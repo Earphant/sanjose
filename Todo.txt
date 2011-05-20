@@ -1,0 +1,95 @@
+Todos 
+http://www.douban.com/group/topic/19277168/ 
+
+ULRs 
+http://www.douban.com/group/topic/19274682/ 
+
+Tables 
+http://www.douban.com/group/topic/19424522/ 
+
+Source 
+http://code.google.com/p/sanjose/source/browse/trunk 
+
+________ 
+
+Tools 
+App Engine Java 
+http://code.google.com/appengine/docs/java/overview.html 
+
+TortoiseSVN 
+http://tortoisesvn.net/ 
+
+Google Talk 
+http://www.google.com/talk/ 
+
+________ 
+
+http://www.fitbit.com/
+
+________ 
+
+Tables
+i - objects 
+a - class 
+b - base site 
+c - base id 
+d - ref site 
+e - ref id 
+f - flags 
+i - id 
+j - site 
+k - rank 
+m - modified 
+n - owner id 
+o - owner site 
+p - reply rate 
+r - rate 
+s - access 
+t - create 
+v - version 
+w - language 
+
+i0 - message**
+
+i1 - individuals
+i - id 
+j - site 
+v - version 
+lsn - last name 
+fsn - first name 
+mdn - mid name 
+
+i2 - organizations
+
+
+i3 - events
+i - id 
+j - site 
+v - version 
+bgn - begin 
+end - end 
+prg - progress
+
+i4 - goods 
+
+i5 - invoice 
+
+i6 - mark*** 
+
+i7 
+
+i8 - location 
+
+i9 - tags 
+
+i10 - classes* 
+
+i11 - users 
+
+i12 - pictures 
+
+i13 - link* 
+
+i21 - contacts 
+
+i37 - activities 
