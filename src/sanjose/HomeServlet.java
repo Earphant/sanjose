@@ -16,7 +16,7 @@ public class HomeServlet extends HttpServlet {
 		Page page=new Page(resp);
 
 		page.Body("<h1>Home</h1>");
-		page.Out("<a href=\"/\">Home</a><br>");
+		page.Out("<a href=\"/\">Home2</a><br>");
 		if(user==null){
 			page.Out("<a href=\"signin\">Sign in</a><br>");
 		}
