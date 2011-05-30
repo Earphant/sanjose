@@ -1,0 +1,50 @@
+html,body,div,h1,h2,h3,h4,h5,h6,ul,ol,dl,li,dt,dd,p,blockquote,pre,form,fieldset,table,th,td{margin:0;padding:0;line-height:1.7em}
+*{font-family:verdana,arial,helvetica,sans-serif;font-size:100%}
+a{text-decoration:none;color:#069}
+a:hover{text-decoration:underline}
+a:active{text-decoration:none}
+body{font-size:79%;color:#333;text-align:center;background-color:#f8f8f8}
+canvas{margin:0;padding:0}
+div{text-align:left}
+h1{font-size:170%;font-weight:normal}
+h2{font-size:130%;font-weight:normal;margin:2ex 0 0}
+
+#body{padding-top:3ex}
+#menu a{margin-right:1.5ex}
+#page{position:relative;width:900px;margin:0 auto}
+#tool{float:right}
+#tool a{margin-left:1.5ex}
+#top{position:absolute;left:0;top:0;width:100%}
+
+.list{table-layout:fixed;border-collapse:collapse}
+.list th{font-weight:normal}
+.list td{text-align:right}
+
+.c504{border:solid 1px #000;height:400px;overflow:hidden;position:relative}
+.c504 div{border:none}
+.c504 canvas{height:100%;width:100%;left:0;top:0;position:absolute}
+
+.w100{width:100%}
+.w099{width:99%}
+.w050{width:50%}
+.w040{width:40%}
+.w030{width:30%}
+.wdat{width:12ex}
+.we03{width:3ex}
+.we05{width:5ex}
+.we07{width:7ex}
+.we08{width:8ex}
+.we09{width:9ex}
+.we10{width:10ex}
+.we12{width:12ex}
+.we14{width:14ex}
+.we15{width:15ex}
+.we17{width:17ex}
+.we18{width:18ex}
+.we19{width:19ex}
+.we20{width:20ex}
+.we30{width:30ex}
+.we40{width:40ex}
+.we50{width:50ex}
+.we60{width:60ex}
+.we70{width:70ex}
