@@ -3,9 +3,12 @@ html,body,div,h1,h2,h3,h4,h5,h6,ul,ol,dl,li,dt,dd,p,blockquote,pre,form,fieldset
 a{text-decoration:none;color:#069}
 a:hover{text-decoration:underline}
 a:active{text-decoration:none}
+aside{float:right}
 body{width:960px;margin:auto;border:1px #f00 solid;font-size:79%;color:#333;background-color:#fff}
 canvas{margin:0;padding:0}
 div{text-align:left}
+footer{clear:both}
+footer li{list-style-type:none;display:inline}
 h1{font-size:170%;font-weight:normal}
 h2{font-size:130%;font-weight:normal;margin:2ex 0 0}
 nav li{list-style-type:none;display:inline}
