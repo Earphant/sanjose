@@ -10,7 +10,7 @@ public class CommunityServlet extends HttpServlet {
 		Page page=new Page(rsp);
 
 		page.title="Community";
-		page.Navi(null);
+		page.Nav(null);
 		page.Body(null);
 		page.Aside(null);
 		page.Footer(null);
