@@ -4,12 +4,12 @@ import java.io.IOException;
 import javax.servlet.http.*;
 
 @SuppressWarnings("serial")
-public class SignupServlet extends HttpServlet {
-	public void doGet(HttpServletRequest req,HttpServletResponse resp)
+public class CommunityServlet extends HttpServlet {
+	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
-		Page page=new Page(resp);
-	
-		page.title="Sign Up";
+		Page page=new Page(rsp);
+
+		page.title="Community";
 		page.Navi(null);
 		page.Body(null);
 		page.Aside(null);
