@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class Page{
 	private HttpServletResponse response;
+	private String head=null;
 
 	public Page(HttpServletResponse resp){
 		response=resp;
@@ -20,6 +21,8 @@ public class Page{
 	}
 	public void Body(String cont)throws IOException{
 		response.setContentType(content_type);
+		if(head==null)
+			response.getWriter().println("<head><title>"+title+"</title></head>");
 		if(cont==null)
 			cont="<h1>"+title+"</h1>";
 		response.getWriter().println(cont);
