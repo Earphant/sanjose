@@ -5,9 +5,14 @@ import javax.servlet.http.*;
 
 @SuppressWarnings("serial")
 public class ToolsServlet extends HttpServlet {
-	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException {
-		resp.setContentType("text/plain");
-		resp.getWriter().println("Hello, tools");
+	public void doGet(HttpServletRequest req,HttpServletResponse resp)
+		throws IOException{
+		Page page=new Page(resp);
+	
+		page.title="Tools";
+		page.Navi(null);
+		page.Body(null);
+		page.Aside(null);
+		page.Footer(null);
 	}
 }
