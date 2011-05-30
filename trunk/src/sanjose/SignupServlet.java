@@ -10,7 +10,7 @@ public class SignupServlet extends HttpServlet {
 		Page page=new Page(resp);
 	
 		page.title="Sign Up";
-		page.Navi(null);
+		page.Nav(null);
 		page.Body(null);
 		page.Aside(null);
 		page.Footer(null);

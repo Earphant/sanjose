@@ -35,7 +35,7 @@ public class Page{
 	public void Head(String title){
 		
 	}
-	public void Navi(String cont)throws IOException{
+	public void Nav(String cont)throws IOException{
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 

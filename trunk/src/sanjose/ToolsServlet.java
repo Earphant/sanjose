@@ -10,7 +10,7 @@ public class ToolsServlet extends HttpServlet {
 		Page page=new Page(resp);
 	
 		page.title="Tools";
-		page.Navi(null);
+		page.Nav(null);
 		page.Body(null);
 		page.Aside(null);
 		page.Footer(null);
