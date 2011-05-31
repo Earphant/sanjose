@@ -1,5 +1,10 @@
 // <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
+_[110]={
+	$:function(d){
+		d.innerHTML='<li><a href=/system/signin>Sign in</a><li><a href=/system/signup>Sign up</a>';
+	}
+}
 _[501]={
 	$:function(d){
 		d=d.lastChild.childNodes;

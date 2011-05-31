@@ -8,19 +8,24 @@ body{width:760px;margin:auto;font-size:79%;color:#333;background-color:#fff}
 canvas{margin:0;padding:0}
 div{text-align:left}
 footer{clear:both;display:block}
-footer li{list-style-type:none;display:inline}
+footer a{color:#888}
+footer li{list-style-type:none;display:inline;margin-right:1.5ex}
 h1{font-size:170%;font-weight:normal}
 h2{font-size:130%;font-weight:normal;margin:2ex 0 0}
+header{height:100px;background-color:#eee;margin-bottom:2ex;display:block}
 nav{clear:both;display:block}
-nav li{list-style-type:none;display:inline}
+nav a{color:#888}
+nav li{list-style-type:none;display:inline;margin-right:1.5ex}
 
 #body{padding-top:3ex}
 #menu a{margin-right:1.5ex}
 #page{position:relative;width:900px;margin:0 auto}
-#syst{float:right}
 #tool{float:right}
 #tool a{margin-left:1.5ex}
 #top{position:absolute;left:0;top:0;width:100%}
+
+.c110{float:right}
+.c110 li{margin-left:1.5ex;margin-right:0}
 
 .list{table-layout:fixed;border-collapse:collapse}
 .list th{font-weight:normal}
