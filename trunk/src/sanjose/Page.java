@@ -29,7 +29,7 @@ public class Page{
 	}
 	public void Footer(String cont)throws IOException{
 		if(cont==null)
-			cont="<ul><li><a href=\"/about/\">About</a><li><a href=\"/about/contact.html\">Contact</a><li><a href=\"/about/privacy.html\">Privacy</a><li><a href=\"/about/term.html\">Term</a><li><a href=\"/forum/\">Forum</a></ul>";
+			cont="<ul><li><a href=/about/>About</a><li><a href=\"/about/contact.html\">Contact</a><li><a href=\"/about/privacy.html\">Privacy</a><li><a href=\"/about/term.html\">Term</a><li><a href=\"/forum/\">Forum</a></ul>";
 		response.getWriter().println(cont);
 	}
 	public void Head(String title){
