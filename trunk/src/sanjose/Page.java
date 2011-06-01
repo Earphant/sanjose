@@ -40,11 +40,11 @@ public class Page{
 		User user = userService.getCurrentUser();
 
 		if(cont==null){
-			cont="<ul><li><a href=\"/\">Home</a><li><a href=\"/products/\">Products</a><li><a href=\"/downloads/\">Downloads</a><li><a href=\"/support/\">Support</a><li><a href=\"/community/\">Community</a></ul><ul id=\"sign\">";
+			cont="<ul><li><a href=/>Home</a><li><a href=/products/>Products</a><li><a href=/downloads/>Downloads</a><li><a href=/support/>Support</a><li><a href=/community/>Community</a></ul><ul class=c110>";
 			if(user==null)
-				cont+="<li><a href=\"/system/signin\">Sign in</a><li><a href=\"/system/signup\">Sign up</a>";
+				cont+="<li><a href=/system/signin>Sign in</a><li><a href=/system/signup>Sign up</a>";
 			else
-				cont+="<li><a href=\"/mail/\">Inbox</a><li><a href=\"/system/signout\">Sign out</a>";
+				cont+="<li><a href=/mail/>Inbox</a><li><a href=/system/signout>Sign out</a>";
 			cont+="</ul>";
 		}
 		response.getWriter().println(cont);
