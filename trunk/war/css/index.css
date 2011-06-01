@@ -10,7 +10,7 @@ aside li a{color:#888}
 body{width:760px;margin:auto;font-size:79%;color:#333;background-color:#fff}
 canvas{margin:0;padding:0}
 div{text-align:left}
-footer{clear:both;display:block;margin-top:2ex}
+footer{clear:both;display:block;margin:2ex 0}
 footer a{color:#888}
 footer li{list-style-type:none;display:inline;margin-right:1.5ex}
 h1{font-size:170%;font-weight:normal}
