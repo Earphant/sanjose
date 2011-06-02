@@ -10,9 +10,7 @@ public class HomeServlet extends HttpServlet {
 		Page page=new Page(resp);
 
 		page.title="Home";
-		page.Nav(null);
+		page.Head(null);
 		page.Body(null);
-		page.Aside(null);
-		page.Footer(null);
 	}
 }

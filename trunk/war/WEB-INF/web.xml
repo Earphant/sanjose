@@ -13,18 +13,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-class>sanjose.HomeServlet</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>signin</servlet-name>
-		<servlet-class>sanjose.SigninServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>signout</servlet-name>
-		<servlet-class>sanjose.SignoutServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>signup</servlet-name>
-		<servlet-class>sanjose.SignupServlet</servlet-class>
-	</servlet>
-	<servlet>
 		<servlet-name>system</servlet-name>
 		<servlet-class>sanjose.SystemServlet</servlet-class>
 	</servlet>
@@ -41,20 +29,8 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>signin</servlet-name>
-		<url-pattern>/system/signin</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>signout</servlet-name>
-		<url-pattern>/system/signout</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>signup</servlet-name>
-		<url-pattern>/system/signup</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
 		<servlet-name>system</servlet-name>
-		<url-pattern>/system/</url-pattern>
+		<url-pattern>/system/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>tools</servlet-name>
