@@ -26,6 +26,7 @@ nav li{list-style-type:none;display:inline;margin-right:1.5ex}
 #tool{float:right}
 #tool a{margin-left:1.5ex}
 #top{position:absolute;left:0;top:0;width:100%}
+#user{font-weight:bold}
 
 .c99{float:right}
 .c99 li{margin-left:1.5ex;margin-right:0}
