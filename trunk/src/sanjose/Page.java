@@ -15,7 +15,7 @@ public class Page{
 		if(!head)
 			Head(null);
 		if(cont==null)
-			cont="<body><nav>"+system+nav+"</nav><header>"+header+
+			cont="<body class=c90><nav>"+system+nav+"</nav><header>"+header+
 				"</header><aside>"+aside+"</aside><articale><h1>"+title+
 				"</h1>"+articale+"</articale><footer>"+footer+
 				"</footer></body><script src=/js/adxon.js></script><script src=/js/></script></html>";
@@ -37,6 +37,6 @@ public class Page{
 	public String footer="<ul><li><a href=/about/>About</a><li><a href=/about/contact.html>Contact</a><li><a href=/about/privacy.html>Privacy</a><li><a href=/about/term.html>Term</a><li><a href=/forum/>Forum</a></ul>";
 	public String header="";
 	public String nav="<ul><li><a href=/>Home</a><li><a href=/products/>Products</a><li><a href=/downloads/>Downloads</a><li><a href=/support/>Support</a><li><a href=/community/>Community</a></ul>";
-	public String system="<ul class=c110><li><a href=/tools/>Tools</a><li><a href=/system/>System</a></ul>";
+	public String system="<ul class=c99><li><a href=/tools/>Tools</a><li><a href=/system/>System</a></ul>";
 	public String title="";
 }

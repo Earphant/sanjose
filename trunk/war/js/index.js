@@ -1,6 +1,10 @@
 // <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-_[110]={
+_[90]={
+	$:function(d){
+	}
+}
+_[99]={
 	$:function(d){
 		d.innerHTML='<li><a href=/system/signin>Sign in</a><li><a href=/system/signup>Sign up</a>';
 	}
