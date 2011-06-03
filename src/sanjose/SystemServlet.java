@@ -23,7 +23,8 @@ public class SystemServlet extends HttpServlet {
 				return;
 			}
 			page.title="Sign In";
-//			rsp.addCookie(null);
+			Cookie k=new Cookie("u",user.getNickname());
+			rsp.addCookie(k);
 		}
 		else if(pl.equalsIgnoreCase("/signout")){
 			rsp.sendRedirect(userService.createLogoutURL("/"));

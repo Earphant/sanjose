@@ -27,8 +27,8 @@ nav li{list-style-type:none;display:inline;margin-right:1.5ex}
 #tool a{margin-left:1.5ex}
 #top{position:absolute;left:0;top:0;width:100%}
 
-.c110{float:right}
-.c110 li{margin-left:1.5ex;margin-right:0}
+.c99{float:right}
+.c99 li{margin-left:1.5ex;margin-right:0}
 
 .list{table-layout:fixed;border-collapse:collapse}
 .list th{font-weight:normal}
