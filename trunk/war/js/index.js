@@ -2,11 +2,50 @@
 
 _[90]={
 	$:function(d){
-	}
+		this.Cookies();
+		this.$$=_(d);
+	},
+	Cookies:function(){
+		var c=document.cookie,i,n,p=this.parms,s,v;
+		if(!(n=navigator.browserLanguage))n=navigator.language;
+		this.ua=[];
+		this.uf='';
+		this.uk=0;
+		this.ui='';
+		this.ux='';
+		if(c){
+			c=c.split('; ');
+			for(i in c){
+				s=c[i].split('=');
+				v=s[1];
+				s=s[0];
+//				p[s]=decodeURI(v);
+				v=v.split('&');
+				switch(s){
+				case 'sn':
+					if(v[3])n=v[3];
+					break;
+				case 'us':
+					if(v[4])this.ef=v[5];
+					if(v[3])this.uf=v[4];
+					if(v[2])this.ux=decodeURIComponent(v[3]);
+					if(v[1])this.ui=decodeURIComponent(v[1]);
+					if(v[0])this.ua=eval('({'+v[0].replace(/-/g,',')+'})');
+				}
+			}
+		}
+		return n;
+	},
+	uk:0,
+	ui:null,
+	ux:null
 }
 _[99]={
 	$:function(d){
-		d.innerHTML='<li><a href=/system/signin>Sign in</a><li><a href=/system/signup>Sign up</a>';
+		if(document.body.$.ux)
+			d.innerHTML='<li><a href=/system/signout>Sign out</a><li><a href=/system/signup>Settings</a>';
+		else
+			d.innerHTML='<li><a href=/system/signin>Sign in</a><li><a href=/system/signup>Sign up</a>';
 	}
 }
 _[501]={
