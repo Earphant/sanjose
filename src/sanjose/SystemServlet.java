@@ -19,14 +19,21 @@ public class SystemServlet extends HttpServlet {
 		else if(pl.equalsIgnoreCase("/signin")){
 			User user = userService.getCurrentUser();
 			if(user==null){
-				rsp.sendRedirect(userService.createLoginURL("/"));
+				rsp.sendRedirect(userService.createLoginURL("/system/signin"));
 				return;
 			}
 			page.title="Sign In";
-			Cookie k=new Cookie("u",user.getNickname());
-			rsp.addCookie(k);
+			Cookie ck=new Cookie("us","12.3:10&&User&"+user.getNickname());
+			ck.setMaxAge(-1);
+			ck.setPath("/");
+			rsp.addCookie(ck);
+			rsp.sendRedirect("/");
 		}
 		else if(pl.equalsIgnoreCase("/signout")){
+			Cookie ck=new Cookie("us",null);
+			ck.setMaxAge(0);
+			ck.setPath("/");
+			rsp.addCookie(ck);
 			rsp.sendRedirect(userService.createLogoutURL("/"));
 			return;
 		}
