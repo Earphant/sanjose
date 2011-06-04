@@ -28,6 +28,7 @@ public class SystemServlet extends HttpServlet {
 			ck.setPath("/");
 			rsp.addCookie(ck);
 			rsp.sendRedirect("/");
+			return;
 		}
 		else if(pl.equalsIgnoreCase("/signout")){
 			Cookie ck=new Cookie("us",null);
@@ -41,6 +42,7 @@ public class SystemServlet extends HttpServlet {
 			page.title="Sign Up";
 		else
 			page.title=pl;
+		page.Head(null);
 		page.Body(null);
 	}
 }

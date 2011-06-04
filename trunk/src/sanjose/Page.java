@@ -24,7 +24,7 @@ public class Page{
 	public void Head(String cont)throws IOException{
 		response.setContentType(content_type);
 		if(cont==null)
-			cont="<!doctype html><html><head><meta http-equiv=content-type content="+content_type+"><title>"+title+"</title></head>";
+			cont="<!doctype html><html><head><meta http-equiv=content-type content="+content_type+"><link rel=stylesheet type=text/css href=/css/><title>"+title+"</title></head>";
 		response.getWriter().println(cont);
 		head=true;
 	}
