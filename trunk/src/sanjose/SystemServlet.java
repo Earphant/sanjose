@@ -14,7 +14,7 @@ public class SystemServlet extends HttpServlet {
 		String pl=req.getPathInfo();
 		Page page=new Page(rsp);
 
-		if(pl.equals("/")||pl==null)
+		if(pl.equals("/"))
 			page.title="System";
 		else if(pl.equalsIgnoreCase("/signin")){
 			User user = userService.getCurrentUser();
@@ -23,7 +23,7 @@ public class SystemServlet extends HttpServlet {
 				return;
 			}
 			page.title="Sign In";
-			Cookie ck=new Cookie("us","12.3:10&&User&"+user.getNickname());
+			Cookie ck=new Cookie("us","12.3:10&12.3&User&"+user.getNickname());
 			ck.setMaxAge(-1);
 			ck.setPath("/");
 			rsp.addCookie(ck);

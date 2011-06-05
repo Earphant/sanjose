@@ -42,8 +42,9 @@ _[90]={
 }
 _[99]={
 	$:function(d){
-		if(document.body.$.ux)
-			d.innerHTML='<li><a href=/12.3/dashboard id=user>User</a><li><a href=/system/settings>Settings</a><li><a href=/system/signout>Sign out</a>';
+		var b=document.body.$
+		if(b.ux)
+			d.innerHTML='<li><a href=/'+b.ui+'/ id=user>User</a><li><a href=/system/settings>Settings</a><li><a href=/system/signout>Sign out</a>';
 		else
 			d.innerHTML='<li><a href=/system/signin>Sign in</a><li><a href=/system/signup>Sign up</a>';
 	}
