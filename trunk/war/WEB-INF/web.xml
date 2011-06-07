@@ -13,6 +13,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-class>sanjose.HomeServlet</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>mail</servlet-name>
+		<servlet-class>sanjose.MailServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>post</servlet-name>
+		<servlet-class>sanjose.PostServlet</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>system</servlet-name>
 		<servlet-class>sanjose.SystemServlet</servlet-class>
 	</servlet>
@@ -27,6 +35,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet-mapping>
 		<servlet-name>home</servlet-name>
 		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>mail</servlet-name>
+		<url-pattern>/mail/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>post</servlet-name>
+		<url-pattern>/post/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>system</servlet-name>
