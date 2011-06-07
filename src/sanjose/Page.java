@@ -4,6 +4,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 
 public class Page{
+	private Boolean full=false;
 	private Boolean head=false;
 	private HttpServletResponse response;
 
@@ -11,15 +12,39 @@ public class Page{
 		response=resp;
 	}
 
+	public void Begin()throws IOException{
+		if(!head)
+			Head(null);
+		response.getWriter().println("<body class=c90><nav>"+system+nav+
+			"</nav><header>"+header+"</header><aside>"+aside+
+			"</aside><article><h1>"+title+"</h1>");
+	}
 	public void Body(String cont)throws IOException{
 		if(!head)
 			Head(null);
 		if(cont==null)
 			cont="<body class=c90><nav>"+system+nav+"</nav><header>"+header+
-				"</header><aside>"+aside+"</aside><articale><h1>"+title+
-				"</h1>"+articale+"</articale><footer>"+footer+
+				"</header><aside>"+aside+"</aside><article><h1>"+title+
+				"</h1>"+articale+"</article><footer>"+footer+
 				"</footer></body><script src=/js/adxon.js></script><script src=/js/></script></html>";
 		response.getWriter().println(cont);
+	}
+	public void End(String cont)throws IOException{
+		if(!head)
+			Begin();
+		if(cont!=null)
+			response.getWriter().println(cont);
+		if(!full)
+			response.getWriter().println("</article>");
+		response.getWriter().println("<footer>"+footer+
+			"</footer></body><script src=/js/adxon.js></script><script src=/js/></script></html>");
+	}
+	public void Full()throws IOException{
+		if(!head)
+			Head(null);
+		response.getWriter().println("<body class=c90><nav>"+system+nav+
+			"</nav><header>"+header+"</header><h1>"+title+"</h1>");
+		full=true;
 	}
 	public void Head(String cont)throws IOException{
 		response.setContentType(content_type);
@@ -29,6 +54,8 @@ public class Page{
 		head=true;
 	}
 	public void Out(String cont)throws IOException{
+		if(!head)
+			Begin();
 		response.getWriter().println(cont);
 	}
 	public String articale="";
