@@ -13,6 +13,6 @@ public class HomeServlet extends HttpServlet{
 			page.title="Home";
 		else
 			new Based(pl,page);
-		page.End(null);
+		page.End("<form method=post action=/post/><textarea rows=5></textarea><input type=submit name=ok></form>");
 	}
 }
