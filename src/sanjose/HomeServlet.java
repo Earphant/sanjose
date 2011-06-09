@@ -9,10 +9,13 @@ public class HomeServlet extends HttpServlet{
 		throws IOException{
 		String pl=req.getPathInfo();
 		Page page=new Page(resp);
-		if(pl.equals("/"))
+		if(pl.equals("/")){
 			page.title="Home";
+			page.Begin();
+			page.Out("<form method=post action=/post/><textarea rows=5></textarea><input type=submit name=ok></form>");
+		}
 		else
 			new Based(pl,page);
-		page.End("<form method=post action=/post/><textarea rows=5></textarea><input type=submit name=ok></form>");
+		page.End(null);
 	}
 }
