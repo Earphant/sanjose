@@ -11,7 +11,7 @@ public class PostServlet extends HttpServlet {
 		throws IOException{
 		Page p=new Page(rsp);
 		p.title="Post";
-		p.aside="<ul><li><a href=/post/>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/books>Book</a></ul><ul><li><a href=/post/parameters>Parameter</a><li><a href=/post/issues>Issue</a></ul>";
+		p.aside="<ul><li><a href=/post/>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/uploads>Upload</a></ul><ul><li><li><a href=/post/books>Book</a><a href=/post/parameters>Parameter</a><li><a href=/post/issues>Issue</a></ul>";
 		p.Out(req.getPathInfo());
 		p.Out("<br>");
 		p.End("<form method=post action=/post/><textarea name=text rows=10></textarea><input type=submit name=ok></form>");
