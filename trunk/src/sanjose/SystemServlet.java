@@ -10,20 +10,20 @@ import com.google.appengine.api.users.UserServiceFactory;
 public class SystemServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
-		UserService userService = UserServiceFactory.getUserService();
+		UserService ur=UserServiceFactory.getUserService();
 		String pl=req.getPathInfo();
 		Page page=new Page(rsp);
 
 		if(pl.equals("/"))
 			page.title="System";
 		else if(pl.equalsIgnoreCase("/signin")){
-			User user = userService.getCurrentUser();
-			if(user==null){
-				rsp.sendRedirect(userService.createLoginURL("/system/signin"));
+			User us=ur.getCurrentUser();
+			if(us==null){
+				rsp.sendRedirect(ur.createLoginURL("/system/signin"));
 				return;
 			}
 			page.title="Sign In";
-			Cookie ck=new Cookie("us","12.3:10&12.3&User&"+user.getNickname());
+			Cookie ck=new Cookie("us","12.3:10&12.3&User&"+us.getNickname());
 			ck.setMaxAge(-1);
 			ck.setPath("/");
 			rsp.addCookie(ck);
@@ -35,7 +35,7 @@ public class SystemServlet extends HttpServlet {
 			ck.setMaxAge(0);
 			ck.setPath("/");
 			rsp.addCookie(ck);
-			rsp.sendRedirect(userService.createLogoutURL("/"));
+			rsp.sendRedirect(ur.createLogoutURL("/"));
 			return;
 		}
 		else if(pl.equals("/signup"))
