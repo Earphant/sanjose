@@ -30,7 +30,7 @@ public class PostServlet extends HttpServlet {
 				return;
 			}
 			if(n.equalsIgnoreCase("fat")){
-				new Fat().doPost(req,rsp);
+				new Fat().doGet(req,rsp);
 				return;
 			}
 		}
