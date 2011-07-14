@@ -14,11 +14,11 @@ public class Weight{
 		Page p=new Page(rsp);
 		p.title="Weight";
 		p.aside="<ul><li><a href=/post/>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/uploads>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/steps>Steps</a></ul>";
-		p.End("<form method=post action=/post/weight><input name=text type=text><input type=submit name=ok value=Ok></form>");
+		p.End("<form method=post action=/post/weight><input type=text name=weight><input type=submit name=ok value=Ok></form>");
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
-		String vols=req.getParameter("text");
+		String vols=req.getParameter("weight");
 		Long vol=Long.parseLong(vols);
 	    PersistenceManager wgh=Helper.getMgr();
 	    I138 i138=new I138(1L,3L,vol);
