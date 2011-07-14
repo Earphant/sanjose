@@ -14,7 +14,7 @@ public class Fat {
 		Page p=new Page(rsp);
 		p.title="Fat";
 		p.aside="<ul><li><a href=/post/>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/uploads>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";
-		p.End("<form method=post action=/post/fat><input type=text name=fat><input type=text name=wat><input type=submit name=ok value=Ok></form>");
+		p.End("<form method=post action=/post/fat>Fat:<input type=text name=fat>Water:<input type=text name=wat><input type=submit name=ok value=Ok></form>");
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
@@ -43,7 +43,7 @@ public class Fat {
 			List<I135> r=(List<I135>)q.execute();
 			if(!r.isEmpty()){
 				for(I135 i135:r){
-					page.Out(i135.getn()+"."+i135.geto()+": "+"fat"+": "+i135.getfat()+"<br>"+"water"+": "+i135.getwat()+"<br>");
+					page.Out(i135.getn()+"."+i135.geto()+": "+"<br>"+"fat"+": "+i135.getfat()+"<br>"+"water"+": "+i135.getwat()+"<br>");
 				}
 			}
 		}
