@@ -10,7 +10,7 @@ public class PostServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		String[]s=req.getPathInfo().split("/");
-		String n="*";
+		String n="*";        
 		if(s.length>1){
 			n=s[1];
 			if(n.equalsIgnoreCase("tags")){
@@ -29,10 +29,14 @@ public class PostServlet extends HttpServlet {
 				new Weight().doGet(req,rsp);
 				return;
 			}
+			if(n.equalsIgnoreCase("fat")){
+				new Fat().doPost(req,rsp);
+				return;
+			}
 		}
 		Page p=new Page(rsp);
 		p.title="Post";
-		p.aside="<ul><li><a href=/post/>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/uploads>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/steps>Steps</a></ul>";
+		p.aside="<ul><li><a href=/post/>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/uploads>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";
 		p.Out(n);
 		p.Out("<br>");
 		p.Out(req.getPathInfo());
@@ -59,6 +63,10 @@ public class PostServlet extends HttpServlet {
 			}
 			if(n.equalsIgnoreCase("weight")){
 				new Weight().doPost(req,rsp);
+				return;
+			}
+			if(n.equalsIgnoreCase("fat")){
+				new Fat().doPost(req,rsp);
 				return;
 			}
 		}
