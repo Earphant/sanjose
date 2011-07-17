@@ -67,7 +67,7 @@ public class I{
 	public I(String x,String p,long a){
 		Date c=new Date();
 		this.i=null;
-		this.i=0L;
+		this.i=0L;//key.getId();
 		this.j=9L;
 		this.a=a;
 		this.b=1L;
@@ -91,7 +91,7 @@ public class I{
 	    return e.getValue();
 	}
 	public long geti(){
-	    return i==0L?key.getId():i;
+	    return i;
 	}
 	public long getj(){
 	    return j;
@@ -110,6 +110,10 @@ public class I{
 	}
 	public String getx(){
 	    return x;
+	}
+	public void seti(){
+		if(this.i==0L)
+			this.i=key.getId();
 	}
 	public void setx(String x){
 	    this.x=x;
