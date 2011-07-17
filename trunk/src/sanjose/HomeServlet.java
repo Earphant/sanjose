@@ -30,9 +30,8 @@ public class HomeServlet extends HttpServlet{
 			finally{
 				q.closeAll();
 			}
+			p.End(null);
 		}
-		else
-			new Based(pl,p);
-		p.End(null);
+		else new Based(pl,p);
 	}
 }
