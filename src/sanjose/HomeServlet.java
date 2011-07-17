@@ -23,7 +23,7 @@ public class HomeServlet extends HttpServlet{
 				List<I> r=(List<I>)q.execute();
 				if(!r.isEmpty()){
 					for(I i:r){
-						p.Out(i.geti()+"."+i.getj()+": "+i.getx()+"<br>");
+						p.Out(i.getx()+" <a href=/post?i="+i.geti()+"."+i.getj()+">≡</a><br>");
 					}
 				}
 			}
