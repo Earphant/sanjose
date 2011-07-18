@@ -61,7 +61,7 @@ public class PostServlet extends HttpServlet {
 			finally{
 				q.closeAll();
 			}
-			p.Out("</textarea><input type=hidden value="+id.i+"."+id.j+">");
+			p.Out("</textarea><input type=hidden name=i value="+id.i+"."+id.j+">");
 		}
 		else p.Out("</textarea>");
 		p.End("<input type=submit name=ok></form>");
@@ -93,17 +93,39 @@ public class PostServlet extends HttpServlet {
 			}
 		}
 		String v=req.getParameter("text");
+		Id id=new Id(req.getParameter("i"));
 		PersistenceManager mgr=Helper.getMgr();
-		I i=new I(v,"",0);
-		try{
-			mgr.makePersistent(i);
-			if(i.geti()==0L){
-				i.seti();
+		if(id.i==0){
+			I i=new I(v,"",0);
+			try{
 				mgr.makePersistent(i);
+				if(i.geti()==0L){
+					i.seti();
+					mgr.makePersistent(i);
+				}
+			}
+			finally{
+				mgr.close();
 			}
 		}
-		finally{
-			mgr.close();
+		else{
+			Query q=mgr.newQuery(I.class);
+			q.setFilter("i==iParam && j==jParam");
+			q.declareParameters("Long iParam,Long jParam");
+			try{
+				@SuppressWarnings("unchecked")
+				List<I> r=(List<I>)q.execute(id.i,id.j);
+				if(!r.isEmpty()){
+					for(I i:r){
+						i.setx(v);
+						break;
+					}
+				}
+			}
+			finally{
+				q.closeAll();
+				mgr.close();
+			}
 		}
 		rsp.sendRedirect("/");
 	}
