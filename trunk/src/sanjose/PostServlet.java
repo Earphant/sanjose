@@ -52,10 +52,8 @@ public class PostServlet extends HttpServlet {
 				@SuppressWarnings("unchecked")
 				List<I> r=(List<I>)q.execute(id.i,id.j);
 				if(!r.isEmpty()){
-					for(I i:r){
-						p.Out(i.getx());
-						break;
-					}
+					I i=r.get(0);
+					p.Out(i.getx());
 				}
 			}
 			finally{
@@ -116,10 +114,8 @@ public class PostServlet extends HttpServlet {
 				@SuppressWarnings("unchecked")
 				List<I> r=(List<I>)q.execute(id.i,id.j);
 				if(!r.isEmpty()){
-					for(I i:r){
-						i.setx(v);
-						break;
-					}
+					I i=r.get(0);
+					i.setx(v);
 				}
 			}
 			finally{
