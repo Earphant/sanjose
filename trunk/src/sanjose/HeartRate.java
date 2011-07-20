@@ -1,9 +1,8 @@
 package sanjose;
 
 import java.io.IOException;
-import java.text.ParseException;
+//import java.text.ParseException;
 import java.util.List;
-
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class HeartRate {
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
-		throws IOException, ParseException{
+		throws IOException{
 		Page p=new Page(rsp);
 		Timed timed=new Timed(req.getParameter("i"));
 		p.title="Heart Rate";
@@ -21,27 +20,29 @@ public class HeartRate {
 			PersistenceManager mgr=Helper.getMgr();
 			Query q=mgr.newQuery(I136.class);
 			q.setFilter("n==nParam && o==oParam && t==tParam");
+			q.declareImports("import java.util.Date");
 			q.declareParameters("Long nParam,Long oParam,Date tParam");
+			//q.declareParameters("Long nParam,Long oParam");
 			try{
 				@SuppressWarnings("unchecked")
 				List<I136> r=(List<I136>)q.execute(timed.n,timed.o,timed.t);
+				//List<I136> r=(List<I136>)q.execute(timed.n,timed.o);
 				if(!r.isEmpty()){
 					I136 i136=r.get(0);
-					Long vols=i136.getvol();
-					String vol=vols.toString();
-					p.Out(vol);
+					Long v=i136.getvol();
+					p.Out(v.toString());
 				}
 			}
 			finally{
 				q.closeAll();
 			}
-			p.Out("</textarea><input type=hidden name=i value="+timed.n+"."+timed.o+"."+timed.t+">");
+			p.Out("</textarea><input type=hidden name=i value="+timed.n+"."+timed.o+"."+timed.t.getTime()/1000+">");
 		}
 		else p.Out("</textarea>");
 		p.End("<input type=submit name=ok></form>");
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
-		throws IOException, ParseException{
+		throws IOException{
         PersistenceManager mgr=Helper.getMgr();
         String vols=req.getParameter("rate");
         Long vol=Long.parseLong(vols);	
@@ -85,7 +86,7 @@ public class HeartRate {
 			List<I136> r=(List<I136>)q.execute();
 			if(!r.isEmpty()){
 				for(I136 i136:r){
-					page.Out(+i136.getn()+"."+i136.geto()+": "+i136.getvol()+" <a href=/post/heartrate?i="+i136.getn()+"."+i136.geto()+"."+i136.gett()+">ÐÞ¸Ä</a><br>");
+					page.Out(+i136.getn()+"."+i136.geto()+": "+i136.getvol()+" <a href=/post/heartrate?i="+i136.getn()+"."+i136.geto()+"."+i136.gett().getTime()/1000+">ÐÞ¸Ä</a><br>");
 				}
 			}
 		}
