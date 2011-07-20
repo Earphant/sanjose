@@ -13,6 +13,7 @@ import com.google.appengine.api.datastore.Key;
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class I136{
 	@PrimaryKey
+	@SuppressWarnings("unused")
 	@Persistent(valueStrategy=IdGeneratorStrategy.IDENTITY)
 	private Key key ;
 	
@@ -31,14 +32,14 @@ public class I136{
 
 	public I136(long n,long o,long vol){
 		Date c=new Date();	
-		this.n=0L;
+		this.n=1L;
 		this.o=9L;
 		this.t=c;
 		this.vol=vol;
 	}
 	
 	public long getn(){
-		return n==0L?key.getId():n;
+		return n;
 	}
 	public long geto(){
 	    return o;
@@ -48,5 +49,8 @@ public class I136{
 	}
 	public long getvol(){
 	    return vol;
+	}
+	public void setvol(long vol){
+		this.vol=vol;
 	}
 }
