@@ -1,21 +1,17 @@
 package sanjose;
 
 import java.util.Date;
-
-import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import com.google.appengine.api.datastore.Key;
-
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class I138{
 	@PrimaryKey
-	@Persistent(valueStrategy=IdGeneratorStrategy.IDENTITY)
-	private Key key;
+	@SuppressWarnings("unused")
+	private String key;
 	
 	@Persistent
 	private Long n;
@@ -30,15 +26,16 @@ public class I138{
 	private Long vol;
 	
 	public I138(Long n,Long o,Long vol){
-		Date c=new Date();
-		this.n=0L;
-		this.o=3L;
+		Long t=new Date().getTime()/1000;
+		this.key=n+"."+o+"."+t;
+		this.n=n;
+		this.o=o;
+		this.t=new Date(t*1000);
 		this.vol=vol;
-		this.t=c;
     }
 	
 	public Long getn(){
-	    return n==0L?key.getId():n;
+	    return n;
 	}
 	
 	public Long geto(){
@@ -51,5 +48,8 @@ public class I138{
 	
 	public Long getvol(){
 		return vol;
+	}
+	public void setvol(long vol){
+		this.vol=vol;
 	}
 }
