@@ -15,22 +15,20 @@ public class HeartRate {
 		Timed timed=new Timed(req.getParameter("i"));
 		p.title="Heart Rate";
 		p.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/uploads>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";
-		p.Out("<form method=post action=/post/heartrate><textarea name=rate rows=5>");
+		p.Out("<form method=post action=/post/heartrate>");
 		if(timed.t!=null){
 			PersistenceManager mgr=Helper.getMgr();
 			Query q=mgr.newQuery(I136.class);
 			q.setFilter("n==nParam && o==oParam && t==tParam");
 			q.declareImports("import java.util.Date");
 			q.declareParameters("Long nParam,Long oParam,Date tParam");
-			//q.declareParameters("Long nParam,Long oParam");
 			try{
 				@SuppressWarnings("unchecked")
 				List<I136> r=(List<I136>)q.execute(timed.n,timed.o,timed.t);
-				//List<I136> r=(List<I136>)q.execute(timed.n,timed.o);
 				if(!r.isEmpty()){
 					I136 i136=r.get(0);
 					Long v=i136.getvol();
-					//p.Out(v.toString());
+					p.Out("<textarea name=rate rows=5>"+v+"</textarea>");
 				}
 			}
 			finally{
@@ -38,7 +36,7 @@ public class HeartRate {
 			}
 			p.Out("</textarea><input type=hidden name=i value="+timed.n+"."+timed.o+"."+timed.t.getTime()/1000+">");
 		}
-		else p.Out("</textarea>");
+		else p.Out("<textarea name=rate rows=5></textarea>");
 		p.End("<input type=submit name=ok></form>");
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
@@ -65,8 +63,8 @@ public class HeartRate {
 				@SuppressWarnings("unchecked")
 				List<I136> r=(List<I136>)q.execute(timed.n,timed.o,timed.t);
 				if(!r.isEmpty()){
-						I136 i136=r.get(0);
-						 i136.setvol(vol);
+					I136 i136=r.get(0);
+					i136.setvol(vol);
 				}
 			}
 			finally{
