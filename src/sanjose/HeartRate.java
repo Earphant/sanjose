@@ -34,7 +34,7 @@ public class HeartRate {
 			finally{
 				q.closeAll();
 			}
-			p.Out("</textarea><input type=hidden name=i value="+timed.n+"."+timed.o+"."+timed.t.getTime()/1000+">");
+			p.Out("<input type=hidden name=i value="+timed.n+"."+timed.o+"."+timed.t.getTime()/1000+">");
 		}
 		else p.Out("<textarea name=rate rows=5></textarea>");
 		p.End("<input type=submit name=ok></form>");
