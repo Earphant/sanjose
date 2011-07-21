@@ -12,9 +12,37 @@ public class Fat {
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		Page p=new Page(rsp);
+		Timed timed=new Timed(req.getParameter("i"));
 		p.title="Fat";
 		p.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/uploads>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";
-		p.End("<form method=post action=/post/fat>Fat:<input type=text name=fat>Water:<input type=text name=wat><input type=submit name=ok value=Ok></form>");
+		p.Out("<form method=post action=/post/fat>");
+		if(timed.t!=null){
+			PersistenceManager mgr=Helper.getMgr();
+			Query q=mgr.newQuery(I135.class);
+			q.setFilter("n==nParam && o==oParam && t==tParam");
+			q.declareImports("import java.util.Date");
+			q.declareParameters("Long nParam,Long oParam,Date tParam");
+			try{
+				@SuppressWarnings("unchecked")
+				List<I135> r=(List<I135>)q.execute(timed.n,timed.o,timed.t);
+				if(!r.isEmpty()){
+					I135 i135=r.get(0);
+					Long f=i135.getfat();
+					Long w=i135.getwat();
+					p.Out("Fat:<textarea name=fat rows=5>"+f+"</textarea>");
+					p.Out("Water:<textarea name=wat rows=5>"+w+"</textarea>");
+				}
+			}
+			finally{
+				q.closeAll();
+			}
+			p.Out("<input type=hidden name=i value="+timed.n+"."+timed.o+"."+timed.t.getTime()/1000+">");
+		}
+		else{
+			p.Out("Fat:<textarea name=fat rows=5></textarea>");
+			p.Out("Water:<textarea name=wat rows=5></textarea>");
+		}
+		p.End("<input type=submit name=ok></form>");
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
@@ -23,12 +51,34 @@ public class Fat {
         String vol2=req.getParameter("wat");
         Long fat=Long.parseLong(vol1);	
         Long wat=Long.parseLong(vol2);	
-		I135 i135=new I135(1L,9L,fat,wat);
-		try{
-			mgr.makePersistent(i135);
+        Timed timed=new Timed(req.getParameter("i"));
+        if(timed.t==null){
+        	I135 i135=new I135(1L,9L,fat,wat);
+			try{
+				mgr.makePersistent(i135);
+			}
+			finally{
+				mgr.close();
+			}
 		}
-		finally{
-			mgr.close();
+		else{
+			Query q=mgr.newQuery(I135.class);
+			q.setFilter("n==nParam && o==oParam && t==tParam");
+			q.declareImports("import java.util.Date");
+			q.declareParameters("Long iParam,Long jParam,Date tParam");
+			try{
+				@SuppressWarnings("unchecked")
+				List<I135> r=(List<I135>)q.execute(timed.n,timed.o,timed.t);
+				if(!r.isEmpty()){
+					I135 i135=r.get(0);
+					i135.setfat(fat);
+					i135.setwat(wat);
+				}
+			}
+			finally{
+				q.closeAll();
+				mgr.close();
+			}
 		}
 		rsp.sendRedirect("/12.3/fat");
 	}
@@ -43,7 +93,7 @@ public class Fat {
 			List<I135> r=(List<I135>)q.execute();
 			if(!r.isEmpty()){
 				for(I135 i135:r){
-					page.Out(i135.getn()+"."+i135.geto()+": "+"<br>"+"fat"+": "+i135.getfat()+"<br>"+"water"+": "+i135.getwat()+"<br>");
+					page.Out(i135.getn()+"."+i135.geto()+": "+"<br>"+"fat"+": "+i135.getfat()+"<br>"+"water"+": "+i135.getwat()+" <a href=/post/fat?i="+i135.getn()+"."+i135.geto()+"."+i135.gett().getTime()/1000+">ÐÞ¸Ä</a><br>");
 				}
 			}
 		}
