@@ -1,21 +1,16 @@
 package sanjose;
 
 import java.util.Date;
-
-
-import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import com.google.appengine.api.datastore.Key;
-
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class I135{
 	@PrimaryKey
-	@Persistent(valueStrategy=IdGeneratorStrategy.IDENTITY)
-	private Key key ;
+	@SuppressWarnings("unused")
+	private String key;
 	@Persistent
 	private Long n;
 	@Persistent
@@ -29,16 +24,17 @@ public class I135{
 
 
 	public I135(long n,long o,long fat,long wat){
-		Date c=new Date();	
-		this.n=0L;
-		this.o=9L;
-		this.t=c;
+		Long t=new Date().getTime()/1000;
+		this.key=n+"."+o+"."+t;
+		this.n=n;
+		this.o=o;
+		this.t=new Date(t*1000);
 		this.fat=fat;
 		this.wat=wat;
 	}
 	
 	public long getn(){
-		return n==0L?key.getId():n;
+		return n;
 	}
 	public long geto(){
 	    return o;
@@ -51,5 +47,11 @@ public class I135{
 	}
 	public long getwat(){
 	    return wat;
+	}
+	public void setfat(long fat){
+		this.fat=fat;
+	}
+	public void setwat(long wat){
+		this.wat=wat;
 	}
 }
