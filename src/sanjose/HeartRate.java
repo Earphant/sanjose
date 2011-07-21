@@ -30,7 +30,7 @@ public class HeartRate {
 				if(!r.isEmpty()){
 					I136 i136=r.get(0);
 					Long v=i136.getvol();
-					p.Out(v.toString());
+					//p.Out(v.toString());
 				}
 			}
 			finally{
@@ -43,10 +43,10 @@ public class HeartRate {
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
-        PersistenceManager mgr=Helper.getMgr();
+        PersistenceManager mgr=Helper.getMgr(); 
         String vols=req.getParameter("rate");
-        Long vol=Long.parseLong(vols);	
-		Timed timed=new Timed(req.getParameter("i"));
+        Long vol=Long.parseLong(vols);
+        Timed timed=new Timed(req.getParameter("i"));
 		if(timed.t==null){
 			I136 i=new I136(1L,9L,vol);
 			try{
@@ -59,6 +59,7 @@ public class HeartRate {
 		else{
 			Query q=mgr.newQuery(I136.class);
 			q.setFilter("n==nParam && o==oParam && t==tParam");
+			q.declareImports("import java.util.Date");
 			q.declareParameters("Long iParam,Long jParam,Date tParam");
 			try{
 				@SuppressWarnings("unchecked")
