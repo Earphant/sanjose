@@ -9,12 +9,12 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
-
+//import com.google.appengine.api.datastore.Key;
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class I139 {
 	@PrimaryKey
-	@Persistent(valueStrategy=IdGeneratorStrategy.IDENTITY)
-	private Key key ;
+	@SuppressWarnings("unused")
+	private String key;
 	
 	@Persistent
 	private Long n;
@@ -27,29 +27,33 @@ public class I139 {
 	
 	@Persistent
 	private Long vol;
-
-
-	public I139(long n,long o,long vol){
-		Date c=new Date();	
-		this.n=0L;
-		this.o=9L;
-		this.t=c;
+	
+	public I139(Long n,Long o,Long vol){
+		Long t=new Date().getTime()/1000;
+		this.key=n+"."+o+"."+t;
+		this.n=n;
+		this.o=o;
+		this.t=new Date(t*1000);
 		this.vol=vol;
+    }
+	
+	public Long getn(){
+	    return n;
 	}
 	
-	public long getn(){
-		return n==0L?key.getId():n;
+	public Long geto(){
+		return o;
 	}
-	public long geto(){
-	    return o;
-	}
+	    
 	public Date gett(){
 		return t;
 	}
-	public long getvol(){
-	    return vol;
+	
+	public Long getvol(){
+		return vol;
+	}
+	public void setvol(long vol){
+		this.vol=vol;
 	}
 }
-
-
 
