@@ -12,6 +12,15 @@ public class Session{
 	public Long usite;
 
 	public Session(){
-		utext=user==null?null:"";
+		if(user==null){
+			utext=null;
+			uid=0L;
+			usite=0L;
+		}
+		else{
+			utext=user.getNickname();
+			uid=1L;
+			usite=1L;
+		}
 	}
 }
