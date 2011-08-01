@@ -12,14 +12,14 @@ public class SystemServlet extends HttpServlet{
 	private Page page;
 
 	private void Signin(HttpServletRequest req,HttpServletResponse rsp)
-		throws IOException{	
-		User us=usv.getCurrentUser();
-		if(us==null){
+		throws IOException{
+		Session ss=new Session();
+		if(ss.usite==0L){
 			rsp.sendRedirect(usv.createLoginURL("/system/signin"));
 			return;
 		}
 		page.title="Sign In";
-		Cookie ck=new Cookie("us","12.3:10&12.3&User&"+us.getNickname());
+		Cookie ck=new Cookie("us","12.3:10&12.3&User&"+ss.utext);
 		ck.setMaxAge(-1);
 		ck.setPath("/");
 		rsp.addCookie(ck);
