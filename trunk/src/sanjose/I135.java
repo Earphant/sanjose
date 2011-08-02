@@ -23,12 +23,11 @@ public class I135{
 	private Long wat;
 
 
-	public I135(long n,long o,long fat,long wat){
-		Long t=new Date().getTime()/1000;
+	public I135(long n,long o,long fat,long wat,Date t){
 		this.key=n+"."+o+"."+t;
 		this.n=n;
 		this.o=o;
-		this.t=new Date(t*1000);
+		this.t=t;
 		this.fat=fat;
 		this.wat=wat;
 	}
@@ -53,5 +52,8 @@ public class I135{
 	}
 	public void setwat(long wat){
 		this.wat=wat;
+	}
+	public void sett(Date t){
+		this.t=t;
 	}
 }
