@@ -15,9 +15,9 @@ public class Session{
 	public Session(Boolean signin){
 		if(user!=null && signin){
 			utext=user.getNickname();
-			uid=1L;
-			usite=1L;
-			cookie=new Cookie("us","12.3:10&12.3&User1&"+utext);
+			uid=12L;
+			usite=3L;
+			cookie=new Cookie("us","12.3:10&"+uid+"."+usite+"&User1&"+utext);
 		}
 		else{
 			utext=null;
