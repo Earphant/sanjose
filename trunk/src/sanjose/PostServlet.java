@@ -4,11 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
 import org.apache.commons.fileupload.FileUploadException;
-
 
 
 @SuppressWarnings("serial")
@@ -101,12 +99,10 @@ public class PostServlet extends HttpServlet {
 				if(n.equalsIgnoreCase("uploads")){
 					try {
 						new Upload().doPost(req,rsp);
-					} catch (ServletException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					} catch (FileUploadException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+					}
 					}			
 					return;
 				}
@@ -146,5 +142,5 @@ public class PostServlet extends HttpServlet {
 		}
 		rsp.sendRedirect("/");
 		}
-	}
 }
+

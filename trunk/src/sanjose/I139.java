@@ -1,15 +1,13 @@
 package sanjose;
 
+
 import java.util.Date;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import com.google.appengine.api.datastore.Key;
-//import com.google.appengine.api.datastore.Key;
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class I139 {
 	@PrimaryKey
@@ -28,12 +26,12 @@ public class I139 {
 	@Persistent
 	private Long vol;
 	
-	public I139(Long n,Long o,Long vol){
-		Long t=new Date().getTime()/1000;
+	public I139(Long n,Long o,Long vol,Date t){
+
 		this.key=n+"."+o+"."+t;
 		this.n=n;
 		this.o=o;
-		this.t=new Date(t*1000);
+		this.t=t;
 		this.vol=vol;
     }
 	
@@ -54,6 +52,9 @@ public class I139 {
 	}
 	public void setvol(long vol){
 		this.vol=vol;
+	}
+	public void sett(Date t){
+		this.t=t;
 	}
 }
 

@@ -1,8 +1,9 @@
 package sanjose;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +22,7 @@ public class Steps {
 		if(timed.t!=null){
 			PersistenceManager mgr=Helper.getMgr();
 			Query q=mgr.newQuery(I139.class);
-			q.setFilter("n==nParam && o==oParam && t==tParam");
+			q.setFilter("n==nParam && o==oParam && t==tParam");	
 			q.declareImports("import java.util.Date");
 			q.declareParameters("Long nParam,Long oParam,Date tParam");
 			try{
@@ -30,33 +31,58 @@ public class Steps {
 				if(!r.isEmpty()){
 					I139 i139=r.get(0);
 					Long v=i139.getvol();
-					p.Out("<textarea name=steps rows=5>"+v+"</textarea>");
+					Date t=i139.gett();
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(t);
+					Long year=(long) cal.get(Calendar.YEAR);
+					Long month=(long) cal.get(Calendar.MONTH);
+					Long date=(long) cal.get(Calendar.DAY_OF_MONTH);
+					Long hour=(long) cal.get(Calendar.HOUR_OF_DAY);
+					Long min=(long) cal.get(Calendar.MINUTE);
+					
+					p.Out("Value:<input type=text name=weight value="+v+"><br>Time:<input type=text name=year style=width:40px; value="+year+">年<input type=text name=month style=width:20px; value="+month+">月<input type=text name=date style=width:20px; value="+date+">日 <input type=text name=hour style=width:20px; value="+hour+">：<input type=text name=min style=width:20px; value="+min+">");
 				}
 			}
 			finally{
 				q.closeAll();
 			}
-			p.Out("<input type=hidden name=i value="+timed.n+"."+timed.o+"."+timed.t.getTime()/1000+">");
+			p.Out("<input type=hidden name=i value="+timed.n+"."+timed.o+"."+timed.t.getTime()+">");
 		}
-		else p.Out("<textarea name=steps rows=5></textarea>");
+		else {
+			Date now=new Date();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(now);
+			Long year=(long) cal.get(Calendar.YEAR);
+			Long month=(long) cal.get(Calendar.MONTH)+1;
+			Long date=(long) cal.get(Calendar.DAY_OF_MONTH);
+			Long hour=(long) cal.get(Calendar.HOUR_OF_DAY)+8;
+			Long min=(long) cal.get(Calendar.MINUTE);
+			p.Out("Value:<input type=text name=weight value=><br>Time:<input type=text name=year style=width:40px; value="+year+">年<input type=text name=month style=width:20px; value="+month+">月<input type=text name=date style=width:20px; value="+date+">日 <input type=text name=hour style=width:20px; value="+hour+">：<input type=text name=min style=width:20px; value="+min+">");
+		
+		}
 		p.End("<input type=submit name=ok></form>");
 		
 	}
-	
-	
-
-
-			
-
+		
 	
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		 PersistenceManager mgr=Helper.getMgr(); 
 		  String ss=req.getParameter("steps");
 	        Long vol=Long.parseLong(ss);
+	        int year = (int)Long.parseLong(req.getParameter("year"));
+	        int month = (int)Long.parseLong(req.getParameter("month"));
+	        int date = (int)Long.parseLong(req.getParameter("date"));
+	        int hour = (int)Long.parseLong(req.getParameter("hour"));
+	        int min = (int)Long.parseLong(req.getParameter("min"));
+	        int sec = 0;
+	        Calendar calendar = Calendar.getInstance();
+	        calendar.set(year,month,date,hour,min,sec);
+	        Date t = calendar.getTime();
+	        
 	        Timed timed=new Timed(req.getParameter("i"));
 			if(timed.t==null){
-				I139 i139=new I139(1L,9L,vol);
+				I139 i139=new I139(1L,9L,vol,t);
 				try{
 					mgr.makePersistent(i139);
 				}
@@ -96,7 +122,15 @@ public class Steps {
 			List<I139> r=(List<I139>)q.execute();
 			if(!r.isEmpty()){
 				for(I139 i139:r){
-					page.Out(+i139.getn()+"."+i139.geto()+": "+i139.getvol()+" <a href=/post/steps?i="+i139.getn()+"."+i139.geto()+"."+i139.gett().getTime()/1000+">修改</a><br>");
+					Date t=i139.gett();
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(t);
+					Long year=(long) cal.get(Calendar.YEAR);
+					Long month=(long) cal.get(Calendar.MONTH);
+					Long date=(long) cal.get(Calendar.DAY_OF_MONTH);
+					Long hour=(long) cal.get(Calendar.HOUR_OF_DAY);
+					Long min=(long) cal.get(Calendar.MINUTE);
+					page.Out(year+"年"+month+"月"+date+"日"+hour+":"+min+"<br>"+i139.getn()+"."+i139.geto()+": "+i139.getvol()+" <a href=/post/weight?i="+i139.getn()+"."+i139.geto()+"."+i139.gett().getTime()+">修改</a><br>");
 				}
 			}
 		}
