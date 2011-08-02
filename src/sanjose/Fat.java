@@ -36,7 +36,7 @@ public class Fat {
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(t);
 					Long year=(long) cal.get(Calendar.YEAR);
-					Long month=(long) cal.get(Calendar.MONTH);
+					Long month=(long) cal.get(Calendar.MONTH)+1;
 					Long date=(long) cal.get(Calendar.DAY_OF_MONTH);
 					Long hour=(long) cal.get(Calendar.HOUR_OF_DAY);
 					Long min=(long) cal.get(Calendar.MINUTE);
@@ -70,7 +70,7 @@ public class Fat {
         Long wat=Long.parseLong(req.getParameter("wat"));	
         
         int year = (int)Long.parseLong(req.getParameter("year"));
-        int month = (int)Long.parseLong(req.getParameter("month"));
+        int month = (int)Long.parseLong(req.getParameter("month"))-1;
         int date = (int)Long.parseLong(req.getParameter("date"));
         int hour = (int)Long.parseLong(req.getParameter("hour"));
         int min = (int)Long.parseLong(req.getParameter("min"));
@@ -123,7 +123,7 @@ public class Fat {
 			if(!r.isEmpty()){
 				for(I135 i135:r){
 					long t = i135.gett().getTime();
-					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 hh:mm");
+					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
 					page.Out(time.format(t)+"<br>"+i135.getn()+"."+i135.geto()+":  Fat: "+i135.getfat()+" Water: "+i135.getwat()+" <a href=/post/fat?i="+i135.getn()+"."+i135.geto()+"."+i135.gett().getTime()+">修改</a><br>");
 				}
 			}
