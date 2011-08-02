@@ -17,10 +17,10 @@ public class Session{
 	public Long site;
 	public Cookie cookie;
 
-	public Session(Boolean signin){
+	public Session(String jump){
 		I i;
 		I11 u;
-		if(user!=null && signin){
+		if(user!=null && jump!=null){
 			name=user.getNickname();
 			email=user.getEmail();
 			cookie=new Cookie("us","12.3:10&"+id+"."+site+"&"+name+"&"+email);
