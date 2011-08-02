@@ -1,6 +1,7 @@
 package sanjose;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +16,7 @@ public class Steps {
 		Page p=new Page(rsp);
 		Timed timed=new Timed(req.getParameter("i"));
 		p.title="Steps";
-		p.aside="<ul><li><a href=/post/steps>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><a href=/12.3/weight>Weight</a><li><a href=/12.3/heartrate>Heart Rate</a><li><a href=/12.3/steps>Steps</a><li><a href=/12.3/fat>Fat</a></ul>";
+		p.aside="<ul><li><a href=/post/steps>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/post/profile>Profile</a><li><a href=/post/contacts>Contacts</a><li><a href=/post/tags>Tags</a></ul><ul><li><a href=/post/dashboard>Dashboard</a><li><a href=/post/activities>Activities</a><li><a href=/post/historical>Historical</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";
 	
 		p.Out("<form method=post action=/post/steps>");
 		
@@ -35,12 +36,12 @@ public class Steps {
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(t);
 					Long year=(long) cal.get(Calendar.YEAR);
-					Long month=(long) cal.get(Calendar.MONTH);
+					Long month=(long) cal.get(Calendar.MONTH)+1;
 					Long date=(long) cal.get(Calendar.DAY_OF_MONTH);
 					Long hour=(long) cal.get(Calendar.HOUR_OF_DAY);
 					Long min=(long) cal.get(Calendar.MINUTE);
 					
-					p.Out("Value:<input type=text name=weight value="+v+"><br>Time:<input type=text name=year style=width:40px; value="+year+">年<input type=text name=month style=width:20px; value="+month+">月<input type=text name=date style=width:20px; value="+date+">日 <input type=text name=hour style=width:20px; value="+hour+">：<input type=text name=min style=width:20px; value="+min+">");
+					p.Out("Value:<input type=text name=steps value="+v+"><br>Time:<input type=text name=year style=width:40px; value="+year+">年<input type=text name=month style=width:20px; value="+month+">月<input type=text name=date style=width:20px; value="+date+">日 <input type=text name=hour style=width:20px; value="+hour+">：<input type=text name=min style=width:20px; value="+min+">");
 				}
 			}
 			finally{
@@ -57,7 +58,7 @@ public class Steps {
 			Long date=(long) cal.get(Calendar.DAY_OF_MONTH);
 			Long hour=(long) cal.get(Calendar.HOUR_OF_DAY)+8;
 			Long min=(long) cal.get(Calendar.MINUTE);
-			p.Out("Value:<input type=text name=weight value=><br>Time:<input type=text name=year style=width:40px; value="+year+">年<input type=text name=month style=width:20px; value="+month+">月<input type=text name=date style=width:20px; value="+date+">日 <input type=text name=hour style=width:20px; value="+hour+">：<input type=text name=min style=width:20px; value="+min+">");
+			p.Out("Value:<input type=text name=steps value=><br>Time:<input type=text name=year style=width:40px; value="+year+">年<input type=text name=month style=width:20px; value="+month+">月<input type=text name=date style=width:20px; value="+date+">日 <input type=text name=hour style=width:20px; value="+hour+">：<input type=text name=min style=width:20px; value="+min+">");
 		
 		}
 		p.End("<input type=submit name=ok></form>");
@@ -71,7 +72,7 @@ public class Steps {
 		  String ss=req.getParameter("steps");
 	        Long vol=Long.parseLong(ss);
 	        int year = (int)Long.parseLong(req.getParameter("year"));
-	        int month = (int)Long.parseLong(req.getParameter("month"));
+	        int month = (int)Long.parseLong(req.getParameter("month"))-1;
 	        int date = (int)Long.parseLong(req.getParameter("date"));
 	        int hour = (int)Long.parseLong(req.getParameter("hour"));
 	        int min = (int)Long.parseLong(req.getParameter("min"));
@@ -101,6 +102,7 @@ public class Steps {
 					if(!r.isEmpty()){
 						I139 i139=r.get(0);
 						i139.setvol(vol);
+						i139.sett(t);
 					}
 				}
 				finally{
@@ -122,15 +124,9 @@ public class Steps {
 			List<I139> r=(List<I139>)q.execute();
 			if(!r.isEmpty()){
 				for(I139 i139:r){
-					Date t=i139.gett();
-					Calendar cal = Calendar.getInstance();
-					cal.setTime(t);
-					Long year=(long) cal.get(Calendar.YEAR);
-					Long month=(long) cal.get(Calendar.MONTH);
-					Long date=(long) cal.get(Calendar.DAY_OF_MONTH);
-					Long hour=(long) cal.get(Calendar.HOUR_OF_DAY);
-					Long min=(long) cal.get(Calendar.MINUTE);
-					page.Out(year+"年"+month+"月"+date+"日"+hour+":"+min+"<br>"+i139.getn()+"."+i139.geto()+": "+i139.getvol()+" <a href=/post/weight?i="+i139.getn()+"."+i139.geto()+"."+i139.gett().getTime()+">修改</a><br>");
+					long t = i139.gett().getTime();
+					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+					page.Out(time.format(t)+"<br>"+i139.getn()+"."+i139.geto()+": "+i139.getvol()+" <a href=/post/steps?i="+i139.getn()+"."+i139.geto()+"."+i139.gett().getTime()+">修改</a><br>");
 				}
 			}
 		}
