@@ -2,6 +2,8 @@ package sanjose;
 
 import java.io.IOException;
 //import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -28,25 +30,54 @@ public class Weight {
 				if(!r.isEmpty()){
 					I138 i138=r.get(0);
 					Long v=i138.getvol();
-					p.Out("<textarea name=weight rows=5>"+v+"</textarea>");
+					Date t=i138.gett();
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(t);
+					Long year=(long) cal.get(Calendar.YEAR);
+					Long month=(long) cal.get(Calendar.MONTH);
+					Long date=(long) cal.get(Calendar.DAY_OF_MONTH);
+					Long hour=(long) cal.get(Calendar.HOUR_OF_DAY);
+					Long min=(long) cal.get(Calendar.MINUTE);
+					
+					p.Out("Value:<input type=text name=weight value="+v+"><br>Time:<input type=text name=year style=width:40px; value="+year+">年<input type=text name=month style=width:20px; value="+month+">月<input type=text name=date style=width:20px; value="+date+">日 <input type=text name=hour style=width:20px; value="+hour+">：<input type=text name=min style=width:20px; value="+min+">");
 				}
 			}
 			finally{
 				q.closeAll();
 			}
-			p.Out("<input type=hidden name=i value="+timed.n+"."+timed.o+"."+timed.t.getTime()/1000+">");
+			p.Out("<input type=hidden name=i value="+timed.n+"."+timed.o+"."+timed.t.getTime()+">");
 		}
-		else p.Out("<textarea name=weight rows=5></textarea>");
+		else {
+			Date now=new Date();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(now);
+			Long year=(long) cal.get(Calendar.YEAR);
+			Long month=(long) cal.get(Calendar.MONTH)+1;
+			Long date=(long) cal.get(Calendar.DAY_OF_MONTH);
+			Long hour=(long) cal.get(Calendar.HOUR_OF_DAY)+8;
+			Long min=(long) cal.get(Calendar.MINUTE);
+			p.Out("Value:<input type=text name=weight value=><br>Time:<input type=text name=year style=width:40px; value="+year+">年<input type=text name=month style=width:20px; value="+month+">月<input type=text name=date style=width:20px; value="+date+">日 <input type=text name=hour style=width:20px; value="+hour+">：<input type=text name=min style=width:20px; value="+min+">");
+		}
 		p.End("<input type=submit name=ok></form>");
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
         PersistenceManager mgr=Helper.getMgr(); 
-        String vols=req.getParameter("weight");
-        Long vol=Long.parseLong(vols);
+
+        Long vol=Long.parseLong(req.getParameter("weight"));
+        int year = (int)Long.parseLong(req.getParameter("year"));
+        int month = (int)Long.parseLong(req.getParameter("month"));
+        int date = (int)Long.parseLong(req.getParameter("date"));
+        int hour = (int)Long.parseLong(req.getParameter("hour"));
+        int min = (int)Long.parseLong(req.getParameter("min"));
+        int sec = 0;
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year,month,date,hour,min,sec);
+        Date t = calendar.getTime();
+        
         Timed timed=new Timed(req.getParameter("i"));
 		if(timed.t==null){
-			I138 i=new I138(1L,9L,vol);
+			I138 i=new I138(1L,9L,vol,t);
 			try{
 				mgr.makePersistent(i);
 			}
@@ -65,6 +96,7 @@ public class Weight {
 				if(!r.isEmpty()){
 					I138 i138=r.get(0);
 					i138.setvol(vol);
+					i138.sett(t);
 				}
 			}
 			finally{
@@ -85,7 +117,15 @@ public class Weight {
 			List<I138> r=(List<I138>)q.execute();
 			if(!r.isEmpty()){
 				for(I138 i138:r){
-					page.Out(+i138.getn()+"."+i138.geto()+": "+i138.getvol()+" <a href=/post/weight?i="+i138.getn()+"."+i138.geto()+"."+i138.gett().getTime()/1000+">修改</a><br>");
+					Date t=i138.gett();
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(t);
+					Long year=(long) cal.get(Calendar.YEAR);
+					Long month=(long) cal.get(Calendar.MONTH);
+					Long date=(long) cal.get(Calendar.DAY_OF_MONTH);
+					int hour= cal.get(Calendar.HOUR_OF_DAY);
+					int min= cal.get(Calendar.MINUTE);
+					page.Out(year+"年"+month+"月"+date+"日"+hour+":"+min+"<br>"+i138.getn()+"."+i138.geto()+": "+i138.getvol()+" <a href=/post/weight?i="+i138.getn()+"."+i138.geto()+"."+i138.gett().getTime()+">修改</a><br>");
 				}
 			}
 		}
