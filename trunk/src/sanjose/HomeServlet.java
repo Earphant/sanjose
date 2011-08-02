@@ -40,7 +40,7 @@ public class HomeServlet extends HttpServlet{
 		throws IOException{
 		String n=req.getPathInfo();
 		Page p=new Page(rsp);
-		Session s=new Session();
+		Session s=new Session(true);
 		if(n.equals("/")){
 			if(s.utext==null)
 				Unsigned(p,s);

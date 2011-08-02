@@ -44,7 +44,7 @@ _[99]={
 	$:function(d){
 		var b=document.body.$
 		if(b.ux)
-			d.innerHTML='<li><a href=/'+b.ui+'/ id=user>User</a><li><a href=/mail/>Inbox</a><li><a href=/tools/>Tools</a><li><a href=/system/signout>Sign out</a>';
+			d.innerHTML='<li><a href=/'+b.ui+'/ id=user>'+b.ux+'</a><li><a href=/mail/>Inbox</a><li><a href=/tools/>Tools</a><li><a href=/system/signout>Sign out</a>';
 		else
 			d.innerHTML='<li><a href=/system/signin>Sign in</a><li><a href=/system/signup>Sign up</a>';
 	}

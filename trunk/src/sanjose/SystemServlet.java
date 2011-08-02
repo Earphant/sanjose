@@ -2,7 +2,7 @@ package sanjose;
 
 import java.io.IOException;
 import javax.servlet.http.*;
-import com.google.appengine.api.users.User;
+//import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
@@ -13,24 +13,19 @@ public class SystemServlet extends HttpServlet{
 
 	private void Signin(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
-		Session ss=new Session();
+		Session ss=new Session(true);
 		if(ss.usite==0L){
 			rsp.sendRedirect(usv.createLoginURL("/system/signin"));
 			return;
 		}
 		page.title="Sign In";
-		Cookie ck=new Cookie("us","12.3:10&12.3&User&"+ss.utext);
-		ck.setMaxAge(-1);
-		ck.setPath("/");
-		rsp.addCookie(ck);
+		rsp.addCookie(ss.cookie);
 		rsp.sendRedirect("/");
 	}
 	private void Signout(HttpServletRequest req,HttpServletResponse rsp)
-		throws IOException{	
-		Cookie ck=new Cookie("us",null);
-		ck.setMaxAge(0);
-		ck.setPath("/");
-		rsp.addCookie(ck);
+		throws IOException{
+		Session ss=new Session(false);
+		rsp.addCookie(ss.cookie);
 		rsp.sendRedirect(usv.createLogoutURL("/"));
 	}
 	private void Signup(HttpServletRequest req,HttpServletResponse rsp)
