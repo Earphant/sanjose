@@ -22,7 +22,7 @@ public class Session{
 			utext=user.getEmail();
 			uid=12L;
 			usite=3L;
-			cookie=new Cookie("us","12.3:10&"+uid+"."+usite+"&User1&"+utext);
+			cookie=new Cookie("us","12.3:10&"+uid+"."+usite+"&"+user.getNickname()+"&"+utext);
 			PersistenceManager m=Helper.getMgr();
 			try{
 				i=m.getObjectById(I11.class,utext);
