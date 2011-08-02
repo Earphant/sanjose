@@ -26,11 +26,13 @@ public class I{
 	@Persistent
 	private Long b;
 	@Persistent
-	private Long s;
-	@Persistent
 	private Long n;
 	@Persistent
 	private Long o;
+	@Persistent
+	private Long r;
+	@Persistent
+	private Long s;
 	@SuppressWarnings("unused")
 	@Persistent
     private Date c;
@@ -47,7 +49,7 @@ public class I{
 	@Persistent
 	private Text e;
 
-	public I(Long i,Long j,String x,String p,Long a,Long n,Long o){
+	public I(Long i,Long j,String x,String p,Long a,Long r,Long n,Long o){
 		Date c=new Date();
 		this.key=KeyFactory.createKey(I.class.getSimpleName(),i+"."+j);
 		this.i=i;
@@ -59,52 +61,54 @@ public class I{
 		this.o=o;
 		this.c=c;
 		this.m=c;
+		this.r=r;
 		this.t=c;
 		this.p=p;
 		this.x=x;
 		this.e=new Text("");
 	}
-	public I(String x,String p,Long a,Long n,Long o){
+	public I(String x,String p,Long a,Long r,Long n,Long o){
 		Date c=new Date();
 		this.i=0L;
 		this.j=9L;
 		this.a=a;
 		this.b=1L;
-		this.s=1L;
-		this.n=n;
-		this.o=o;
 		this.c=c;
 		this.m=c;
-		this.t=c;
+		this.n=n;
+		this.o=o;
 		this.p=p;
+		this.r=r;
+		this.s=1L;
+		this.t=c;
 		this.x=x;
 		this.e=new Text("");
 	}
-	public long geta(){
+	public Long geta(){
 	    return a;
 	}
-	public long getb(){
+	public Long getb(){
 	    return b;
 	}
 	public String gete(){
 	    return e.getValue();
 	}
-	public long geti(){
+	public Long geti(){
 	    return i;
 	}
-	public long getj(){
+	public Long getj(){
 	    return j;
 	}
-	public long getn(){
+	public Long getn(){
 	    return n;
 	}
-	public long geto(){
+	public Long geto(){
 	    return o;
 	}
 	public String getp(){
 	    return p;
 	}
-	public long gets(){
+	public Long gets(){
 	    return s;
 	}
 	public String getx(){

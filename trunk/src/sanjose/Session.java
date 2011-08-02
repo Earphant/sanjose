@@ -30,7 +30,7 @@ public class Session{
 				email=u.geteml();
 			}
 			catch (JDOObjectNotFoundException e) {
-				i=new I(name,"",1L,1L,1L);
+				i=new I(name,"",1L,0L,1L,1L);
 				m.makePersistent(i);
 				if(i.geti()==0L){
 					i.seti();
