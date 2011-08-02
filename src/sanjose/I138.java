@@ -14,23 +14,19 @@ public class I138{
 	@PrimaryKey
 	@SuppressWarnings("unused")
 	private String key;
-	
 	@Persistent
 	private Long n;
-	
 	@Persistent
 	private Long o;
-	
 	@Persistent
 	private Date t;
-	
 	@Persistent
 	private Long vol;
 	
 	public I138(Long n,Long o,Long vol,Date t){
-		this.key=n+"."+o+"."+t;
-		this.n=3L;
-		this.o=9L;
+		this.key=n+"."+o+"."+t.getTime()/1000;
+		this.n=n;
+		this.o=o;
 		this.t=t;
 		this.vol=vol;
     }
@@ -47,7 +43,6 @@ public class I138{
 	public Long getvol(){
 		return vol;
 	}
-	
 	public void setvol(long vol){
 		this.vol=vol;
 	}
