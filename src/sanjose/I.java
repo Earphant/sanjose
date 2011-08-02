@@ -28,9 +28,9 @@ public class I{
 	@Persistent
 	private Long s;
 	@Persistent
-	private Long o;
+	private Long n;
 	@Persistent
-	private Long w;
+	private Long o;
 	@SuppressWarnings("unused")
 	@Persistent
     private Date c;
@@ -47,7 +47,7 @@ public class I{
 	@Persistent
 	private Text e;
 
-	public I(String x,String p,long a,long i,long j){
+	public I(Long i,Long j,String x,String p,Long a,Long n,Long o){
 		Date c=new Date();
 		this.key=KeyFactory.createKey(I.class.getSimpleName(),i+"."+j);
 		this.i=i;
@@ -55,8 +55,8 @@ public class I{
 		this.a=a;
 		this.b=1L;
 		this.s=1L;
-		this.o=1L;
-		this.w=1L;
+		this.n=n;
+		this.o=o;
 		this.c=c;
 		this.m=c;
 		this.t=c;
@@ -64,16 +64,15 @@ public class I{
 		this.x=x;
 		this.e=new Text("");
 	}
-	public I(String x,String p,long a){
+	public I(String x,String p,Long a,Long n,Long o){
 		Date c=new Date();
-		this.i=null;
-		this.i=0L;//key.getId();
+		this.i=0L;
 		this.j=9L;
 		this.a=a;
 		this.b=1L;
 		this.s=1L;
-		this.o=1L;
-		this.w=1L;
+		this.n=n;
+		this.o=o;
 		this.c=c;
 		this.m=c;
 		this.t=c;
@@ -96,6 +95,9 @@ public class I{
 	public long getj(){
 	    return j;
 	}
+	public long getn(){
+	    return n;
+	}
 	public long geto(){
 	    return o;
 	}
@@ -104,9 +106,6 @@ public class I{
 	}
 	public long gets(){
 	    return s;
-	}
-	public long getw(){
-	    return w;
 	}
 	public String getx(){
 	    return x;
