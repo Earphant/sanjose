@@ -2,6 +2,7 @@ package sanjose;
 
 import java.io.IOException;
 //import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -117,15 +118,9 @@ public class Weight {
 			List<I138> r=(List<I138>)q.execute();
 			if(!r.isEmpty()){
 				for(I138 i138:r){
-					Date t=i138.gett();
-					Calendar cal = Calendar.getInstance();
-					cal.setTime(t);
-					Long year=(long) cal.get(Calendar.YEAR);
-					Long month=(long) cal.get(Calendar.MONTH);
-					Long date=(long) cal.get(Calendar.DAY_OF_MONTH);
-					int hour= cal.get(Calendar.HOUR_OF_DAY);
-					int min= cal.get(Calendar.MINUTE);
-					page.Out(year+"年"+month+"月"+date+"日"+hour+":"+min+"<br>"+i138.getn()+"."+i138.geto()+": "+i138.getvol()+" <a href=/post/weight?i="+i138.getn()+"."+i138.geto()+"."+i138.gett().getTime()+">修改</a><br>");
+					long t = i138.gett().getTime();
+					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 hh:mm");
+					page.Out(time.format(t)+"<br>"+i138.getn()+"."+i138.geto()+": "+i138.getvol()+" <a href=/post/weight?i="+i138.getn()+"."+i138.geto()+"."+i138.gett().getTime()+">修改</a><br>");
 				}
 			}
 		}

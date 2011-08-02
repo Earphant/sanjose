@@ -1,6 +1,7 @@
 package sanjose;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -121,15 +122,9 @@ public class Fat {
 			List<I135> r=(List<I135>)q.execute();
 			if(!r.isEmpty()){
 				for(I135 i135:r){
-					Date t=i135.gett();
-					Calendar cal = Calendar.getInstance();
-					cal.setTime(t);
-					Long year=(long) cal.get(Calendar.YEAR);
-					Long month=(long) cal.get(Calendar.MONTH);
-					Long date=(long) cal.get(Calendar.DAY_OF_MONTH);
-					Long hour=(long) cal.get(Calendar.HOUR_OF_DAY);
-					Long min=(long) cal.get(Calendar.MINUTE);
-					page.Out(year+"年"+month+"月"+date+"日"+hour+":"+min+"<br>"+i135.getn()+"."+i135.geto()+":  Fat: "+i135.getfat()+" Water: "+i135.getwat()+" <a href=/post/fat?i="+i135.getn()+"."+i135.geto()+"."+i135.gett().getTime()+">修改</a><br>");
+					long t = i135.gett().getTime();
+					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 hh:mm");
+					page.Out(time.format(t)+"<br>"+i135.getn()+"."+i135.geto()+":  Fat: "+i135.getfat()+" Water: "+i135.getwat()+" <a href=/post/fat?i="+i135.getn()+"."+i135.geto()+"."+i135.gett().getTime()+">修改</a><br>");
 				}
 			}
 		}
