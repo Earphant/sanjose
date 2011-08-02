@@ -13,13 +13,13 @@ public class SystemServlet extends HttpServlet{
 
 	private void Signin(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
-		Session ss=new Session(true);
-		if(ss.usite==0L){
+		Session s=new Session(true);
+		if(s.site==0L){
 			rsp.sendRedirect(usv.createLoginURL("/system/signin"));
 			return;
 		}
 		page.title="Sign In";
-		rsp.addCookie(ss.cookie);
+		rsp.addCookie(s.cookie);
 		rsp.sendRedirect("/");
 	}
 	private void Signout(HttpServletRequest req,HttpServletResponse rsp)

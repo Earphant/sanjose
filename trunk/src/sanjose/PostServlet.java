@@ -108,23 +108,24 @@ public class PostServlet extends HttpServlet {
 				}
 		}
 		v=req.getParameter("text");
+		Session s=new Session(true);
 		Id id=new Id(req.getParameter("i"));
-		PersistenceManager mgr=Helper.getMgr();
+		PersistenceManager m=Helper.getMgr();
 		if(id.i==0){
-			I i=new I(v,"",0);
+			I i=new I(v,"",0L,s.id,s.site);
 			try{
-				mgr.makePersistent(i);
+				m.makePersistent(i);
 				if(i.geti()==0L){
 					i.seti();
-					mgr.makePersistent(i);
+					m.makePersistent(i);
 				}
 			}
 			finally{
-				mgr.close();
+				m.close();
 			}
 		}
 		else{
-			Query q=mgr.newQuery(I.class);
+			Query q=m.newQuery(I.class);
 			q.setFilter("i==iParam && j==jParam");
 			q.declareParameters("Long iParam,Long jParam");
 			try{
@@ -137,7 +138,7 @@ public class PostServlet extends HttpServlet {
 			}
 			finally{
 				q.closeAll();
-				mgr.close();
+				m.close();
 			}
 		}
 		rsp.sendRedirect("/");

@@ -11,35 +11,44 @@ import javax.servlet.http.*;
 
 public class Session{
 	public User user=UserServiceFactory.getUserService().getCurrentUser();
-	public String utext;
-	public Long uid;
-	public Long usite;
+	public String name;
+	public String email;
+	public Long id;
+	public Long site;
 	public Cookie cookie;
 
 	public Session(Boolean signin){
-		I11 i;
+		I i;
+		I11 u;
 		if(user!=null && signin){
-			utext=user.getEmail();
-			uid=12L;
-			usite=3L;
-			cookie=new Cookie("us","12.3:10&"+uid+"."+usite+"&"+user.getNickname()+"&"+utext);
+			name=user.getNickname();
+			email=user.getEmail();
+			cookie=new Cookie("us","12.3:10&"+id+"."+site+"&"+name+"&"+email);
 			PersistenceManager m=Helper.getMgr();
 			try{
-				i=m.getObjectById(I11.class,utext);
-				utext=i.geteml();
+				u=m.getObjectById(I11.class,email);
+				email=u.geteml();
 			}
 			catch (JDOObjectNotFoundException e) {
-				i=new I11(0L,0L,utext);
+				i=new I(name,"",1L,1L,1L);
 				m.makePersistent(i);
+				if(i.geti()==0L){
+					i.seti();
+					m.makePersistent(i);
+				}
+				u=new I11(i,email);
+				m.makePersistent(u);
 			}
 			finally{
 				m.close();
 			}
+			id=u.geti();
+			site=u.getj();
 		}
 		else{
-			utext=null;
-			uid=0L;
-			usite=0L;
+			email=null;
+			id=0L;
+			site=0L;
 			cookie=new Cookie("us",null);
 		}
 		cookie.setMaxAge(-1);

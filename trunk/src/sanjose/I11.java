@@ -19,9 +19,9 @@ public class I11{
 	@Persistent
 	private String pwd;
 
-	public I11(Long i,Long j,String eml){
-		this.i=(long) 0;
-		this.j=(long) 9;
+	public I11(I i,String eml){
+		this.i=i.geti();
+		this.j=i.getj();
 		this.eml=eml;
 		this.pwd="";
 	}

@@ -14,6 +14,7 @@ public class HomeServlet extends HttpServlet{
 		page.Out("<form method=post action=/post/><textarea name=text rows=5></textarea><input type=submit name=ok></form>");
 		PersistenceManager mgr=Helper.getMgr();
 		Query q=mgr.newQuery(I.class);
+		q.setFilter("a==0");
 		q.setOrdering("m desc");
 		try{
 			@SuppressWarnings("unchecked")
@@ -42,7 +43,7 @@ public class HomeServlet extends HttpServlet{
 		Page p=new Page(rsp);
 		Session s=new Session(true);
 		if(n.equals("/")){
-			if(s.utext==null)
+			if(s.email==null)
 				Unsigned(p,s);
 			else
 				Signed(p,s);
