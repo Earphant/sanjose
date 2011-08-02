@@ -21,9 +21,8 @@ public class I136{
 	@Persistent
 	private Long vol;
 
-	public I136(long n,long o,long vol,Date t){
-
-		this.key=n+"."+o+"."+t;
+	public I136(Long n,Long o,Long vol,Date t){
+		this.key=n+"."+o+"."+t.getTime()/1000;
 		this.n=n;
 		this.o=o;
 		this.t=t;

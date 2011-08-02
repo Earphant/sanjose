@@ -23,8 +23,8 @@ public class I135{
 	private Long wat;
 
 
-	public I135(long n,long o,long fat,long wat,Date t){
-		this.key=n+"."+o+"."+t;
+	public I135(Long n,Long o,Long fat,Long wat,Date t){
+		this.key=n+"."+o+"."+t.getTime()/1000;
 		this.n=n;
 		this.o=o;
 		this.t=t;
