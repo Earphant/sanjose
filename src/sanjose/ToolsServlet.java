@@ -11,7 +11,7 @@ public class ToolsServlet extends HttpServlet {
 	
 		page.title="Tools";
 		page.aside="<ul><li><a href=/post>Post</a><li><a href=/system/settings>Settings</a><li><a href=/12.3/dashboard>Dashboard</a></ul>";
-		page.Out("Tools");
+		page.Out("<a href=/tools/debug>Debug</a><br>");
 		page.End(null);
 	}
 }
