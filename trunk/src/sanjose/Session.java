@@ -6,7 +6,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
-import javax.servlet.ServletException;
+//import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
 public class Session{
@@ -19,7 +19,7 @@ public class Session{
 	public Session(Boolean signin){
 		I11 i;
 		if(user!=null && signin){
-			utext=user.getNickname();
+			utext=user.getEmail();
 			uid=12L;
 			usite=3L;
 			cookie=new Cookie("us","12.3:10&"+uid+"."+usite+"&User1&"+utext);

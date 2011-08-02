@@ -11,8 +11,6 @@ public class HomeServlet extends HttpServlet{
 		throws IOException{
 		page.title="Home";
 		page.Begin();
-		page.Out(ssn.utext);
-		page.Out("<br>");
 		page.Out("<form method=post action=/post/><textarea name=text rows=5></textarea><input type=submit name=ok></form>");
 		PersistenceManager mgr=Helper.getMgr();
 		Query q=mgr.newQuery(I.class);
