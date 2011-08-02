@@ -41,7 +41,7 @@ public class HomeServlet extends HttpServlet{
 		throws IOException{
 		String n=req.getPathInfo();
 		Page p=new Page(rsp);
-		Session s=new Session(true);
+		Session s=new Session("");
 		if(n.equals("/")){
 			if(s.email==null)
 				Unsigned(p,s);

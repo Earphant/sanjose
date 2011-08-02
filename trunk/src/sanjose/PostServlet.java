@@ -108,7 +108,7 @@ public class PostServlet extends HttpServlet {
 				}
 		}
 		v=req.getParameter("text");
-		Session s=new Session(true);
+		Session s=new Session("/post");
 		Id id=new Id(req.getParameter("i"));
 		PersistenceManager m=Helper.getMgr();
 		if(id.i==0){
