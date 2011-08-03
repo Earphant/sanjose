@@ -1,8 +1,41 @@
 package sanjose;
 
 import java.io.IOException;
+import java.util.List;
+
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 
 public class Based{
+	private void Index0(String plink,Page page)throws IOException{
+		page.title=plink;
+		int i;
+		for(i=0;i<10;i++)
+			page.Out("<h2>Based</h2>Blah blah.");
+		page.End(null);
+	}
+	private void Index(String plink,Page page)throws IOException{
+		page.title=plink;
+		page.aside="<ul><li><a href=/post>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><li><a href=/12.3/weight>Weight</a><li><a href=/12.3/heartrate>Heart Rate</a><li><a href=/12.3/steps>Steps</a><li><a href=/12.3/fat>Fat</a></ul>";
+		PersistenceManager mgr=Helper.getMgr();
+		Query q=mgr.newQuery(I.class);
+		q.setFilter("a==0");
+		q.setOrdering("m desc");
+		try{
+			@SuppressWarnings("unchecked")
+			List<I> r=(List<I>)q.execute();
+			if(!r.isEmpty()){
+				for(I i:r){
+					page.Out(i.getx()+" <a href=/post?i="+i.geti()+"."+i.getj()+">=</a><br>");
+				}
+			}
+		}
+		finally{
+			q.closeAll();
+		}
+		page.End(null);
+	}
+
 	public Based(String plink,Page page)throws IOException{
 		String[]s=plink.split("/");
 		if(s.length>2){
@@ -41,13 +74,5 @@ public class Based{
 			}
 		}
 		Index(plink,page);
-	}
-	private void Index(String plink,Page page)throws IOException{
-		page.title=plink;
-		page.aside="<ul><li><a href=/post>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><li><a href=/12.3/weight>Weight</a><li><a href=/12.3/heartrate>Heart Rate</a><li><a href=/12.3/steps>Steps</a><li><a href=/12.3/fat>Fat</a></ul>";
-		int i;
-		for(i=0;i<10;i++)
-			page.Out("<h2>Based</h2>Blah blah.");
-		page.End(null);
 	}
 }
