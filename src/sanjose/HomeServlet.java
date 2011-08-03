@@ -10,7 +10,6 @@ public class HomeServlet extends HttpServlet{
 	private void Signed(Page page,Session ssn)
 		throws IOException{
 		page.title="Home";
-		page.Begin();
 		page.Out("<form method=post action=/post/><textarea name=text rows=5></textarea><input type=submit name=ok></form>");
 		PersistenceManager mgr=Helper.getMgr();
 		Query q=mgr.newQuery(I.class);
