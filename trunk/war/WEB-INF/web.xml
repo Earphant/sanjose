@@ -5,6 +5,10 @@ xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet>
+		<servlet-name>Admins</servlet-name>
+		<servlet-class>sanjose.AdminsServlet</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>community</servlet-name>
 		<servlet-class>sanjose.CommunityServlet</servlet-class>
 	</servlet>
@@ -28,6 +32,17 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>tools</servlet-name>
 		<servlet-class>sanjose.ToolsServlet</servlet-class>
 	</servlet>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.css</welcome-file>
+		<welcome-file>index.js</welcome-file>
+	</welcome-file-list>
+
+	<servlet-mapping>
+		<servlet-name>Admins</servlet-name>
+		<url-pattern>/admins/*</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>community</servlet-name>
 		<url-pattern>/community/</url-pattern>
@@ -35,11 +50,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet-mapping>
 		<servlet-name>home</servlet-name>
 		<url-pattern>/*</url-pattern>
-	</servlet-mapping><welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.css</welcome-file>
-		<welcome-file>index.js</welcome-file>
-	</welcome-file-list>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>mail</servlet-name>
 		<url-pattern>/mail/*</url-pattern>
