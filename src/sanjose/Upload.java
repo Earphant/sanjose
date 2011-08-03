@@ -52,34 +52,10 @@ public class Upload{
 		    else{ 
 		        log.warning("Got an uploaded file: "+t.getFieldName()+", name = "+t.getName());
 		        String extension=t.getName().substring(t.getName().lastIndexOf(".")+1,t.getName().length());
-		        if(extension.equals("txt")){
+		        if(extension.equals("txt"))
 		        	new Datatxt().doPost(req,rsp,s,12L,3L);
-		        }
-		        else{		        		        	
-		            InputStream is=req.getInputStream();		            		            
-		            byte[] buffer=new byte[4096*250];
-		        	is.read(buffer);
-		        	is.close();
-		        	Blob img=new Blob(buffer);
-		        	
-		        	I i=new I("","",1L,0L,1L,1L);
-		        	I12 i12=new I12(i,img);
-		        	
-		        	PersistenceManager mgr=Helper.getMgr();
-		        	try{
-                         mgr.makePersistent(i12);
-
-                    }
-                    finally{
-                         mgr.close();
-                    }
-		        	                 
-                    int len;
-                    
-		            while ((len = s.read(buffer, 0, buffer.length)) != -1) {
-		                rsp.getOutputStream().write(buffer, 0, len);
-		            }
-		        }
+		        else
+		        	new Picture().doPost(req,rsp,s,12L,3L);
 		    }
 		}
 	}
