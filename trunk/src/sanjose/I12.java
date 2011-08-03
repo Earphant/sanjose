@@ -1,19 +1,19 @@
 package sanjose;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
+//import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Blob;
-import com.google.appengine.api.datastore.Key;
+//import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class I12{
+	@SuppressWarnings("unused")
 	@PrimaryKey
-	@Persistent(valueStrategy=IdGeneratorStrategy.IDENTITY)
-	private Key key;
+	private String key;
 	@Persistent
 	private Long i;
 	@Persistent
@@ -21,10 +21,10 @@ public class I12{
 	@Persistent
 	private Blob img;
 
-
 	public I12(I i,Blob img){
 		this.i=i.geti();
 		this.j=i.getj();
+		this.key=i+"."+j;
 		this.img=img;
 	}
 	public Long geti(){
