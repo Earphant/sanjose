@@ -43,7 +43,7 @@ public class Session{
 			}
 			id=u.geti();
 			site=u.getj();
-			cookie=new Cookie("us","12.3:10&"+id+"."+site+"&"+name+"&"+email);
+			cookie=new Cookie("us",id+"."+site+":10&"+id+"."+site+"&"+name+"&"+email);
 		}
 		else{
 			email=null;
