@@ -29,6 +29,7 @@ public class I{
 	private Long n;
 	@Persistent
 	private Long o;
+	@SuppressWarnings("unused")
 	@Persistent
 	private Long r;
 	@Persistent
