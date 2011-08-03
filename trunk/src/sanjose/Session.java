@@ -23,7 +23,6 @@ public class Session{
 		if(user!=null && jump!=null){
 			name=user.getNickname();
 			email=user.getEmail();
-			cookie=new Cookie("us","12.3:10&"+id+"."+site+"&"+name+"&"+email);
 			PersistenceManager m=Helper.getMgr();
 			try{
 				u=m.getObjectById(I11.class,email);
@@ -44,6 +43,7 @@ public class Session{
 			}
 			id=u.geti();
 			site=u.getj();
+			cookie=new Cookie("us","12.3:10&"+id+"."+site+"&"+name+"&"+email);
 		}
 		else{
 			email=null;
