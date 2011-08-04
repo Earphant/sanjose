@@ -33,13 +33,13 @@ public class HeartRate {
 					Date t=i136.gett();
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(t);
-					Long year=(long) cal.get(Calendar.YEAR);
-					Long month=(long) cal.get(Calendar.MONTH)+1;
-					Long date=(long) cal.get(Calendar.DAY_OF_MONTH);
-					Long hour=(long) cal.get(Calendar.HOUR_OF_DAY);
-					Long min=(long) cal.get(Calendar.MINUTE);;
-										
-					p.Out("Value:<input type=text name=rate value="+v+"><br>Time:<input type=text name=year style=width:40px; value="+year+">年<input type=text name=month style=width:20px; value="+month+">月<input type=text name=date style=width:20px; value="+date+">日 <input type=text name=hour style=width:20px; value="+hour+">：<input type=text name=min style=width:20px; value="+min+">");
+					int year= cal.get(Calendar.YEAR);
+					int month= cal.get(Calendar.MONTH)+1;
+					int date= cal.get(Calendar.DAY_OF_MONTH);
+					int hour= cal.get(Calendar.HOUR_OF_DAY);
+					int min= cal.get(Calendar.MINUTE);
+					int sec = cal.get(Calendar.SECOND);
+					p.Out("Value:<input type=text name=rate value="+v+"><br>Time:<input type=text name=year style=width:40px; value="+year+">年<input type=text name=month style=width:20px; value="+month+">月<input type=text name=date style=width:20px; value="+date+">日 <input type=text name=hour style=width:20px; value="+hour+">:<input type=text name=min style=width:20px; value="+min+">:<input type=text name=sec style=width:20px; value="+sec+">");
 				    
 				}
 			}
@@ -53,12 +53,13 @@ public class HeartRate {
 			Date now=new Date();
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(now);
-			Long year=(long) cal.get(Calendar.YEAR);
-			Long month=(long) cal.get(Calendar.MONTH)+1;
-			Long date=(long) cal.get(Calendar.DAY_OF_MONTH);
-			Long hour=(long) cal.get(Calendar.HOUR_OF_DAY)+8;
-			Long min=(long) cal.get(Calendar.MINUTE);
-			p.Out("Value:<input type=text name=rate value=><br>Time:<input type=text name=year style=width:40px; value="+year+">年<input type=text name=month style=width:20px; value="+month+">月<input type=text name=date style=width:20px; value="+date+">日 <input type=text name=hour style=width:20px; value="+hour+">：<input type=text name=min style=width:20px; value="+min+">");
+			int year= cal.get(Calendar.YEAR);
+			int month= cal.get(Calendar.MONTH)+1;
+			int date= cal.get(Calendar.DAY_OF_MONTH);
+			int hour= cal.get(Calendar.HOUR_OF_DAY)+8;
+			int min= cal.get(Calendar.MINUTE);
+			int sec = cal.get(Calendar.SECOND);
+			p.Out("Value:<input type=text name=rate value=><br>Time:<input type=text name=year style=width:40px; value="+year+">年<input type=text name=month style=width:20px; value="+month+">月<input type=text name=date style=width:20px; value="+date+">日 <input type=text name=hour style=width:20px; value="+hour+">:<input type=text name=min style=width:20px; value="+min+">:<input type=text name=sec style=width:20px; value="+sec+">");
 		 }   
 		p.End("<input type=submit name=ok></form>");
 	}
@@ -67,12 +68,13 @@ public class HeartRate {
         PersistenceManager mgr=Helper.getMgr(); 
         String vols=req.getParameter("rate");
         Long vol=Long.parseLong(vols);
-        int year = (int)Long.parseLong(req.getParameter("year"));
-        int month = (int)Long.parseLong(req.getParameter("month"))-1;
-        int date = (int)Long.parseLong(req.getParameter("date"));
-        int hour = (int)Long.parseLong(req.getParameter("hour"));
-        int min = (int)Long.parseLong(req.getParameter("min"));
-        int sec = 0;
+        int year = Integer.parseInt(req.getParameter("year"));
+        int month = Integer.parseInt(req.getParameter("month"))-1;
+        int date = Integer.parseInt(req.getParameter("date"));
+        int hour = Integer.parseInt(req.getParameter("hour"));
+        int min = Integer.parseInt(req.getParameter("min"));
+        int sec = Integer.parseInt(req.getParameter("sec"));
+        
         Calendar calendar = Calendar.getInstance();
         calendar.set(year,month,date,hour,min,sec);
         Date t = calendar.getTime();

@@ -15,7 +15,7 @@ public class Datatxt{
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp,
 		InputStream stream,Long id,Long site)throws IOException{
 		BufferedReader r=new BufferedReader(new InputStreamReader(stream));
-		SimpleDateFormat fmt=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat fmt=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String v;
 		r.readLine();
 		r.readLine();
