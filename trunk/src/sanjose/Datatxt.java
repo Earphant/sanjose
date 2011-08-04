@@ -25,15 +25,10 @@ public class Datatxt{
 			PersistenceManager mgr=Helper.getMgr();
 			try {
 				t=fmt.parse(v);
-				Long w=Long.parseLong(s[2]);
-				Long f=Long.parseLong(s[3]);
-				Long a=Long.parseLong(s[4]);
-				Long e=Long.parseLong(s[5]);
-				Long p=Long.parseLong(s[6]);
-				I138 i138=new I138(id,site,w,t);
-				I135 i135=new I135(id,site,f,a,t);
-				I136 i136=new I136(id,site,e,t);
-				I139 i139=new I139(id,site,p,t);
+				I138 i138=new I138(id,site,Long.parseLong(s[2]),t);
+				I135 i135=new I135(id,site,Long.parseLong(s[3]),Long.parseLong(s[4]),t);
+				I136 i136=new I136(id,site,Long.parseLong(s[5]),t);
+				I139 i139=new I139(id,site,Long.parseLong(s[6]),t);
 				mgr.makePersistent(i138);
 				mgr.makePersistent(i135);
 				mgr.makePersistent(i136);
