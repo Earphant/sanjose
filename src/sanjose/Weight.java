@@ -78,9 +78,10 @@ public class Weight {
         calendar.set(year,month,date,hour,min,sec);
         Date t = calendar.getTime();
         
+        Session s=new Session("/post");
         Timed timed=new Timed(req.getParameter("i"));
 		if(timed.t==null){
-			I138 i=new I138(1L,9L,vol,t);
+			I138 i=new I138(s.id,s.site,vol,t);
 			try{
 				mgr.makePersistent(i);
 			}
@@ -112,12 +113,52 @@ public class Weight {
 	public void Out(String plink,Page page) throws IOException{
 		page.title="Weight";
 		page.aside="<ul><li><a href=/post/weight>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><a href=/12.3/weight>Weight</a><li><a href=/12.3/heartrate>Heart Rate</a><li><a href=/12.3/steps>Steps</a><li><a href=/12.3/fat>Fat</a></ul>";
-		PersistenceManager mgr=Helper.getMgr();
-		Query q=mgr.newQuery(I138.class);
-		q.setOrdering("t desc");
+
+		PersistenceManager mgrimg=Helper.getMgr();
+		Query q1=mgrimg.newQuery(I138.class);
+		q1.setOrdering("t asc");
 		try{
 			@SuppressWarnings("unchecked")
-			List<I138> r=(List<I138>)q.execute();
+			List<I138> r=(List<I138>)q1.execute();
+			Long max = 10L;
+			
+			if(!r.isEmpty()){
+				int k;
+				I138 i0=r.get(0);
+				Date t0=i0.gett();
+				Calendar cal0 = Calendar.getInstance();
+				cal0.setTime(t0);
+				int year0 = cal0.get(Calendar.YEAR);
+				int month0 = cal0.get(Calendar.MONTH)+1;
+				int date0 = cal0.get(Calendar.DAY_OF_MONTH);
+				for(k=1;;k++)
+					I138 i=r.get(k);
+					Date t=i.gett();
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(t);
+					int year= cal.get(Calendar.YEAR);
+					int month= cal.get(Calendar.MONTH)+1;
+					int date= cal.get(Calendar.DAY_OF_MONTH);
+				
+				
+					Long wid = i.getvol()/max;
+					Long hei = (long) (100/k);		
+					page.Out("<div style=background-color:#000;height:"+40/i+"px;width:"+wid+"%>&nbsp;</div>");
+
+				
+			}
+		}
+		finally{
+			q1.closeAll();
+			mgrimg.close();
+		}
+	
+		PersistenceManager mgrdata=Helper.getMgr();
+		Query q2=mgrdata.newQuery(I138.class);
+		q2.setOrdering("t desc");
+		try{
+			@SuppressWarnings("unchecked")
+			List<I138> r=(List<I138>)q2.execute();
 			if(!r.isEmpty()){
 				for(I138 i138:r){
 					long t = i138.gett().getTime();
@@ -127,7 +168,8 @@ public class Weight {
 			}
 		}
 		finally{
-			q.closeAll();
+			q2.closeAll();
+			mgrdata.close();
 		}
 		page.End(null);
 	}

@@ -82,9 +82,10 @@ public class Fat {
         calendar.set(year,month,date,hour,min,sec);
         Date t = calendar.getTime();
         
+        Session s=new Session("/post");
         Timed timed=new Timed(req.getParameter("i"));
         if(timed.t==null){
-        	I135 i135=new I135(1L,9L,fat,wat,t);
+        	I135 i135=new I135(s.id,s.site,fat,wat,t);
 			try{
 				mgr.makePersistent(i135);
 			}
