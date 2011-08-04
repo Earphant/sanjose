@@ -57,6 +57,7 @@ public class Upload{
 		        else
 		        	new Picture().doPost(req,rsp,s,12L,3L);
 		    }
+			s.close();
 		}
 	}
 }	
