@@ -82,9 +82,10 @@ public class Steps {
 	        calendar.set(year,month,date,hour,min,sec);
 	        Date t = calendar.getTime();
 	        
+	        Session s=new Session("/post");
 	        Timed timed=new Timed(req.getParameter("i"));
 			if(timed.t==null){
-				I139 i139=new I139(1L,9L,vol,t);
+				I139 i139=new I139(s.id,s.site,vol,t);
 				try{
 					mgr.makePersistent(i139);
 				}

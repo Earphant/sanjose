@@ -79,10 +79,10 @@ public class HeartRate {
         calendar.set(year,month,date,hour,min,sec);
         Date t = calendar.getTime();
         
+        Session s=new Session("/post");
         Timed timed=new Timed(req.getParameter("i"));
-        
 		if(timed.t==null){
-			I136 i=new I136(1L,9L,vol,t);
+			I136 i=new I136(s.id,s.site,vol,t);
 			try{
 				mgr.makePersistent(i);
 			}
