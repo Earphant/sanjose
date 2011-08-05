@@ -12,7 +12,7 @@ public class Based{
 		page.aside="<ul><li><a href=/post>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><li><a href=/12.3/weight>Weight</a><li><a href=/12.3/heartrate>Heart Rate</a><li><a href=/12.3/steps>Steps</a><li><a href=/12.3/fat>Fat</a></ul>";
 		PersistenceManager mgr=Helper.getMgr();
 		Query q=mgr.newQuery(I.class);
-		q.setFilter("a==0");
+		//q.setFilter("a==0");
 		q.setOrdering("m desc");
 		try{
 			@SuppressWarnings("unchecked")

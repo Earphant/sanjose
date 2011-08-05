@@ -28,7 +28,7 @@ public class Session{
 				u=m.getObjectById(I11.class,email);
 				email=u.geteml();
 			}
-			catch (JDOObjectNotFoundException e) {
+			catch(JDOObjectNotFoundException e) {
 				i=new I(name,"",1L,0L,1L,1L);
 				m.makePersistent(i);
 				if(i.geti()==0L){
