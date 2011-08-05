@@ -194,7 +194,7 @@ public class Steps {
 					long t = i139.gett().getTime();
 					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
 				
-					page.Out(time.format(t)+"<br>"+i139.getn()+"."+i139.geto()+": "+i139.getvol()+" <a href=/post/steps?i="+i139.getn()+"."+i139.geto()+".absdfsdfsasdfsdfsdfsfdfsfsdfsfdfsdfsdfs"+i139.gett().getTime()+">修改</a><br>");
+					page.Out(time.format(t)+"<br>"+i139.getn()+"."+i139.geto()+": "+i139.getvol()+" <a href=/post/steps?i="+i139.getn()+"."+i139.geto()+"."+i139.gett().getTime()+">修改</a><br>");
 				}
 			}
 		}
