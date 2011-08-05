@@ -21,14 +21,20 @@ public class I12{
 	@Persistent
 	private String ext;
 	@Persistent
-	private Blob dat;
+	private Blob org;
+	@Persistent
+	private Blob reg;
+	@Persistent
+	private Blob thm;
+	@Persistent
+	private Blob ico;
 
-	public I12(I i,String ext,Blob dat){
+	public I12(I i,String ext,Blob org){
 		this.i=i.geti();
 		this.j=i.getj();
 		this.key=i+"."+j;
 		this.ext=ext;
-		this.dat=dat;
+		this.org=org;
 	}
 	public Long geti(){
 	    return i;
@@ -39,8 +45,16 @@ public class I12{
 	public String getext(){
 	    return ext;
 	}
-	public Blob getdat(){
-	    return dat;
+	public Blob getorg(){
+	    return org;
 	}
-
+	public Blob getico(){
+	    return ico;
+	}
+	public Blob getreg(){
+	    return reg;
+	}
+	public Blob getthm(){
+	    return thm;
+	}
 }

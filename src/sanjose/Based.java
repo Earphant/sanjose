@@ -51,7 +51,7 @@ public class Based{
 				List<I12> r=(List<I12>)q.execute(d.i,d.j);
 				if(!r.isEmpty()){
 					I12 i=r.get(0);
-					rsp.getOutputStream().write(i.getdat().getBytes());
+					rsp.getOutputStream().write(i.getorg().getBytes());
 				}
 			}
 			finally{
