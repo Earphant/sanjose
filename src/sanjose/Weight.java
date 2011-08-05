@@ -121,7 +121,6 @@ public class Weight {
 			@SuppressWarnings("unchecked")
 			List<I138> r=(List<I138>)q1.execute();
 			Long max = 10L;
-			
 			if(!r.isEmpty()){
 				int k;
 				I138 i0=r.get(0);
@@ -131,7 +130,7 @@ public class Weight {
 				int year0 = cal0.get(Calendar.YEAR);
 				int month0 = cal0.get(Calendar.MONTH)+1;
 				int date0 = cal0.get(Calendar.DAY_OF_MONTH);
-				for(k=1;;k++)
+				for(k=1;;k++){
 					I138 i=r.get(k);
 					Date t=i.gett();
 					Calendar cal = Calendar.getInstance();
@@ -143,9 +142,8 @@ public class Weight {
 				
 					Long wid = i.getvol()/max;
 					Long hei = (long) (100/k);		
-					page.Out("<div style=background-color:#000;height:"+40/i+"px;width:"+wid+"%>&nbsp;</div>");
-
-				
+					page.Out("<div style=background-color:#000;height:"+40/i.getvol()+"px;width:"+wid+"%>&nbsp;</div>");
+				}
 			}
 		}
 		finally{

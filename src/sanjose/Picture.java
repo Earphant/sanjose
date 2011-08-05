@@ -19,14 +19,19 @@ public class Picture{
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp,
 		InputStream stream,Long id,Long site)throws IOException{
 		Blob b=new Blob(IOUtils.toByteArray(stream));
-		I i=new I("","",1L,0L,1L,1L);
-		I12 i12=new I12(i,b);
-		PersistenceManager mgr=Helper.getMgr();
+		PersistenceManager m=Helper.getMgr();
 		try{
-			mgr.makePersistent(i12);
+			I i=new I("","",1L,0L,1L,1L);
+			m.makePersistent(i);
+			if(i.geti()==0L){
+				i.seti();
+				m.makePersistent(i);
+			}
+			I12 i12=new I12(i,b);
+			m.makePersistent(i12);
 		}
 		finally{
-			mgr.close();
+			m.close();
 		}
 		rsp.getOutputStream().write(b.getBytes());
 	}
