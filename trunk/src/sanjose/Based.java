@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+import javax.servlet.http.HttpServletResponse;
 
 public class Based{
 	private void Index(String plink,Page page)throws IOException{
@@ -19,7 +20,11 @@ public class Based{
 			List<I> r=(List<I>)q.execute();
 			if(!r.isEmpty()){
 				for(I i:r){
-					page.Out(i.getx()+" <a href=/post?i="+i.geti()+"."+i.getj()+">=</a><br>");
+					String d=i.geti()+"."+i.getj();
+					String x=i.getx();
+					if(x==null || x.equals(""))
+						x="(Untitled)";
+					page.Out("<a href=/1.1/"+d+">"+x+"</a> <a href=/post?i="+d+">=</a><br>");
 				}
 			}
 		}
@@ -28,44 +33,89 @@ public class Based{
 		}
 		page.End(null);
 	}
+	private void Object(String id,String base,HttpServletResponse rsp,
+		Page page)throws IOException{
+		//Id b=new Id(base);
+		Id d=new Id(id);
+		PersistenceManager mgr=Helper.getMgr();
+		if(d.IsPicture()){
+			Query q=mgr.newQuery(I12.class);
+			q.setFilter("i==iParam && j==jParam");
+			q.declareParameters("Long iParam,Long jParam");
+			try{
+				@SuppressWarnings("unchecked")
+				List<I12> r=(List<I12>)q.execute(d.i,d.j);
+				if(!r.isEmpty()){
+					I12 i=r.get(0);
+					rsp.getOutputStream().write(i.getdat().getBytes());
+				}
+			}
+			finally{
+				q.closeAll();
+			}
+		}
+		else{
+			page.title=id;
+			Query q=mgr.newQuery(I.class);
+			q.setFilter("i==iParam && j==jParam");
+			q.declareParameters("Long iParam,Long jParam");
+			try{
+				@SuppressWarnings("unchecked")
+				List<I> r=(List<I>)q.execute(d.i,d.j);
+				if(!r.isEmpty()){
+					I i=r.get(0);
+					if(i.geta()==12)
+						page.Out("<img src=/"+base+"/"+id+".jpg>");
+					page.Out(i.getx());
+				}
+			}
+			finally{
+				q.closeAll();
+			}
+			page.End(null);
+		}
+	}
 
-	public Based(String plink,Page page)throws IOException{
+	public Based(String plink,HttpServletResponse rsp)throws IOException{
 		String[]s=plink.split("/");
+		Page p=new Page(rsp);
 		if(s.length>2){
 			String n=s[2];
 			if(n.equalsIgnoreCase("profile")){
-				new Profile().Out(plink,page);
+				new Profile().Out(plink,p);
 				return;
 			}
 			if(n.equalsIgnoreCase("dashboard")){
-				new Dashboard().Out(plink,page);
+				new Dashboard().Out(plink,p);
 				return;
 			}
 			if(n.equalsIgnoreCase("contacts")){
-				new Contacts().Out(plink,page);
+				new Contacts().Out(plink,p);
 				return;
 			}
 			if(n.equalsIgnoreCase("tags")){
-				new Tags().Out(plink,page);
+				new Tags().Out(plink,p);
 				return;
 			}
 			if(n.equalsIgnoreCase("steps")){
-				new Steps().Out(plink,page);
+				new Steps().Out(plink,p);
 				return;
 			}
 			if(n.equalsIgnoreCase("weight")){
-				new Weight().Out(plink,page);
+				new Weight().Out(plink,p);
 				return;
 			}
 			if(n.equalsIgnoreCase("heartrate")){
-				new HeartRate().Out(plink,page);
+				new HeartRate().Out(plink,p);
 				return;
 			}
 			if(n.equalsIgnoreCase("fat")){
-				new Fat().Out(plink,page);
+				new Fat().Out(plink,p);
 				return;
 			}
+			Object(n,s[1],rsp,p);
+			return;
 		}
-		Index(plink,page);
+		Index(plink,p);
 	}
 }
