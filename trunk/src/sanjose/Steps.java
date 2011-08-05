@@ -146,7 +146,7 @@ public class Steps {
 					if(iag==0)
 					{ 
 		     		t1=i.gett().getTime();iag=1;
-			        dateb=i.getvol();}
+			        dateb=i.getvol()/100;}
 				   	long t = i.gett().getTime();
 				    long ls=2000000l;
 				    d=t-t1;
@@ -155,7 +155,7 @@ public class Steps {
 				    int s =(int) d;
 				    
 				    
-					  long dateab=i.getvol();
+					  long dateab=i.getvol()/100;
 				   page.Out("<div style=bottom:0px;position:absolute;background-color:#F00;left:"+s1+"px;height:"+dateb+"px;width:"+s+"px>&nbsp;</div>");
 				
 				   
