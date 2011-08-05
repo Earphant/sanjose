@@ -21,13 +21,13 @@ public class Picture{
 		Blob b=new Blob(IOUtils.toByteArray(stream));
 		PersistenceManager m=Helper.getMgr();
 		try{
-			I i=new I("","",1L,0L,1L,1L);
+			I i=new I("","",12L,0L,1L,1L);
 			m.makePersistent(i);
 			if(i.geti()==0L){
 				i.seti();
 				m.makePersistent(i);
 			}
-			I12 i12=new I12(i,b);
+			I12 i12=new I12(i,null,b);
 			m.makePersistent(i12);
 		}
 		finally{

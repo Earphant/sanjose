@@ -19,13 +19,16 @@ public class I12{
 	@Persistent
 	private Long j;
 	@Persistent
-	private Blob img;
+	private String ext;
+	@Persistent
+	private Blob dat;
 
-	public I12(I i,Blob img){
+	public I12(I i,String ext,Blob dat){
 		this.i=i.geti();
 		this.j=i.getj();
 		this.key=i+"."+j;
-		this.img=img;
+		this.ext=ext;
+		this.dat=dat;
 	}
 	public Long geti(){
 	    return i;
@@ -33,8 +36,11 @@ public class I12{
 	public Long getj(){
 	    return j;
 	}
-	public Blob getimg(){
-	    return img;
+	public String getext(){
+	    return ext;
+	}
+	public Blob getdat(){
+	    return dat;
 	}
 
 }
