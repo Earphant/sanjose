@@ -120,8 +120,7 @@ public class Steps {
 		
 		page.aside="<ul><li><a href=/post/steps>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><a href=/12.3/weight>Weight</a><li><a href=/12.3/heartrate>Heart Rate</a><li><a href=/12.3/steps>Steps</a><li><a href=/12.3/fat>Fat</a></ul>";
 		
-		page.Out("<div style=background-color:#000;height:1px;width:20px>&nbsp;</div>");
-		page.Out("youjww");
+	
 		
 		
 		PersistenceManager mgr=Helper.getMgr();
@@ -129,10 +128,10 @@ public class Steps {
 		
 		
 		
-		
+		int s1=0;
 		long dateb=0l;
 		q1.setOrdering("t asc");
-	
+	    
 	    long datea=0l;
 		try{
 			@SuppressWarnings("unchecked")
@@ -142,37 +141,37 @@ public class Steps {
 		   long d=0l;
 			if(!r.isEmpty())
 			{
-				
 				for(I139 i:r)
-					
 				{	
 					if(iag==0)
 					{ 
 		     		t1=i.gett().getTime();iag=1;
 			        dateb=i.getvol();}
 				   	long t = i.gett().getTime();
-				    long ls=1000000l;
+				    long ls=2000000l;
 				    d=t-t1;
 				    t1=t;
 				    d=d/ls;
 				    int s =(int) d;
-				    String ss = String.valueOf(s);
-					   
-				    long dateab=i.getvol();
-				  
 				    
 				    
-				    page.Out("<div style=background-color:#F00;height:"+s+"px;width:"+dateb+"px>&nbsp;</div>");
-				    dateb=dateab;
-					
-				}
+					  long dateab=i.getvol();
+				   page.Out("<div id=wrap><div style=bottom:0px;background-color:#F00;left:"+s1+"px;height:"+dateb+"px;width:"+s+"px>&nbsp;</div>");
+				
+				   
+				   dateb=dateab;
+				   s1=s1+s;  
+				
+				}    
+				String ss = String.valueOf(s1);  
+	     		
 				Date isf=new Date();
 				long nowe=isf.getTime();
 				d=nowe-t1;
-				long ls=1000000l;
+				long ls=2000000l;
 				  d=d/ls;
 				  int s =(int) d;
-				 page.Out("<div style=background-color:#F00;height:"+s+"px;width:"+dateb+"px>&nbsp;</div>");
+				 page.Out("<div style=bottom:0px;background-color:#00f;left:"+s1+"px;height:"+dateb+"px;width:"+s+"px>&nbsp;</div>");
 				  
 				
 				
@@ -182,37 +181,33 @@ public class Steps {
 		}
 		finally{
 			q1.closeAll();
-		}
-		
-		
-		
-		
+		}	
+				
 		
 	
-		
-		
-		
-		page.Out("<div style=background-color:#000;height:1px;width:20px>&nbsp;</div>");
-		
-		
-		
-		Query q=mgr.newQuery(I139.class);
-		q.setOrdering("t desc");
-		try{
-			@SuppressWarnings("unchecked")
-			List<I139> r=(List<I139>)q.execute();
-			if(!r.isEmpty()){
-				for(I139 i139:r){
-					long t = i139.gett().getTime();
-					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
-					page.Out(time.format(t)+"<br>"+i139.getn()+"."+i139.geto()+": "+i139.getvol()+" <a href=/post/steps?i="+i139.getn()+"."+i139.geto()+"."+i139.gett().getTime()+">修改</a><br>");
-				}
-			}
-		}
-		finally{
-			q.closeAll();
-		}
-		page.End(null);
+	
+
+
+
+
+
+
 	}
 	
 }
+		    
+				    
+				   
+			
+		
+		
+		
+		
+	
+		
+		
+		
+		
+		
+		
+		
