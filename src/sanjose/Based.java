@@ -23,8 +23,12 @@ public class Based{
 					String d=i.geti()+"."+i.getj();
 					String x=i.getx();
 					if(x==null || x.equals(""))
-						x="(Untitled)";
-					page.Out("<a href=/1.1/"+d+">"+x+"</a> <a href=/post?i="+d+">=</a><br>");
+						x="<i>(Untitled)</i>";
+					if(i.geta()==12)
+						page.Out("<a href=/1.1/"+d+">"+x+"</a>");
+					else
+						page.Out(x);
+					page.Out(" <a href=/post?i="+d+">=</a><br>");
 				}
 			}
 		}
