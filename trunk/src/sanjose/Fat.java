@@ -118,12 +118,51 @@ public class Fat {
 	public void Out(String plink,Page page) throws IOException{
 		page.title="Fat";
 		page.aside="<ul><li><a href=/post/fat>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><a href=/12.3/weight>Weight</a><li><a href=/12.3/heartrate>Heart Rate</a><li><a href=/12.3/steps>Steps</a><li><a href=/12.3/fat>Fat</a></ul>";
-		PersistenceManager mgr=Helper.getMgr();
-		Query q=mgr.newQuery(I135.class);
-		q.setOrdering("t desc");
+		PersistenceManager mgrimg=Helper.getMgr();
+		Query q=mgrimg.newQuery(I135.class);
+		q.setOrdering("t asc");
 		try{
 			@SuppressWarnings("unchecked")
 			List<I135> r=(List<I135>)q.execute();
+			
+			final long MAX=40;
+			final long MIN=0;
+			if(!r.isEmpty()){
+				Long T =0L;
+                Long W =0L;
+				                           
+                int n;               
+                for(n=0;(n+1)<r.size();n++){
+                	Long ti=r.get(n).gett().getTime();
+                	Long tii=r.get(n+1).gett().getTime();
+                	Long txi=(tii-ti)/3600000;
+                	
+                	Long vol=r.get(n).getfat();
+                	Long volL=r.get(n+1).getfat();
+					Long wid=(vol-MIN)*100/(MAX-MIN);
+					page.Out("<div style="+"background-color:#000;height:"+txi+"px;width:"+wid+"%"+">&nbsp;</div>");
+					T=tii;
+					W=volL;	
+                }
+
+                Date t=new Date();
+                Long tnow=t.getTime();
+                Long txL=(tnow-T)/3600000;
+                Long widL=(W-MIN)*100/(MAX-MIN);
+                page.Out("<div style="+"background-color:#000;height:"+txL+"px;width:"+widL+"%"+">&nbsp;</div>");
+                
+			}
+		}
+		finally{
+			q.closeAll();
+		}
+		
+		PersistenceManager mgr=Helper.getMgr();
+		Query q2=mgr.newQuery(I135.class);
+		q2.setOrdering("t desc");
+		try{
+			@SuppressWarnings("unchecked")
+			List<I135> r=(List<I135>)q2.execute();
 			if(!r.isEmpty()){
 				for(I135 i135:r){
 					long t = i135.gett().getTime();
