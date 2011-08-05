@@ -128,7 +128,7 @@ public class Steps {
 		
 		
 		
-		int s1=0;
+		int s1=300;
 		long dateb=0l;
 		q1.setOrdering("t asc");
 	    
@@ -156,7 +156,7 @@ public class Steps {
 				    
 				    
 					  long dateab=i.getvol();
-				   page.Out("<div id=wrap><div style=bottom:0px;background-color:#F00;left:"+s1+"px;height:"+dateb+"px;width:"+s+"px>&nbsp;</div>");
+				   page.Out("<div style=bottom:0px;position:absolute;background-color:#F00;left:"+s1+"px;height:"+dateb+"px;width:"+s+"px>&nbsp;</div>");
 				
 				   
 				   dateb=dateab;
@@ -171,7 +171,7 @@ public class Steps {
 				long ls=2000000l;
 				  d=d/ls;
 				  int s =(int) d;
-				 page.Out("<div style=bottom:0px;background-color:#00f;left:"+s1+"px;height:"+dateb+"px;width:"+s+"px>&nbsp;</div>");
+				 page.Out("<div style=position:absolute;bottom:0px;background-color:#00f;left:"+s1+"px;height:"+dateb+"px;width:"+s+"px>&nbsp;</div>");
 				  
 				
 				
@@ -184,15 +184,34 @@ public class Steps {
 		}	
 				
 		
-	
-	
-
-
-
-
-
-
+		Query q=mgr.newQuery(I139.class);
+		q.setOrdering("t desc");
+		try{
+			@SuppressWarnings("unchecked")
+			List<I139> r=(List<I139>)q.execute();
+			if(!r.isEmpty()){
+				for(I139 i139:r){
+					long t = i139.gett().getTime();
+					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+				
+					page.Out(time.format(t)+"<br>"+i139.getn()+"."+i139.geto()+": "+i139.getvol()+" <a href=/post/steps?i="+i139.getn()+"."+i139.geto()+".absdfsdfsasdfsdfsdfsfdfsfsdfsfdfsdfsdfs"+i139.gett().getTime()+">修改</a><br>");
+				}
+			}
+		}
+		finally{
+			q.closeAll();
+		}
+		page.End(null);
 	}
+
+	
+
+
+
+
+
+
+	
 	
 }
 		    
