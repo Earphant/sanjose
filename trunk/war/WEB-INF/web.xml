@@ -32,6 +32,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>tools</servlet-name>
 		<servlet-class>sanjose.ToolsServlet</servlet-class>
 	</servlet>
+	
 
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
@@ -67,4 +68,5 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>tools</servlet-name>
 		<url-pattern>/tools/*</url-pattern>
 	</servlet-mapping>
+	
 </web-app>
