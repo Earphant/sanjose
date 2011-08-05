@@ -33,13 +33,13 @@ public class HeartRate {
 					Date t=i136.gett();
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(t);
-					int year= cal.get(Calendar.YEAR);
-					int month= cal.get(Calendar.MONTH)+1;
-					int date= cal.get(Calendar.DAY_OF_MONTH);
-					int hour= cal.get(Calendar.HOUR_OF_DAY);
-					int min= cal.get(Calendar.MINUTE);
-					int sec = cal.get(Calendar.SECOND);
-					p.Out("Value:<input type=text name=rate value="+v+"><br>Time:<input type=text name=year style=width:40px; value="+year+">年<input type=text name=month style=width:20px; value="+month+">月<input type=text name=date style=width:20px; value="+date+">日 <input type=text name=hour style=width:20px; value="+hour+">:<input type=text name=min style=width:20px; value="+min+">:<input type=text name=sec style=width:20px; value="+sec+">");
+					Long year=(long) cal.get(Calendar.YEAR);
+					Long month=(long) cal.get(Calendar.MONTH)+1;
+					Long date=(long) cal.get(Calendar.DAY_OF_MONTH);
+					Long hour=(long) cal.get(Calendar.HOUR_OF_DAY);
+					Long min=(long) cal.get(Calendar.MINUTE);;
+										
+					p.Out("Value:<input type=text name=rate value="+v+"><br>Time:<input type=text name=year style=width:40px; value="+year+">年<input type=text name=month style=width:20px; value="+month+">月<input type=text name=date style=width:20px; value="+date+">日 <input type=text name=hour style=width:20px; value="+hour+">：<input type=text name=min style=width:20px; value="+min+">");
 				    
 				}
 			}
@@ -53,13 +53,12 @@ public class HeartRate {
 			Date now=new Date();
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(now);
-			int year= cal.get(Calendar.YEAR);
-			int month= cal.get(Calendar.MONTH)+1;
-			int date= cal.get(Calendar.DAY_OF_MONTH);
-			int hour= cal.get(Calendar.HOUR_OF_DAY)+8;
-			int min= cal.get(Calendar.MINUTE);
-			int sec = cal.get(Calendar.SECOND);
-			p.Out("Value:<input type=text name=rate value=><br>Time:<input type=text name=year style=width:40px; value="+year+">年<input type=text name=month style=width:20px; value="+month+">月<input type=text name=date style=width:20px; value="+date+">日 <input type=text name=hour style=width:20px; value="+hour+">:<input type=text name=min style=width:20px; value="+min+">:<input type=text name=sec style=width:20px; value="+sec+">");
+			Long year=(long) cal.get(Calendar.YEAR);
+			Long month=(long) cal.get(Calendar.MONTH)+1;
+			Long date=(long) cal.get(Calendar.DAY_OF_MONTH);
+			Long hour=(long) cal.get(Calendar.HOUR_OF_DAY)+8;
+			Long min=(long) cal.get(Calendar.MINUTE);
+			p.Out("Value:<input type=text name=rate value=><br>Time:<input type=text name=year style=width:40px; value="+year+">年<input type=text name=month style=width:20px; value="+month+">月<input type=text name=date style=width:20px; value="+date+">日 <input type=text name=hour style=width:20px; value="+hour+">：<input type=text name=min style=width:20px; value="+min+">");
 		 }   
 		p.End("<input type=submit name=ok></form>");
 	}
@@ -68,21 +67,20 @@ public class HeartRate {
         PersistenceManager mgr=Helper.getMgr(); 
         String vols=req.getParameter("rate");
         Long vol=Long.parseLong(vols);
-        int year = Integer.parseInt(req.getParameter("year"));
-        int month = Integer.parseInt(req.getParameter("month"))-1;
-        int date = Integer.parseInt(req.getParameter("date"));
-        int hour = Integer.parseInt(req.getParameter("hour"));
-        int min = Integer.parseInt(req.getParameter("min"));
-        int sec = Integer.parseInt(req.getParameter("sec"));
-        
+        int year = (int)Long.parseLong(req.getParameter("year"));
+        int month = (int)Long.parseLong(req.getParameter("month"))-1;
+        int date = (int)Long.parseLong(req.getParameter("date"));
+        int hour = (int)Long.parseLong(req.getParameter("hour"));
+        int min = (int)Long.parseLong(req.getParameter("min"));
+        int sec = 0;
         Calendar calendar = Calendar.getInstance();
         calendar.set(year,month,date,hour,min,sec);
         Date t = calendar.getTime();
         
-        Session s=new Session("/post");
         Timed timed=new Timed(req.getParameter("i"));
+        
 		if(timed.t==null){
-			I136 i=new I136(s.id,s.site,vol,t);
+			I136 i=new I136(1L,9L,vol,t);
 			try{
 				mgr.makePersistent(i);
 			}
@@ -116,21 +114,78 @@ public class HeartRate {
 	public void Out(String plink,Page page) throws IOException{
 		page.title="Heart Rate";
 		page.aside="<ul><li><a href=/post/heartrate>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><a href=/12.3/weight>Weight</a><li><a href=/12.3/heartrate>Heart Rate</a><li><a href=/12.3/steps>Steps</a><li><a href=/12.3/fat>Fat</a></ul>";
-		PersistenceManager mgr=Helper.getMgr();
-		Query q=mgr.newQuery(I136.class);
-		q.setOrdering("t desc");
+		
+
+		
+		PersistenceManager mgrimg=Helper.getMgr();
+		Query q1=mgrimg.newQuery(I136.class);
+		q1.setOrdering("t asc");
 		try{
 			@SuppressWarnings("unchecked")
-			List<I136> r=(List<I136>)q.execute();
-			if(!r.isEmpty()){
-				for(I136 i136:r){
-					long t = i136.gett().getTime();
-					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日HH:mm");
-					page.Out(time.format(t)+"<br>"+i136.getn()+"."+i136.geto()+": "+i136.getvol()+" <a href=/post/heartrate?i="+i136.getn()+"."+i136.geto()+"."+i136.gett().getTime()+">修改</a><br>");				}
+			List<I136> r=(List<I136>)q1.execute();
+			
+			final long MAX=100;
+			final long MIN=50;
+			
+			if(!r.isEmpty()){				
+				
+				Long t0=r.get(0).gett().getTime();
+				Long vol1=r.get(0).getvol();
+				Long wid1=(vol1-MIN)*100/(MAX-MIN);
+                Long t1=r.get(1).gett().getTime();
+                Long tx=(t1-t0)/3600000;
+                page.Out("<div style="+"background-color:#000;height:"+tx+"px;width:"+wid1+"%"+">&nbsp;</div>");
+                
+                Long T =0L;
+                Long W =0L;
+                for(I136 i136:r){                   
+					
+					Long ti=i136.gett().getTime();
+					Long txi=(ti-t0)/3600000;
+				
+					Long vol=i136.getvol();
+					Long wid=(vol-MIN)*100/(MAX-MIN);
+					Long hei=txi;
+					
+					page.Out("<div style="+"background-color:#000;height:"+hei+"px;width:"+wid+"%"+">&nbsp;</div>");					
+                    
+					t0=ti;
+					T=ti;
+					W=vol;
+				}
+                
+                Date t=new Date();
+                Long tnow=t.getTime();
+                Long txL=(tnow-T)/3600000;
+                page.Out("<div style="+"background-color:#000;height:"+txL+"px;width:"+W+"%"+">&nbsp;</div>");
+                
 			}
 		}
 		finally{
-			q.closeAll();
+			q1.closeAll();
+		}
+			
+		PersistenceManager mgrdata=Helper.getMgr();
+		Query q2=mgrdata.newQuery(I136.class);
+		q2.setOrdering("t desc");
+		try{
+			@SuppressWarnings("unchecked")
+			List<I136> r=(List<I136>)q2.execute();
+			
+			
+			if(!r.isEmpty()){			
+				
+				
+				for(I136 i136:r){
+
+					long t = i136.gett().getTime();
+					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日HH:mm");					
+					page.Out(time.format(t)+"<br>"+i136.getn()+"."+i136.geto()+": "+i136.getvol()+" <a href=/post/heartrate?i="+i136.getn()+"."+i136.geto()+"."+i136.gett().getTime()+">修改</a><br>");				
+				}
+			}
+		}
+		finally{
+			q2.closeAll();
 		}
 		page.End(null);
 	}
