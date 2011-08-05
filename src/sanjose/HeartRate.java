@@ -128,36 +128,30 @@ public class HeartRate {
 			final long MIN=50;
 			
 			if(!r.isEmpty()){				
-				
-				Long t0=r.get(0).gett().getTime();
-				Long vol1=r.get(0).getvol();
-				Long wid1=(vol1-MIN)*100/(MAX-MIN);
-                Long t1=r.get(1).gett().getTime();
-                Long tx=(t1-t0)/3600000;
-                page.Out("<div style="+"background-color:#000;height:"+tx+"px;width:"+wid1+"%"+">&nbsp;</div>");
-                
-                Long T =0L;
+				Long T =0L;
                 Long W =0L;
-                for(I136 i136:r){                   
-					
-					Long ti=i136.gett().getTime();
-					Long txi=(ti-t0)/3600000;
-				
-					Long vol=i136.getvol();
-					Long wid=(vol-MIN)*100/(MAX-MIN);
-					Long hei=txi;
-					
-					page.Out("<div style="+"background-color:#000;height:"+hei+"px;width:"+wid+"%"+">&nbsp;</div>");					
-                    
-					t0=ti;
-					T=ti;
-					W=vol;
-				}
+				                           
+                int n;               
+                for(n=0;(n+1)<r.size();n++){
+
+                		Long ti=r.get(n).gett().getTime();
+                    	Long tii=r.get(n+1).gett().getTime();
+                    	Long txi=(tii-ti)/3600000;
+                    	
+                    	Long vol=r.get(n).getvol();
+                    	Long volL=r.get(n+1).getvol();
+    					Long wid=(vol-MIN)*100/(MAX-MIN);
+    					page.Out("<div style="+"background-color:#000;height:"+txi+"px;width:"+wid+"%"+">&nbsp;</div>");
+    					T=tii;
+    					W=volL;
+                }
+
                 
                 Date t=new Date();
                 Long tnow=t.getTime();
                 Long txL=(tnow-T)/3600000;
-                page.Out("<div style="+"background-color:#000;height:"+txL+"px;width:"+W+"%"+">&nbsp;</div>");
+                Long widL=(W-MIN)*100/(MAX-MIN);
+                page.Out("<div style="+"background-color:#000;height:"+txL+"px;width:"+widL+"%"+">&nbsp;</div>");
                 
 			}
 		}
