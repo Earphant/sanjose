@@ -116,34 +116,36 @@ public class Weight {
 
 		PersistenceManager mgrimg=Helper.getMgr();
 		Query q1=mgrimg.newQuery(I138.class);
-		q1.setOrdering("t asc");
+		q1.setOrdering("t asc");	
 		try{
 			@SuppressWarnings("unchecked")
-			List<I138> r=(List<I138>)q1.execute();
-			Long max = 10L;
+			List<I138> r=(List<I138>)q1.execute();	
 			if(!r.isEmpty()){
-				int k;
-				I138 i0=r.get(0);
-				Date t0=i0.gett();
-				Calendar cal0 = Calendar.getInstance();
-				cal0.setTime(t0);
-				int year0 = cal0.get(Calendar.YEAR);
-				int month0 = cal0.get(Calendar.MONTH)+1;
-				int date0 = cal0.get(Calendar.DAY_OF_MONTH);
-				for(k=1;;k++){
-					I138 i=r.get(k);
-					Date t=i.gett();
-					Calendar cal = Calendar.getInstance();
-					cal.setTime(t);
-					int year= cal.get(Calendar.YEAR);
-					int month= cal.get(Calendar.MONTH)+1;
-					int date= cal.get(Calendar.DAY_OF_MONTH);
-				
-				
-					Long wid = i.getvol()/max;
-					Long hei = (long) (100/k);		
-					page.Out("<div style=background-color:#000;height:"+40/i.getvol()+"px;width:"+wid+"%>&nbsp;</div>");
+				Long min=300L;
+				Long max=2500L;
+				Long t0 = r.get(0).gett().getTime()/3600000;
+				Long t1 = r.get(1).gett().getTime()/3600000;
+				Long tx=t1-t0;
+				t0=t1;
+				Long vol0=r.get(0).getvol();
+				for (I138 i138 : r) {
+					Long t=i138.gett().getTime()/3600000;
+					tx = t-t0;
+					if(tx>=0)
+						t0=t;
+					else 
+						tx=-tx;
+					if(tx>0)
+						page.Out("<div style=background-color:#000;height:"+tx+"px;width:"+(vol0-min)*100/(max-min)+"%>&nbsp;</div>");
+                    vol0=i138.getvol();
 				}
+				Date now = new Date();
+				Long t=now.getTime()/3600000;
+				tx = t-t0;
+				page.Out("<div style=background-color:#000;height:"+tx+"px;width:"+(vol0-min)*100/(max-min)+"%>&nbsp;</div>");
+
+				
+				
 			}
 		}
 		finally{
@@ -173,5 +175,3 @@ public class Weight {
 	}
 	
 }
-
- 
