@@ -117,8 +117,85 @@ public class Steps {
 	public void Out(String plink,Page page) throws IOException{
 		
 		page.title="Steps";
+		
 		page.aside="<ul><li><a href=/post/steps>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><a href=/12.3/weight>Weight</a><li><a href=/12.3/heartrate>Heart Rate</a><li><a href=/12.3/steps>Steps</a><li><a href=/12.3/fat>Fat</a></ul>";
+		
+		page.Out("<div style=background-color:#000;height:1px;width:20px>&nbsp;</div>");
+		page.Out("youjww");
+		
+		
 		PersistenceManager mgr=Helper.getMgr();
+		Query q1=mgr.newQuery(I139.class);
+		
+		
+		
+		
+		long dateb=0l;
+		q1.setOrdering("t asc");
+	
+	    long datea=0l;
+		try{
+			@SuppressWarnings("unchecked")
+			List<I139> r=(List<I139>)q1.execute();
+		   int iag=0;
+		   long t1=0l;
+		   long d=0l;
+			if(!r.isEmpty())
+			{
+				
+				for(I139 i:r)
+					
+				{	
+					if(iag==0)
+					{ 
+		     		t1=i.gett().getTime();iag=1;
+			        dateb=i.getvol();}
+				   	long t = i.gett().getTime();
+				    long ls=1000000l;
+				    d=t-t1;
+				    t1=t;
+				    d=d/ls;
+				    int s =(int) d;
+				    String ss = String.valueOf(s);
+					   
+				    long dateab=i.getvol();
+				  
+				    
+				    
+				    page.Out("<div style=background-color:#F00;height:"+s+"px;width:"+dateb+"px>&nbsp;</div>");
+				    dateb=dateab;
+					
+				}
+				Date isf=new Date();
+				long nowe=isf.getTime();
+				d=nowe-t1;
+				long ls=1000000l;
+				  d=d/ls;
+				  int s =(int) d;
+				 page.Out("<div style=background-color:#F00;height:"+s+"px;width:"+dateb+"px>&nbsp;</div>");
+				  
+				
+				
+				
+				
+			}
+		}
+		finally{
+			q1.closeAll();
+		}
+		
+		
+		
+		
+		
+	
+		
+		
+		
+		page.Out("<div style=background-color:#000;height:1px;width:20px>&nbsp;</div>");
+		
+		
+		
 		Query q=mgr.newQuery(I139.class);
 		q.setOrdering("t desc");
 		try{
