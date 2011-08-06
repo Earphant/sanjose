@@ -65,18 +65,22 @@ public class Picture{
 	}
 	public void Icon(String path,HttpServletResponse rsp)throws IOException{
 		I12 i=Get(path);
+		rsp.setContentType("image/jpeg");
 		rsp.getOutputStream().write(i.getorg().getBytes());
 	}
 	public void Original(String path,HttpServletResponse rsp)throws IOException{
 		I12 i=Get(path);
+		rsp.setContentType("image/jpeg");
 		rsp.getOutputStream().write(i.getorg().getBytes());
 	}
 	public void Regular(Id id,HttpServletResponse rsp)throws IOException{
 		I12 i=Get(id);
+		rsp.setContentType("image/jpeg");
 		rsp.getOutputStream().write(i.getorg().getBytes());
 	}
 	public void Thumbnail(String path,HttpServletResponse rsp)throws IOException{
 		I12 i=Get(path);
+		rsp.setContentType("image/jpeg");
 		rsp.getOutputStream().write(i.getorg().getBytes());
 	}
 }
