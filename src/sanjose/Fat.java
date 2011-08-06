@@ -167,7 +167,7 @@ public class Fat {
 				for(I135 i135:r){
 					long t = i135.gett().getTime();
 					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-					page.Out(time.format(t)+"<br>"+i135.getn()+"."+i135.geto()+":  Fat: "+i135.getfat()+" Water: "+i135.getwat()+" <a href=/post/fat?i="+i135.getn()+"."+i135.geto()+"."+i135.gett().getTime()+">修改</a><br>");
+					page.Out(time.format(t)+"<br>"+i135.geto()+"."+i135.getw()+":  Fat: "+i135.getfat()+" Water: "+i135.getwat()+" <a href=/post/fat?i="+i135.geto()+"."+i135.getw()+"."+i135.gett().getTime()+">修改</a><br>");
 				}
 			}
 		}
