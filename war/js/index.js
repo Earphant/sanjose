@@ -26,9 +26,9 @@ _[90]={
 					if(v[3])n=v[3];
 					break;
 				case 'us':
-					if(v[4])this.ef=v[5];
-					if(v[3])this.uf=v[4];
-					if(v[2])this.ux=decodeURIComponent(v[3]);
+					if(v[4])this.ef=v[4];
+					if(v[3])this.uf=v[3];
+					if(v[2])this.ux=decodeURIComponent(v[2]);
 					if(v[1])this.ui=decodeURIComponent(v[1]);
 					if(v[0])this.ua=eval('({'+v[0].replace(/-/g,',')+'})');
 				}
