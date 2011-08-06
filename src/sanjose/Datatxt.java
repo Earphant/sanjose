@@ -28,7 +28,7 @@ public class Datatxt{
 				I138 i138=new I138(id,site,Long.parseLong(s[2]),t);
 				I135 i135=new I135(id,site,Long.parseLong(s[3]),Long.parseLong(s[4]),t);
 				I136 i136=new I136(id,site,Long.parseLong(s[5]),t);
-				I139 i139=new I139(id,site,Long.parseLong(s[6]),t);
+				I139 i139=new I139(id,site,t,Long.parseLong(s[6]));
 				mgr.makePersistent(i138);
 				mgr.makePersistent(i135);
 				mgr.makePersistent(i136);
