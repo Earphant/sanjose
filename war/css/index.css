@@ -8,7 +8,7 @@ aside{float:right;display:block;min-height:70ex;width:215px}
 aside ul{margin-bottom:2ex}
 aside li{list-style-type:none}
 aside li a{color:#888}
-body{width:760px;margin:auto;font-size:79%;color:#333;background-color:#fff;overflow-y:scroll}
+body{width:760px;margin:auto;font-size:79%;color:#333;background-color:#fff}
 canvas{margin:0;padding:0}
 div{text-align:left}
 footer{clear:both;display:block;margin:4ex 0 1ex}
