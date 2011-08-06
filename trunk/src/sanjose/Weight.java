@@ -31,7 +31,7 @@ public class Weight {
 				if(!r.isEmpty()){
 					I138 i138=r.get(0);
 					Long v=i138.getvol();
-					Date t=i138.gett();
+					Date t=i138.gettime();
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(t);
 					int year= cal.get(Calendar.YEAR);
@@ -141,13 +141,16 @@ public class Weight {
 		try{
 			@SuppressWarnings("unchecked")
 			List<I138> r=(List<I138>)q1.execute();
+			page.Out("<div class=graf>");
+			page.Out(new Graph().Daily(r));
+			page.Out("</div>");
 			if(!r.isEmpty()){
 				 tx4=0l;
 				 tx5=0l;re=1l;
 				for(I138 i:r){
 					
 					long tx3= i.getvol();
-					long tt2 = i.gett().getTime();
+					long tt2 = i.gettime().getTime();
 					long tt3=tt1-tt2;
 					if(tt3<(tx1*tx2))
 					{
@@ -189,7 +192,7 @@ public class Weight {
 		}
 	 
 		
-		int a1=0;
+		//int a1=0;
 		
 		int ii2=0;
 		
@@ -276,9 +279,9 @@ public class Weight {
 			List<I138> r=(List<I138>)q2.execute();
 			if(!r.isEmpty()){
 				for(I138 i138:r){
-					long t = i138.gett().getTime();
+					long t = i138.gettime().getTime();
 					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-					page.Out(time.format(t)+"<br>"+i138.getn()+"."+i138.geto()+": "+i138.getvol()+" <a href=/post/weight?i="+i138.getn()+"."+i138.geto()+"."+i138.gett().getTime()+">修改</a><br>");
+					page.Out(time.format(t)+"<br>"+i138.getn()+"."+i138.geto()+": "+i138.getvol()+" <a href=/post/weight?i="+i138.getn()+"."+i138.geto()+"."+i138.gettime().getTime()+">修改</a><br>");
 				}
 			}
 		}

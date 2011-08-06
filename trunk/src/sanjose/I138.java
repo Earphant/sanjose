@@ -9,8 +9,8 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 
-@PersistenceCapable(identityType = IdentityType.APPLICATION)
-public class I138{
+@PersistenceCapable
+public class I138 extends Single{
 	@PrimaryKey
 	@SuppressWarnings("unused")
 	private String key;
@@ -37,7 +37,7 @@ public class I138{
 	public Long geto(){
 		return o;
 	}
-	public Date gett(){
+	public Date gettime(){
 		return t;
 	}
 	public Long getvol(){
