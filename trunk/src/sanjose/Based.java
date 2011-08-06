@@ -56,7 +56,7 @@ public class Based{
 				if(!r.isEmpty()){
 					I i=r.get(0);
 					if(i.geta()==12)
-						page.Out("<img src=/"+base+"/"+id+".jpg>");
+						page.Out("<a href=/original/"+id+".jpg><img src=/"+base+"/"+id+".jpg></a>");
 					page.Out(i.getx());
 				}
 			}
