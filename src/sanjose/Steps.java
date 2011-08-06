@@ -9,6 +9,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.crypto.Data;
 
 public class Steps {
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
@@ -122,73 +123,172 @@ public class Steps {
 		
 	
 		
+		long tx1=100l;
+		long tx2=86400000l;
+		long tx8=3l;
+		long tx4=0l;
+		long tx5=0l;
+	
+		long re=1l;
+		long sos=0l;
 		
-		PersistenceManager mgr=Helper.getMgr();
+		
+	
+		int day1=0;
+		int day2=0;
+		
+	    Date t1=new Date();
+	    long tt1=t1.getTime();
+	    tt1=tt1+tx2/tx8;
+		int s11=550;
+		long[] atr={0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l};
+				PersistenceManager mgr=Helper.getMgr();
+		
 		Query q1=mgr.newQuery(I139.class);
+		q1.setOrdering("t desc");
 		
-		
-		
-		int s1=300;
-		long dateb=0l;
-		q1.setOrdering("t asc");
-	    
-	    long datea=0l;
 		try{
 			@SuppressWarnings("unchecked")
 			List<I139> r=(List<I139>)q1.execute();
-		   int iag=0;
-		   long t1=0l;
-		   long d=0l;
-			if(!r.isEmpty())
-			{
-				for(I139 i:r)
-				{	
-					if(iag==0)
-					{ 
-		     		t1=i.gett().getTime();iag=1;
-			        dateb=i.getvol()/100;}
-				   	long t = i.gett().getTime();
-				    long ls=2000000l;
-				    d=t-t1;
-				    t1=t;
-				    d=d/ls;
-				    int s =(int) d;
-				    
-				    
-					  long dateab=i.getvol()/100;
-				   page.Out("<div style=bottom:0px;position:absolute;background-color:#F00;left:"+s1+"px;height:"+dateb+"px;width:"+s+"px>&nbsp;</div>");
+			if(!r.isEmpty()){
+				 tx4=0l;
+				 tx5=0l;re=1l;
+				for(I139 i:r){
+					
+					long tx3= i.getvol();
+					long tt2 = i.gett().getTime();
+					long tt3=tt1-tt2;
+					if(tt3<(tx1*tx2))
+					{
+                       day1=(int) (tt3/tx2);   
+                       if(day1==day2)
+                          {  
+                    	   re=re+1l;
+                    	   if(sos==0l){re=1l;sos=1l;}
+                           tx5=atr[day2]*(re-2l) +tx4; 
+                           
+                           atr[day2]=tx5/re;
+                          } 
+                       else 
+                         {  
+                    	  
+                    	    atr[day2]=(tx5+tx4)/re;
+                    	    re=1l;
+                    	    tx5=0l;
+                    	  
+                          }
+                       tx4= tx3;
+					   day2=day1;
+						
+						
+						
+					}atr[day2]=(tx5+tx4)/re;
 				
-				   
-				   dateb=dateab;
-				   s1=s1+s;  
-				
-				}    
-				String ss = String.valueOf(s1);  
-	     		
-				Date isf=new Date();
-				long nowe=isf.getTime();
-				d=nowe-t1;
-				long ls=2000000l;
-				  d=d/ls;
-				  int s =(int) d;
-				 page.Out("<div style=position:absolute;bottom:0px;background-color:#00f;left:"+s1+"px;height:"+dateb+"px;width:"+s+"px>&nbsp;</div>");
-				  
+				}
 				
 				
 				
 				
+				
+			       
 			}
 		}
 		finally{
 			q1.closeAll();
+		}
+	 
+		
+		int a1=0;
+		
+		int ii2=0;
+		
+		long dd=0;
+		
+		
+		int a=0;
+		
+		for(int ii1=0;ii1<80;ii1++)
+		
+		{  if(atr[ii1]!=0)
+		 	{  
+			  if(a==0)
+		    {
+			
+			  a=1;
+			  ii2=ii1;
+			  for(int ii3=0;ii3<ii1;ii3++)
+			  { atr[ii3]=atr[ii1];
+		   }
+		   }
+		
+			else
+		{
+		  
+		  if((ii1-ii2)!=0&&(ii1-ii2)!=1)
+		{  
+			  dd=atr[ii2]-atr[ii1];
+			  long sdd=dd/(ii1-ii2);
+			  for(int ii3=1;ii3<ii1-ii2;ii3++)
+			  {
+				  atr[ii2+ii3]=atr[ii2+ii3-1]-sdd;
+		   }
+			  ii2=ii1;
+		}
+		  else
+		  { ii2=ii1;}
+		  
+		} 
 		}	
-				
+		
+		}	
+		   
+		int[] abc={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		for(int ii=0;ii<50;ii++)
+		
+		{   
+			atr[ii]=atr[ii]/150;
+			abc[ii]=(int)atr[ii];
+			
+		}
+		
+		
+		String ass="  *time*  1 *****  5 ****** 10 ******  15 *****  20 ****** 25 **** 29  ";
+		for(int aa=0;aa<30;aa++)
+			
+		{  	
+			
+			if((aa%3)==0)
+			{page.Out("<div style=position:absolute;bottom:100px;background-color:#0ff;right:"+s11+"px;height:"+abc[aa]+"px;width:17px>&nbsp;</div>");}
+			else
+			{ if((aa%3)==1)
+			    {	page.Out("<div style=position:absolute;bottom:100px;background-color:#ff0;right:"+s11+"px;height:"+abc[aa]+"px;width:17px>&nbsp;</div>");}
+			   else
+			{  page.Out("<div style=position:absolute;bottom:100px;background-color:#f0f;right:"+s11+"px;height:"+abc[aa]+"px;width:17px>&nbsp;</div>");}
+			             
+			
+			
+			}
+			s11=s11+15;
+		    
+		    
+		}
+		page.Out("<br>50000<br>****<br>****<br>40000<br>****<br>****<br>30000<br>****<br>****<br>20000<br>****<br>****<br>10000<br>****<br>**** <br>steps  0 ");
+		page.Out("<br>"+ass+"<br>");
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		Query q=mgr.newQuery(I139.class);
 		q.setOrdering("t desc");
 		try{
 			@SuppressWarnings("unchecked")
 			List<I139> r=(List<I139>)q.execute();
+			
 			if(!r.isEmpty()){
 				for(I139 i139:r){
 					long t = i139.gett().getTime();
