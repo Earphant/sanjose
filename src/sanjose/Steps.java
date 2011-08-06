@@ -134,6 +134,9 @@ public class Steps {
 		try{
 			@SuppressWarnings("unchecked")
 			List<I139> r=(List<I139>)q1.execute();
+			page.Out("<div class=graf>");
+			page.Out(new Graph().Daily(r));
+			page.Out("</div>");
 			if(!r.isEmpty()){
 				tx4=0l;
 				tx5=0l;re=1l;
@@ -218,7 +221,7 @@ public class Steps {
 		page.Out("<br>50000<br>****<br>****<br>40000<br>****<br>****<br>30000<br>****<br>****<br>20000<br>****<br>****<br>10000<br>****<br>**** <br>steps  0 ");
 		page.Out("<br>"+ass+"<br>");
 		Query q=mgr.newQuery(I139.class);
-		q.setOrdering("t desc");
+		q.setOrdering("t");
 		try{
 			@SuppressWarnings("unchecked")
 			List<I139> r=(List<I139>)q.execute();

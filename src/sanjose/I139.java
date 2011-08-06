@@ -4,7 +4,7 @@ import java.util.Date;
 import javax.jdo.annotations.*;
 
 @PersistenceCapable
-public class I139{
+public class I139 extends Single{
 	@PrimaryKey
 	@SuppressWarnings("unused")
 	private String _key;
