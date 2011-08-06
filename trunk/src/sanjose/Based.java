@@ -42,7 +42,7 @@ public class Based{
 		//Id b=new Id(base);
 		Id d=new Id(id);
 		if(d.IsPicture()){
-			new Picture().Original(d,rsp);
+			new Picture().Regular(d,rsp);
 		}
 		else{
 			page.title=id;

@@ -5,7 +5,7 @@ xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet>
-		<servlet-name>Admins</servlet-name>
+		<servlet-name>admins</servlet-name>
 		<servlet-class>sanjose.AdminsServlet</servlet-class>
 	</servlet>
 	<servlet>
@@ -17,8 +17,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-class>sanjose.HomeServlet</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>icons</servlet-name>
+		<servlet-class>sanjose.IconsServlet</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>mail</servlet-name>
 		<servlet-class>sanjose.MailServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>originals</servlet-name>
+		<servlet-class>sanjose.OriginalsServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>post</servlet-name>
@@ -29,10 +37,13 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-class>sanjose.SystemServlet</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>thumbnails</servlet-name>
+		<servlet-class>sanjose.ThumbnailsServlet</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>tools</servlet-name>
 		<servlet-class>sanjose.ToolsServlet</servlet-class>
 	</servlet>
-	
 
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
@@ -41,7 +52,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</welcome-file-list>
 
 	<servlet-mapping>
-		<servlet-name>Admins</servlet-name>
+		<servlet-name>admins</servlet-name>
 		<url-pattern>/admins/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
@@ -53,8 +64,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
+		<servlet-name>icons</servlet-name>
+		<url-pattern>/icons/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>mail</servlet-name>
 		<url-pattern>/mail/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>originals</servlet-name>
+		<url-pattern>/originals/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>post</servlet-name>
@@ -63,6 +82,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet-mapping>
 		<servlet-name>system</servlet-name>
 		<url-pattern>/system/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>thumbnails</servlet-name>
+		<url-pattern>/thumbnails/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>tools</servlet-name>

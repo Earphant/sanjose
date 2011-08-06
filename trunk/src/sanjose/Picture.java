@@ -67,12 +67,16 @@ public class Picture{
 		I12 i=Get(path);
 		rsp.getOutputStream().write(i.getorg().getBytes());
 	}
-	public void Original(Id id,HttpServletResponse rsp)throws IOException{
+	public void Original(String path,HttpServletResponse rsp)throws IOException{
+		I12 i=Get(path);
+		rsp.getOutputStream().write(i.getorg().getBytes());
+	}
+	public void Regular(Id id,HttpServletResponse rsp)throws IOException{
 		I12 i=Get(id);
 		rsp.getOutputStream().write(i.getorg().getBytes());
 	}
-	public void Thumbnail(Id id,HttpServletResponse rsp)throws IOException{
-		I12 i=Get(id);
+	public void Thumbnail(String path,HttpServletResponse rsp)throws IOException{
+		I12 i=Get(path);
 		rsp.getOutputStream().write(i.getorg().getBytes());
 	}
 }
