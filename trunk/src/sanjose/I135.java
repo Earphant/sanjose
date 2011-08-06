@@ -12,9 +12,9 @@ public class I135{
 	@SuppressWarnings("unused")
 	private String key;
 	@Persistent
-	private Long n;
-	@Persistent
 	private Long o;
+	@Persistent
+	private Long w;
 	@Persistent
 	private Date t;
 	@Persistent
@@ -23,18 +23,15 @@ public class I135{
 	private Long wat;
 
 
-	public I135(Long n,Long o,Long fat,Long wat,Date t){
-		this.key=n+"."+o+"."+t.getTime()/1000;
-		this.n=n;
-		this.o=o;
+	public I135(Long owner,Long ownersite,Long fat,Long wat,Date t){
+		this.key=o+"."+w+"."+t.getTime()/1000;
+		this.o=owner;
+		this.w=ownersite;
 		this.t=t;
 		this.fat=fat;
 		this.wat=wat;
 	}
 	
-	public long getn(){
-		return n;
-	}
 	public long geto(){
 	    return o;
 	}
@@ -43,6 +40,9 @@ public class I135{
 	}
 	public long getfat(){
 	    return fat;
+	}
+	public long getw(){
+		return w;
 	}
 	public long getwat(){
 	    return wat;

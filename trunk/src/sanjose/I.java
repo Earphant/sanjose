@@ -26,9 +26,9 @@ public class I{
 	@Persistent
 	private Long b;
 	@Persistent
-	private Long n;
-	@Persistent
 	private Long o;
+	@Persistent
+	private Long w;
 	@SuppressWarnings("unused")
 	@Persistent
 	private Long r;
@@ -50,7 +50,7 @@ public class I{
 	@Persistent
 	private Text e;
 
-	public I(Long i,Long j,String x,String p,Long a,Long r,Long n,Long o){
+	public I(Long i,Long j,String x,String p,Long a,Long r,Long o,Long w){
 		Date c=new Date();
 		this.key=KeyFactory.createKey(I.class.getSimpleName(),i+"."+j);
 		this.i=i;
@@ -58,8 +58,8 @@ public class I{
 		this.a=a;
 		this.b=1L;
 		this.s=1L;
-		this.n=n;
 		this.o=o;
+		this.w=w;
 		this.c=c;
 		this.m=c;
 		this.r=r;
@@ -68,21 +68,21 @@ public class I{
 		this.x=x;
 		this.e=new Text("");
 	}
-	public I(String x,String p,Long a,Long r,Long n,Long o){
+	public I(String text,String guid,Long classid,Long rate,Long owner,Long ownersite){
 		Date c=new Date();
 		this.i=0L;
 		this.j=9L;
-		this.a=a;
+		this.a=classid;
 		this.b=1L;
 		this.c=c;
 		this.m=c;
-		this.n=n;
-		this.o=o;
-		this.p=p;
-		this.r=r;
+		this.o=owner;
+		this.w=ownersite;
+		this.p=guid;
+		this.r=rate;
 		this.s=1L;
 		this.t=c;
-		this.x=x;
+		this.x=text;
 		this.e=new Text("");
 	}
 	public Long geta(){
@@ -100,8 +100,8 @@ public class I{
 	public Long getj(){
 	    return j;
 	}
-	public Long getn(){
-	    return n;
+	public Long getw(){
+	    return w;
 	}
 	public Long geto(){
 	    return o;
