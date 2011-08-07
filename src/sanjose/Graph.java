@@ -8,7 +8,7 @@ public class Graph{
 	public String Daily(Object list)throws IOException{
 		if(((List<Single>)list).isEmpty())
 			return "";
-		long max=-0x7ffffffffL,min=0x7fffffffL;
+		long max=-0x7fffffffffffffffL,min=0x7fffffffffffffffL;
 		long vol;
 		String s="";
 		for(Single i:(List<Single>)list){
