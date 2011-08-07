@@ -81,7 +81,7 @@ public class Weight {
         Session s=new Session("/post");
         Timed timed=new Timed(req.getParameter("i"));
 		if(timed.t==null){
-			I138 i=new I138(s.id,s.site,vol,t);
+			I138 i=new I138(s.id,s.site,t,vol);
 			try{
 				mgr.makePersistent(i);
 			}
@@ -100,7 +100,6 @@ public class Weight {
 				if(!r.isEmpty()){
 					I138 i138=r.get(0);
 					i138.setvol(vol);
-					i138.sett(t);
 				}
 			}
 			finally{
@@ -281,7 +280,7 @@ public class Weight {
 				for(I138 i138:r){
 					long t = i138.gettime().getTime();
 					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-					page.Out(time.format(t)+"<br>"+i138.getn()+"."+i138.geto()+": "+i138.getvol()+" <a href=/post/weight?i="+i138.getn()+"."+i138.geto()+"."+i138.gettime().getTime()+">修改</a><br>");
+					page.Out(time.format(t)+"<br>"+i138.getid()+"."+i138.getsite()+": "+i138.getvol()+" <a href=/post/weight?i="+i138.getid()+"."+i138.getsite()+"."+i138.gettime().getTime()+">修改</a><br>");
 				}
 			}
 		}
