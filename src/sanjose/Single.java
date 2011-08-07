@@ -7,6 +7,7 @@ import java.util.Date;
 //import javax.jdo.annotations.PrimaryKey;
 
 public class Single{
+	public boolean mark=false;
 	public Date gettime(){
 		return null;
 	}
