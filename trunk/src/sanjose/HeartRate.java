@@ -116,24 +116,24 @@ public class HeartRate {
 		page.aside="<ul><li><a href=/post/heartrate>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><a href=/12.3/weight>Weight</a><li><a href=/12.3/heartrate>Heart Rate</a><li><a href=/12.3/steps>Steps</a><li><a href=/12.3/fat>Fat</a></ul>";
 		
 
-		long tx1=100l;
+		long tx1=100l;int day1=0;int day2=0;
 		long tx2=86400000l;
 		long tx8=3l;
 		long tx4=0l;
 		long tx5=0l;
-	
-		long re=1l;
+	    long re=1l;
 		long sos=0l;
-		
-		
-	
-		int day1=0;
-		int day2=0;
-		
 	    Date t1=new Date();
 	    long tt1=t1.getTime();
 	    tt1=tt1+tx2/tx8;
-		int s11=550;
+		
+		
+	
+		
+		
+		
+	   
+		
 		long[] atr={0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l};
 				PersistenceManager mgr=Helper.getMgr();
 		
@@ -191,7 +191,7 @@ public class HeartRate {
 		}
 	 
 		
-		int a1=0;
+	
 		
 		int ii2=0;
 		
@@ -236,17 +236,35 @@ public class HeartRate {
 		}	
 		   
 		int[] abc={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-		for(int ii=0;ii<50;ii++)
+
+	long max=0l;	long min=atr[0]; long d=0l;
+	long aaa=200l;  int bb=30; int aa1=0;
+	
+	for(int ii=0;ii<30;ii++){
 		
-		{   
-			
-			abc[ii]=(int)atr[ii];
-			
-		}
+		if(max<atr[ii]&&aa1==0){
+			max=atr[ii];
+		} 
+		if(min>atr[ii]&&aa1==0&&atr[ii]!=0){
+			min=atr[ii];
+        }
+		if(atr[ii]==0&&aa1==0){ 
+		  bb=ii; aa1=1;
+	     }
+	}
+	
+	   int s11=550+(30-bb)*17;
+	   d=max-min;
+	   aaa=10l;
+	   max=max/aaa;
+	   aaa=200l;
+	   for(int ii=0;ii<bb;ii++){
+	     atr[ii]=(atr[ii]-min+max)*aaa/d;
+	     abc[ii]=(int)atr[ii];	
+	 }
 		
 		
-		String ass="  *time*  1 *****  5 ****** 10 ******  15 *****  20 ****** 25 **** 29  ";
-		for(int aa=0;aa<30;aa++)
+			for(int aa=0;aa<bb;aa++)
 			
 		{  	
 			
@@ -265,8 +283,8 @@ public class HeartRate {
 		    
 		    
 		}
-		page.Out("<br>*375<br>****<br>****<br>*300<br>****<br>****<br>*225<br>****<br>****<br>*150<br>****<br>****<br>*75<br>****<br>**** <br>steps  0 ");
-		page.Out("<br>"+ass+"<br>");
+		page.Out("<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>");
+		page.Out("<br><br>");
 		
 			
 		PersistenceManager mgrdata=Helper.getMgr();
