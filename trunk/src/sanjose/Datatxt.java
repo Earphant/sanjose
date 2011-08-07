@@ -25,7 +25,7 @@ public class Datatxt{
 			PersistenceManager mgr=Helper.getMgr();
 			try {
 				t=fmt.parse(v);
-				I138 i138=new I138(id,site,Long.parseLong(s[2]),t);
+				I138 i138=new I138(id,site,t,Long.parseLong(s[2]));
 				I135 i135=new I135(id,site,Long.parseLong(s[3]),Long.parseLong(s[4]),t);
 				I136 i136=new I136(id,site,Long.parseLong(s[5]),t);
 				I139 i139=new I139(id,site,t,Long.parseLong(s[6]));
