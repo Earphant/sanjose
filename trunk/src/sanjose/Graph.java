@@ -18,10 +18,12 @@ public class Graph{
 			if(vol>max)
 				max=vol;
 		}
+		max-=min;
+		long k=80000/max;
 		min-=10;
 		int n=10;
 		for(Single i:(List<Single>)list){
-			s+="<div style=left:"+n+"px;height:"+(i.getvol()-min)+"px></div>";
+			s+="<div style=left:"+n+"px;height:"+(i.getvol()-min)*k/1000+"%></div>";
 			n+=20;
 		}
 		return s;
