@@ -20,7 +20,7 @@ public class Graph{
 		}
 		max-=min;
 		long k=80000/max;
-		min-=10;
+		min-=10000/k;
 		int n=10;
 		for(Single i:(List<Single>)list){
 			s+="<div style=left:"+n+"px;height:"+(i.getvol()-min)*k/1000+"%></div>";
