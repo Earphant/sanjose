@@ -19,6 +19,8 @@ public class Graph{
 				max=vol;
 		}
 		max-=min;
+		if(max==0)
+			return "";
 		long k=80000/max;
 		min-=10000/k;
 		int n=10;
