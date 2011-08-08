@@ -9,13 +9,7 @@ import java.util.List;
 public class Graph{
 	@SuppressWarnings("unchecked")
 	public String Daily(Object list)throws IOException{
-	
-		
-		
-		
-		
-		
-		long tx1=100l;int day1=0;int day2=0;String s="";
+	    long tx1=100l;int day1=0;int day2=0;String s="";
 		long tx2=86400000l;
 		long tx8=3l;
 		long tx4=0l;
@@ -75,8 +69,8 @@ public class Graph{
 		
 		  if(atr[ii1]!=0){
 		 	  
-			  if(a==0)
-		    {
+			  if(a==0){
+		    
 			
 			  a=1;
 			  ii2=ii1;
@@ -98,8 +92,8 @@ public class Graph{
 		   }
 			  ii2=ii1;
 		}
-		  else
-		  { ii2=ii1;}
+		  else{
+		   ii2=ii1;}
 		  
 		} 
 		}	
@@ -109,6 +103,7 @@ public class Graph{
 
 	long max=0l;	long min=atr[0]; 
 	  int bb=30; int aa1=0;
+	
 	
 	for(int ii=0;ii<30;ii++){
 		
@@ -123,17 +118,24 @@ public class Graph{
 	     }
 	}
 	
-
+  
 	max-=min;
 	if(max==0)
 		return "";
 	long k=80000/max;
+	
 	min-=10000/k;
 	int n=10;
 	for(int aaa1=bb;aaa1>0;aaa1--){
-		s+="<div style=left:"+n+"px;height:"+(atr[aaa1]-min)*k/1000+"%></div>";
+		s+="<div style=left:"+n+"px;height:"+(atr[aaa1]-min)*k/1000+"%;background-color:#0ff></div>";
 		n+=16;
 	}
 	return s;
 }
 }
+		
+		
+		
+		
+		
+		

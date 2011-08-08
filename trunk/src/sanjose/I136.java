@@ -8,42 +8,39 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
-public class I136{
+public class I136 extends Single{
 	@PrimaryKey
 	@SuppressWarnings("unused")
-	private String key ;
-	@Persistent
-	private Long n;
+	private String _key;
 	@Persistent
 	private Long o;
+	@Persistent
+	private Long w;
 	@Persistent
 	private Date t;
 	@Persistent
 	private Long vol;
-
-	public I136(Long n,Long o,Long vol,Date t){
-		this.key=n+"."+o+"."+t.getTime()/1000;
-		this.n=n;
-		this.o=o;
-		this.t=t;
+	
+	public I136(Long ownerid,Long ownersite,Date time,Long vol){
+		this._key=ownerid+"."+ownersite+"."+time;
+		this.o=ownerid;
+		this.w=ownersite;
+		this.t=time;
 		this.vol=vol;
 	}
-	public long getn(){
-		return n;
-	}
-	public long geto(){
+	public Long getid(){
 	    return o;
+	}	
+	public Long getsite(){
+		return w;
 	}
-	public Date gett(){
+	public Date gettime(){
 		return t;
 	}
-	public long getvol(){
-	    return vol;
+	public Long getvol(){
+		return vol;
 	}
 	public void setvol(long vol){
 		this.vol=vol;
-	}
-	public void sett(Date t){
-		this.t=t;
 	}
 }
