@@ -34,7 +34,7 @@ textarea{width:100%}
 .c99 li{margin-left:1.5ex;margin-right:0}
 
 .graf{position:relative;height:200px;border:solid 1px #000}
-.graf div{position:absolute;bottom:0;width:10px;border:solid 1px #000;border-bottom:none;background-color:#aaa}
+.graf div{position:absolute;bottom:0;width:10px;border:solid 1px #000;border-bottom:none;}
 .list{table-layout:fixed;border-collapse:collapse}
 .list th{font-weight:normal}
 .list td{text-align:right}
