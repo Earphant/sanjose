@@ -27,7 +27,7 @@ public class Picture{
 		if(path!=null){
 			String[]s=path.split("/");
 			if(s.length>1)
-				return Get(new Id(s[1]));
+				return Get(new Id(s[2]));
 		}
 		return null;
 	}
@@ -52,6 +52,7 @@ public class Picture{
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp,
 		InputStream stream,Long id,Long site)throws IOException, FileUploadException{
 		Blob b=new Blob(IOUtils.toByteArray(stream));
+		Id icon=new Id(req.getParameter("i"));
 		ServletFileUpload upload=new ServletFileUpload();				
 		FileItemIterator iterator=upload.getItemIterator(req); 
 		String ext = null;
@@ -60,7 +61,7 @@ public class Picture{
 			ext=t.getName().substring(t.getName().lastIndexOf(".")+1,t.getName().length());
 						
 			if (ext.equals("gif")) {  
-	            rsp.setContentType("image/gif");  
+	            rsp.setContentType("image/gif");
 	        } 
 			else if(ext.equals("jpeg")){  
 			    rsp.setContentType("image/jpeg");  
@@ -117,6 +118,28 @@ public class Picture{
   
 		String base=null;
 		PersistenceManager m=Helper.getMgr();
+		if(icon.i!=0){
+			try{
+				I12 i12=new I12(icon.i,icon.j,ext,b);
+				
+				byte[] oldImageData=b.getBytes();  		    
+				ImagesService imagesService = ImagesServiceFactory.getImagesService();
+			    Image oldImage = ImagesServiceFactory.makeImage(oldImageData);
+			    
+			    Transform resize3 = ImagesServiceFactory.makeResize(48, 48);
+			    Image newImage3 = imagesService.applyTransform(resize3, oldImage);
+			    byte[] newImageData3 = newImage3.getImageData();
+			    Blob ico=new Blob(newImageData3);
+			    i12.setico(ico);
+			    
+				m.makePersistent(i12);
+			}
+			finally{
+				m.close();
+			}
+			rsp.sendRedirect("/admins/users/"+icon.i+"."+icon.j);
+		}
+		else{
 		try{
 			I i=new I("","",12L,0L,1L,1L);
 			base=i.getb()+"."+i.gets();
@@ -161,6 +184,7 @@ public class Picture{
 			m.close();
 		}	    
 		rsp.sendRedirect("/"+base+"/");
+		}
 	}
 	
 	
