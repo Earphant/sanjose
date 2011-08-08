@@ -117,8 +117,9 @@ public class Graph{
 		  bb=ii; aa1=1;
 	     }
 	}
-	
-  
+	for(int ii=0;ii<8;ii++){
+		s=atr[ii]+"a"+s;
+	}
 	max-=min;
 	if(max==0)
 		return "";
@@ -126,7 +127,7 @@ public class Graph{
 	
 	min-=10000/k;
 	int n=10;
-	for(int aaa1=bb;aaa1>0;aaa1--){
+	for(int aaa1=bb-1;aaa1>-1;aaa1--){
 		s+="<div style=left:"+n+"px;height:"+(atr[aaa1]-min)*k/1000+"%;background-color:#0ff></div>";
 		n+=16;
 	}
