@@ -27,7 +27,7 @@ public class Picture{
 		if(path!=null){
 			String[]s=path.split("/");
 			if(s.length>1)
-				return Get(new Id(s[2]));
+				return Get(new Id(s[1]));
 		}
 		return null;
 	}
