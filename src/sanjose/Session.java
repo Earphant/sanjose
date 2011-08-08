@@ -20,9 +20,11 @@ public class Session{
 	public Session(String jump){
 		I i;
 		I11 u;
+		I1 idt;
 		if(user!=null && jump!=null){
 			name=user.getNickname();
 			email=user.getEmail();
+			
 			PersistenceManager m=Helper.getMgr();
 			try{
 				u=m.getObjectById(I11.class,email);
@@ -31,14 +33,17 @@ public class Session{
 			catch(JDOObjectNotFoundException e) {
 				i=new I(name,"",1L,0L,1L,1L);
 				m.makePersistent(i);
-				if(i.geti()==0L){
+				if(i.geti()==0L){ 
 					i.seti();
 					m.makePersistent(i);
 				}
 				u=new I11(i,email);
 				m.makePersistent(u);
+				idt=new I1(i);
+				m.makePersistent(idt);
 			}
 			finally{
+				
 				m.close();
 			}
 			id=u.geti();
