@@ -23,9 +23,11 @@ public class Steps {
 		if(timed.t!=null){
 			PersistenceManager mgr=Helper.getMgr();
 			Query q=mgr.newQuery(I139.class);
-			q.setFilter("n==nParam && o==oParam && t==tParam");	
+			q.setFilter("w==wParam && o==oParam && t==tParam");	
 			q.declareImports("import java.util.Date");
-			q.declareParameters("Long nParam,Long oParam,Date tParam");
+			q.declareParameters("Long iParam,Long jParam,Date tParam");
+			
+			
 			try{
 				@SuppressWarnings("unchecked")
 				List<I139> r=(List<I139>)q.execute(timed.n,timed.o,timed.t);
@@ -93,7 +95,7 @@ public class Steps {
 		}
 		else{
 			Query q=mgr.newQuery(I139.class);
-			q.setFilter("n==nParam && o==oParam && t==tParam");
+			q.setFilter("w==nParam && o==oParam && t==tParam");
 			q.declareImports("import java.util.Date");
 			q.declareParameters("Long iParam,Long jParam,Date tParam");
 			try{
@@ -117,21 +119,24 @@ public class Steps {
 		page.aside="<ul><li><a href=/post/steps>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><a href=/12.3/weight>Weight</a><li><a href=/12.3/heartrate>Heart Rate</a><li><a href=/12.3/steps>Steps</a><li><a href=/12.3/fat>Fat</a></ul>";
 		
 		
-		
-		
 		PersistenceManager mgr=Helper.getMgr();
 		Query q1=mgr.newQuery(I139.class);
-		q1.setOrdering("t desc");
 		try{
 			@SuppressWarnings("unchecked")
-			List<I139> r=(List<I139>)q1.execute();
+			List<I138> r=(List<I138>)q1.execute();
+			String as="steps";
 			page.Out("<div class=graf>");
-			page.Out(new Graph().Daily(r));
+			page.Out(new Graph().Daily(r,as));
 			page.Out("</div>");
 		}
 		finally{
 			q1.closeAll();
-		}	
+		}
+	 
+
+
+		
+		
 		
 		
 		Query q=mgr.newQuery(I139.class);
