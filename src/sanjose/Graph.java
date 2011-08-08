@@ -134,9 +134,9 @@ public class Graph{
 	int n=10;
 	for(int aaa1=bb-1;aaa1>-1;aaa1--){
 		if(atrd[aaa1]==0)
-		s+="<div   style=left:"+n+"px;height:"+(atr[aaa1]-min)*k/1000+"%;background-color:#f0f></div>";
+			s+="<div style=left:"+n+"px;height:"+(atr[aaa1]-min)*k/1000+"%;background-color:#f0f></div>";
 		else
-		s+="<div   style=left:"+n+"px;height:"+(atr[aaa1]-min)*k/1000+"%;background-color:#ff0><a href=/post/"+type+"?i=1.9."+atrt[aaa1]+" title="+atr[aaa1]+">¸Ä</a></div>";
+			s+="<a href=/post/"+type+"?i=1.9."+atrt[aaa1]+" title="+atr[aaa1]+"><div style=left:"+n+"px;height:"+(atr[aaa1]-min)*k/1000+"%;background-color:#ff0></div></a>";
 		n+=16;
 	}
 	return s;
