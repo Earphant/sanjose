@@ -52,7 +52,6 @@ public class Picture{
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp,
 		InputStream stream,Long id,Long site)throws IOException, FileUploadException{
 		Blob b=new Blob(IOUtils.toByteArray(stream));
-		Id icon=new Id(req.getParameter("i"));
 		ServletFileUpload upload=new ServletFileUpload();				
 		FileItemIterator iterator=upload.getItemIterator(req); 
 		String ext = null;
@@ -86,7 +85,7 @@ public class Picture{
 		    }
 			else if(ext.equals("jpg")){  
 				rsp.setContentType("image/JPEG");  
-		}
+		    }
 	        else if(ext.equals("jpc")){
 	        	rsp.setContentType("application/octet-stream");
 	        }
@@ -117,27 +116,39 @@ public class Picture{
 		}
   
 		String base=null;
-		PersistenceManager m=Helper.getMgr();
+		Id icon=new Id(req.getParameter("i"));
+		PersistenceManager m=Helper.getMgr();	
 		if(icon.i!=0){
+			byte[] oldImageData=b.getBytes();
+			ImagesService imagesService = ImagesServiceFactory.getImagesService();
+		    Image oldImage = ImagesServiceFactory.makeImage(oldImageData);
+		    
+		    Transform resize3 = ImagesServiceFactory.makeResize(48, 48);
+		    Image newImage3 = imagesService.applyTransform(resize3, oldImage);
+		    byte[] newImageData3 = newImage3.getImageData();
+		    Blob ico=new Blob(newImageData3);
+		    
+			Query q=m.newQuery(I12.class);
+			q.setFilter("i==iParam && j==jParam");
+			q.declareParameters("Long iParam,Long jParam");
 			try{
-				I12 i12=new I12(icon.i,icon.j,ext,b);
-				
-				byte[] oldImageData=b.getBytes();  		    
-				ImagesService imagesService = ImagesServiceFactory.getImagesService();
-			    Image oldImage = ImagesServiceFactory.makeImage(oldImageData);
-			    
-			    Transform resize3 = ImagesServiceFactory.makeResize(48, 48);
-			    Image newImage3 = imagesService.applyTransform(resize3, oldImage);
-			    byte[] newImageData3 = newImage3.getImageData();
-			    Blob ico=new Blob(newImageData3);
-			    i12.setico(ico);
-			    
-				m.makePersistent(i12);
+				@SuppressWarnings("unchecked")
+				List<I12> r=(List<I12>)q.execute(icon.i,icon.j);
+				if(!r.isEmpty()){
+					I12 i12 = r.get(0);
+				    i12.setico(ico);
+				    m.makePersistent(i12);
+				}
+				else{
+					I12 i12 = new I12(icon.i,icon.j,ext,ico);
+				    m.makePersistent(i12);
+				}
 			}
 			finally{
+				q.closeAll();
 				m.close();
 			}
-			rsp.sendRedirect("/admins/users/"+icon.i+"."+icon.j);
+			rsp.sendRedirect("/admins/users?i="+icon.i+"."+icon.j);
 		}
 		else{
 		try{
@@ -171,13 +182,13 @@ public class Picture{
 		    Image newImage2 = imagesService.applyTransform(resize2, oldImage);
 		    byte[] newImageData2 = newImage2.getImageData();
 		    Blob thm=new Blob(newImageData2);
-		    i12.setthm(thm);		    
+		    i12.setthm(thm);
 		    
 		    Transform resize3 = ImagesServiceFactory.makeResize(48, 48);
 		    Image newImage3 = imagesService.applyTransform(resize3, oldImage);
 		    byte[] newImageData3 = newImage3.getImageData();
 		    Blob ico=new Blob(newImageData3);
-		    i12.setico(ico);		   
+		    i12.setico(ico);
 
 		}
 		finally{
