@@ -11,6 +11,11 @@ public class SystemServlet extends HttpServlet{
 	private UserService usv=UserServiceFactory.getUserService();
 	private Page page;
 
+	private void Settings(HttpServletRequest req,HttpServletResponse rsp)
+		throws IOException{	
+		page.title="Settings";
+		page.End(null);
+	}
 	private void Signin(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		Session s=new Session("");
@@ -40,6 +45,10 @@ public class SystemServlet extends HttpServlet{
 
 		if(p.equals("/"))
 			page.title="System";
+		else if(p.equalsIgnoreCase("/settings")){
+			Settings(req,rsp);
+			return;
+		}
 		else if(p.equalsIgnoreCase("/signin")){
 			Signin(req,rsp);
 			return;
