@@ -35,12 +35,12 @@ public class I12{
 		this.ext=ext;
 		this.org=org;
 	}
-	public I12(Long i,Long j,String ext,Blob org){
+	public I12(Long i,Long j,String ext,Blob ico){
 		this.key=i+"."+j;
 		this.i=i;
 		this.j=j;
 		this.ext=ext;
-		this.org=org;
+		this.ico=ico;
 	}
 	public Long geti(){
 	    return i;

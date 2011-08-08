@@ -23,7 +23,7 @@ public class AdminsServlet extends HttpServlet{
 			List<I11> r=(List<I11>)q11.execute();
 			if(!r.isEmpty()){
 				for(I11 i11:r){
-					page.Out("<a href=/admins/users?i="+i11.geti()+"."+i11.getj()+">"+i11.geteml()+"</a><br>");
+					page.Out("<a href=/admins/pictures?i="+i11.geti()+"."+i11.getj()+">"+i11.geteml()+"</a><br>");
 				}
 			}
 		}
@@ -44,7 +44,7 @@ public class AdminsServlet extends HttpServlet{
 			List<I11> r=(List<I11>)q11.execute();
 			if(!r.isEmpty()){
 				for(I11 i11:r){
-					page.Out("<a href=/admins/users?i="+i11.geti()+"."+i11.getj()+">"+i11.geteml()+"</a><br>");
+					page.Out("<a href=/admins/posts?i="+i11.geti()+"."+i11.getj()+">"+i11.geteml()+"</a><br>");
 				}
 			}
 		}
