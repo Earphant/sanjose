@@ -11,47 +11,47 @@ import javax.servlet.http.*;
 
 @SuppressWarnings("serial")
 public class AdminsServlet extends HttpServlet{
+	@SuppressWarnings("unchecked")
 	private void Pictures(HttpServletRequest req,HttpServletResponse rsp) throws IOException{
 		Page page=new Page(rsp);
 		page.title="Pictures";
 		page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
 		PersistenceManager mgr=Helper.getMgr();
-		Query q=mgr.newQuery(I.class);
-		q.setOrdering("t desc");
+		Query q11=mgr.newQuery(I11.class);
+		q11.setOrdering("i desc");
 		try{
-			@SuppressWarnings("unchecked")
-			List<I> r=(List<I>)q.execute();
+			List<I11> r=(List<I11>)q11.execute();
 			if(!r.isEmpty()){
-				for(I i:r){
-					page.Out(i.getx()+"<br>");
+				for(I11 i11:r){
+					page.Out("<a href=/admins/users?i="+i11.geti()+"."+i11.getj()+">"+i11.geteml()+"</a><br>");
 				}
 			}
 		}
 		finally{
-			q.closeAll();
+			q11.closeAll();
 		}
-		page.End(null);	
+		page.End(null);
 	}
+	@SuppressWarnings("unchecked")
 	private void Posts(HttpServletRequest req,HttpServletResponse rsp) throws IOException{
 		Page page=new Page(rsp);
 		page.title="Posts";
 		page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
 		PersistenceManager mgr=Helper.getMgr();
-		Query q=mgr.newQuery(I.class);
-		q.setOrdering("t desc");
+		Query q11=mgr.newQuery(I11.class);
+		q11.setOrdering("i desc");
 		try{
-			@SuppressWarnings("unchecked")
-			List<I> r=(List<I>)q.execute();
+			List<I11> r=(List<I11>)q11.execute();
 			if(!r.isEmpty()){
-				for(I i:r){
-					page.Out(i.getx()+"<br>");
+				for(I11 i11:r){
+					page.Out("<a href=/admins/users?i="+i11.geti()+"."+i11.getj()+">"+i11.geteml()+"</a><br>");
 				}
 			}
 		}
 		finally{
-			q.closeAll();
+			q11.closeAll();
 		}
-		page.End(null);	
+		page.End(null);		
 	}
 	@SuppressWarnings("unchecked")
 	private void Users(HttpServletRequest req,HttpServletResponse rsp) throws IOException{
@@ -82,7 +82,7 @@ public class AdminsServlet extends HttpServlet{
 			page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
 			page.Out("<form method=post action=/admins/users>");
 			
-			page.Out("<a href=/post/uploads?i="+id.i+"."+id.j+"><img src=/icons/"+id.i+"."+id.j+".jpg></a><br>");
+			page.Out("<a href=/post/uploads?i="+id.i+"."+id.j+"><img src=/icon/"+id.i+"."+id.j+"></a><br>");
 			PersistenceManager mgr=Helper.getMgr();	
 			Query q11=mgr.newQuery(I11.class);
 			q11.setFilter("i==iParam && j==jParam");
