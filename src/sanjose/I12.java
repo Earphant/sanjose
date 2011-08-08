@@ -1,13 +1,12 @@
 package sanjose;
 
-//import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Blob;
-//import com.google.appengine.api.datastore.Key;
+
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class I12{
@@ -56,5 +55,14 @@ public class I12{
 	}
 	public Blob getthm(){
 	    return thm;
+	}
+	public void setreg(Blob reg){
+		this.reg=reg;
+	}
+	public void setthm(Blob thm){
+		this.thm=thm;
+	}
+	public void setico(Blob ico){
+		this.ico=ico;
 	}
 }

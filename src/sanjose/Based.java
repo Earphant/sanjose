@@ -7,13 +7,13 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.HttpServletResponse;
 
+
 public class Based{
 	private void Index(String plink,Page page)throws IOException{
 		page.title=plink;
-		page.aside="<ul><li><a href=/post>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><li><a href=/12.3/weight>Weight</a><li><a href=/12.3/heartrate>Heart Rate</a><li><a href=/12.3/steps>Steps</a><li><a href=/12.3/fat>Fat</a></ul>";
+		page.aside="<ul><li><a href=/post>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><li><a href=/12.3/weight>Weight</a><li><a href=/12.3/heartrate>Heart Rate</a><li><a href=/12.3/steps>Steps</a><li><a href=/12.3/fat>Fat</a></ul>";		
 		PersistenceManager mgr=Helper.getMgr();
-		Query q=mgr.newQuery(I.class);
-		//q.setFilter("a==0");
+		Query q=mgr.newQuery(I.class);		
 		q.setOrdering("m desc");
 		try{
 			@SuppressWarnings("unchecked")
@@ -22,10 +22,13 @@ public class Based{
 				for(I i:r){
 					String d=i.geti()+"."+i.getj();
 					String x=i.getx();
+					String base=i.getb()+"."+i.gets();
+				
 					if(x==null || x.equals(""))
 						x="<i>(Untitled)</i>";
-					if(i.geta()==12)
-						page.Out("<a href=/1.1/"+d+">"+x+"</a>");
+					if(i.geta()==12){
+						page.Out("<a href=/"+base+"/"+d+"><img src=/thumbnails/"+d+".jpg></a>");
+					}
 					else
 						page.Out(x);
 					page.Out(" <a href=/post?i="+d+">=</a><br>");
@@ -37,8 +40,8 @@ public class Based{
 		}
 		page.End(null);
 	}
-	private void Object(String id,String base,HttpServletResponse rsp,
-		Page page)throws IOException{
+	private void Object(String id,String base,HttpServletResponse rsp,Page page)
+	    throws IOException{
 		//Id b=new Id(base);
 		Id d=new Id(id);
 		if(d.IsPicture()){
@@ -56,7 +59,7 @@ public class Based{
 				if(!r.isEmpty()){
 					I i=r.get(0);
 					if(i.geta()==12)
-						page.Out("<a href=/original/"+id+".jpg title=test><img src=/"+base+"/"+id+".jpg></a>");
+						page.Out("<a href=/originals/"+id+".jpg title=test><img src=/"+base+"/"+id+".jpg></a>");
 					page.Out(i.getx());
 				}
 			}
