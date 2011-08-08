@@ -116,7 +116,7 @@ public class HeartRate {
 		page.aside="<ul><li><a href=/post/heartrate>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><a href=/12.3/weight>Weight</a><li><a href=/12.3/heartrate>Heart Rate</a><li><a href=/12.3/steps>Steps</a><li><a href=/12.3/fat>Fat</a></ul>";
 		
 
-		long tx1=100l;int day1=0;int day2=0;
+		long tx1=100l;int day1=0;int day2=0;int a=0;int f=0;
 		long tx2=86400000l;
 		long tx8=3l;
 		long tx4=0l;
@@ -125,15 +125,10 @@ public class HeartRate {
 		long sos=0l;
 	    Date t1=new Date();
 	    long tt1=t1.getTime();
+		int ii2=0;
+		long dd=0;
+		
 	    tt1=tt1+tx2/tx8;
-		
-		
-	
-		
-		
-		
-	   
-		
 		long[] atr={0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l,0l};
 				PersistenceManager mgr=Helper.getMgr();
 		
@@ -147,7 +142,7 @@ public class HeartRate {
 				 tx4=0l;
 				 tx5=0l;re=1l;
 				for(I136 i:r){
-					
+					f++;
 					long tx3= i.getvol();
 					long tt2 = i.gett().getTime();
 					long tt3=tt1-tt2;
@@ -172,38 +167,21 @@ public class HeartRate {
                           }
                        tx4= tx3;
 					   day2=day1;
-						
-						
-						
-					}atr[day2]=(tx5+tx4)/re;
+						}
+					atr[day2]=(tx5+tx4)/re;
 				
 				}
-				
-				
-				
-				
-				
-			       
+					       
 			}
 		}
 		finally{
 			q1.closeAll();
-		}
-	 
+		}	
+						
+	   for(int ii1=0;ii1<80;ii1++){
 		
-	
-		
-		int ii2=0;
-		
-		long dd=0;
-		
-		
-		int a=0;
-		
-		for(int ii1=0;ii1<80;ii1++)
-		
-		{  if(atr[ii1]!=0)
-		 	{  
+		  if(atr[ii1]!=0){
+		 	  
 			  if(a==0)
 		    {
 			
@@ -240,7 +218,8 @@ public class HeartRate {
 	long max=0l;	long min=atr[0]; long d=0l;
 	long aaa=200l;  int bb=30; int aa1=0;
 	
-	for(int ii=0;ii<30;ii++){
+
+	  for(int ii=0;ii<30;ii++){
 		
 		if(max<atr[ii]&&aa1==0){
 			max=atr[ii];
@@ -251,14 +230,15 @@ public class HeartRate {
 		if(atr[ii]==0&&aa1==0){ 
 		  bb=ii; aa1=1;
 	     }
-	}
+		d=max-min;
+	    aaa=10l;
+	    max=max/aaa;
+	    aaa=200l;
+	 }
 	
 	   int s11=550+(30-bb)*17;
-	   d=max-min;
-	   aaa=10l;
-	   max=max/aaa;
-	   aaa=200l;
-	   for(int ii=0;ii<bb;ii++){
+	  
+	   for(int ii=0;ii<bb&&d!=0;ii++){
 	     atr[ii]=(atr[ii]-min+max)*aaa/d;
 	     abc[ii]=(int)atr[ii];	
 	 }
@@ -283,8 +263,11 @@ public class HeartRate {
 		    
 		    
 		}
-		page.Out("<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>");
-		page.Out("<br><br>");
+	
+
+	
+	page.Out("<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>");
+		page.Out("<br><br>asd");
 		
 			
 		PersistenceManager mgrdata=Helper.getMgr();
@@ -311,4 +294,14 @@ public class HeartRate {
 		}
 		page.End(null);
 	}
-}
+	}
+	
+
+		
+	
+		
+		
+		
+	   
+		
+		
