@@ -21,9 +21,9 @@ public class HeartRate {
 		if(timed.t!=null){
 			PersistenceManager mgr=Helper.getMgr();
 			Query q=mgr.newQuery(I136.class);
-			q.setFilter("n==nParam && o==oParam && t==tParam");
+			q.setFilter("w==wParam && o==oParam && t==tParam");
 			q.declareImports("import java.util.Date");
-			q.declareParameters("Long nParam,Long oParam,Date tParam");
+			q.declareParameters("Long iParam,Long jParam,Date tParam");
 			try{
 				@SuppressWarnings("unchecked")
 				List<I136> r=(List<I136>)q.execute(timed.n,timed.o,timed.t);
@@ -92,7 +92,7 @@ public class HeartRate {
 		}
 		else{
 			Query q=mgr.newQuery(I136.class);
-			q.setFilter("n==nParam && o==oParam && t==tParam");
+			q.setFilter("w==wParam && o==oParam && t==tParam");
 			q.declareImports("import java.util.Date");
 			q.declareParameters("Long iParam,Long jParam,Date tParam");
 			try{
@@ -123,7 +123,8 @@ public class HeartRate {
 			@SuppressWarnings("unchecked")
 			List<I136> r=(List<I136>)q3.execute();
 			page.Out("<div class=graf>");
-			page.Out(new Graph().Daily(r));
+			String s="heartrate";
+			page.Out(new Graph().Daily(r,s));
 			page.Out("</div>");
 		}
 		finally{
