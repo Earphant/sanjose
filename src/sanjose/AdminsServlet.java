@@ -82,7 +82,7 @@ public class AdminsServlet extends HttpServlet{
 			page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
 			page.Out("<form method=post action=/admins/users>");
 			
-			page.Out("<a href=/post/uploads?i="+id.i+"."+id.j+"><img src=/icon/"+id.i+"."+id.j+"></a><br>");
+			page.Out("<a href=/post/uploads?i="+id.i+"."+id.j+"><img src=/icons/"+id.i+"."+id.j+"></a><br>");
 			PersistenceManager mgr=Helper.getMgr();	
 			Query q11=mgr.newQuery(I11.class);
 			q11.setFilter("i==iParam && j==jParam");
