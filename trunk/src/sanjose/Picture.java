@@ -62,58 +62,58 @@ public class Picture{
 			FileItemStream t=iterator.next(); 
 			ext=t.getName().substring(t.getName().lastIndexOf(".")+1,t.getName().length());
 						
-			if (ext.equals("gif")) {  
+			if (ext.equalsIgnoreCase("gif")) {  
 	            rsp.setContentType("image/gif");
 	        } 
-			else if(ext.equals("jpeg")){  
+			else if(ext.equalsIgnoreCase("jpeg")){  
 			    rsp.setContentType("image/jpeg");  
 		    }
-			else if(ext.equals("jpg")){  
+			else if(ext.equalsIgnoreCase("jpg")){  
 			    rsp.setContentType("image/jpg");  
 	        }
-			else if(ext.equals("png")){  
+			else if(ext.equalsIgnoreCase("png")){  
 			    rsp.setContentType("image/png");  
 		    }
-			else if(ext.equals("swf")){  
+			else if(ext.equalsIgnoreCase("swf")){  
 			    rsp.setContentType("application/x-shockwave-flash");  
 		    }
-			else if(ext.equals("psd")){  
+			else if(ext.equalsIgnoreCase("psd")){  
 				rsp.setContentType("image/psd");  
 		    }
-			else if(ext.equals("bmp")){
+			else if(ext.equalsIgnoreCase("bmp")){
 	        	rsp.setContentType("image/bmp");
 	        }
-			else if(ext.equals("tiff")){  
+			else if(ext.equalsIgnoreCase("tiff")){  
 				rsp.setContentType("image/tiff");  
 		    }
-			else if(ext.equals("jpg")){  
+			else if(ext.equalsIgnoreCase("jpg")){  
 				rsp.setContentType("image/JPEG");  
 		    }
-	        else if(ext.equals("jpc")){
+	        else if(ext.equalsIgnoreCase("jpc")){
 	        	rsp.setContentType("application/octet-stream");
 	        }
-	        else if(ext.equals("jp2")){
+	        else if(ext.equalsIgnoreCase("jp2")){
 	        	rsp.setContentType("image/jp2");
 	        }
-	        else if(ext.equals("jpx")){
+	        else if(ext.equalsIgnoreCase("jpx")){
 	        	rsp.setContentType("application/octet-stream");
 	        }
-	        else if(ext.equals("jb2")){
+	        else if(ext.equalsIgnoreCase("jb2")){
 	        	rsp.setContentType("application/octet-stream");
 	        }
-	        else if(ext.equals("swc")){
+	        else if(ext.equalsIgnoreCase("swc")){
 	        	rsp.setContentType("application/x-shockwave-flash");
 	        }
-	        else if(ext.equals("iff")){
+	        else if(ext.equalsIgnoreCase("iff")){
 	        	rsp.setContentType("image/iff");
 	        }
-	        else if(ext.equals("wbmp")){
+	        else if(ext.equalsIgnoreCase("wbmp")){
 	        	rsp.setContentType("image/vnd.wap.wbmp");
 	        }
-	        else if(ext.equals("xbm")){
+	        else if(ext.equalsIgnoreCase("xbm")){
 	        	rsp.setContentType("image/xbm");
 	        }
-	        else if(ext.equals("ico")){
+	        else if(ext.equalsIgnoreCase("ico")){
 	        	rsp.setContentType("image/vnd.microsoft.icon");
 	        }
 		}
@@ -151,10 +151,7 @@ public class Picture{
 				q.closeAll();
 				m.close();
 			}
-			if(icon.ext!=null)
-				rsp.sendRedirect("/admins/users?i="+icon.i+"."+icon.j);
-			else 
-				rsp.sendRedirect("/system/settings");
+			rsp.sendRedirect("/admins/users?i="+icon.i+"."+icon.j);
 		}
 		else{
 			Long currenti=0L;
