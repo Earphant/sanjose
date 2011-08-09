@@ -149,7 +149,10 @@ public class Picture{
 				q.closeAll();
 				m.close();
 			}
-			rsp.sendRedirect("/admins/users?i="+icon.i+"."+icon.j);
+			if(icon.ext!=null)
+				rsp.sendRedirect("/admins/users?i="+icon.i+"."+icon.j);
+			else
+				rsp.sendRedirect("/system/settings");
 		}
 		else{
 			Session s=new Session("");
