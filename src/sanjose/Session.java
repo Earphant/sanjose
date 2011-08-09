@@ -20,7 +20,6 @@ public class Session{
 	public Session(String jump){
 		I i;
 		I11 u;
-		I1 idt;
 		if(user!=null && jump!=null){
 			name=user.getNickname();
 			email=user.getEmail();
@@ -39,11 +38,10 @@ public class Session{
 				}
 				u=new I11(i,email);
 				m.makePersistent(u);
-				idt=new I1(i);
-				m.makePersistent(idt);
+				//I1 idt=new I1(i);
+				//m.makePersistent(idt);
 			}
 			finally{
-				
 				m.close();
 			}
 			id=u.geti();
