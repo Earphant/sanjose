@@ -49,7 +49,7 @@ public class AdminsServlet extends HttpServlet{
 				if(!r.isEmpty()){	
 					for(I i:r){
 						if(i.geta()==12L)
-							page.Out("<a href=/post/uploads?i="+i.geti()+"."+i.getj()+"><img src=/thumbnails/"+i.geti()+"."+i.getj()+"></a><br>");
+							page.Out("<a href=/post/uploads?i="+i.getId()+"."+i.getSite()+"><img src=/thumbnails/"+i.getId()+"."+i.getSite()+"></a><br>");
 
 					}
 				}
@@ -98,7 +98,7 @@ public class AdminsServlet extends HttpServlet{
 				if(!r.isEmpty()){	
 					for(I i:r){
 						if(i.geta()==12)
-							page.Out("<a href=/post/upload?i="+i.geti()+"."+i.getj()+"><img src=/thumbnails/"+i.geti()+"."+i.getj()+"></a><br>");
+							page.Out("<a href=/post/upload?i="+i.getId()+"."+i.getSite()+"><img src=/thumbnails/"+i.getId()+"."+i.getSite()+"></a><br>");
                         if(i.geta()==135){
                         	long t = i.geti135().gettime().getTime();
         					SimpleDateFormat time=new SimpleDateFormat("yyyyƒÍMM‘¬dd»’ HH:mm:ss");

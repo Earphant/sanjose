@@ -48,9 +48,9 @@ public class Based{
 		
 			if(!r.isEmpty()){
 				for(I i:r){
-					String d=i.geti()+"."+i.getj();
+					String d=i.getId()+"."+i.getSite();
 					String t=i.getx();
-					String base=i.geto()+"."+i.getw();
+					String base=i.getOwnerId()+"."+i.getOwnerSite();
 				
 					if(t==null || t.equals(""))
 						t="<i>(Untitled)</i>";

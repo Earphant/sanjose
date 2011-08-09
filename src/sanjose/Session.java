@@ -32,10 +32,7 @@ public class Session{
 			catch(JDOObjectNotFoundException e) {
 				i=new I(name,"",1L,0L,1L,1L);
 				m.makePersistent(i);
-				if(i.geti()==0L){ 
-					i.seti();
-					m.makePersistent(i);
-				}
+				i.setId(m);
 				u=new I11(i,email);
 				m.makePersistent(u);
 				I1 idt=new I1(i);

@@ -19,8 +19,8 @@ public class I138 extends Single{
 	
 	public I138(I i,Long vol,Date time){
 		this.key=i+"."+j+"."+time;
-		this.i=i.geti();
-		this.j=i.getj();
+		this.i=i.getId();
+		this.j=i.getSite();
 		this.t=time;
 		this.vol=vol;
 	}

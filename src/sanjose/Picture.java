@@ -101,7 +101,7 @@ public class Picture{
 			rsp.setContentType(Mime(ext));
 		}
   
-		String base=null;
+		//String base=null;
 		Id icon=new Id(req.getParameter("i"));
 		PersistenceManager m=Helper.getMgr();	
 		if(icon.i!=0){
@@ -142,18 +142,11 @@ public class Picture{
 		else{
 			Session	s=new Session("");
 			try{
-				I i=new	I("","",12L,0L,1L,1L);
-				base=s.id+"."+s.site;
-
+				I i=new	I("","",12L,0L,s.id,s.site);
 				m.makePersistent(i);
-				if(i.geti()==0L)
-					i.seti();
-				i.seto(s.id);
-				i.setw(s.site);
-				m.makePersistent(i);
+				i.setId(m);
 				I12 i12=new I12(i,ext,b);			
 				m.makePersistent(i12);
-				
 				
 				byte[] oldImageData=b.getBytes();		    
 				ImagesService imagesService = ImagesServiceFactory.getImagesService();
@@ -185,7 +178,7 @@ public class Picture{
 			finally{
 				m.close();
 			}	    
-			rsp.sendRedirect("/"+base+"/");
+			rsp.sendRedirect("/"+s.id+"."+s.site+"/");
 		}
 	}
 	

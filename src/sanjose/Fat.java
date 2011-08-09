@@ -86,12 +86,9 @@ public class Fat {
         Timed timed=new Timed(req.getParameter("i"));
         if(timed.t==null){
         	try{
-				I i=new I("","",135L,0L,1L,1L);
+				I i=new I("","",135L,0L,s.id,s.site);
 				mgr.makePersistent(i);
-				if(i.geti()==0L)
-					i.seti();
-				i.seto(s.id);
-				i.setw(s.site);
+				i.setId();
 				I135 i135=new I135(i,fat,wat,t);
 				i.seti135(i135);
 				mgr.makePersistent(i);

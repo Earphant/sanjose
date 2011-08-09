@@ -6,6 +6,7 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Text;
 
+import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
@@ -78,7 +79,7 @@ public class I{
 		this.x=x;
 		this.e=new Text("");
 	}
-	public I(String text,String guid,long classid,long rate,long owner,long ownersite){
+	public I(String text,String guid,long classid,long rate,long ownerid,long ownersite){
 		Date c=new Date();
 		this.i=0L;
 		this.j=9L;
@@ -86,7 +87,7 @@ public class I{
 		this.b=o;
 		this.c=c;
 		this.m=c;
-		this.o=owner;
+		this.o=ownerid;
 		this.w=ownersite;
 		this.p=guid;
 		this.r=rate;
@@ -104,14 +105,11 @@ public class I{
 	public String gete(){
 	    return e.getValue();
 	}
-	public long geti(){
+	public long getId(){
 	    return i;
 	}
-	public long getj(){
+	public long getSite(){
 	    return j;
-	}
-	public long geto(){
-	    return o;
 	}
 	public String getp(){
 	    return p;
@@ -119,7 +117,10 @@ public class I{
 	public long gets(){
 	    return s;
 	}
-	public long getw(){
+	public long getOwnerId(){
+	    return o;
+	}
+	public long getOwnerSite(){
 	    return w;
 	}
 	public String getx(){
@@ -140,15 +141,13 @@ public class I{
 	public I139 geti139(){
 	    return i139;
 	}
-	public void seti(){
+	public void setId(){
 		if(this.i==0L)
 			this.i=key.getId();
 	}
-	public void seto(long o){
-	    this.o=o;
-	}
-	public void setw(long w){
-	    this.w=w;
+	public void setId(PersistenceManager mgr){
+		if(this.i==0L)
+			this.i=key.getId();
 	}
 	public void setx(String val){
 	    this.x=val;

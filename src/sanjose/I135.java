@@ -24,8 +24,8 @@ public class I135{
 
 	public I135(I i,Long fat,Long wat,Date time){
 		this.key=i+"."+j+"."+time;
-		this.i=i.geti();
-		this.j=i.getj();
+		this.i=i.getId();
+		this.j=i.getSite();
 		this.fat=fat;
 		this.wat=wat;
 		this.t=time;

@@ -16,8 +16,8 @@ public class I11{
 	private String pwd;
 
 	public I11(I i,String eml){
-		this.i=i.geti();
-		this.j=i.getj();
+		this.i=i.getId();
+		this.j=i.getSite();
 		this.eml=eml;
 		this.pwd="";
 	}

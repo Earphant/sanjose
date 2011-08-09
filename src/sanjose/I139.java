@@ -19,8 +19,8 @@ public class I139 extends Single{
 
 	public I139(I i,Long vol,Date time){
 		this._key=i+"."+j+"."+time;
-		this.i=i.geti();
-		this.j=i.getj();
+		this.i=i.getId();
+		this.j=i.getSite();
 		this.t=time;
 		this.vol=vol;
 	}
