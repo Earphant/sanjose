@@ -56,8 +56,8 @@ public class I{
 		this.i=i;
 		this.j=j;
 		this.a=a;
-		this.b=1L;
-		this.s=1L;
+		this.b=o;
+		this.s=w;
 		this.o=o;
 		this.w=w;
 		this.c=c;
@@ -73,14 +73,14 @@ public class I{
 		this.i=0L;
 		this.j=9L;
 		this.a=classid;
-		this.b=1L;
+		this.b=o;
 		this.c=c;
 		this.m=c;
 		this.o=owner;
 		this.w=ownersite;
 		this.p=guid;
 		this.r=rate;
-		this.s=1L;
+		this.s=w;
 		this.t=c;
 		this.x=text;
 		this.e=new Text("");
