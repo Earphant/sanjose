@@ -33,10 +33,10 @@ public class SystemServlet extends HttpServlet{
 		try{
 			List<I12> r12=(List<I12>)q12.execute(s.id,s.site);
 			if(!r12.isEmpty()){	
-				page.Out("<a href=/post/uploads?i="+s.id+"."+s.site+"><img src=/icons/"+s.id+"."+s.site+"></a><br>");
+				page.Out("<a href=/post/upload?i="+s.id+"."+s.site+"><img src=/icons/"+s.id+"."+s.site+"></a><br>");
 			}
 			else
-				page.Out("<a href=/post/uploads?i="+s.id+"."+s.site+"><div style=background-color:#EEE;height:48px;width:48px>&nbsp;</div></a>");
+				page.Out("<a href=/post/upload?i="+s.id+"."+s.site+"><div style=background-color:#EEE;height:48px;width:48px>&nbsp;</div></a>");
 		}
 		finally{
 			q12.closeAll();
