@@ -23,7 +23,7 @@ public class Steps {
 		if(timed.t!=null){
 			PersistenceManager mgr=Helper.getMgr();
 			Query q=mgr.newQuery(I139.class);
-			q.setFilter("w==wParam && o==oParam && t==tParam");	
+			q.setFilter("i==iParam && j==jParam && t==tParam");	
 			q.declareImports("import java.util.Date");
 			q.declareParameters("Long iParam,Long jParam,Date tParam");
 			
@@ -85,8 +85,15 @@ public class Steps {
 		Session s=new Session("/post");
 		Timed timed=new Timed(req.getParameter("i"));
 		if(timed.t==null){
-			I139 i139=new I139(s.id,s.site,t,vol);
 			try{
+				I i=new I("","",139L,0L,1L,1L);
+				mgr.makePersistent(i);
+				if(i.geti()==0L)
+					i.seti();
+				i.seto(s.id);
+				i.setw(s.site);
+				mgr.makePersistent(i);
+				I139 i139=new I139(i,vol,t);			
 				mgr.makePersistent(i139);
 			}
 			finally{
@@ -111,13 +118,13 @@ public class Steps {
 				mgr.close();
 			}
 		}
-		rsp.sendRedirect("/12.3/steps");
+		rsp.sendRedirect("/"+s.id+"."+s.site+"/steps");
 	}
 	public void Out(String plink,Page page) throws IOException{
+		String[]s=plink.split("/");
+		String base=s[1];
 		page.title="Steps";
-		
-		page.aside="<ul><li><a href=/post/steps>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><a href=/12.3/weight>Weight</a><li><a href=/12.3/heartrate>Heart Rate</a><li><a href=/12.3/steps>Steps</a><li><a href=/12.3/fat>Fat</a></ul>";
-		
+		page.aside="<ul><li><a href=/post/weight>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+base+"/profile>Profile</a><li><a href=/"+base+"/contacts>Contacts</a><li><a href=/"+base+"/tags>Tags</a></ul><ul><li><a href=/"+base+"/dashboard>Dashboard</a><li><a href=/"+base+"/activities>Activities</a><li><a href=/"+base+"/historical>Historical</a></ul><ul><li><a href=/"+base+"/weight>Weight</a><li><a href=/"+base+"/heartrate>Heart Rate</a><li><a href=/"+base+"/steps>Steps</a><li><a href=/"+base+"/fat>Fat</a></ul>";
 		
 		PersistenceManager mgr=Helper.getMgr();
 		Query q1=mgr.newQuery(I139.class);
@@ -148,7 +155,7 @@ public class Steps {
 				for(I139 i139:r){
 					long t = i139.gettime().getTime();
 					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
-					page.Out(time.format(t)+"<br>"+i139.getid()+"."+i139.getsite()+": "+i139.getvol()+" <a href=/post/steps?i="+i139.getid()+"."+i139.getsite()+"."+i139.gettime().getTime()+">修改</a><br>");
+					page.Out(time.format(t)+"<br>"+base+": "+i139.getvol()+" <a href=/post/steps?i="+i139.geti()+"."+i139.getj()+"."+i139.gettime().getTime()+">修改</a><br>");
 				}
 			}
 		}
@@ -159,5 +166,3 @@ public class Steps {
 	
                }
            }
-	
-	

@@ -85,8 +85,15 @@ public class Fat {
         Session s=new Session("/post");
         Timed timed=new Timed(req.getParameter("i"));
         if(timed.t==null){
-        	I135 i135=new I135(s.id,s.site,fat,wat,t);
-			try{
+        	try{
+				I i=new I("","",135L,0L,1L,1L);
+				mgr.makePersistent(i);
+				if(i.geti()==0L)
+					i.seti();
+				i.seto(s.id);
+				i.setw(s.site);
+				mgr.makePersistent(i);
+				I135 i135=new I135(i,fat,wat,t);			
 				mgr.makePersistent(i135);
 			}
 			finally{
@@ -113,11 +120,14 @@ public class Fat {
 				mgr.close();
 			}
 		}
-		rsp.sendRedirect("/12.3/fat");
+		rsp.sendRedirect("/"+s.id+"."+s.site+"/fat");
 	}
 	public void Out(String plink,Page page) throws IOException{
+		String[]s=plink.split("/");
+		String base=s[1];
 		page.title="Fat";
-		page.aside="<ul><li><a href=/post/fat>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><a href=/12.3/weight>Weight</a><li><a href=/12.3/heartrate>Heart Rate</a><li><a href=/12.3/steps>Steps</a><li><a href=/12.3/fat>Fat</a></ul>";
+		page.aside="<ul><li><a href=/post/weight>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+base+"/profile>Profile</a><li><a href=/"+base+"/contacts>Contacts</a><li><a href=/"+base+"/tags>Tags</a></ul><ul><li><a href=/"+base+"/dashboard>Dashboard</a><li><a href=/"+base+"/activities>Activities</a><li><a href=/"+base+"/historical>Historical</a></ul><ul><li><a href=/"+base+"/weight>Weight</a><li><a href=/"+base+"/heartrate>Heart Rate</a><li><a href=/"+base+"/steps>Steps</a><li><a href=/"+base+"/fat>Fat</a></ul>";
+
 		PersistenceManager mgrimg=Helper.getMgr();
 		Query q=mgrimg.newQuery(I135.class);
 		q.setOrdering("t asc");
@@ -167,7 +177,7 @@ public class Fat {
 				for(I135 i135:r){
 					long t = i135.gett().getTime();
 					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-					page.Out(time.format(t)+"<br>"+i135.geto()+"."+i135.getw()+":  Fat: "+i135.getfat()+" Water: "+i135.getwat()+" <a href=/post/fat?i="+i135.geto()+"."+i135.getw()+"."+i135.gett().getTime()+">修改</a><br>");
+					page.Out(time.format(t)+"<br>"+base+":  Fat: "+i135.getfat()+" Water: "+i135.getwat()+" <a href=/post/fat?i="+i135.geti()+"."+i135.getj()+"."+i135.gett().getTime()+">修改</a><br>");
 				}
 			}
 		}

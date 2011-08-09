@@ -21,7 +21,7 @@ public class HeartRate {
 		if(timed.t!=null){
 			PersistenceManager mgr=Helper.getMgr();
 			Query q=mgr.newQuery(I136.class);
-			q.setFilter("w==wParam && o==oParam && t==tParam");
+			q.setFilter("i==iParam && j==jParam && t==tParam");
 			q.declareImports("import java.util.Date");
 			q.declareParameters("Long iParam,Long jParam,Date tParam");
 			try{
@@ -82,9 +82,16 @@ public class HeartRate {
         Session s=new Session("/post");
         Timed timed=new Timed(req.getParameter("i"));    
 		if(timed.t==null){
-			I136 i=new I136(s.id,s.site,t,vol);
 			try{
+				I i=new I("","",136L,0L,1L,1L);
 				mgr.makePersistent(i);
+				if(i.geti()==0L)
+					i.seti();
+				i.seto(s.id);
+				i.setw(s.site);
+				mgr.makePersistent(i);
+				I136 i136=new I136(i,vol,t);			
+				mgr.makePersistent(i136);
 			}
 			finally{
 				mgr.close();
@@ -109,13 +116,14 @@ public class HeartRate {
 				mgr.close();
 			}
 		}
-		rsp.sendRedirect("/12.3/heartrate");
+		rsp.sendRedirect("/"+s.id+"."+s.site+"/heartrate");
 	}
 	public void Out(String plink,Page page) throws IOException{
+		String[]s=plink.split("/");
+		String base=s[1];
 		page.title="Heart Rate";
-		page.aside="<ul><li><a href=/post/heartrate>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><a href=/12.3/weight>Weight</a><li><a href=/12.3/heartrate>Heart Rate</a><li><a href=/12.3/steps>Steps</a><li><a href=/12.3/fat>Fat</a></ul>";
-		
-
+		page.aside="<ul><li><a href=/post/weight>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+base+"/profile>Profile</a><li><a href=/"+base+"/contacts>Contacts</a><li><a href=/"+base+"/tags>Tags</a></ul><ul><li><a href=/"+base+"/dashboard>Dashboard</a><li><a href=/"+base+"/activities>Activities</a><li><a href=/"+base+"/historical>Historical</a></ul><ul><li><a href=/"+base+"/weight>Weight</a><li><a href=/"+base+"/heartrate>Heart Rate</a><li><a href=/"+base+"/steps>Steps</a><li><a href=/"+base+"/fat>Fat</a></ul>";
+	    
 		PersistenceManager mgr=Helper.getMgr();
 		Query q3=mgr.newQuery(I136.class);
 		q3.setOrdering("t desc");
@@ -123,8 +131,8 @@ public class HeartRate {
 			@SuppressWarnings("unchecked")
 			List<I136> r=(List<I136>)q3.execute();
 			page.Out("<div class=graf>");
-			String s="heartrate";
-			page.Out(new Graph().Daily(r,s));
+			String rate="heartrate";
+			page.Out(new Graph().Daily(r,rate));
 			page.Out("</div>");
 		}
 		finally{
@@ -132,32 +140,18 @@ public class HeartRate {
 		}	
 						
 	   for(int ii1=0;ii1<80;ii1++){
-		
-		
-	
-
-	
-
-	
-	
-		
-			
 		PersistenceManager mgrdata=Helper.getMgr();
 		Query q2=mgrdata.newQuery(I136.class);
 		q2.setOrdering("t desc");
 		try{
 			@SuppressWarnings("unchecked")
 			List<I136> r=(List<I136>)q2.execute();
-			
-			
 			if(!r.isEmpty()){			
-				
-				
 				for(I136 i136:r){
 
 					long t = i136.gettime().getTime();
 					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日HH:mm:ss");					
-					page.Out(time.format(t)+"<br>"+i136.getid()+"."+i136.getsite()+": "+i136.getvol()+" <a href=/post/heartrate?i="+i136.getid()+"."+i136.getsite()+"."+i136.gettime().getTime()+">修改</a><br>");				
+					page.Out(time.format(t)+"<br>"+base+": "+i136.getvol()+" <a href=/post/heartrate?i="+i136.geti()+"."+i136.getj()+"."+i136.gettime().getTime()+">修改</a><br>");				
 				}
 			}
 		}
@@ -168,15 +162,3 @@ public class HeartRate {
 	}
 	}
 }
-
-
-	
-
-		
-	
-		
-		
-		
-	   
-		
-		

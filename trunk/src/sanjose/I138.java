@@ -7,28 +7,35 @@ import javax.jdo.annotations.*;
 public class I138 extends Single{
 	@PrimaryKey
 	@SuppressWarnings("unused")
-	private String _key;
+	private String key;
 	@Persistent
-	private Long o;
+	private Long i;
 	@Persistent
-	private Long w;
+	private Long j;
 	@Persistent
 	private Date t;
 	@Persistent
 	private Long vol;
 	
-	public I138(Long ownerid,Long ownersite,Date time,Long vol){
-		this._key=ownerid+"."+ownersite+"."+time;
-		this.o=ownerid;
-		this.w=ownersite;
+	public I138(I i,Long vol,Date time){
+		this.key=i+"."+j+"."+time;
+		this.i=i.geti();
+		this.j=i.getj();
 		this.t=time;
 		this.vol=vol;
 	}
-	public Long getid(){
-	    return o;
+	public I138(Long i,Long j,Long vol,Date time){
+		this.key=i+"."+j+"."+time;
+		this.i=i;
+		this.j=j;
+		this.vol=vol;
+		this.t=time;
+	}
+	public Long geti(){
+	    return i;
 	}	
-	public Long getsite(){
-		return w;
+	public Long getj(){
+		return j;
 	}
 	public Date gettime(){
 		return t;
