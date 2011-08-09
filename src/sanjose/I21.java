@@ -7,11 +7,11 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import com.google.appengine.api.datastore.Blob;
-
-
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class I21{
+	@PrimaryKey
+	@SuppressWarnings("unused")
+	private String _key;
 	@Persistent
 	private Long i;
 	@Persistent
@@ -31,6 +31,7 @@ public class I21{
 		this.i=oi;
 		this.j=os;
 		this.t=t;
+		this._key=this.i+"."+this.j+"."+this.o+"."+this.w;
 	}
 
 	public Long geti(){

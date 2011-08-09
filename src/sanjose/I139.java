@@ -7,7 +7,7 @@ import javax.jdo.annotations.*;
 public class I139 extends Single{
 	@PrimaryKey
 	@SuppressWarnings("unused")
-	private String key;
+	private String _key;
 	@Persistent
 	private Long i;
 	@Persistent
@@ -18,14 +18,14 @@ public class I139 extends Single{
 	private Long vol;
 
 	public I139(I i,Long vol,Date time){
-		this.key=i+"."+j+"."+time;
+		this._key=i+"."+j+"."+time;
 		this.i=i.geti();
 		this.j=i.getj();
 		this.t=time;
 		this.vol=vol;
 	}
 	public I139(Long i,Long j,Long vol,Date time){
-		this.key=i+"."+j+"."+time;
+		this._key=i+"."+j+"."+time;
 		this.i=i;
 		this.j=j;
 		this.vol=vol;
