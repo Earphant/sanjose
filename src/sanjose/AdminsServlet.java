@@ -13,11 +13,12 @@ import javax.servlet.http.*;
 public class AdminsServlet extends HttpServlet{
 	@SuppressWarnings("unchecked")
 	private void Pictures(HttpServletRequest req,HttpServletResponse rsp) throws IOException{
+		Page page=new Page(rsp);
+		page.title="Pictures";
+		page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
+
 		Id id = new Id(req.getParameter("i"));
 		if(id.i==0L){
-			Page page=new Page(rsp);
-			page.title="Pictures";
-			page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
 			PersistenceManager mgr=Helper.getMgr();
 			Query q11=mgr.newQuery(I11.class);
 			q11.setOrdering("i desc");
@@ -35,15 +36,13 @@ public class AdminsServlet extends HttpServlet{
 			page.End(null);
 		}
 		else{
-			Page page=new Page(rsp);
-			page.title="Pictures";
-			page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
 			page.Out("<form method=post action=/admins/pictures>");
 			
 			PersistenceManager mgr=Helper.getMgr();	
 			Query q=mgr.newQuery(I.class);
 			q.setFilter("o==oParam && w==wParam");
 			q.declareParameters("Long oParam,Long wParam");
+			q.setOrdering("i desc");
 			try{
 				List<I> r=(List<I>)q.execute(id.i,id.j);
 				if(!r.isEmpty()){	
@@ -61,11 +60,12 @@ public class AdminsServlet extends HttpServlet{
 	}
 	@SuppressWarnings("unchecked")
 	private void Posts(HttpServletRequest req,HttpServletResponse rsp) throws IOException{
+		Page page=new Page(rsp);
+		page.title="Posts";
+		page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
+
 		Id id = new Id(req.getParameter("i"));
 		if(id.i==0L){
-			Page page=new Page(rsp);
-			page.title="Posts";
-			page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
 			PersistenceManager mgr=Helper.getMgr();
 			Query q11=mgr.newQuery(I11.class);
 			q11.setOrdering("i desc");
@@ -88,11 +88,12 @@ public class AdminsServlet extends HttpServlet{
 	}
 	@SuppressWarnings("unchecked")
 	private void Users(HttpServletRequest req,HttpServletResponse rsp) throws IOException{
+		Page page=new Page(rsp);
+		page.title="Users";
+		page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
+
 		Id id = new Id(req.getParameter("i"));
 		if(id.i==0L){
-			Page page=new Page(rsp);
-			page.title="Users";
-			page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
 			PersistenceManager mgr=Helper.getMgr();
 			Query q11=mgr.newQuery(I11.class);
 			q11.setOrdering("i desc");
@@ -110,13 +111,23 @@ public class AdminsServlet extends HttpServlet{
 			page.End(null);	
 		}
 		else{
-			Page page=new Page(rsp);
-			page.title="Users";
-			page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
 			page.Out("<form method=post action=/admins/users>");
-			
-			page.Out("<a href=/post/uploads?i="+id.i+"."+id.j+"><img src=/icons/"+id.i+"."+id.j+"></a><br>");
 			PersistenceManager mgr=Helper.getMgr();	
+			Query q12=mgr.newQuery(I12.class);
+			q12.setFilter("i==iParam && j==jParam");
+			q12.declareParameters("Long iParam,Long jParam");
+			try{
+				List<I12> r12=(List<I12>)q12.execute(id.i,id.j);
+				if(!r12.isEmpty()){	
+					page.Out("<a href=/post/uploads?i="+id.i+"."+id.j+".admin><img src=/icons/"+id.i+"."+id.j+"></a><br>");
+				}
+				else
+					page.Out("<a href=/post/uploads?i="+id.i+"."+id.j+".admin><div style=background-color:#EEE;height:48px;width:48px>&nbsp;</div></a>");
+			}
+			finally{
+				q12.closeAll();
+			}
+			
 			Query q11=mgr.newQuery(I11.class);
 			q11.setFilter("i==iParam && j==jParam");
 			q11.declareParameters("Long iParam,Long jParam");
@@ -156,6 +167,9 @@ public class AdminsServlet extends HttpServlet{
 					String fsn="";
 					if(i1.getfsn()!=null)
 						fsn=i1.getfsn();
+					String mdn="";
+					if(i1.getmdn()!=null)
+						mdn=i1.getmdn();
 					String lsn="";
 					if(i1.getlsn()!=null)
 						lsn=i1.getlsn();
@@ -171,14 +185,17 @@ public class AdminsServlet extends HttpServlet{
 					int year=0;
 					int month=0;
 					int date=0;
-					if(i1.getbtd()!=null){
-						Date btd=i1.getbtd();
+					if(i1.gett()!=null){
+						Date t=i1.gett();
 						Calendar cal = Calendar.getInstance();
-						cal.setTime(btd);
+						cal.setTime(t);
 						year= cal.get(Calendar.YEAR);
 						month= cal.get(Calendar.MONTH)+1;
 						date= cal.get(Calendar.DAY_OF_MONTH);
 					}
+					String ocp="";
+					if(i1.getocp()!=null)
+						ocp=i1.getocp();
 					Long tel=0L;
 					if(i1.gettel()!=null)
 						tel=i1.gettel();
@@ -188,9 +205,10 @@ public class AdminsServlet extends HttpServlet{
 					String add="";
 					if(i1.getadd()!=null)
 						add=i1.getadd();
-					page.Out("First Name:<input type=text name=fsn style=width:60px; value="+fsn+">Last Name:<input type=text name=lsn style=width:60px; value="+lsn+"><br>"
+					page.Out("First Name:<input type=text name=fsn style=width:60px; value="+fsn+">Middle Name:<input type=text name=mdn style=width:60px; value="+mdn+">Last Name:<input type=text name=lsn style=width:60px; value="+lsn+"><br>"
 							+"Gender:<input type=radio name=gnd value=female "+gnd1+">Female<input type=radio name=gnd value=male "+gnd2+">Male<br>"
 							+"Birthday:<input type=text name=year style=width:40px; value="+year+">Äê<input type=text name=month style=width:20px; value="+month+">ÔÂ<input type=text name=date style=width:20px; value="+date+">ÈÕ<br>"
+							+"Occupation:<input type=text name=ocp value="+ocp+"><br>"
 							+"Postal Code:<input type=text name=zip style=width:40px; value="+zip+">Telephone Number:<input type=text name=tel style=width:110px; value="+tel+"><br>"
 							+"Address:<textarea name=add rows=1>"+add+"</textarea><br>");
 				}
@@ -233,7 +251,8 @@ public class AdminsServlet extends HttpServlet{
         page.Out("<a href=/admins/users>Users</a><br>");
         page.End(null);
 	}
-    public void doPost(HttpServletRequest req,HttpServletResponse rsp)
+    @SuppressWarnings("unchecked")
+	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
     throws IOException{
 	Id id = new Id(req.getParameter("i"));
 	if(id.i!=0L){
@@ -249,7 +268,6 @@ public class AdminsServlet extends HttpServlet{
         q11.setFilter("i==iParam && j==jParam");
 		q11.declareParameters("Long iParam,Long jParam");
 		   try{
-				@SuppressWarnings("unchecked")
 				List<I11> r11=(List<I11>)q11.execute(id.i,id.j);
 				if(!r11.isEmpty()){
 					I11 i11=r11.get(0);
@@ -267,7 +285,6 @@ public class AdminsServlet extends HttpServlet{
         q.setFilter("i==iParam && j==jParam");
 		q.declareParameters("Long iParam,Long jParam");
 		   try{
-				@SuppressWarnings("unchecked")
 				List<I> r=(List<I>)q.execute(id.i,id.j);
 				if(!r.isEmpty()){
 					I i=r.get(0);
@@ -279,17 +296,19 @@ public class AdminsServlet extends HttpServlet{
 			}
 		
 		String fsn = req.getParameter("fsn");
+		String mdn = req.getParameter("mdn");
 		String lsn = req.getParameter("lsn");
 		String gnd = req.getParameter("gnd");
 		   int year = Integer.parseInt(req.getParameter("year"));
            int month = Integer.parseInt(req.getParameter("month"));
            int date = Integer.parseInt(req.getParameter("date"));
            Calendar calendar = Calendar.getInstance();
-           Date btd=null;
+           Date t=null;
            if(year!=0L || month!=0L || date!=0L){
         	   calendar.set(year,month-1,date);
-        	   btd = calendar.getTime();
+        	   t = calendar.getTime();
            }
+        String ocp = req.getParameter("ocp");
         Long zip=Long.parseLong(req.getParameter("zip"));
         Long tel=Long.parseLong(req.getParameter("tel"));
         String add = req.getParameter("add");
@@ -297,14 +316,15 @@ public class AdminsServlet extends HttpServlet{
         q1.setFilter("i==iParam && j==jParam");
 		q1.declareParameters("Long iParam,Long jParam");
 		   try{
-				@SuppressWarnings("unchecked")
 				List<I1> r1=(List<I1>)q1.execute(id.i,id.j);
 				if(!r1.isEmpty()){
 					I1 i1=r1.get(0);
 					i1.setfsn(fsn);
+					i1.setfsn(mdn);
 					i1.setlsn(lsn);
 					i1.setgnd(gnd);
-					i1.setbtd(btd);
+					i1.sett(t);
+					i1.setocp(ocp);
 					i1.setzip(zip);
 					i1.settel(tel);
 					i1.setadd(add);

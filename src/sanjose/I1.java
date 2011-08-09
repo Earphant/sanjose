@@ -28,7 +28,9 @@ public class I1{
 	@Persistent
 	private String gnd;
 	@Persistent
-	private Date btd;
+	private Date t;
+	@Persistent
+	private String ocp;	
 	@Persistent
 	private Long zip;
 	@Persistent
@@ -41,14 +43,15 @@ public class I1{
 		this.i=i.geti();
 		this.j=i.getj();
 	}
-	public I1(I i,String fsn,String mdn,String lsn,String gnd,Date btd,Long zip,Long tel,String add){
+	public I1(I i,String fsn,String mdn,String lsn,String gnd,Date t,String ocp,Long zip,Long tel,String add){
 		this.i=i.geti();
 		this.j=i.getj();
 		this.fsn=fsn;
 		this.mdn=mdn;
 		this.lsn=lsn;
 		this.gnd=gnd;
-		this.btd=btd;
+		this.t=t;
+		this.ocp=ocp;
 		this.zip=zip;
 		this.tel=tel;
 		this.add=add;
@@ -72,8 +75,11 @@ public class I1{
     public String getgnd(){
     	return gnd;
     }
-    public Date getbtd(){
-    	return btd;
+    public Date gett(){
+    	return t;
+    }
+    public String getocp(){
+    	return ocp;
     }
     public String getadd(){
     	return add;
@@ -96,8 +102,11 @@ public class I1{
     public void setgnd(String gnd){
 	    this.gnd=gnd;
     }
-    public void setbtd(Date btd){
-	    this.btd=btd;
+    public void sett(Date t){
+	    this.t=t;
+    }
+    public void setocp(String ocp){
+	    this.ocp=ocp;
     }
     public void setzip(Long zip){
 	    this.zip=zip;
