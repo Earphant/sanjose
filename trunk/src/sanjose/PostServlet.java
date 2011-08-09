@@ -42,6 +42,7 @@ public class PostServlet extends HttpServlet {
 					new Upload().doGet(req,rsp);
 					return;
 				}
+
 			}
 		}
 		Page p=new Page(rsp);
@@ -96,6 +97,15 @@ public class PostServlet extends HttpServlet {
 					new Fat().doPost(req,rsp);
 					return;
 				}
+				if(n.equalsIgnoreCase("friends")){
+					try {
+						new Friends().doPost(req,rsp);
+					} catch (FileUploadException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return;
+				}
 				if(n.equalsIgnoreCase("uploads")){
 					try {
 						new Upload().doPost(req,rsp);
@@ -105,7 +115,8 @@ public class PostServlet extends HttpServlet {
 					}
 					}			
 					return;
-				}
+			  }   
+			  
 		}
 		v=req.getParameter("text");
 		Session s=new Session("/post");
