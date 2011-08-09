@@ -22,16 +22,15 @@ public class HomeServlet extends HttpServlet{
 				for(I i:r){
 					String d=i.geti()+"."+i.getj();
 					String x=i.getx();
-					String base=i.getb()+"."+i.gets();
 					String b=i.geto()+"."+i.getw();
 				    
 					if(x==null || x.equals(""))
 						x="<i>(Untitled)</i>";
 					if(i.geta()==12){
-						page.Out("<a href=/"+base+"/><img src=/icons/"+b+".jpg>:  <a href=/"+base+"/"+d+"><img src=/thumbnails/"+d+".jpg></a><br>");
+						page.Out("<a href=/"+b+"/><img src=/icons/"+b+".jpg>:  <a href=/"+b+"/"+d+"><img src=/thumbnails/"+d+".jpg></a><br>");
 					}
 					else
-						page.Out("<a href=/"+base+"/><img src=/icons/"+b+".jpg></a>: "+x+"<br>");					
+						page.Out("<a href=/"+b+"/><img src=/icons/"+b+".jpg></a>: "+x+"<br>");					
 				}
 			}
 		}
