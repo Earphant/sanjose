@@ -35,14 +35,6 @@ public class PostServlet extends HttpServlet {
 					new Fat().doGet(req,rsp);
 					return;
 				}
-				if(n.equalsIgnoreCase("follow")){
-					new Follow(req,rsp);
-					return;
-				}
-				if(n.equalsIgnoreCase("unfollow")){
-					new Follow().Unfollow(req,rsp);
-					return;
-				}
 				if(n.equalsIgnoreCase("upload")){
 					new Upload().doGet(req,rsp);
 					return;
