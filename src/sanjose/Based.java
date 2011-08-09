@@ -1,7 +1,6 @@
 package sanjose;
 
 import java.io.IOException;
-//import java.util.Date;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -14,41 +13,68 @@ public class Based{
 	private void Index(String plink,Page page,HttpServletRequest req)throws IOException{
 		String[]current=plink.split("/");
 		String currentbase=current[1];
-		page.title=plink;
-		page.aside="<ul><li><a href=/post/weight>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+currentbase+"/profile>Profile</a><li><a href=/"+currentbase+"/contacts>Contacts</a><li><a href=/"+currentbase+"/tags>Tags</a></ul><ul><li><a href=/"+currentbase+"/dashboard>Dashboard</a><li><a href=/"+currentbase+"/activities>Activities</a><li><a href=/"+currentbase+"/historical>Historical</a></ul><ul><li><a href=/"+currentbase+"/weight>Weight</a><li><a href=/"+currentbase+"/heartrate>Heart Rate</a><li><a href=/"+currentbase+"/steps>Steps</a><li><a href=/"+currentbase+"/fat>Fat</a></ul>";		PersistenceManager mgr=Helper.getMgr();
-		Query q=mgr.newQuery(I.class);		
-		q.setOrdering("m desc");
+	    page.title=plink;	
+		page.aside="<ul><li><a href=/post>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+currentbase+"/profile>Profile</a><li><a href=/"+currentbase+"/contacts>Contacts</a><li><a href=/"+currentbase+"/tags>Tags</a></ul><ul><li><a href=/"+currentbase+"/dashboard>Dashboard</a><li><a href=/"+currentbase+"/activities>Activities</a><li><a href=/"+currentbase+"/historical>Historical</a></ul><ul><li><a href=/"+currentbase+"/weight>Weight</a><li><a href=/"+currentbase+"/heartrate>Heart Rate</a><li><a href=/"+currentbase+"/steps>Steps</a><li><a href=/"+currentbase+"/fat>Fat</a></ul>";		PersistenceManager mgr=Helper.getMgr();
+						
+		Session currentowner=new Session("ow");
+		Long ci=currentowner.id;
+		Long cs=currentowner.site;
 		String ss=req.getPathInfo();
-		ss=ss.substring(1);
-		
-		String[]s=ss.split("\\.");
-		Long o=0l;Long w=0l;
-       
-		int n=s.length;
-		if(n>0){
+		String[] s2=ss.split("/");
+		String[] s=s2[1].split("\\.");
+		Long o=0L;Long w=0L;
+        int n=s.length;
+		if(n>1){
 			o=Long.parseLong(s[0]);
-			}
-		 String[]sss=s[1].split("/");
-		 w=Long.parseLong(sss[0]);
-		 q.setFilter("w==wParam && o==oParam ");	
-			q.declareImports("import java.util.Date");
-			q.declareParameters("Long wParam,Long oParam");
+			w=Long.parseLong(s[1]);
+		}
+
+		if(ci!=o){	
 			
-       
+			PersistenceManager mgr21=Helper.getMgr();	
+			Query q21=mgr21.newQuery(I21.class);		
+			q21.setOrdering("i desc");
+			q21.setFilter("o==oParam && w==wParam && i==iParam");	
+			q21.declareParameters("Long oParam,Long wParam,Long iParam");
+	     
+			try{
+				@SuppressWarnings("unchecked")
+				List<I21> r=(List<I21>)q21.execute(ci,cs,o);
+			
+				if(!r.isEmpty()){
+					page.Out("已关注");
+				}
+				else{
+					page.Out("<form method=post action=/post/friends><input type=hidden name=i value="+o+"."+w+"><input type=submit name=ok value=关注此人></form>");		    
+				}
+			}
+			finally{
+				q21.closeAll();
+			}
+			    
+			
+			
+
+
+			
+		}
+				
+		PersistenceManager mgr1=Helper.getMgr();	
+		Query q=mgr1.newQuery(I.class);		
+		q.setOrdering("m desc");
+		q.setFilter("o==oParam && w==wParam ");	
+		q.declareImports("import java.util.Date");
+		q.declareParameters("Long oParam,Long wParam");
+     
 		try{
 			@SuppressWarnings("unchecked")
-			List<I> r=(List<I>)q.execute(w,o);
-			
+			List<I> r=(List<I>)q.execute(o,w);
 		
-			
-			
 			if(!r.isEmpty()){
 				for(I i:r){
-					
-				  
 					String d=i.geti()+"."+i.getj();
 					String x=i.getx();
-					String base=i.getb()+"."+i.gets();
+					String base=i.geto()+"."+i.getw();
 				
 					if(x==null || x.equals(""))
 						x="<i>(Untitled)</i>";

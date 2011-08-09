@@ -10,7 +10,11 @@ import javax.jdo.Query;
 public class Contacts {
 	public void Out(String plink,Page page) throws IOException{
 		page.title="Contacts";
-		page.aside="<ul><li><a href=/post/>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><a href=/12.3/weight>Weight</a></ul>";	
+		Session s=new Session("ow");
+		String[]current=plink.split("/");
+		String currentbase=current[1];
+		
+		page.aside="<ul><li><a href=/post/>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+currentbase+"/profile>Profile</a><li><a href=/"+currentbase+"/contacts>Contacts</a><li><a href=/"+currentbase+"/tags>Tags</a></ul><ul><li><a href=/"+currentbase+"/dashboard>Dashboard</a><li><a href=/"+currentbase+"/activities>Activities</a><li><a href=/"+currentbase+"/historical>Historical</a></ul><ul><li><a href=/"+currentbase+"/weight>Weight</a></ul>";	
 		
 		PersistenceManager mgr=Helper.getMgr();
 		Query q=mgr.newQuery(I11.class);		
@@ -25,17 +29,50 @@ public class Contacts {
 					String base=i.geti()+"."+i.getj();
 					
 					page.Out("<a href=/"+base+"/><img src=/icons/"+d+".jpg></a>");
-					page.Out("<a href=/"+base+"/>"+x+"</a>");
+					page.Out("<a href=/"+base+"/>"+x+"</a><br>");
 				}
 			}
 		}
 		finally{
 			q.closeAll();
 		}
+		
+		
+		page.Out("<br>我关注的人：");
+		
+		
+		
+		
+		
+		
+		PersistenceManager mgr21=Helper.getMgr();	
+		Query q21=mgr21.newQuery(I21.class);		
+		q21.setOrdering("i desc");
+		q21.setFilter("o==oParam && w==wParam ");	
+		q21.declareParameters("Long oParam,Long wParam");
+     
+		try{
+			@SuppressWarnings("unchecked")
+			List<I21> r=(List<I21>)q21.execute(s.id,s.site);
+		
+			if(!r.isEmpty()){
+				for(I21 i21:r){
+					String d=i21.geti()+"."+i21.getj();					
+
+                    page.Out("<a href=/"+d+"/><img src=/icons/"+d+".jpg></a>");
+
+				}
+			}
+		}
+		finally{
+			q21.closeAll();
+		}
+		
+		
+		
 		page.End(null);
 
-	}
-
+		}
 
 }
 
