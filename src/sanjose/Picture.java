@@ -143,7 +143,7 @@ public class Picture{
 			Session	s=new Session("");
 			try{
 				I i=new	I("","",12L,0L,1L,1L);
-				base=i.getb()+"."+i.gets();
+				base=s.id+"."+s.site;
 
 				m.makePersistent(i);
 				if(i.geti()==0L)
