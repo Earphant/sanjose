@@ -1,18 +1,15 @@
 package sanjose;
 
-import javax.jdo.annotations.IdentityType;
+import com.google.appengine.api.datastore.Blob;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import com.google.appengine.api.datastore.Blob;
-
-
-@PersistenceCapable(identityType = IdentityType.APPLICATION)
+@PersistenceCapable
 public class I12{
 	@SuppressWarnings("unused")
 	@PrimaryKey
-	private String key;
+	private String _key;
 	@Persistent
 	private Long i;
 	@Persistent
@@ -31,16 +28,16 @@ public class I12{
 	public I12(I i,String ext,Blob org){
 		this.i=i.geti();
 		this.j=i.getj();
-		this.key=i+"."+j;
 		this.ext=ext;
 		this.org=org;
+		this._key=this.i+"."+this.j;
 	}
 	public I12(Long i,Long j,String ext,Blob ico){
-		this.key=i+"."+j;
 		this.i=i;
 		this.j=j;
 		this.ext=ext;
 		this.ico=ico;
+		this._key=this.i+"."+this.j;
 	}
 	public Long geti(){
 	    return i;

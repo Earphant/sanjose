@@ -1,15 +1,14 @@
 package sanjose;
 
-//import java.util.Date;
-//import com.google.appengine.api.datastore.Text;
-//import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-@PersistenceCapable(identityType = IdentityType.APPLICATION)
+@PersistenceCapable
 public class I11{
+	@SuppressWarnings("unused")
+	@PrimaryKey
+	private String _key;
 	@Persistent
 	private Long i;
 	@Persistent
@@ -24,6 +23,7 @@ public class I11{
 		this.j=i.getj();
 		this.eml=eml;
 		this.pwd="";
+		this._key=this.i+"."+this.j;
 	}
 	public Long geti(){
 	    return i;
