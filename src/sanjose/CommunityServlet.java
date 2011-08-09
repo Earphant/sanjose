@@ -18,7 +18,7 @@ public class CommunityServlet extends HttpServlet {
 		q.setFilter("r==0");
 		q.setOrdering("m desc");
 		try{
-			new RegList((List<I>)q.execute(),p,rsp);
+			new RegList((List<I>)q.execute(),p);
 		}
 		finally{
 			q.closeAll();

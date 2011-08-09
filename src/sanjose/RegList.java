@@ -6,8 +6,7 @@ import javax.servlet.http.*;
 
 @SuppressWarnings("serial")
 public class RegList extends HttpServlet {
-	public RegList(List<I> rs,Page page,HttpServletResponse rsp)
-		throws IOException{
+	public RegList(List<I> rs,Page page)throws IOException{
 		if(!rs.isEmpty()){
 			for(I o:rs){
 				String i=o.geti()+"."+o.getj();

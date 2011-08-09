@@ -7,6 +7,7 @@ import javax.servlet.http.*;
 
 @SuppressWarnings("serial")
 public class HomeServlet extends HttpServlet{
+	@SuppressWarnings("unchecked")
 	private void Signed(Page page,Session ssn)throws IOException{
 		page.title="Home";
 		page.Out("<form method=post action=/post/><textarea name=text rows=5></textarea><input type=submit name=ok></form>");
@@ -15,24 +16,7 @@ public class HomeServlet extends HttpServlet{
 		Query q=m.newQuery(I.class);		
 		q.setOrdering("m desc");
 		try{
-			@SuppressWarnings("unchecked")
-			List<I> r=(List<I>)q.execute();
-			if(!r.isEmpty()){
-				for(I o:r){
-					String i=o.geti()+"."+o.getj();
-					String x=o.getx();
-					String w=o.geto()+"."+o.getw();
-					if(x==null || x.equals(""))
-						x="<i>(Untitled)</i>";
-					switch((int)o.geta()){
-					case 12:
-						page.Out("<a href=/"+w+"/><img src=/icons/"+w+">:  <a href=/"+w+"/"+i+"><img src=/thumbnails/"+i+"></a><br>");
-						break;
-					default:
-						page.Out("<a href=/"+w+"/><img src=/icons/"+w+"></a>: "+x+"<br>");
-					}
-				}
-			}
+			new RegList((List<I>)q.execute(),page);
 		}
 		finally{
 			q.closeAll();
