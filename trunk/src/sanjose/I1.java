@@ -1,17 +1,15 @@
 package sanjose;
 
 import java.util.Date;
-
-import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-@PersistenceCapable(identityType = IdentityType.APPLICATION)
+@PersistenceCapable
 public class I1{
 	@SuppressWarnings("unused")
 	@PrimaryKey
-	private String key;
+	private String _key;
 	@Persistent
 	private Long i;
 	@Persistent
@@ -39,9 +37,9 @@ public class I1{
 	private String add;
 
 	public I1(I i){
-		this.key=i+"."+j;
 		this.i=i.geti();
 		this.j=i.getj();
+		this._key=this.i+"."+this.j;
 	}
 	public I1(I i,String fsn,String mdn,String lsn,String gnd,Date t,String ocp,Long zip,Long tel,String add){
 		this.i=i.geti();
@@ -55,6 +53,7 @@ public class I1{
 		this.zip=zip;
 		this.tel=tel;
 		this.add=add;
+		this._key=this.i+"."+this.j;
 	}
 	
 	public Long geti(){
