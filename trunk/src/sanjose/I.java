@@ -119,6 +119,12 @@ public class I{
 		if(this.i==0L)
 			this.i=key.getId();
 	}
+	public void seto(Long o){
+	    this.o=o;
+	}
+	public void setw(Long w){
+	    this.w=w;
+	}
 	public void setx(String x){
 	    this.x=x;
 	}
