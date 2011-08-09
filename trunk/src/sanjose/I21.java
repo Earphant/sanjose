@@ -1,7 +1,6 @@
 package sanjose;
 
 import java.util.Date;
-
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
@@ -24,15 +23,14 @@ public class I21{
 	@Persistent
 	private Long w;;
 
-	public I21(I i,Long oi,Long os,Date t){
-		this.o=i.geto();
-		this.w=i.getw();
-		this.i=oi;
-		this.j=os;
-		this.t=t;
-		this._key=this.i+"."+this.j+"."+this.o+"."+this.w;
+	public I21(long id,long site,long ownerid,long ownersite,Date time){
+		i=id;
+		j=site;
+		o=ownerid;
+		w=ownersite;
+		t=time;
+		_key=i+"."+j+"."+o+"."+w;
 	}
-
 	public Long geti(){
 	    return i;
 	}

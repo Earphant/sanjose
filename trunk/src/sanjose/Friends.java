@@ -27,8 +27,8 @@ public class Friends{
 			i.seti();
 		m.makePersistent(i);
 	    Date t=new Date();
-		I21 i21=new I21(i,o,w,t);
-		m.makePersistent(i21);
+		//I21 i21=new I21(i,o,w,t);
+		//m.makePersistent(i21);
         
 		rsp.sendRedirect("/"+ii+"/");
 	}

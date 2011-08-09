@@ -6,9 +6,6 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.*;
 
-import org.apache.commons.fileupload.FileUploadException;
-
-
 @SuppressWarnings("serial")
 public class PostServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
@@ -36,6 +33,14 @@ public class PostServlet extends HttpServlet {
 				}
 				if(n.equalsIgnoreCase("fat")){
 					new Fat().doGet(req,rsp);
+					return;
+				}
+				if(n.equalsIgnoreCase("follow")){
+					new Follow(req,rsp);
+					return;
+				}
+				if(n.equalsIgnoreCase("unfollow")){
+					new Follow().Unfollow(req,rsp);
 					return;
 				}
 				if(n.equalsIgnoreCase("uploads")){
@@ -97,33 +102,18 @@ public class PostServlet extends HttpServlet {
 					new Fat().doPost(req,rsp);
 					return;
 				}
-				if(n.equalsIgnoreCase("friends")){
-					try {
-						new Friends().doPost(req,rsp);
-					} catch (FileUploadException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					return;
-				}
 				if(n.equalsIgnoreCase("uploads")){
-					try {
-						new Upload().doPost(req,rsp);
-					} catch (FileUploadException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					}			
+					new Upload().doPost(req,rsp);
 					return;
-			  }   
-			  
+				}   
+			}
 		}
 		v=req.getParameter("text");
-		Session s=new Session("/post");
+		Session sn=new Session("/post");
 		Id id=new Id(req.getParameter("i"));
 		PersistenceManager m=Helper.getMgr();
 		if(id.i==0){
-			I i=new I(v,"",0L,0L,s.id,s.site);
+			I i=new I(v,"",0L,0L,sn.id,sn.site);
 			try{
 				m.makePersistent(i);
 				if(i.geti()==0L){
@@ -153,6 +143,5 @@ public class PostServlet extends HttpServlet {
 			}
 		}
 		rsp.sendRedirect("/");
-		}
+	}
 }
-
