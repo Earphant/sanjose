@@ -48,6 +48,8 @@ public class I{
 	@Persistent
 	private String x;
 	@Persistent
+	private String xtr;
+	@Persistent
 	private Text e;
 	@Persistent
 	private I135 i135;
@@ -76,7 +78,7 @@ public class I{
 		this.x=x;
 		this.e=new Text("");
 	}
-	public I(String text,String guid,Long classid,Long rate,Long owner,Long ownersite){
+	public I(String text,String guid,long classid,long rate,long owner,long ownersite){
 		Date c=new Date();
 		this.i=0L;
 		this.j=9L;
@@ -96,32 +98,35 @@ public class I{
 	public long geta(){
 	    return a;
 	}
-	public Long getb(){
+	public long getb(){
 	    return b;
 	}
 	public String gete(){
 	    return e.getValue();
 	}
-	public Long geti(){
+	public long geti(){
 	    return i;
 	}
-	public Long getj(){
+	public long getj(){
 	    return j;
 	}
-	public Long getw(){
-	    return w;
-	}
-	public Long geto(){
+	public long geto(){
 	    return o;
 	}
 	public String getp(){
 	    return p;
 	}
-	public Long gets(){
+	public long gets(){
 	    return s;
+	}
+	public long getw(){
+	    return w;
 	}
 	public String getx(){
 	    return x;
+	}
+	public String getxtr(){
+	    return xtr;
 	}
 	public I135 geti135(){
 	    return i135;
@@ -139,14 +144,17 @@ public class I{
 		if(this.i==0L)
 			this.i=key.getId();
 	}
-	public void seto(Long o){
+	public void seto(long o){
 	    this.o=o;
 	}
-	public void setw(Long w){
+	public void setw(long w){
 	    this.w=w;
 	}
-	public void setx(String x){
-	    this.x=x;
+	public void setx(String val){
+	    this.x=val;
+	}
+	public void setxtr(String val){
+	    this.xtr=val;
 	}
 	public void sete(String e){
 		this.e=new Text(e);
