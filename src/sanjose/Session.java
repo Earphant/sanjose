@@ -38,8 +38,8 @@ public class Session{
 				}
 				u=new I11(i,email);
 				m.makePersistent(u);
-				//I1 idt=new I1(i);
-				//m.makePersistent(idt);
+				I1 idt=new I1(i);
+				m.makePersistent(idt);
 			}
 			finally{
 				m.close();
