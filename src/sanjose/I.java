@@ -93,7 +93,7 @@ public class I{
 		this.x=text;
 		this.e=new Text("");
 	}
-	public Long geta(){
+	public long geta(){
 	    return a;
 	}
 	public Long getb(){
