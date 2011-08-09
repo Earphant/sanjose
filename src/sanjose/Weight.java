@@ -27,7 +27,7 @@ public class Weight {
 			q.declareParameters("Long iParam,Long jParam,Date tParam");
 			try{
 				@SuppressWarnings("unchecked")
-				List<I138> r=(List<I138>)q.execute(timed.n,timed.o,timed.t);
+				List<I138> r=(List<I138>)q.execute(timed.i,timed.j,timed.t);
 				if(!r.isEmpty()){
 					I138 i138=r.get(0);
 					Long v=i138.getvol();
@@ -46,7 +46,7 @@ public class Weight {
 			finally{
 				q.closeAll();
 			}
-			p.Out("<input type=hidden name=i value="+timed.n+"."+timed.o+"."+timed.t.getTime()+">");
+			p.Out("<input type=hidden name=i value="+timed.i+"."+timed.j+"."+timed.t.getTime()+">");
 		}
 		else {
 			Date now=new Date();
@@ -88,9 +88,9 @@ public class Weight {
 					i.seti();
 				i.seto(s.id);
 				i.setw(s.site);
+				I138 i138=new I138(i,vol,t);
+				i.seti138(i138);
 				mgr.makePersistent(i);
-				I138 i138=new I138(i,vol,t);			
-				mgr.makePersistent(i138);
 			}
 			finally{
 				mgr.close();
@@ -103,7 +103,7 @@ public class Weight {
 			q.declareParameters("Long iParam,Long jParam,Date tParam");
 			try{
 				@SuppressWarnings("unchecked")
-				List<I138> r=(List<I138>)q.execute(timed.n,timed.o,timed.t);
+				List<I138> r=(List<I138>)q.execute(timed.i,timed.j,timed.t);
 				if(!r.isEmpty()){
 					I138 i138=r.get(0);
 					i138.setvol(vol);
@@ -121,11 +121,12 @@ public class Weight {
 		String base=s[1];
 		page.title="Weight";
 		page.aside="<ul><li><a href=/post/weight>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+base+"/profile>Profile</a><li><a href=/"+base+"/contacts>Contacts</a><li><a href=/"+base+"/tags>Tags</a></ul><ul><li><a href=/"+base+"/dashboard>Dashboard</a><li><a href=/"+base+"/activities>Activities</a><li><a href=/"+base+"/historical>Historical</a></ul><ul><li><a href=/"+base+"/weight>Weight</a><li><a href=/"+base+"/heartrate>Heart Rate</a><li><a href=/"+base+"/steps>Steps</a><li><a href=/"+base+"/fat>Fat</a></ul>";
+		Long id=Long.parseLong(base.split("\\.")[0]);
+		Long site=Long.parseLong(base.split("\\.")[1]);
 		
 		PersistenceManager mgr=Helper.getMgr();
 		Query q1=mgr.newQuery(I138.class);
 		q1.setOrdering("t desc");
-		
 		try{
 			@SuppressWarnings("unchecked")
 			List<I138> r=(List<I138>)q1.execute();
@@ -137,25 +138,28 @@ public class Weight {
 		finally{
 			q1.closeAll();
 		}
-		PersistenceManager mgrdata=Helper.getMgr();
-		Query q2=mgrdata.newQuery(I138.class);
+
+		Query q2=mgr.newQuery(I.class);
+		q2.setFilter("o==oParam && w==wParam");
+		q2.declareParameters("Long oParam,Long wParam");
 		q2.setOrdering("t desc");
 		try{
 			@SuppressWarnings("unchecked")
-			List<I138> r=(List<I138>)q2.execute();
+			List<I> r=(List<I>)q2.execute(id,site);
 			if(!r.isEmpty()){
-				for(I138 i138:r){
-					long t = i138.gettime().getTime();
-					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-					page.Out(time.format(t)+"<br>"+base+": "+i138.getvol()+" <a href=/post/weight?i="+i138.geti()+"."+i138.getj()+"."+i138.gettime().getTime()+">修改</a><br>");
+				for(I i:r){
+					if(i.geta()==138){
+						long t = i.geti138().gettime().getTime();
+						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+						page.Out(time.format(t)+"<br>"+base+": "+i.geti138().getvol()+" <a href=/post/weight?i="+i.geti138().geti()+"."+i.geti138().getj()+"."+i.geti138().gettime().getTime()+">修改</a><br>");         	
+					}
 				}
 			}
 		}
 		finally{
 			q2.closeAll();
-			mgrdata.close();
+			mgr.close();
 		}
 		page.End(null);
 	}
-	
 }

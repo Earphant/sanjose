@@ -1,6 +1,7 @@
 package sanjose;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -47,7 +48,9 @@ public class AdminsServlet extends HttpServlet{
 				List<I> r=(List<I>)q.execute(id.i,id.j);
 				if(!r.isEmpty()){	
 					for(I i:r){
-						page.Out("<a href=/post/uploads?i="+i.geti()+"."+i.getj()+"><img src=/thumbnails/"+i.geti()+"."+i.getj()+"></a><br>");
+						if(i.geta()==12L)
+							page.Out("<a href=/post/uploads?i="+i.geti()+"."+i.getj()+"><img src=/thumbnails/"+i.geti()+"."+i.getj()+"></a><br>");
+
 					}
 				}
 			}
@@ -83,7 +86,51 @@ public class AdminsServlet extends HttpServlet{
 			page.End(null);
 		}
 		else{
+			page.Out("<form method=post action=/admins/posts>");
 			
+			PersistenceManager mgr=Helper.getMgr();	
+			Query q=mgr.newQuery(I.class);
+			q.setFilter("o==oParam && w==wParam");
+			q.declareParameters("Long oParam,Long wParam");
+			q.setOrdering("t desc");
+			try{
+				List<I> r=(List<I>)q.execute(id.i,id.j);
+				if(!r.isEmpty()){	
+					for(I i:r){
+						if(i.geta()==12)
+							page.Out("<a href=/post/uploads?i="+i.geti()+"."+i.getj()+"><img src=/thumbnails/"+i.geti()+"."+i.getj()+"></a><br>");
+                        if(i.geta()==135){
+                        	long t = i.geti135().gettime().getTime();
+        					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+                        	page.Out(time.format(t)+"  Fat:"+i.geti135().getfat()+"  Water:"+i.geti135().getwat());
+                        	
+                        }
+                        if(i.geta()==136){
+                        	long t = i.geti136().gettime().getTime();
+        					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+                        	page.Out(time.format(t)+"  Heart Rate:"+i.geti136().getvol());
+                        	
+                        }
+                        if(i.geta()==138){
+                        	long t = i.geti138().gettime().getTime();
+        					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+                        	page.Out(time.format(t)+"  Weight:"+i.geti138().getvol());
+                        	
+                        }
+                        if(i.geta()==139){
+                        	long t = i.geti139().gettime().getTime();
+        					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+                        	page.Out(time.format(t)+"  Steps:"+i.geti139().getvol());
+                        	
+                        }	
+					}
+				}
+			}
+			finally{
+				q.closeAll();
+				mgr.close();
+			}
+			page.End(null);
 		}
 	}
 	@SuppressWarnings("unchecked")

@@ -31,10 +31,10 @@ public class Datatxt{
 				if(ii138.geti()==0L)
 					ii138.seti();
 				ii138.seto(id);
-				ii138.setw(site);
-				mgr.makePersistent(ii138);		
+				ii138.setw(site);	
 				I138 i138=new I138(id,site,Long.parseLong(s[2]),t);
-				mgr.makePersistent(i138);
+				ii138.seti138(i138);
+				mgr.makePersistent(ii138);
 				
 				I ii135=new I("","",135L,0L,1L,1L);
 				mgr.makePersistent(ii135);
@@ -42,9 +42,9 @@ public class Datatxt{
 					ii135.seti();
 				ii135.seto(id);
 				ii135.setw(site);
-				mgr.makePersistent(ii135);	
 				I135 i135=new I135(id,site,Long.parseLong(s[3]),Long.parseLong(s[4]),t);
-				mgr.makePersistent(i135);
+				ii135.seti135(i135);
+				mgr.makePersistent(ii135);
 				
 				I ii136=new I("","",136L,0L,1L,1L);
 				mgr.makePersistent(ii136);
@@ -52,9 +52,9 @@ public class Datatxt{
 					ii136.seti();
 				ii136.seto(id);
 				ii136.setw(site);
-				mgr.makePersistent(ii136);	
 				I136 i136=new I136(id,site,Long.parseLong(s[5]),t);
-				mgr.makePersistent(i136);
+				ii136.seti136(i136);
+				mgr.makePersistent(ii136);
 				
 				I ii139=new I("","",139L,0L,1L,1L);
 				mgr.makePersistent(ii139);
@@ -62,9 +62,9 @@ public class Datatxt{
 					ii139.seti();
 				ii139.seto(id);
 				ii139.setw(site);
-				mgr.makePersistent(ii139);	
 				I139 i139=new I139(id,site,Long.parseLong(s[6]),t);
-				mgr.makePersistent(i139);
+				ii139.seti139(i139);
+				mgr.makePersistent(ii139);
 			} 
 			catch (ParseException e) {
 				// TODO Auto-generated catch block
