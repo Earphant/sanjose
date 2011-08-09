@@ -42,7 +42,7 @@ public class Based{
 				List<I21> r=(List<I21>)q21.execute(ci,cs,o);
 			
 				if(!r.isEmpty()){
-					page.Out("已关注");
+					page.Out("已关注<br>");
 				}
 				else{
 					page.Out("<form method=post action=/post/friends><input type=hidden name=i value="+o+"."+w+"><input type=submit name=ok value=关注此人></form>");		    
