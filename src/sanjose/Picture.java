@@ -21,8 +21,6 @@ import com.google.appengine.api.images.Image;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.Transform;
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserServiceFactory;
 
 public class Picture{
 	private I12 Get(String path){		
@@ -53,7 +51,7 @@ public class Picture{
 
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp,
 		InputStream stream,Long id,Long site)throws IOException, FileUploadException{
-		User user=UserServiceFactory.getUserService().getCurrentUser();
+
 		Blob b=new Blob(IOUtils.toByteArray(stream));
 		ServletFileUpload upload=new ServletFileUpload();				
 		FileItemIterator iterator=upload.getItemIterator(req); 
@@ -154,36 +152,16 @@ public class Picture{
 			rsp.sendRedirect("/admins/users?i="+icon.i+"."+icon.j);
 		}
 		else{
-			Long currenti=0L;
-			Long currentj=0L;
-			if(user!=null){
-				String email=user.getEmail();
-				Query q11=m.newQuery(I11.class);
-		        q11.setFilter("eml==emlParam");
-				q11.declareParameters("String emlParam");
-				   try{
-						@SuppressWarnings("unchecked")
-						List<I11> r11=(List<I11>)q11.execute(email);
-						if(!r11.isEmpty()){
-							I11 i11=r11.get(0);
-							currenti=i11.geti();
-							currentj=i11.getj();
-						}
-				   }
-				   finally{
-					   q11.closeAll();
-				   }
-			}
+			Session s=new Session("");
 			try{
 				I i=new I("","",12L,0L,1L,1L);
 				base=i.getb()+"."+i.gets();
 
 				m.makePersistent(i);
-				if(i.geti()==0L){
+				if(i.geti()==0L)
 					i.seti();
-				}
-				i.seto(currenti);
-				i.setw(currentj);
+				i.seto(s.id);
+				i.setw(s.site);
 				m.makePersistent(i);
 				I12 i12=new I12(i,ext,b);			
 				m.makePersistent(i12);

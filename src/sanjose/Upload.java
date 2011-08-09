@@ -53,10 +53,11 @@ public class Upload{
 		    else{ 
 		        log.warning("Got an uploaded file: "+t.getFieldName()+", name = "+t.getName());
 		        String extension=t.getName().substring(t.getName().lastIndexOf(".")+1,t.getName().length());
+		        Session session=new Session("/post");
 		        if(extension.equals("txt"))
-		        	new Datatxt().doPost(req,rsp,s,12L,3L);
+		        	new Datatxt().doPost(req,rsp,s,session.id,session.site);
 		        else
-		        	new Picture().doPost(req,rsp,s,12L,3L);
+		        	new Picture().doPost(req,rsp,s,session.id,session.site);
 		    }
 			s.close();
 		}

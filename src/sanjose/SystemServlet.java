@@ -23,38 +23,20 @@ public class SystemServlet extends HttpServlet{
 		throws IOException{	
 		page.title="Settings";
 		
-		User user=UserServiceFactory.getUserService().getCurrentUser();
 		PersistenceManager mgr=Helper.getMgr();	
-		Long currenti=0L;
-		Long currentj=0L;
-		if(user!=null){
-			String email=user.getEmail();
-			Query q11=mgr.newQuery(I11.class);
-	        q11.setFilter("eml==emlParam");
-			q11.declareParameters("String emlParam");
-			   try{
-					List<I11> r11=(List<I11>)q11.execute(email);
-					if(!r11.isEmpty()){
-						I11 i11=r11.get(0);
-						currenti=i11.geti();
-						currentj=i11.getj();
-					}
-			   }
-			   finally{
-				   q11.closeAll();
-			   }
-		}
+		
+		Session s=new Session("");
 		
 		Query q12=mgr.newQuery(I12.class);
 		q12.setFilter("i==iParam && j==jParam");
 		q12.declareParameters("Long iParam,Long jParam");
 		try{
-			List<I12> r12=(List<I12>)q12.execute(currenti,currentj);
+			List<I12> r12=(List<I12>)q12.execute(s.id,s.site);
 			if(!r12.isEmpty()){	
-				page.Out("<a href=/post/uploads?i="+currenti+"."+currentj+".admin><img src=/icons/"+currenti+"."+currentj+"></a><br>");
+				page.Out("<a href=/post/uploads?i="+s.id+"."+s.site+".admin><img src=/icons/"+s.id+"."+s.site+"></a><br>");
 			}
 			else
-				page.Out("<a href=/post/uploads?i="+currenti+"."+currentj+".admin><div style=background-color:#EEE;height:48px;width:48px>&nbsp;</div></a>");
+				page.Out("<a href=/post/uploads?i="+s.id+"."+s.site+".admin><div style=background-color:#EEE;height:48px;width:48px>&nbsp;</div></a>");
 		}
 		finally{
 			q12.closeAll();
@@ -63,7 +45,7 @@ public class SystemServlet extends HttpServlet{
 		q11.setFilter("i==iParam && j==jParam");
 		q11.declareParameters("Long iParam,Long jParam");
 		try{
-			List<I11> r11=(List<I11>)q11.execute(currenti,currentj);
+			List<I11> r11=(List<I11>)q11.execute(s.id,s.site);
 			if(!r11.isEmpty()){	
 				I11 i11=r11.get(0);
 				String eml=i11.geteml();
@@ -78,7 +60,7 @@ public class SystemServlet extends HttpServlet{
 		q.setFilter("i==iParam && j==jParam");
 		q.declareParameters("Long iParam,Long jParam");
 		try{
-			List<I> r=(List<I>)q.execute(currenti,currentj);
+			List<I> r=(List<I>)q.execute(s.id,s.site);
 			if(!r.isEmpty()){
 				I i=r.get(0);
 				String x=i.getx();
@@ -92,7 +74,7 @@ public class SystemServlet extends HttpServlet{
 		q1.setFilter("i==iParam && j==jParam");
 		q1.declareParameters("Long iParam,Long jParam");
 		try{
-			List<I1> r1=(List<I1>)q1.execute(currenti,currentj);
+			List<I1> r1=(List<I1>)q1.execute(s.id,s.site);
 			if(!r1.isEmpty()){
 				I1 i1=r1.get(0);
 				String fsn="";
@@ -148,7 +130,7 @@ public class SystemServlet extends HttpServlet{
 			q1.closeAll();
 			mgr.close();
 		}
-		page.Out("<input type=hidden name=i value="+currenti+"."+currentj+">");
+		page.Out("<input type=hidden name=i value="+s.id+"."+s.site+">");
 		page.End("<input type=submit name=ok></form>");
 	}
 	private void Signin(HttpServletRequest req,HttpServletResponse rsp)

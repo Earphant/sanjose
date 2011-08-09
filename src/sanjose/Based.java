@@ -1,7 +1,7 @@
 package sanjose;
 
 import java.io.IOException;
-import java.util.Date;
+//import java.util.Date;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -12,9 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 public class Based{
 	private void Index(String plink,Page page,HttpServletRequest req)throws IOException{
+		String[]current=plink.split("/");
+		String currentbase=current[1];
 		page.title=plink;
-		page.aside="<ul><li><a href=/post>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><li><a href=/12.3/weight>Weight</a><li><a href=/12.3/heartrate>Heart Rate</a><li><a href=/12.3/steps>Steps</a><li><a href=/12.3/fat>Fat</a></ul>";		
-		PersistenceManager mgr=Helper.getMgr();
+		page.aside="<ul><li><a href=/post/weight>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+currentbase+"/profile>Profile</a><li><a href=/"+currentbase+"/contacts>Contacts</a><li><a href=/"+currentbase+"/tags>Tags</a></ul><ul><li><a href=/"+currentbase+"/dashboard>Dashboard</a><li><a href=/"+currentbase+"/activities>Activities</a><li><a href=/"+currentbase+"/historical>Historical</a></ul><ul><li><a href=/"+currentbase+"/weight>Weight</a><li><a href=/"+currentbase+"/heartrate>Heart Rate</a><li><a href=/"+currentbase+"/steps>Steps</a><li><a href=/"+currentbase+"/fat>Fat</a></ul>";		PersistenceManager mgr=Helper.getMgr();
 		Query q=mgr.newQuery(I.class);		
 		q.setOrdering("m desc");
 		String ss=req.getPathInfo();

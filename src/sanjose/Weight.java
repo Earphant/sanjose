@@ -22,7 +22,7 @@ public class Weight {
 		if(timed.t!=null){
 			PersistenceManager mgr=Helper.getMgr();
 			Query q=mgr.newQuery(I138.class);
-			q.setFilter("w==wParam && o==oParam && t==tParam");
+			q.setFilter("i==iParam && j==jParam && t==tParam");
 			q.declareImports("import java.util.Date");
 			q.declareParameters("Long iParam,Long jParam,Date tParam");
 			try{
@@ -81,9 +81,16 @@ public class Weight {
         Session s=new Session("/post");
         Timed timed=new Timed(req.getParameter("i"));
 		if(timed.t==null){
-			I138 i=new I138(s.id,s.site,t,vol);
 			try{
+				I i=new I("","",138L,0L,1L,1L);
 				mgr.makePersistent(i);
+				if(i.geti()==0L)
+					i.seti();
+				i.seto(s.id);
+				i.setw(s.site);
+				mgr.makePersistent(i);
+				I138 i138=new I138(i,vol,t);			
+				mgr.makePersistent(i138);
 			}
 			finally{
 				mgr.close();
@@ -91,7 +98,7 @@ public class Weight {
 		}
 		else{
 			Query q=mgr.newQuery(I138.class);
-			q.setFilter("w==wParam && o==oParam && t==tParam");
+			q.setFilter("i==iParam && j==jParam && t==tParam");
 			q.declareImports("import java.util.Date");
 			q.declareParameters("Long iParam,Long jParam,Date tParam");
 			try{
@@ -107,12 +114,14 @@ public class Weight {
 				mgr.close();
 			}
 		}
-		rsp.sendRedirect("/12.3/weight");
+		rsp.sendRedirect("/"+s.id+"."+s.site+"/weight");
 	}
 	public void Out(String plink,Page page) throws IOException{
+		String[]s=plink.split("/");
+		String base=s[1];
 		page.title="Weight";
-		page.aside="<ul><li><a href=/post/weight>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><a href=/12.3/weight>Weight</a><li><a href=/12.3/heartrate>Heart Rate</a><li><a href=/12.3/steps>Steps</a><li><a href=/12.3/fat>Fat</a></ul>";
-
+		page.aside="<ul><li><a href=/post/weight>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+base+"/profile>Profile</a><li><a href=/"+base+"/contacts>Contacts</a><li><a href=/"+base+"/tags>Tags</a></ul><ul><li><a href=/"+base+"/dashboard>Dashboard</a><li><a href=/"+base+"/activities>Activities</a><li><a href=/"+base+"/historical>Historical</a></ul><ul><li><a href=/"+base+"/weight>Weight</a><li><a href=/"+base+"/heartrate>Heart Rate</a><li><a href=/"+base+"/steps>Steps</a><li><a href=/"+base+"/fat>Fat</a></ul>";
+		
 		PersistenceManager mgr=Helper.getMgr();
 		Query q1=mgr.newQuery(I138.class);
 		q1.setOrdering("t desc");
@@ -128,11 +137,6 @@ public class Weight {
 		finally{
 			q1.closeAll();
 		}
-	 
-		
-	
-		
-		
 		PersistenceManager mgrdata=Helper.getMgr();
 		Query q2=mgrdata.newQuery(I138.class);
 		q2.setOrdering("t desc");
@@ -143,7 +147,7 @@ public class Weight {
 				for(I138 i138:r){
 					long t = i138.gettime().getTime();
 					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-					page.Out(time.format(t)+"<br>"+i138.getid()+"."+i138.getsite()+": "+i138.getvol()+" <a href=/post/weight?i="+i138.getid()+"."+i138.getsite()+"."+i138.gettime().getTime()+">修改</a><br>");
+					page.Out(time.format(t)+"<br>"+base+": "+i138.getvol()+" <a href=/post/weight?i="+i138.geti()+"."+i138.getj()+"."+i138.gettime().getTime()+">修改</a><br>");
 				}
 			}
 		}
