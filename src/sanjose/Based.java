@@ -1,25 +1,50 @@
 package sanjose;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
 public class Based{
-	private void Index(String plink,Page page)throws IOException{
+	private void Index(String plink,Page page,HttpServletRequest req)throws IOException{
 		page.title=plink;
 		page.aside="<ul><li><a href=/post>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/12.3/profile>Profile</a><li><a href=/12.3/contacts>Contacts</a><li><a href=/12.3/tags>Tags</a></ul><ul><li><a href=/12.3/dashboard>Dashboard</a><li><a href=/12.3/activities>Activities</a><li><a href=/12.3/historical>Historical</a></ul><ul><li><li><a href=/12.3/weight>Weight</a><li><a href=/12.3/heartrate>Heart Rate</a><li><a href=/12.3/steps>Steps</a><li><a href=/12.3/fat>Fat</a></ul>";		
 		PersistenceManager mgr=Helper.getMgr();
 		Query q=mgr.newQuery(I.class);		
 		q.setOrdering("m desc");
+		String ss=req.getPathInfo();
+		ss=ss.substring(1);
+		
+		String[]s=ss.split("\\.");
+		Long o=0l;Long w=0l;
+       
+		int n=s.length;
+		if(n>0){
+			o=Long.parseLong(s[0]);
+			}
+		 String[]sss=s[1].split("/");
+		 w=Long.parseLong(sss[0]);
+		 q.setFilter("w==wParam && o==oParam ");	
+			q.declareImports("import java.util.Date");
+			q.declareParameters("Long wParam,Long oParam");
+			
+       
 		try{
 			@SuppressWarnings("unchecked")
-			List<I> r=(List<I>)q.execute();
+			List<I> r=(List<I>)q.execute(w,o);
+			
+		
+			
+			
 			if(!r.isEmpty()){
 				for(I i:r){
+					
+				  
 					String d=i.geti()+"."+i.getj();
 					String x=i.getx();
 					String base=i.getb()+"."+i.gets();
@@ -27,6 +52,7 @@ public class Based{
 					if(x==null || x.equals(""))
 						x="<i>(Untitled)</i>";
 					if(i.geta()==12){
+					    page.Out("a"+o+"aa"+w+"aa");
 						page.Out("<a href=/"+base+"/"+d+"><img src=/thumbnails/"+d+".jpg></a>");
 					}
 					else
@@ -70,7 +96,7 @@ public class Based{
 		}
 	}
 
-	public Based(String plink,HttpServletResponse rsp)throws IOException{
+	public Based(String plink,HttpServletResponse rsp,HttpServletRequest req)throws IOException{
 		String[]s=plink.split("/");
 		Page p=new Page(rsp);
 		if(s.length>2){
@@ -110,6 +136,6 @@ public class Based{
 			Object(n,s[1],rsp,p);
 			return;
 		}
-		Index(plink,p);
+		Index(plink,p,req);
 	}
 }

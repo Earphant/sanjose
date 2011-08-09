@@ -35,9 +35,10 @@ textarea{width:100%}
 
 .graf{position:relative;height:200px;border:solid 1px #000}
 .graf div{position:absolute;bottom:0;width:10px;border:solid 1px #000;border-bottom:none}
-.graf a{font-size:09pt;}
+.graf a{font-size:13pt;}
     .graf a:hover{color:red;}
     .graf a:active{color:black;}
+    .graf a:visited{color:#000;}
     
     
 .list{table-layout:fixed;border-collapse:collapse}
