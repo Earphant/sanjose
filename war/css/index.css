@@ -40,7 +40,7 @@ textarea{width:100%}
     .graf a:active{color:black;}
     .graf a:visited{color:#000;}
     
-    
+.icon{width:48px;height:48px}
 .list{table-layout:fixed;border-collapse:collapse}
 .list th{font-weight:normal}
 .list td{text-align:right}
