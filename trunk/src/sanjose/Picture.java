@@ -1,4 +1,4 @@
-package sanjose;
+package	sanjose;
 
 
 import java.io.IOException;
@@ -23,46 +23,46 @@ import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.Transform;
 
 public class Picture{
-	private String Mime(String ext){
+	private	String Mime(String ext){
 		if (ext.equalsIgnoreCase("gif"))
-            return "image/gif";
+			return "image/gif";
 		if(ext.equalsIgnoreCase("jpeg"))
-		    return "image/jpeg";  
+			return "image/jpeg";  
 		if(ext.equalsIgnoreCase("jpg"))
-		    return "image/jpg";  
+			return "image/jpg";	 
 		if(ext.equalsIgnoreCase("png"))
-		    return "image/png";  
+			return "image/png";	 
 		if(ext.equalsIgnoreCase("swf"))
-		    return "application/x-shockwave-flash";  
+			return "application/x-shockwave-flash";  
 		if(ext.equalsIgnoreCase("psd"))
 			return "image/psd";  
 		if(ext.equalsIgnoreCase("bmp"))
-        	return "image/bmp";
+			return "image/bmp";
 		if(ext.equalsIgnoreCase("tiff"))
 			return "image/tiff";  
 		if(ext.equalsIgnoreCase("jpg"))
 			return "image/JPEG";  
-        if(ext.equalsIgnoreCase("jpc"))
-        	return "application/octet-stream";
-        if(ext.equalsIgnoreCase("jp2"))
-        	return "image/jp2";
-        if(ext.equalsIgnoreCase("jpx"))
-        	return "application/octet-stream";
-        if(ext.equalsIgnoreCase("jb2"))
-        	return "application/octet-stream";
-        if(ext.equalsIgnoreCase("swc"))
-        	return "application/x-shockwave-flash";
-        if(ext.equalsIgnoreCase("iff"))
-        	return "image/iff";
-        if(ext.equalsIgnoreCase("wbmp"))
-        	return "image/vnd.wap.wbmp";
-        if(ext.equalsIgnoreCase("xbm"))
-        	return "image/xbm";
-        if(ext.equalsIgnoreCase("ico"))
-        	return "image/vnd.microsoft.icon";
+		if(ext.equalsIgnoreCase("jpc"))
+			return "application/octet-stream";
+		if(ext.equalsIgnoreCase("jp2"))
+			return "image/jp2";
+		if(ext.equalsIgnoreCase("jpx"))
+			return "application/octet-stream";
+		if(ext.equalsIgnoreCase("jb2"))
+			return "application/octet-stream";
+		if(ext.equalsIgnoreCase("swc"))
+			return "application/x-shockwave-flash";
+		if(ext.equalsIgnoreCase("iff"))
+			return "image/iff";
+		if(ext.equalsIgnoreCase("wbmp"))
+			return "image/vnd.wap.wbmp";
+		if(ext.equalsIgnoreCase("xbm"))
+			return "image/xbm";
+		if(ext.equalsIgnoreCase("ico"))
+			return "image/vnd.microsoft.icon";
 		return null;
 	}
-	private I12 Get(String path){		
+	private	I12 Get(String path){		
 		if(path!=null){
 			String[]s=path.split("/");
 			if(s.length>1)
@@ -70,7 +70,7 @@ public class Picture{
 		}
 		return null;
 	}
-	private I12 Get(Id id){
+	private	I12 Get(Id id){
 		PersistenceManager mgr=Helper.getMgr();
 		Query q=mgr.newQuery(I12.class);
 		q.setFilter("i==iParam && j==jParam");
@@ -89,7 +89,7 @@ public class Picture{
 	}
 
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp,
-		InputStream stream,Long id,Long site)throws IOException, FileUploadException{
+		InputStream stream,Long	id,Long	site)throws IOException, FileUploadException{
 
 		Blob b=new Blob(IOUtils.toByteArray(stream));
 		ServletFileUpload upload=new ServletFileUpload();				
@@ -109,7 +109,7 @@ public class Picture{
 			ImagesService imagesService = ImagesServiceFactory.getImagesService();
 		    Image oldImage = ImagesServiceFactory.makeImage(oldImageData);
 		    
-		    Transform resize3 = ImagesServiceFactory.makeResize(48, 48);
+		    Transform resize3 =	ImagesServiceFactory.makeResize(48, 48);
 		    Image newImage3 = imagesService.applyTransform(resize3, oldImage);
 		    byte[] newImageData3 = newImage3.getImageData();
 		    Blob ico=new Blob(newImageData3);
@@ -121,12 +121,12 @@ public class Picture{
 				@SuppressWarnings("unchecked")
 				List<I12> r=(List<I12>)q.execute(icon.i,icon.j);
 				if(!r.isEmpty()){
-					I12 i12 = r.get(0);
+					I12 i12	= r.get(0);
 				    i12.setico(ico);
 				    m.makePersistent(i12);
 				}
 				else{
-					I12 i12 = new I12(icon.i,icon.j,ext,ico);
+					I12 i12	= new I12(icon.i,icon.j,ext,ico);
 				    m.makePersistent(i12);
 				}
 			}
@@ -140,9 +140,9 @@ public class Picture{
 				rsp.sendRedirect("/system/settings");
 		}
 		else{
-			Session s=new Session("");
+			Session	s=new Session("");
 			try{
-				I i=new I("","",12L,0L,1L,1L);
+				I i=new	I("","",12L,0L,1L,1L);
 				base=i.getb()+"."+i.gets();
 
 				m.makePersistent(i);
@@ -155,27 +155,27 @@ public class Picture{
 				m.makePersistent(i12);
 				
 				
-				byte[] oldImageData=b.getBytes();  		    
+				byte[] oldImageData=b.getBytes();		    
 				ImagesService imagesService = ImagesServiceFactory.getImagesService();
 			    Image oldImage = ImagesServiceFactory.makeImage(oldImageData);
-			    int wid=oldImage.getWidth();
-			    int height=oldImage.getHeight();
+			    int	wid=oldImage.getWidth();
+			    int	height=oldImage.getHeight();
 			    
 			    if(wid>500){
-			    	Transform resize1 = ImagesServiceFactory.makeResize(500, 500*height/wid);
+				Transform resize1 = ImagesServiceFactory.makeResize(500, 500*height/wid);
 				    Image newImage1 = imagesService.applyTransform(resize1, oldImage);
 				    byte[] newImageData1 = newImage1.getImageData();
 				    Blob reg=new Blob(newImageData1);
-				    i12.setreg(reg); 			  			               
+				    i12.setreg(reg);							       
 			    }
 			    
-			    Transform resize2 = ImagesServiceFactory.makeResize(96, 96);
+			    Transform resize2 =	ImagesServiceFactory.makeResize(96, 96);
 			    Image newImage2 = imagesService.applyTransform(resize2, oldImage);
 			    byte[] newImageData2 = newImage2.getImageData();
 			    Blob thm=new Blob(newImageData2);
 			    i12.setthm(thm);
 			    
-			    Transform resize3 = ImagesServiceFactory.makeResize(48, 48);
+			    Transform resize3 =	ImagesServiceFactory.makeResize(48, 48);
 			    Image newImage3 = imagesService.applyTransform(resize3, oldImage);
 			    byte[] newImageData3 = newImage3.getImageData();
 			    Blob ico=new Blob(newImageData3);
@@ -190,12 +190,12 @@ public class Picture{
 	}
 	
 	
-	public void Icon(String path,HttpServletResponse rsp)throws IOException{
+	public void Icon(String	path,HttpServletResponse rsp)throws IOException{
 		I12 i=Get(path);
 		rsp.setContentType("image");
 		rsp.getOutputStream().write(i.getico().getBytes());
 	}
-	public void Original(String path,HttpServletResponse rsp)throws IOException{
+	public void Original(String path,HttpServletResponse rsp)throws	IOException{
 		I12 i=Get(path);
 		rsp.setContentType("image");
 		rsp.getOutputStream().write(i.getorg().getBytes());
