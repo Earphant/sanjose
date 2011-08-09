@@ -26,8 +26,8 @@ public class I12{
 	private Blob ico;
 
 	public I12(I i,String ext,Blob org){
-		this.i=i.geti();
-		this.j=i.getj();
+		this.i=i.getId();
+		this.j=i.getSite();
 		this.ext=ext;
 		this.org=org;
 		this._key=this.i+"."+this.j;

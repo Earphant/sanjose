@@ -9,9 +9,9 @@ public class RegList extends HttpServlet {
 	public RegList(List<I> rs,Page page)throws IOException{
 		if(!rs.isEmpty()){
 			for(I o:rs){
-				String i=o.geti()+"."+o.getj();
+				String i=o.getId()+"."+o.getSite();
 				String x=o.getx();
-				String w=o.geto()+"."+o.getw();
+				String w=o.getOwnerId()+"."+o.getOwnerSite();
 				if(x==null || x.equals(""))
 					x="<i>(Untitled)</i>";
 				switch((int)o.geta()){

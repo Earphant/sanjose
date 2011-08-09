@@ -108,10 +108,7 @@ public class PostServlet extends HttpServlet {
 			I i=new I(v,"",0L,0L,sn.id,sn.site);
 			try{
 				m.makePersistent(i);
-				if(i.geti()==0L){
-					i.seti();
-					m.makePersistent(i);
-				}
+				i.setId(m);
 			}
 			finally{
 				m.close();

@@ -82,12 +82,9 @@ public class Weight {
         Timed timed=new Timed(req.getParameter("i"));
 		if(timed.t==null){
 			try{
-				I i=new I("","",138L,0L,1L,1L);
+				I i=new I("","",138L,0L,s.id,s.site);
 				mgr.makePersistent(i);
-				if(i.geti()==0L)
-					i.seti();
-				i.seto(s.id);
-				i.setw(s.site);
+				i.setId();
 				I138 i138=new I138(i,vol,t);
 				i.seti138(i138);
 				mgr.makePersistent(i);

@@ -83,12 +83,9 @@ public class HeartRate {
         Timed timed=new Timed(req.getParameter("i"));    
 		if(timed.t==null){
 			try{
-				I i=new I("","",136L,0L,1L,1L);
+				I i=new I("","",136L,0L,s.id,s.site);
 				mgr.makePersistent(i);
-				if(i.geti()==0L)
-					i.seti();
-				i.seto(s.id);
-				i.setw(s.site);
+				i.setId();
 				I136 i136=new I136(i,vol,t);
 				i.seti136(i136);
 				mgr.makePersistent(i);

@@ -82,12 +82,9 @@ public class Steps {
 		Timed timed=new Timed(req.getParameter("i"));
 		if(timed.t==null){
 			try{
-				I i=new I("","",139L,0L,1L,1L);
+				I i=new I("","",139L,0L,s.id,s.site);
 				mgr.makePersistent(i);
-				if(i.geti()==0L)
-					i.seti();
-				i.seto(s.id);
-				i.setw(s.site);
+				i.setId();
 				I139 i139=new I139(i,vol,t);
 				i.seti139(i139);
 				mgr.makePersistent(i);
