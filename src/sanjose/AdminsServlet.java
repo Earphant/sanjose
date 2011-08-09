@@ -98,7 +98,7 @@ public class AdminsServlet extends HttpServlet{
 				if(!r.isEmpty()){	
 					for(I i:r){
 						if(i.geta()==12)
-							page.Out("<a href=/post/uploads?i="+i.geti()+"."+i.getj()+"><img src=/thumbnails/"+i.geti()+"."+i.getj()+"></a><br>");
+							page.Out("<a href=/post/upload?i="+i.geti()+"."+i.getj()+"><img src=/thumbnails/"+i.geti()+"."+i.getj()+"></a><br>");
                         if(i.geta()==135){
                         	long t = i.geti135().gettime().getTime();
         					SimpleDateFormat time=new SimpleDateFormat("yyyyƒÍMM‘¬dd»’ HH:mm:ss");
@@ -166,10 +166,10 @@ public class AdminsServlet extends HttpServlet{
 			try{
 				List<I12> r12=(List<I12>)q12.execute(id.i,id.j);
 				if(!r12.isEmpty()){	
-					page.Out("<a href=/post/uploads?i="+id.i+"."+id.j+".admin><img src=/icons/"+id.i+"."+id.j+"></a><br>");
+					page.Out("<a href=/post/upload?i="+id.i+"."+id.j+".admin><img src=/icons/"+id.i+"."+id.j+"></a><br>");
 				}
 				else
-					page.Out("<a href=/post/uploads?i="+id.i+"."+id.j+".admin><div style=background-color:#EEE;height:48px;width:48px>&nbsp;</div></a>");
+					page.Out("<a href=/post/upload?i="+id.i+"."+id.j+".admin><div style=background-color:#EEE;height:48px;width:48px>&nbsp;</div></a>");
 			}
 			finally{
 				q12.closeAll();
