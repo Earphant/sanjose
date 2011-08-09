@@ -26,11 +26,9 @@ public class Steps {
 			q.setFilter("i==iParam && j==jParam && t==tParam");	
 			q.declareImports("import java.util.Date");
 			q.declareParameters("Long iParam,Long jParam,Date tParam");
-			
-			
 			try{
 				@SuppressWarnings("unchecked")
-				List<I139> r=(List<I139>)q.execute(timed.n,timed.o,timed.t);
+				List<I139> r=(List<I139>)q.execute(timed.i,timed.j,timed.t);
 				if(!r.isEmpty()){
 					I139 i139=r.get(0);
 					Long v=i139.getvol();
@@ -49,7 +47,7 @@ public class Steps {
 			finally{
 				q.closeAll();
 			}
-			p.Out("<input type=hidden name=i value="+timed.n+"."+timed.o+"."+timed.t.getTime()+">");
+			p.Out("<input type=hidden name=i value="+timed.i+"."+timed.j+"."+timed.t.getTime()+">");
 		}
 		else {
 			Date now=new Date();
@@ -62,10 +60,8 @@ public class Steps {
 			int min= cal.get(Calendar.MINUTE);
 			int sec = cal.get(Calendar.SECOND);
 			p.Out("Value:<input type=text name=steps value=><br>Time:<input type=text name=year style=width:40px; value="+year+">年<input type=text name=month style=width:20px; value="+month+">月<input type=text name=date style=width:20px; value="+date+">日 <input type=text name=hour style=width:20px; value="+hour+">:<input type=text name=min style=width:20px; value="+min+">:<input type=text name=sec style=width:20px; value="+sec+">");
-		
 		}
 		p.End("<input type=submit name=ok></form>");
-		
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
@@ -92,9 +88,9 @@ public class Steps {
 					i.seti();
 				i.seto(s.id);
 				i.setw(s.site);
+				I139 i139=new I139(i,vol,t);
+				i.seti139(i139);
 				mgr.makePersistent(i);
-				I139 i139=new I139(i,vol,t);			
-				mgr.makePersistent(i139);
 			}
 			finally{
 				mgr.close();
@@ -102,12 +98,12 @@ public class Steps {
 		}
 		else{
 			Query q=mgr.newQuery(I139.class);
-			q.setFilter("w==nParam && o==oParam && t==tParam");
+			q.setFilter("i==iParam && j==jParam && t==tParam");
 			q.declareImports("import java.util.Date");
 			q.declareParameters("Long iParam,Long jParam,Date tParam");
 			try{
 				@SuppressWarnings("unchecked")
-				List<I139> r=(List<I139>)q.execute(timed.n,timed.o,timed.t);
+				List<I139> r=(List<I139>)q.execute(timed.i,timed.j,timed.t);
 				if(!r.isEmpty()){
 					I139 i139=r.get(0);
 					i139.setvol(vol);
@@ -125,6 +121,8 @@ public class Steps {
 		String base=s[1];
 		page.title="Steps";
 		page.aside="<ul><li><a href=/post/step>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+base+"/profile>Profile</a><li><a href=/"+base+"/contacts>Contacts</a><li><a href=/"+base+"/tags>Tags</a></ul><ul><li><a href=/"+base+"/dashboard>Dashboard</a><li><a href=/"+base+"/activities>Activities</a><li><a href=/"+base+"/historical>Historical</a></ul><ul><li><a href=/"+base+"/weight>Weight</a><li><a href=/"+base+"/heartrate>Heart Rate</a><li><a href=/"+base+"/steps>Steps</a><li><a href=/"+base+"/fat>Fat</a></ul>";
+		Long id=Long.parseLong(base.split("\\.")[0]);
+		Long site=Long.parseLong(base.split("\\.")[1]);
 		
 		PersistenceManager mgr=Helper.getMgr();
 		Query q1=mgr.newQuery(I139.class);
@@ -139,30 +137,27 @@ public class Steps {
 		finally{
 			q1.closeAll();
 		}
-	 
-
-
-		
-		
-		
-		
-		Query q=mgr.newQuery(I139.class);
-		q.setOrdering("t desc");
+		Query q2=mgr.newQuery(I.class);
+		q2.setFilter("o==oParam && w==wParam");
+		q2.declareParameters("Long oParam,Long wParam");
+		q2.setOrdering("t desc");
 		try{
 			@SuppressWarnings("unchecked")
-			List<I139> r=(List<I139>)q.execute();
+			List<I> r=(List<I>)q2.execute(id,site);
 			if(!r.isEmpty()){
-				for(I139 i139:r){
-					long t = i139.gettime().getTime();
-					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
-					page.Out(time.format(t)+"<br>"+base+": "+i139.getvol()+" <a href=/post/steps?i="+i139.geti()+"."+i139.getj()+"."+i139.gettime().getTime()+">修改</a><br>");
+				for(I i:r){
+					if(i.geta()==139){
+						long t = i.geti139().gettime().getTime();
+						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+						page.Out(time.format(t)+"<br>"+base+": "+i.geti139().getvol()+" <a href=/post/steps?i="+i.geti139().geti()+"."+i.geti139().getj()+"."+i.geti139().gettime().getTime()+">修改</a><br>");
+					}
 				}
 			}
 		}
 		finally{
-			q.closeAll();
+			q2.closeAll();
+			mgr.close();
 		}
 		page.End(null);
-	
-               }
-           }
+    }
+}

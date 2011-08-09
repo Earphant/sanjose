@@ -26,7 +26,7 @@ public class HeartRate {
 			q.declareParameters("Long iParam,Long jParam,Date tParam");
 			try{
 				@SuppressWarnings("unchecked")
-				List<I136> r=(List<I136>)q.execute(timed.n,timed.o,timed.t);
+				List<I136> r=(List<I136>)q.execute(timed.i,timed.j,timed.t);
 				if(!r.isEmpty()){
 					I136 i136=r.get(0);
 					Long v=i136.getvol();
@@ -46,7 +46,7 @@ public class HeartRate {
 			finally{
 				q.closeAll();
 			}
-			p.Out("<input type=hidden name=i value="+timed.n+"."+timed.o+"."+timed.t.getTime()+">");
+			p.Out("<input type=hidden name=i value="+timed.i+"."+timed.j+"."+timed.t.getTime()+">");
 			
 		}
 		else {
@@ -89,9 +89,9 @@ public class HeartRate {
 					i.seti();
 				i.seto(s.id);
 				i.setw(s.site);
+				I136 i136=new I136(i,vol,t);
+				i.seti136(i136);
 				mgr.makePersistent(i);
-				I136 i136=new I136(i,vol,t);			
-				mgr.makePersistent(i136);
 			}
 			finally{
 				mgr.close();
@@ -104,7 +104,7 @@ public class HeartRate {
 			q.declareParameters("Long iParam,Long jParam,Date tParam");
 			try{
 				@SuppressWarnings("unchecked")
-				List<I136> r=(List<I136>)q.execute(timed.n,timed.o,timed.t);		
+				List<I136> r=(List<I136>)q.execute(timed.i,timed.j,timed.t);		
 				if(!r.isEmpty()){
 					I136 i136=r.get(0);
 					i136.setvol(vol);
@@ -123,42 +123,45 @@ public class HeartRate {
 		String base=s[1];
 		page.title="Heart Rate";
 		page.aside="<ul><li><a href=/post/heartrate>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+base+"/profile>Profile</a><li><a href=/"+base+"/contacts>Contacts</a><li><a href=/"+base+"/tags>Tags</a></ul><ul><li><a href=/"+base+"/dashboard>Dashboard</a><li><a href=/"+base+"/activities>Activities</a><li><a href=/"+base+"/historical>Historical</a></ul><ul><li><a href=/"+base+"/weight>Weight</a><li><a href=/"+base+"/heartrate>Heart Rate</a><li><a href=/"+base+"/steps>Steps</a><li><a href=/"+base+"/fat>Fat</a></ul>";
-	    
+		Long id=Long.parseLong(base.split("\\.")[0]);
+		Long site=Long.parseLong(base.split("\\.")[1]);
+		
 		PersistenceManager mgr=Helper.getMgr();
-		Query q3=mgr.newQuery(I136.class);
-		q3.setOrdering("t desc");
+		Query q1=mgr.newQuery(I136.class);
+		q1.setOrdering("t desc");
 		try{
 			@SuppressWarnings("unchecked")
-			List<I136> r=(List<I136>)q3.execute();
+			List<I136> r=(List<I136>)q1.execute();
 			page.Out("<div class=graf>");
 			String rate="heartrate";
 			page.Out(new Graph().Daily(r,rate));
 			page.Out("</div>");
 		}
 		finally{
-			q3.closeAll();
+			q1.closeAll();
 		}	
-						
-	   for(int ii1=0;ii1<80;ii1++){
-		PersistenceManager mgrdata=Helper.getMgr();
-		Query q2=mgrdata.newQuery(I136.class);
+
+		Query q2=mgr.newQuery(I.class);
+		q2.setFilter("o==oParam && w==wParam");
+		q2.declareParameters("Long oParam,Long wParam");
 		q2.setOrdering("t desc");
 		try{
 			@SuppressWarnings("unchecked")
-			List<I136> r=(List<I136>)q2.execute();
+			List<I> r=(List<I>)q2.execute(id,site);
 			if(!r.isEmpty()){			
-				for(I136 i136:r){
-
-					long t = i136.gettime().getTime();
-					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日HH:mm:ss");					
-					page.Out(time.format(t)+"<br>"+base+": "+i136.getvol()+" <a href=/post/heartrate?i="+i136.geti()+"."+i136.getj()+"."+i136.gettime().getTime()+">修改</a><br>");				
+				for(I i:r){
+					if(i.geta()==136){
+						long t = i.geti136().gettime().getTime();
+						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日HH:mm:ss");					
+						page.Out(time.format(t)+"<br>"+base+": "+i.geti136().getvol()+" <a href=/post/heartrate?i="+i.geti136().geti()+"."+i.geti136().getj()+"."+i.geti136().gettime().getTime()+">修改</a><br>");				
+					}
 				}
 			}
 		}
 		finally{
 			q2.closeAll();
+			mgr.close();
 		}
 		page.End(null);
-	}
 	}
 }

@@ -22,17 +22,17 @@ public class Fat {
 		if(timed.t!=null){
 			PersistenceManager mgr=Helper.getMgr();
 			Query q=mgr.newQuery(I135.class);
-			q.setFilter("n==nParam && o==oParam && t==tParam");
+			q.setFilter("i==jParam && i==jParam && t==tParam");
 			q.declareImports("import java.util.Date");
-			q.declareParameters("Long nParam,Long oParam,Date tParam");
+			q.declareParameters("Long iParam,Long jParam,Date tParam");
 			try{
 				@SuppressWarnings("unchecked")
-				List<I135> r=(List<I135>)q.execute(timed.n,timed.o,timed.t);
+				List<I135> r=(List<I135>)q.execute(timed.i,timed.j,timed.t);
 				if(!r.isEmpty()){
 					I135 i135=r.get(0);
 					Long f=i135.getfat();
 					Long w=i135.getwat();
-					Date t=i135.gett();
+					Date t=i135.gettime();
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(t);
 					int year= cal.get(Calendar.YEAR);
@@ -48,7 +48,7 @@ public class Fat {
 			finally{
 				q.closeAll();
 			}
-			p.Out("<input type=hidden name=i value="+timed.n+"."+timed.o+"."+timed.t.getTime()+">");
+			p.Out("<input type=hidden name=i value="+timed.i+"."+timed.j+"."+timed.t.getTime()+">");
 		}
 		else{
 			Date now=new Date();
@@ -92,9 +92,9 @@ public class Fat {
 					i.seti();
 				i.seto(s.id);
 				i.setw(s.site);
+				I135 i135=new I135(i,fat,wat,t);
+				i.seti135(i135);
 				mgr.makePersistent(i);
-				I135 i135=new I135(i,fat,wat,t);			
-				mgr.makePersistent(i135);
 			}
 			finally{
 				mgr.close();
@@ -102,12 +102,12 @@ public class Fat {
 		}
 		else{
 			Query q=mgr.newQuery(I135.class);
-			q.setFilter("n==nParam && o==oParam && t==tParam");
+			q.setFilter("i==iParam && j==jParam && t==tParam");
 			q.declareImports("import java.util.Date");
 			q.declareParameters("Long iParam,Long jParam,Date tParam");
 			try{
 				@SuppressWarnings("unchecked")
-				List<I135> r=(List<I135>)q.execute(timed.n,timed.o,timed.t);
+				List<I135> r=(List<I135>)q.execute(timed.i,timed.j,timed.t);
 				if(!r.isEmpty()){
 					I135 i135=r.get(0);
 					i135.setfat(fat);
@@ -127,24 +127,25 @@ public class Fat {
 		String base=s[1];
 		page.title="Fat";
 		page.aside="<ul><li><a href=/post/fat>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+base+"/profile>Profile</a><li><a href=/"+base+"/contacts>Contacts</a><li><a href=/"+base+"/tags>Tags</a></ul><ul><li><a href=/"+base+"/dashboard>Dashboard</a><li><a href=/"+base+"/activities>Activities</a><li><a href=/"+base+"/historical>Historical</a></ul><ul><li><a href=/"+base+"/weight>Weight</a><li><a href=/"+base+"/heartrate>Heart Rate</a><li><a href=/"+base+"/steps>Steps</a><li><a href=/"+base+"/fat>Fat</a></ul>";
-
-		PersistenceManager mgrimg=Helper.getMgr();
-		Query q=mgrimg.newQuery(I135.class);
-		q.setOrdering("t asc");
+		Long id=Long.parseLong(base.split("\\.")[0]);
+		Long site=Long.parseLong(base.split("\\.")[1]);
+		
+		PersistenceManager mgr=Helper.getMgr();
+		Query q1=mgr.newQuery(I135.class);
+		q1.setOrdering("t asc");
 		try{
 			@SuppressWarnings("unchecked")
-			List<I135> r=(List<I135>)q.execute();
+			List<I135> r=(List<I135>)q1.execute();
 			
 			final long MAX=40;
 			final long MIN=0;
 			if(!r.isEmpty()){
 				Long T =0L;
                 Long W =0L;
-				                           
                 int n;               
                 for(n=0;(n+1)<r.size();n++){
-                	Long ti=r.get(n).gett().getTime();
-                	Long tii=r.get(n+1).gett().getTime();
+                	Long ti=r.get(n).gettime().getTime();
+                	Long tii=r.get(n+1).gettime().getTime();
                 	Long txi=(tii-ti)/3600000;
                 	
                 	Long vol=r.get(n).getfat();
@@ -154,7 +155,6 @@ public class Fat {
 					T=tii;
 					W=volL;	
                 }
-
                 Date t=new Date();
                 Long tnow=t.getTime();
                 Long txL=(tnow-T)/3600000;
@@ -164,27 +164,30 @@ public class Fat {
 			}
 		}
 		finally{
-			q.closeAll();
+			q1.closeAll();
 		}
 		
-		PersistenceManager mgr=Helper.getMgr();
-		Query q2=mgr.newQuery(I135.class);
+		Query q2=mgr.newQuery(I.class);
+		q2.setFilter("o==oParam && w==wParam");
+		q2.declareParameters("Long oParam,Long wParam");
 		q2.setOrdering("t desc");
 		try{
 			@SuppressWarnings("unchecked")
-			List<I135> r=(List<I135>)q2.execute();
+			List<I> r=(List<I>)q2.execute(id,site);
 			if(!r.isEmpty()){
-				for(I135 i135:r){
-					long t = i135.gett().getTime();
-					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-					page.Out(time.format(t)+"<br>"+base+":  Fat: "+i135.getfat()+" Water: "+i135.getwat()+" <a href=/post/fat?i="+i135.geti()+"."+i135.getj()+"."+i135.gett().getTime()+">修改</a><br>");
+				for(I i:r){
+					if(i.geta()==139){
+						long t = i.geti139().gettime().getTime();
+						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+						page.Out(time.format(t)+"<br>"+base+":  Fat: "+i.geti135().getfat()+" Water: "+i.geti135().getwat()+" <a href=/post/fat?i="+i.geti135().geti()+"."+i.geti135().getj()+"."+i.geti135().gettime().getTime()+">修改</a><br>");
+					}
 				}
 			}
 		}
 		finally{
-			q.closeAll();
+			q2.closeAll();
+			mgr.close();
 		}
 		page.End(null);
 	}
-	
 }

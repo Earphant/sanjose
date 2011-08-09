@@ -50,7 +50,7 @@ public class I135{
 	public long getwat(){
 	    return wat;
 	}
-	public Date gett(){
+	public Date gettime(){
 		return t;
 	}
 	public void setfat(long fat){
