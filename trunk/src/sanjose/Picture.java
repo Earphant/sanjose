@@ -23,6 +23,45 @@ import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.Transform;
 
 public class Picture{
+	private String Mime(String ext){
+		if (ext.equalsIgnoreCase("gif"))
+            return "image/gif";
+		if(ext.equalsIgnoreCase("jpeg"))
+		    return "image/jpeg";  
+		if(ext.equalsIgnoreCase("jpg"))
+		    return "image/jpg";  
+		if(ext.equalsIgnoreCase("png"))
+		    return "image/png";  
+		if(ext.equalsIgnoreCase("swf"))
+		    return "application/x-shockwave-flash";  
+		if(ext.equalsIgnoreCase("psd"))
+			return "image/psd";  
+		if(ext.equalsIgnoreCase("bmp"))
+        	return "image/bmp";
+		if(ext.equalsIgnoreCase("tiff"))
+			return "image/tiff";  
+		if(ext.equalsIgnoreCase("jpg"))
+			return "image/JPEG";  
+        if(ext.equalsIgnoreCase("jpc"))
+        	return "application/octet-stream";
+        if(ext.equalsIgnoreCase("jp2"))
+        	return "image/jp2";
+        if(ext.equalsIgnoreCase("jpx"))
+        	return "application/octet-stream";
+        if(ext.equalsIgnoreCase("jb2"))
+        	return "application/octet-stream";
+        if(ext.equalsIgnoreCase("swc"))
+        	return "application/x-shockwave-flash";
+        if(ext.equalsIgnoreCase("iff"))
+        	return "image/iff";
+        if(ext.equalsIgnoreCase("wbmp"))
+        	return "image/vnd.wap.wbmp";
+        if(ext.equalsIgnoreCase("xbm"))
+        	return "image/xbm";
+        if(ext.equalsIgnoreCase("ico"))
+        	return "image/vnd.microsoft.icon";
+		return null;
+	}
 	private I12 Get(String path){		
 		if(path!=null){
 			String[]s=path.split("/");
@@ -59,61 +98,7 @@ public class Picture{
 		while (iterator.hasNext()) {
 			FileItemStream t=iterator.next(); 
 			ext=t.getName().substring(t.getName().lastIndexOf(".")+1,t.getName().length());
-						
-			if (ext.equalsIgnoreCase("gif")) {  
-	            rsp.setContentType("image/gif");
-	        } 
-			else if(ext.equalsIgnoreCase("jpeg")){  
-			    rsp.setContentType("image/jpeg");  
-		    }
-			else if(ext.equalsIgnoreCase("jpg")){  
-			    rsp.setContentType("image/jpg");  
-	        }
-			else if(ext.equalsIgnoreCase("png")){  
-			    rsp.setContentType("image/png");  
-		    }
-			else if(ext.equalsIgnoreCase("swf")){  
-			    rsp.setContentType("application/x-shockwave-flash");  
-		    }
-			else if(ext.equalsIgnoreCase("psd")){  
-				rsp.setContentType("image/psd");  
-		    }
-			else if(ext.equalsIgnoreCase("bmp")){
-	        	rsp.setContentType("image/bmp");
-	        }
-			else if(ext.equalsIgnoreCase("tiff")){  
-				rsp.setContentType("image/tiff");  
-		    }
-			else if(ext.equalsIgnoreCase("jpg")){  
-				rsp.setContentType("image/JPEG");  
-		    }
-	        else if(ext.equalsIgnoreCase("jpc")){
-	        	rsp.setContentType("application/octet-stream");
-	        }
-	        else if(ext.equalsIgnoreCase("jp2")){
-	        	rsp.setContentType("image/jp2");
-	        }
-	        else if(ext.equalsIgnoreCase("jpx")){
-	        	rsp.setContentType("application/octet-stream");
-	        }
-	        else if(ext.equalsIgnoreCase("jb2")){
-	        	rsp.setContentType("application/octet-stream");
-	        }
-	        else if(ext.equalsIgnoreCase("swc")){
-	        	rsp.setContentType("application/x-shockwave-flash");
-	        }
-	        else if(ext.equalsIgnoreCase("iff")){
-	        	rsp.setContentType("image/iff");
-	        }
-	        else if(ext.equalsIgnoreCase("wbmp")){
-	        	rsp.setContentType("image/vnd.wap.wbmp");
-	        }
-	        else if(ext.equalsIgnoreCase("xbm")){
-	        	rsp.setContentType("image/xbm");
-	        }
-	        else if(ext.equalsIgnoreCase("ico")){
-	        	rsp.setContentType("image/vnd.microsoft.icon");
-	        }
+			rsp.setContentType(Mime(ext));
 		}
   
 		String base=null;
@@ -207,22 +192,22 @@ public class Picture{
 	
 	public void Icon(String path,HttpServletResponse rsp)throws IOException{
 		I12 i=Get(path);
-		rsp.setContentType("image/jpg");
+		rsp.setContentType("image");
 		rsp.getOutputStream().write(i.getico().getBytes());
 	}
 	public void Original(String path,HttpServletResponse rsp)throws IOException{
 		I12 i=Get(path);
-		rsp.setContentType("image/jpg");
+		rsp.setContentType("image");
 		rsp.getOutputStream().write(i.getorg().getBytes());
 	}
 	public void Regular(Id id,HttpServletResponse rsp)throws IOException{
 		I12 i=Get(id);
-		rsp.setContentType("image/jpg");
+		rsp.setContentType("image");
 		rsp.getOutputStream().write(i.getreg().getBytes());
 	}
 	public void Thumbnail(String path,HttpServletResponse rsp)throws IOException{
 		I12 i=Get(path);
-		rsp.setContentType("image/jpg");
+		rsp.setContentType("image");
 		rsp.getOutputStream().write(i.getthm().getBytes());
 	}
 }
