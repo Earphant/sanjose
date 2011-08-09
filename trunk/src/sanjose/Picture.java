@@ -185,13 +185,17 @@ public class Picture{
 			finally{
 				m.close();
 			}	    
-		rsp.sendRedirect("/"+base+"/");
+			rsp.sendRedirect("/"+base+"/");
 		}
 	}
 	
 	
 	public void Icon(String	path,HttpServletResponse rsp)throws IOException{
 		I12 i=Get(path);
+		if(i==null){
+			rsp.sendRedirect("/icon.jpg");
+			return;
+		}
 		rsp.setContentType("image");
 		rsp.getOutputStream().write(i.getico().getBytes());
 	}
