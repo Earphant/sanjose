@@ -18,6 +18,33 @@ public class SystemServlet extends HttpServlet{
 	private UserService usv=UserServiceFactory.getUserService();
 	private Page page;
 
+	private void Follow(HttpServletRequest req,HttpServletResponse rsp)
+		throws IOException{
+		Session s=new Session("ow");
+		Id d=new Id(req.getParameter("i"));
+		PersistenceManager m=Helper.getMgr();   
+		I21 i=new I21(d.i,d.j,s.id,s.site,new Date());
+		try{
+			m.makePersistent(i);
+		}finally {
+			m.close();
+		}
+		rsp.sendRedirect("/"+d.i+"."+d.j+"/");
+	}
+	private void Unfollow(HttpServletRequest req,HttpServletResponse rsp)
+		throws IOException{
+		Session s=new Session("ow");
+		Id d=new Id(req.getParameter("i"));
+		PersistenceManager m=Helper.getMgr();   
+		I21 i=new I21(d.i,d.j,s.id,s.site,new Date());
+		try{
+			m.makePersistent(i);
+			m.deletePersistent(i);
+		}finally {
+			m.close();
+		}
+		rsp.sendRedirect("/"+d.i+"."+d.j+"/");
+	}
 	@SuppressWarnings("unchecked")
 	private void Settings(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{	
@@ -162,6 +189,10 @@ public class SystemServlet extends HttpServlet{
 
 		if(p.equals("/"))
 			page.title="System";
+		else if(p.equalsIgnoreCase("/follow")){
+			Follow(req,rsp);
+			return;
+		}
 		else if(p.equalsIgnoreCase("/settings")){
 			Settings(req,rsp);
 			return;
@@ -176,6 +207,10 @@ public class SystemServlet extends HttpServlet{
 		}
 		else if(p.equals("/signup")){
 			Signup(req,rsp);
+			return;
+		}
+		else if(p.equalsIgnoreCase("/unfollow")){
+			Unfollow(req,rsp);
 			return;
 		}
 		else
