@@ -38,7 +38,6 @@ public class I{
 	@SuppressWarnings("unused")
 	@Persistent
     private Date c;
-	@SuppressWarnings("unused")
 	@Persistent
     private Date m;
 	@SuppressWarnings("unused")
@@ -150,11 +149,8 @@ public class I{
 		}
 	}
 	public void setId(PersistenceManager mgr){
-		if(this.i==0L){
-			this.i=key.getId();
-			this.c=this.m;
-			this.t=this.m;
-		}
+		setId();
+		mgr.makePersistent(this);
 	}
 	public void setx(String val){
 	    this.x=val;
