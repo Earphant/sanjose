@@ -55,7 +55,7 @@ public class Based{
 					if(t==null || t.equals(""))
 						t="<i>(Untitled)</i>";
 					if(i.getClassId()==12){
-					    page.Out("a"+ow.i+"aa"+ow.j+"aa");
+					 
 						page.Out("<a href=/"+base+"/"+d+"><img src=/thumbnails/"+d+".jpg></a>");
 					}
 					else

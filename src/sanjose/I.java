@@ -96,6 +96,9 @@ public class I{
 	public long getClassId(){
 	    return a;
 	}
+	public Date getc(){
+	    return c;
+	}
 	public long getBaseId(){
 	    return b;
 	}
