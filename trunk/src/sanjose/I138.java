@@ -22,20 +22,23 @@ public class I138 extends Single{
 		this.w=owner.getSite();
 		this.t=time;
 		this.vol=vol;
-		this._key=this.o+"."+this.w+"."+time.getTime();
+		this._key=this.o+"."+this.w+"."+this.getTick();
 	}
 	public I138(long ownerId,long ownerSite,long vol,Date time){
 		this.o=ownerId;
 		this.w=ownerSite;
 		this.t=time;
 		this.vol=vol;
-		this._key=this.o+"."+this.w+"."+time.getTime();
+		this._key=this.o+"."+this.w+"."+this.getTick();
 	}
 	public long getOwnerId(){
 	    return o;
 	}	
 	public long getOwnerSite(){
 		return w;
+	}
+	public long getTick(){
+		return t.getTime()/1000;
 	}
 	public Date getTime(){
 		return t;

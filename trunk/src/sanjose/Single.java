@@ -8,6 +8,9 @@ import java.util.Date;
 
 public class Single{
 	public boolean mark=false;
+	public long getTick(){
+		return 0;
+	}
 	public Date getTime(){
 		return null;
 	}
