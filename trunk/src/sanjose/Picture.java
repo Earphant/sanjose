@@ -3,6 +3,7 @@ package	sanjose;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -88,6 +89,7 @@ public class Picture{
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp,
 		InputStream stream,Long	id,Long	site)throws IOException, FileUploadException{
 
@@ -118,7 +120,6 @@ public class Picture{
 			q.setFilter("i==iParam && j==jParam");
 			q.declareParameters("Long iParam,Long jParam");
 			try{
-				@SuppressWarnings("unchecked")
 				List<I12> r=(List<I12>)q.execute(icon.i,icon.j);
 				if(!r.isEmpty()){
 					I12 i12	= r.get(0);
@@ -132,17 +133,32 @@ public class Picture{
 			}
 			finally{
 				q.closeAll();
-				m.close();
 			}
 			if(icon.ext!=null)
 				rsp.sendRedirect("/admins/users?i="+icon.i+"."+icon.j);
-			else
+			else{
+				Date now=new Date();
+				Query qi=m.newQuery(I.class);
+		        qi.setFilter("i==iParam && j==jParam");
+				qi.declareParameters("Long iParam,Long jParam");
+				   try{
+						List<I> r=(List<I>)qi.execute(icon.i,icon.j);
+						if(!r.isEmpty()){
+							I i=r.get(0);
+							i.setModifyTime(now);
+						}
+					}
+					finally{
+						qi.closeAll();
+						m.close();
+					}
 				rsp.sendRedirect("/system/settings");
+			}
 		}
 		else{
 			Session	s=new Session("");
 			try{
-				I i=new	I("","",12L,0L,s.id,s.site);
+				I i=new	I(s.name,"",12L,0L,s.id,s.site);
 				m.makePersistent(i);
 				i.setId(m);
 				I12 i12=new I12(i,ext,b);			
