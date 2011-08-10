@@ -114,8 +114,8 @@ public class Graph{
 	}
 	/*
 	@SuppressWarnings("unchecked")
-	public String html(Object list,String type,long begin,long end,
-		long interval)throws IOException{
+	public String html(Object list,String type,long end,long length,
+		long interval){
 	    long tx1=100l;int day1=0;int day2=0;String s="";
 		long tx2=86400000l;
 		long tx8=3l;
