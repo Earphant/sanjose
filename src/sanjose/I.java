@@ -96,8 +96,11 @@ public class I{
 	public long getClassId(){
 	    return a;
 	}
-	public long getb(){
+	public long getBaseId(){
 	    return b;
+	}
+	public long getBaseSite(){
+	    return s;
 	}
 	public String gete(){
 	    return e.getValue();
@@ -108,14 +111,14 @@ public class I{
 	public long getId(){
 	    return i;
 	}
+	public Date getModifyTime(){
+	    return m;
+	}
 	public long getSite(){
 	    return j;
 	}
 	public String getp(){
 	    return p;
-	}
-	public long gets(){
-	    return s;
 	}
 	public long getOwnerId(){
 	    return o;
