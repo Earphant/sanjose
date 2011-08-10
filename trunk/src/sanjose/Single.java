@@ -8,10 +8,10 @@ import java.util.Date;
 
 public class Single{
 	public boolean mark=false;
-	public Date gettime(){
+	public Date getTime(){
 		return null;
 	}
-	public Long getvol(){
-		return null;
+	public long getVol(){
+		return 0;
 	}
 }

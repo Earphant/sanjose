@@ -31,8 +31,8 @@ public class Steps {
 				List<I139> r=(List<I139>)q.execute(timed.o,timed.w,timed.t);
 				if(!r.isEmpty()){
 					I139 i139=r.get(0);
-					Long v=i139.getvol();
-					Date t=i139.gettime();
+					Long v=i139.getVol();
+					Date t=i139.getTime();
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(t);
 					int year= cal.get(Calendar.YEAR);
@@ -171,9 +171,9 @@ public class Steps {
 			List<I139> r=(List<I139>)q2.execute(id,site);
 			if(!r.isEmpty()){			
 				for(I139 i139:r){
-					long t = i139.gettime().getTime();
+					long t = i139.getTime().getTime();
 					SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					page.Out(time.format(t)+"<br>"+base+": "+i139.getvol()+" <a href=/post/steps?i="+i139.getOwnerId()+"."+i139.getOwnerSite()+"."+i139.gettime().getTime()+">ÐÞ¸Ä</a><br>");
+					page.Out(time.format(t)+"<br>"+base+": "+i139.getVol()+" <a href=/post/steps?i="+i139.getOwnerId()+"."+i139.getOwnerSite()+"."+i139.getTime().getTime()+">ÐÞ¸Ä</a><br>");
 				}
 			}
 		}

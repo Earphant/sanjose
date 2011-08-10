@@ -30,8 +30,8 @@ public class Graph{
 		tx5=0l;re=1l;
 				
 		for(Single i:(List<Single>)list){
-			long tx3 = i.getvol();
-			long tt2 = i.gettime().getTime();
+			long tx3 = i.getVol();
+			long tt2 = i.getTime().getTime();
 			long tt3 = tt1-tt2;
 				
 			if(tt3<(tx1*tx2)){
