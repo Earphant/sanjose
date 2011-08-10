@@ -46,6 +46,7 @@ textarea{width:100%}
 .list td{text-align:right}
 .post{clear:left;padding-top:1ex}
 .post div{margin-left:70px}
+.post .c2{margin:0}
 
 .c504{border:solid 1px #000;height:400px;overflow:hidden;position:relative}
 .c504 div{border:none}
