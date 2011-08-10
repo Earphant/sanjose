@@ -112,7 +112,7 @@ public class I{
 	    return i;
 	}
 	public long getModifyTick(){
-	    return m.getTime();
+	    return m.getTime()/1000;
 	}
 	public Date getModifyTime(){
 	    return m;
