@@ -32,7 +32,7 @@ public class Fat {
 					I135 i135=r.get(0);
 					Long f=i135.getFat();
 					Long w=i135.getWater();
-					Date t=i135.gettime();
+					Date t=i135.getTime();
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(t);
 					int year= cal.get(Calendar.YEAR);
@@ -172,9 +172,9 @@ public class Fat {
 			List<I135> r=(List<I135>)q2.execute(id,site);
 			if(!r.isEmpty()){			
 				for(I135 i135:r){
-					long t = i135.gettime().getTime();
+					long t = i135.getTime().getTime();
 					SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					page.Out(time.format(t)+"<br>"+base+":  Fat: "+i135.getFat()+" Water: "+i135.getWater()+" <a href=/post/fat?i="+i135.getOwnerId()+"."+i135.getOwnerSite()+"."+i135.gettime().getTime()+">ÐÞ¸Ä</a><br>");
+					page.Out(time.format(t)+"<br>"+base+":  Fat: "+i135.getFat()+" Water: "+i135.getWater()+" <a href=/post/fat?i="+i135.getOwnerId()+"."+i135.getOwnerSite()+"."+i135.getTime().getTime()+">ÐÞ¸Ä</a><br>");
 				}
 			}
 		}

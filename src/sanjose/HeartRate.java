@@ -29,8 +29,8 @@ public class HeartRate {
 				List<I136> r=(List<I136>)q.execute(timed.o,timed.w,timed.t);
 				if(!r.isEmpty()){
 					I136 i136=r.get(0);
-					Long v=i136.getvol();
-					Date t=i136.gettime();
+					Long v=i136.getVol();
+					Date t=i136.getTime();
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(t);
 					int year= cal.get(Calendar.YEAR);
@@ -173,9 +173,9 @@ public class HeartRate {
 			List<I136> r=(List<I136>)q2.execute(id,site);
 			if(!r.isEmpty()){			
 				for(I136 i136:r){
-					long t =i136.gettime().getTime();
+					long t =i136.getTime().getTime();
 					SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");					
-					page.Out(time.format(t)+"<br>"+base+": "+i136.getvol()+" <a href=/post/heartrate?i="+i136.getOwnerId()+"."+i136.getOwnerSite()+"."+i136.gettime().getTime()+">ÐÞ¸Ä</a><br>");									
+					page.Out(time.format(t)+"<br>"+base+": "+i136.getVol()+" <a href=/post/heartrate?i="+i136.getOwnerId()+"."+i136.getOwnerSite()+"."+i136.getTime().getTime()+">ÐÞ¸Ä</a><br>");									
 				}
 			}
 		}
