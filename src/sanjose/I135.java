@@ -28,7 +28,7 @@ public class I135 extends Single{
 		this.t=time;
 		this.fat=fat;
 		this.wat=wat;
-		this._key=this.o+"."+this.w+"."+time.getTime();
+		this._key=this.o+"."+this.w+"."+this.getTick();
 	}
 	public I135(long ownerId,long ownerSite,long fat,long wat,Date time){
 		this.o=ownerId;
@@ -36,13 +36,16 @@ public class I135 extends Single{
 		this.t=time;
 		this.fat=fat;
 		this.wat=wat;
-		this._key=this.o+"."+this.w+"."+time.getTime();
+		this._key=this.o+"."+this.w+"."+this.getTick();
 	}
 	public long getOwnerId(){
 	    return o;
 	}	
 	public long getOwnerSite(){
 		return w;
+	}
+	public long getTick(){
+		return t.getTime()/1000;
 	}
 	public Date getTime(){
 		return t;
