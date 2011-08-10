@@ -8,8 +8,7 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.*;
-//import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.User;
+
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
@@ -221,28 +220,8 @@ public class SystemServlet extends HttpServlet{
 	@SuppressWarnings("unchecked")
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 	throws IOException{
-		User user=UserServiceFactory.getUserService().getCurrentUser();
 		PersistenceManager mgr=Helper.getMgr();	
-		Long currenti=0L;
-		Long currentj=0L;
-		if(user!=null){
-			String email=user.getEmail();
-			Query q11=mgr.newQuery(I11.class);
-	        q11.setFilter("eml==emlParam");
-			q11.declareParameters("String emlParam");
-			   try{
-					List<I11> r11=(List<I11>)q11.execute(email);
-					if(!r11.isEmpty()){
-						I11 i11=r11.get(0);
-						currenti=i11.geti();
-						currentj=i11.getj();
-					}
-			   }
-			   finally{
-				   q11.closeAll();
-			   }
-		}
-		
+		Session current = new Session("");
 		String eml = req.getParameter("eml");
 		String pwd1 = req.getParameter("pwd1");
 		String pwd2 = req.getParameter("pwd2");
@@ -253,7 +232,7 @@ public class SystemServlet extends HttpServlet{
         q11.setFilter("i==iParam && j==jParam");
 		q11.declareParameters("Long iParam,Long jParam");
 		   try{
-				List<I11> r11=(List<I11>)q11.execute(currenti,currentj);
+				List<I11> r11=(List<I11>)q11.execute(current.id,current.site);
 				if(!r11.isEmpty()){
 					I11 i11=r11.get(0);
 					i11.seteml(eml);
@@ -270,7 +249,7 @@ public class SystemServlet extends HttpServlet{
         q.setFilter("i==iParam && j==jParam");
 		q.declareParameters("Long iParam,Long jParam");
 		   try{
-				List<I> r=(List<I>)q.execute(currenti,currentj);
+				List<I> r=(List<I>)q.execute(current.id,current.site);
 				if(!r.isEmpty()){
 					I i=r.get(0);
 					i.setx(x);
@@ -301,7 +280,7 @@ public class SystemServlet extends HttpServlet{
         q1.setFilter("i==iParam && j==jParam");
 		q1.declareParameters("Long iParam,Long jParam");
 		   try{
-				List<I1> r1=(List<I1>)q1.execute(currenti,currentj);
+				List<I1> r1=(List<I1>)q1.execute(current.id,current.site);
 				if(!r1.isEmpty()){
 					I1 i1=r1.get(0);
 					i1.setfsn(fsn);
@@ -319,6 +298,6 @@ public class SystemServlet extends HttpServlet{
 				q1.closeAll();
 				mgr.close();
 			}
-		rsp.sendRedirect("/"+currenti+"."+currentj+"/");
+		rsp.sendRedirect("/"+current.id+"."+current.site+"/");
 	}
 }
