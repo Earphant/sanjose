@@ -7,7 +7,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
-public class I135{
+public class I135 extends Single{
 	@PrimaryKey
 	@SuppressWarnings("unused")
 	private String key;

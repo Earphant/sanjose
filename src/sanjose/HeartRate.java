@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -21,14 +22,14 @@ public class HeartRate {
 		if(timed.t!=null){
 			PersistenceManager mgr=Helper.getMgr();
 			Query q=mgr.newQuery(I136.class);
-			q.setFilter("i==iParam && j==jParam && t==tParam");
+			q.setFilter("o==oParam && w==wParam && m==mParam");
 			q.declareImports("import java.util.Date");
-			q.declareParameters("Long iParam,Long jParam,Date tParam");
+			q.declareParameters("Long oParam,Long wParam,Date mParam");
 			try{
 				@SuppressWarnings("unchecked")
-				List<I136> r=(List<I136>)q.execute(timed.i,timed.j,timed.t);
+				List<I> r=(List<I>)q.execute(timed.i,timed.j,timed.t);
 				if(!r.isEmpty()){
-					I136 i136=r.get(0);
+					I136 i136=r.get(0).geti136();
 					Long v=i136.getvol();
 					Date t=i136.gettime();
 					Calendar cal = Calendar.getInstance();
@@ -95,17 +96,19 @@ public class HeartRate {
 			}
 		}
 		else{
-			Query q=mgr.newQuery(I136.class);
-			q.setFilter("w==wParam && o==oParam && t==tParam");
+			Query q=mgr.newQuery(I.class);
+			q.setFilter("o==oParam && w==wParam && m==mParam");
 			q.declareImports("import java.util.Date");
-			q.declareParameters("Long iParam,Long jParam,Date tParam");
+			q.declareParameters("Long oParam,Long wParam,Date mParam");
 			try{
 				@SuppressWarnings("unchecked")
-				List<I136> r=(List<I136>)q.execute(timed.i,timed.j,timed.t);		
+				List<I> r=(List<I>)q.execute(timed.i,timed.j,timed.t);
 				if(!r.isEmpty()){
-					I136 i136=r.get(0);
+					I i=r.get(0);
+					I136 i136=i.geti136();
 					i136.setvol(vol);
-					i136.gettime();
+					i.seti136(i136);
+					mgr.makePersistent(i);
 				}
 			}
 			finally{
@@ -115,6 +118,7 @@ public class HeartRate {
 		}
 		rsp.sendRedirect("/"+s.id+"."+s.site+"/heartrate");
 	}
+	@SuppressWarnings("unchecked")
 	public void Out(String plink,Page page) throws IOException{
 		String[]s=plink.split("/");
 		String base=s[1];
@@ -124,14 +128,22 @@ public class HeartRate {
 		Long site=Long.parseLong(base.split("\\.")[1]);
 		
 		PersistenceManager mgr=Helper.getMgr();
-		Query q1=mgr.newQuery(I136.class);
-		q1.setOrdering("t desc");
+		Query q1=mgr.newQuery(I.class);
+		q1.setFilter("o==oParam && w==wParam");
+		q1.declareParameters("Long oParam,Long wParam");
+		q1.setOrdering("m desc");
 		try{
-			@SuppressWarnings("unchecked")
-			List<I136> r=(List<I136>)q1.execute();
+			List<I> r=(List<I>)q1.execute(id,site);
+			List<I136> r136 = new LinkedList<I136>();
+			for(I i:r){
+				if(i.getClassId()==136){
+					I136 i136 = i.geti136();
+					r136.add(i136);
+				}
+			}
 			page.Out("<div class=graf>");
-			String rate="heartrate";
-			page.Out(new Graph().Daily(r,rate));
+			String abc="heartrate";
+			page.Out(new Graph().Daily(r136,abc));
 			page.Out("</div>");
 		}
 		finally{
@@ -141,9 +153,8 @@ public class HeartRate {
 		Query q2=mgr.newQuery(I.class);
 		q2.setFilter("o==oParam && w==wParam");
 		q2.declareParameters("Long oParam,Long wParam");
-		q2.setOrdering("t desc");
+		q2.setOrdering("m desc");
 		try{
-			@SuppressWarnings("unchecked")
 			List<I> r=(List<I>)q2.execute(id,site);
 			if(!r.isEmpty()){			
 				for(I i:r){
