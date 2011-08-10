@@ -25,6 +25,7 @@ public class Datatxt{
 		r.readLine();
 		while((v=r.readLine())!=null){
 			String s[]=v.split(" ");
+			Session current=new Session("");
 			Date t;
 			Date now=new Date();
 			PersistenceManager mgr=Helper.getMgr();
@@ -36,7 +37,7 @@ public class Datatxt{
 
 				List<I> r138=(List<I>)qi.execute(id,site,138);
 				if(r138.isEmpty()){
-					I i138= new I("","",138L,0L,id,site);
+					I i138= new I(current.name,"",138L,0L,id,site);
 					i138.setModifyTime(now);
 					mgr.makePersistent(i138);
 				}
@@ -51,7 +52,7 @@ public class Datatxt{
 				
 				List<I> r135=(List<I>)qi.execute(id,site,135);
 				if(r135.isEmpty()){
-					I i135= new I("","",135L,0L,id,site);
+					I i135= new I(current.name,"",135L,0L,id,site);
 					i135.setModifyTime(now);
 					mgr.makePersistent(i135);
 				}
@@ -66,7 +67,7 @@ public class Datatxt{
 				
 				List<I> r136=(List<I>)qi.execute(id,site,136);
 				if(r136.isEmpty()){
-					I i136= new I("","",136L,0L,id,site);
+					I i136= new I(current.name,"",136L,0L,id,site);
 					i136.setModifyTime(now);
 					mgr.makePersistent(i136);
 				}
@@ -81,7 +82,7 @@ public class Datatxt{
 				
 				List<I> r139=(List<I>)qi.execute(id,site,139);
 				if(r136.isEmpty()){
-					I i139= new I("","",139L,0L,id,site);
+					I i139= new I(current.name,"",139L,0L,id,site);
 					i139.setModifyTime(now);
 					mgr.makePersistent(i139);
 				}
