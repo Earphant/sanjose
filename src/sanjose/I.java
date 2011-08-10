@@ -143,12 +143,18 @@ public class I{
 	    this.xtr=val;
 	}
 	public void setId(){
-		if(this.i==0L)
+		if(this.i==0L){
 			this.i=key.getId();
+			this.c=this.m;
+			this.t=this.m;
+		}
 	}
 	public void setId(PersistenceManager mgr){
-		if(this.i==0L)
+		if(this.i==0L){
 			this.i=key.getId();
+			this.c=this.m;
+			this.t=this.m;
+		}
 	}
 	public void setx(String val){
 	    this.x=val;
