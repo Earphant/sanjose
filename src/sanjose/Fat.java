@@ -173,7 +173,7 @@ public class Fat {
 			List<I> r=(List<I>)q2.execute(id,site);
 			if(!r.isEmpty()){
 				for(I i:r){
-					if(i.geta()==139){
+					if(i.getClassId()==139){
 						long t = i.geti139().gettime().getTime();
 						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
 						page.Out(time.format(t)+"<br>"+base+":  Fat: "+i.geti135().getfat()+" Water: "+i.geti135().getwat()+" <a href=/post/fat?i="+i.geti135().geti()+"."+i.geti135().getj()+"."+i.geti135().gettime().getTime()+">修改</a><br>");

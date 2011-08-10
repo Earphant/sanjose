@@ -14,7 +14,7 @@ public class RegList extends HttpServlet {
 				String w=o.getOwnerId()+"."+o.getOwnerSite();
 				if(x==null || x.equals(""))
 					x="<i>(Untitled)</i>";
-				switch((int)o.geta()){
+				switch((int)o.getClassId()){
 				case 1:
 					page.Out("<a href=/"+i+"/><img src=/icons/"+i+" class=icon></a>: "+x+"<br>");
 					break;

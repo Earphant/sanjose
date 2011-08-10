@@ -147,7 +147,7 @@ public class HeartRate {
 			List<I> r=(List<I>)q2.execute(id,site);
 			if(!r.isEmpty()){			
 				for(I i:r){
-					if(i.geta()==136){
+					if(i.getClassId()==136){
 						long t = i.geti136().gettime().getTime();
 						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日HH:mm:ss");					
 						page.Out(time.format(t)+"<br>"+base+": "+i.geti136().getvol()+" <a href=/post/heartrate?i="+i.geti136().geti()+"."+i.geti136().getj()+"."+i.geti136().gettime().getTime()+">修改</a><br>");				

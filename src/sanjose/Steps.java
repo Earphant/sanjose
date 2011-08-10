@@ -143,7 +143,7 @@ public class Steps {
 			List<I> r=(List<I>)q2.execute(id,site);
 			if(!r.isEmpty()){
 				for(I i:r){
-					if(i.geta()==139){
+					if(i.getClassId()==139){
 						long t = i.geti139().gettime().getTime();
 						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
 						page.Out(time.format(t)+"<br>"+base+": "+i.geti139().getvol()+" <a href=/post/steps?i="+i.geti139().geti()+"."+i.geti139().getj()+"."+i.geti139().gettime().getTime()+">修改</a><br>");

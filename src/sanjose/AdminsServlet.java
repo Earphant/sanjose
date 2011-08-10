@@ -48,7 +48,7 @@ public class AdminsServlet extends HttpServlet{
 				List<I> r=(List<I>)q.execute(id.i,id.j);
 				if(!r.isEmpty()){	
 					for(I i:r){
-						if(i.geta()==12L)
+						if(i.getClassId()==12L)
 							page.Out("<a href=/post/uploads?i="+i.getId()+"."+i.getSite()+"><img src=/thumbnails/"+i.getId()+"."+i.getSite()+"></a><br>");
 
 					}
@@ -66,72 +66,43 @@ public class AdminsServlet extends HttpServlet{
 		Page page=new Page(rsp);
 		page.title="Posts";
 		page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
-
-		Id id = new Id(req.getParameter("i"));
-		if(id.i==0L){
-			PersistenceManager mgr=Helper.getMgr();
-			Query q11=mgr.newQuery(I11.class);
-			q11.setOrdering("i desc");
-			try{
-				List<I11> r=(List<I11>)q11.execute();
-				if(!r.isEmpty()){
-					for(I11 i11:r){
-						page.Out("<a href=/admins/posts?i="+i11.geti()+"."+i11.getj()+">"+i11.geteml()+"</a><br>");
+		PersistenceManager mgr=Helper.getMgr();	
+		Query q=mgr.newQuery(I.class);
+		q.setOrdering("t desc");
+		try{
+			List<I> r=(List<I>)q.execute();
+			if(!r.isEmpty()){	
+				for(I i:r){
+					if(i.getClassId()==12)
+						page.Out("<a href=/post/upload?i="+i.getId()+"."+i.getSite()+"><img src=/thumbnails/"+i.getId()+"."+i.getSite()+"></a><br>");
+					if(i.getClassId()==135){
+						long t = i.geti135().gettime().getTime();
+						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+						page.Out(time.format(t)+"  Fat:"+i.geti135().getfat()+"  Water:"+i.geti135().getwat()+"<br>");
 					}
+					if(i.getClassId()==136){
+						long t = i.geti136().gettime().getTime();
+						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+						page.Out(time.format(t)+"  Heart Rate:"+i.geti136().getvol()+"<br>");
+					}
+					if(i.getClassId()==138){
+						long t = i.geti138().gettime().getTime();
+						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+						page.Out(time.format(t)+"  Weight:"+i.geti138().getvol()+"<br>");
+					}
+					if(i.getClassId()==139){
+						long t = i.geti139().gettime().getTime();
+						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+						page.Out(time.format(t)+"  Steps:"+i.geti139().getvol()+"<br>");
+					}	
 				}
 			}
-			finally{
-				q11.closeAll();
-			}
-			page.End(null);
 		}
-		else{
-			page.Out("<form method=post action=/admins/posts>");
-			
-			PersistenceManager mgr=Helper.getMgr();	
-			Query q=mgr.newQuery(I.class);
-			q.setFilter("o==oParam && w==wParam");
-			q.declareParameters("Long oParam,Long wParam");
-			q.setOrdering("t desc");
-			try{
-				List<I> r=(List<I>)q.execute(id.i,id.j);
-				if(!r.isEmpty()){	
-					for(I i:r){
-						if(i.geta()==12)
-							page.Out("<a href=/post/upload?i="+i.getId()+"."+i.getSite()+"><img src=/thumbnails/"+i.getId()+"."+i.getSite()+"></a><br>");
-                        if(i.geta()==135){
-                        	long t = i.geti135().gettime().getTime();
-        					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-                        	page.Out(time.format(t)+"  Fat:"+i.geti135().getfat()+"  Water:"+i.geti135().getwat());
-                        	
-                        }
-                        if(i.geta()==136){
-                        	long t = i.geti136().gettime().getTime();
-        					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-                        	page.Out(time.format(t)+"  Heart Rate:"+i.geti136().getvol());
-                        	
-                        }
-                        if(i.geta()==138){
-                        	long t = i.geti138().gettime().getTime();
-        					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-                        	page.Out(time.format(t)+"  Weight:"+i.geti138().getvol());
-                        	
-                        }
-                        if(i.geta()==139){
-                        	long t = i.geti139().gettime().getTime();
-        					SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-                        	page.Out(time.format(t)+"  Steps:"+i.geti139().getvol());
-                        	
-                        }	
-					}
-				}
-			}
-			finally{
-				q.closeAll();
-				mgr.close();
-			}
-			page.End(null);
+		finally{
+			q.closeAll();
+			mgr.close();
 		}
+		page.End(null);
 	}
 	@SuppressWarnings("unchecked")
 	private void Users(HttpServletRequest req,HttpServletResponse rsp) throws IOException{
@@ -293,8 +264,8 @@ public class AdminsServlet extends HttpServlet{
         Page page=new Page(rsp);
         page.title="Admins";
         page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
-        page.Out("<a href=/admins/posts>Posts</a><br>");
         page.Out("<a href=/admins/pictures>Pictures</a><br>");
+        page.Out("<a href=/admins/posts>Posts</a><br>");
         page.Out("<a href=/admins/users>Users</a><br>");
         page.End(null);
 	}
