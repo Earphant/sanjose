@@ -138,6 +138,9 @@ public class I{
 	public I139 geti139(){
 	    return i139;
 	}
+	public void sete(String e){
+		this.e=new Text(e);
+	}
 	public void setExtra(String val){
 	    this.xtr=val;
 	}
@@ -152,11 +155,11 @@ public class I{
 		setId();
 		mgr.makePersistent(this);
 	}
+	public void setModifyTime(Date val){
+		this.m=val;
+	}
 	public void setx(String val){
 	    this.x=val;
-	}
-	public void sete(String e){
-		this.e=new Text(e);
 	}
 	public void seti135(I135 i135){
 	    this.i135=i135;

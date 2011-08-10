@@ -84,7 +84,7 @@ public class Weight {
 			try{
 				I i=new I("","",138L,0L,s.id,s.site);
 				mgr.makePersistent(i);
-				i.setm(t);
+				i.setModifyTime(t);
 				i.setId();
 				I138 i138=new I138(i,vol,t);
 				i.seti138(i138);
