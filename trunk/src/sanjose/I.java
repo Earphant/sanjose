@@ -111,6 +111,9 @@ public class I{
 	public long getId(){
 	    return i;
 	}
+	public long getModifyTick(){
+	    return m.getTime();
+	}
 	public Date getModifyTime(){
 	    return m;
 	}
