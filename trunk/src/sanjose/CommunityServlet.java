@@ -13,6 +13,7 @@ public class CommunityServlet extends HttpServlet {
 		throws IOException{
 		Page p=new Page(rsp);
 		p.title="Community";
+		p.aside="<ul><li><a href=/post/organization>Create a group</a></ul>";
 		PersistenceManager mgr=Helper.getMgr();
 		Query q=mgr.newQuery(I.class);
 		q.setFilter("r==0");
