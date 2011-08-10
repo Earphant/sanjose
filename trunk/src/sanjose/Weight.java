@@ -145,7 +145,7 @@ public class Weight {
 			List<I> r=(List<I>)q2.execute(id,site);
 			if(!r.isEmpty()){
 				for(I i:r){
-					if(i.geta()==138){
+					if(i.getClassId()==138){
 						long t = i.geti138().gettime().getTime();
 						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
 						page.Out(time.format(t)+"<br>"+base+": "+i.geti138().getvol()+" <a href=/post/weight?i="+i.geti138().geti()+"."+i.geti138().getj()+"."+i.geti138().gettime().getTime()+">修改</a><br>");         	

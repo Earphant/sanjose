@@ -96,7 +96,7 @@ public class I{
 		this.x=text;
 		this.e=new Text("");
 	}
-	public long geta(){
+	public long getClassId(){
 	    return a;
 	}
 	public long getb(){
@@ -104,6 +104,9 @@ public class I{
 	}
 	public String gete(){
 	    return e.getValue();
+	}
+	public String getExtra(){
+	    return xtr;
 	}
 	public long getId(){
 	    return i;
@@ -126,9 +129,6 @@ public class I{
 	public String getx(){
 	    return x;
 	}
-	public String getxtr(){
-	    return xtr;
-	}
 	public I135 geti135(){
 	    return i135;
 	}
@@ -141,6 +141,9 @@ public class I{
 	public I139 geti139(){
 	    return i139;
 	}
+	public void setExtra(String val){
+	    this.xtr=val;
+	}
 	public void setId(){
 		if(this.i==0L)
 			this.i=key.getId();
@@ -151,9 +154,6 @@ public class I{
 	}
 	public void setx(String val){
 	    this.x=val;
-	}
-	public void setxtr(String val){
-	    this.xtr=val;
 	}
 	public void sete(String e){
 		this.e=new Text(e);

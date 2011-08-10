@@ -54,7 +54,7 @@ public class Based{
 				
 					if(t==null || t.equals(""))
 						t="<i>(Untitled)</i>";
-					if(i.geta()==12){
+					if(i.getClassId()==12){
 					    page.Out("a"+ow.i+"aa"+ow.j+"aa");
 						page.Out("<a href=/"+base+"/"+d+"><img src=/thumbnails/"+d+".jpg></a>");
 					}
@@ -87,7 +87,7 @@ public class Based{
 				List<I> r=(List<I>)q.execute(d.i,d.j);
 				if(!r.isEmpty()){
 					I i=r.get(0);
-					if(i.geta()==12)
+					if(i.getClassId()==12)
 						page.Out("<a href=/originals/"+id+".jpg title=test><img src=/"+base+"/"+id+".jpg></a>");
 					page.Out(i.getx());
 				}
