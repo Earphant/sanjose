@@ -17,49 +17,27 @@ public class AdminsServlet extends HttpServlet{
 		Page page=new Page(rsp);
 		page.title="Pictures";
 		page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
-
-		Id id = new Id(req.getParameter("i"));
-		if(id.i==0L){
-			PersistenceManager mgr=Helper.getMgr();
-			Query q11=mgr.newQuery(I11.class);
-			q11.setOrdering("i desc");
-			try{
-				List<I11> r=(List<I11>)q11.execute();
-				if(!r.isEmpty()){
-					for(I11 i11:r){
-						page.Out("<a href=/admins/pictures?i="+i11.geti()+"."+i11.getj()+">"+i11.geteml()+"</a><br>");
-					}
+		page.Out("<form method=post action=/admins/pictures>");
+		
+		PersistenceManager mgr=Helper.getMgr();	
+		Query q=mgr.newQuery(I.class);
+		q.setFilter("a==aParam");
+		q.declareParameters("Long aParam");
+		q.setOrdering("m desc");
+		try{
+			List<I> r=(List<I>)q.execute(12);
+			if(!r.isEmpty()){	
+				for(I i:r){
+					page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/"+i.getId()+"."+i.getSite()+"><img src=/thumbnails/"+i.getId()+"."+i.getSite()+"></a><br>");
 				}
 			}
-			finally{
-				q11.closeAll();
-			}
-			page.End(null);
 		}
-		else{
-			page.Out("<form method=post action=/admins/pictures>");
+		finally{
+			q.closeAll();
+			mgr.close();
+		}
+		page.End(null);
 			
-			PersistenceManager mgr=Helper.getMgr();	
-			Query q=mgr.newQuery(I.class);
-			q.setFilter("o==oParam && w==wParam");
-			q.declareParameters("Long oParam,Long wParam");
-			q.setOrdering("i desc");
-			try{
-				List<I> r=(List<I>)q.execute(id.i,id.j);
-				if(!r.isEmpty()){	
-					for(I i:r){
-						if(i.getClassId()==12L)
-							page.Out("<a href=/post/uploads?i="+i.getId()+"."+i.getSite()+"><img src=/thumbnails/"+i.getId()+"."+i.getSite()+"></a><br>");
-
-					}
-				}
-			}
-			finally{
-				q.closeAll();
-				mgr.close();
-			}
-			page.End(null);
-		}
 	}
 	@SuppressWarnings("unchecked")
 	private void Posts(HttpServletRequest req,HttpServletResponse rsp) throws IOException{
@@ -68,32 +46,35 @@ public class AdminsServlet extends HttpServlet{
 		page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
 		PersistenceManager mgr=Helper.getMgr();	
 		Query q=mgr.newQuery(I.class);
-		q.setOrdering("t desc");
+		q.setOrdering("m desc");
 		try{
 			List<I> r=(List<I>)q.execute();
 			if(!r.isEmpty()){	
 				for(I i:r){
-					if(i.getClassId()==12)
-						page.Out("<a href=/post/upload?i="+i.getId()+"."+i.getSite()+"><img src=/thumbnails/"+i.getId()+"."+i.getSite()+"></a><br>");
+					SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					if(i.getClassId()==1){
+						long t = i.getModifyTime().getTime();
+						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/>"+time.format(t)+" "+i.getx()+" uploaded settings</a><br>");
+					}
+					if(i.getClassId()==12){
+						long t = i.getModifyTime().getTime();
+						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/"+i.getId()+"."+i.getSite()+"/>"+time.format(t)+" "+i.getx()+" uploaded a picture</a><br>");
+					}
 					if(i.getClassId()==135){
-						long t = i.geti135().gettime().getTime();
-						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/fat>"+time.format(t)+"  Fat:"+i.geti135().getfat()+"  Water:"+i.geti135().getwat()+"</a><br>");
+						long t = i.getModifyTime().getTime();
+						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/fat>"+time.format(t)+" "+i.getx()+" uploaded fat and water</a><br>");
 					}
 					if(i.getClassId()==136){
-						long t = i.geti136().gettime().getTime();
-						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/heartrate>"+time.format(t)+"  Heart Rate:"+i.geti136().getvol()+"</a><br>");
+						long t = i.getModifyTime().getTime();
+						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/heartrate>"+time.format(t)+" "+i.getx()+" uploaded heart rate</a><br>");
 					}
 					if(i.getClassId()==138){
-						long t = i.geti138().gettime().getTime();
-						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/weight>"+time.format(t)+"  Weight:"+i.geti138().getvol()+"</a><br>");
+						long t = i.getModifyTime().getTime();
+						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/weight>"+time.format(t)+" "+i.getx()+" uploaded weight</a><br>");
 					}
 					if(i.getClassId()==139){
-						long t = i.geti139().gettime().getTime();
-						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/steps>"+time.format(t)+"  Steps:"+i.geti139().getvol()+"</a><br>");
+						long t = i.getModifyTime().getTime();
+						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/steps>"+time.format(t)+" "+i.getx()+" uploaded steps</a><br>");
 					}	
 				}
 			}
@@ -140,7 +121,7 @@ public class AdminsServlet extends HttpServlet{
 					page.Out("<a href=/post/upload?i="+id.i+"."+id.j+".admin><img src=/icons/"+id.i+"."+id.j+"></a><br>");
 				}
 				else
-					page.Out("<a href=/post/upload?i="+id.i+"."+id.j+".admin><div style=background-color:#EEE;height:48px;width:48px>&nbsp;</div></a>");
+					page.Out("<a href=/post/upload?i="+id.i+"."+id.j+"><img src=/icons/"+id.i+"."+id.j+" class=icon></a><br>");
 			}
 			finally{
 				q12.closeAll();

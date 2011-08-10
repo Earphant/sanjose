@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -22,15 +21,15 @@ public class Fat {
 		p.Out("<form method=post action=/post/fat>");
 		if(timed.t!=null){
 			PersistenceManager mgr=Helper.getMgr();
-			Query q=mgr.newQuery(I.class);
-			q.setFilter("o==oParam && w==wParam && m==mParam");
+			Query q=mgr.newQuery(I135.class);
+			q.setFilter("o==oParam && w==wParam && t==tParam");
 			q.declareImports("import java.util.Date");
-			q.declareParameters("Long oParam,Long wParam,Date mParam");
+			q.declareParameters("Long oParam,Long wParam,Date tParam");
 			try{
 				@SuppressWarnings("unchecked")
-				List<I> r=(List<I>)q.execute(timed.i,timed.j,timed.t);
+				List<I135> r=(List<I135>)q.execute(timed.o,timed.w,timed.t);
 				if(!r.isEmpty()){
-					I135 i135=r.get(0).geti135();
+					I135 i135=r.get(0);
 					Long f=i135.getfat();
 					Long w=i135.getwat();
 					Date t=i135.gettime();
@@ -42,14 +41,13 @@ public class Fat {
 					int hour= cal.get(Calendar.HOUR_OF_DAY);
 					int min= cal.get(Calendar.MINUTE);
 					int sec = cal.get(Calendar.SECOND);
-					p.Out("Fat:<input type=text name=fat value="+f+">Water:<input type=text name=wat value="+w+"><br>Time:<input type=text name=year style=width:40px; value="+year+">年<input type=text name=month style=width:20px; value="+month+">月<input type=text name=date style=width:20px; value="+date+">日 <input type=text name=hour style=width:20px; value="+hour+">:<input type=text name=min style=width:20px; value="+min+">:<input type=text name=sec style=width:20px; value="+sec+">");
-					
+					p.Out("Fat:<input type=text name=fat value="+f+">Water:<input type=text name=wat value="+w+"><br>Date:<input type=text name=year style=width:40px; value="+year+">-<input type=text name=month style=width:20px; value="+month+">-<input type=text name=date style=width:20px; value="+date+"> Time:<input type=text name=hour style=width:20px; value="+hour+">:<input type=text name=min style=width:20px; value="+min+">:<input type=text name=sec style=width:20px; value="+sec+">");
 				}
 			}
 			finally{
 				q.closeAll();
 			}
-			p.Out("<input type=hidden name=i value="+timed.i+"."+timed.j+"."+timed.t.getTime()+">");
+			p.Out("<input type=hidden name=i value="+timed.o+"."+timed.w+"."+timed.t.getTime()+">");
 		}
 		else{
 			Date now=new Date();
@@ -61,62 +59,83 @@ public class Fat {
 			int hour= cal.get(Calendar.HOUR_OF_DAY)+8;
 			int min= cal.get(Calendar.MINUTE);
 			int sec = cal.get(Calendar.SECOND);
-			p.Out("Fat:<input type=text name=fat value=>Water:<input type=text name=wat value=><br>Time:<input type=text name=year style=width:40px; value="+year+">年<input type=text name=month style=width:20px; value="+month+">月<input type=text name=date style=width:20px; value="+date+">日 <input type=text name=hour style=width:20px; value="+hour+">:<input type=text name=min style=width:20px; value="+min+">:<input type=text name=sec style=width:20px; value="+sec+">");
+			p.Out("Fat:<input type=text name=fat value=>Water:<input type=text name=wat value=><br>Date:<input type=text name=year style=width:40px; value="+year+">-<input type=text name=month style=width:20px; value="+month+">-<input type=text name=date style=width:20px; value="+date+"> Time:<input type=text name=hour style=width:20px; value="+hour+">:<input type=text name=min style=width:20px; value="+min+">:<input type=text name=sec style=width:20px; value="+sec+">");
 		}
 		p.End("<input type=submit name=ok></form>");
 	}
+	@SuppressWarnings("unchecked")
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
         PersistenceManager mgr=Helper.getMgr();
         
         Long fat=Long.parseLong(req.getParameter("fat"));	
         Long wat=Long.parseLong(req.getParameter("wat"));	
-        
         int year = Integer.parseInt(req.getParameter("year"));
         int month = Integer.parseInt(req.getParameter("month"))-1;
         int date = Integer.parseInt(req.getParameter("date"));
         int hour = Integer.parseInt(req.getParameter("hour"));
         int min = Integer.parseInt(req.getParameter("min"));
         int sec = Integer.parseInt(req.getParameter("sec"));
-        
         Calendar calendar = Calendar.getInstance();
         calendar.set(year,month,date,hour,min,sec);
         Date t = calendar.getTime();
-        
+        Date now=new Date();
         Session s=new Session("/post");
         Timed timed=new Timed(req.getParameter("i"));
         if(timed.t==null){
-        	try{
-				I i=new I("","",135L,0L,s.id,s.site);
-				mgr.makePersistent(i);
-				i.setId();
-				I135 i135=new I135(i,fat,wat,t);
-				i.seti135(i135);
-				mgr.makePersistent(i);
+        	Query qi=mgr.newQuery(I.class);
+			qi.setFilter("o==oParam && w==wParam && a==aParam");
+			qi.declareParameters("Long oParam,Long wParam,Long aParam");
+			try{
+				List<I> r=(List<I>)qi.execute(s.id,s.site,135);
+				if(r.isEmpty()){
+					I i= new I(s.name,"",135L,0L,s.id,s.site);
+					i.setModifyTime(now);
+					mgr.makePersistent(i);
+				}
+				else{
+					I i=r.get(0);
+					i.setModifyTime(now);
+					mgr.makePersistent(i);
+				}
+				I135 i135=new I135(s.id,s.site,fat,wat,t);
+				mgr.makePersistent(i135);
 			}
 			finally{
+				qi.closeAll();
 				mgr.close();
 			}
 		}
 		else{
-			Query q=mgr.newQuery(I.class);
-			q.setFilter("o==oParam && w==wParam && m==mParam");
+			Query q=mgr.newQuery(I135.class);
+			q.setFilter("o==oParam && w==wParam && t==tParam");
 			q.declareImports("import java.util.Date");
-			q.declareParameters("Long oParam,Long wParam,Date mParam");
+			q.declareParameters("Long oParam,Long wParam,Date tParam");
 			try{
-				@SuppressWarnings("unchecked")
-				List<I> r=(List<I>)q.execute(timed.i,timed.j,timed.t);
+				List<I135> r=(List<I135>)q.execute(timed.o,timed.w,timed.t);
 				if(!r.isEmpty()){
-					I i=r.get(0);
-					I135 i135=i.geti135();
+					I135 i135=r.get(0);
 					i135.setfat(fat);
 					i135.setwat(wat);
-					i.seti135(i135);
-					mgr.makePersistent(i);
+					mgr.makePersistent(i135);
 				}
 			}
 			finally{
 				q.closeAll();
+			}
+			Query qi=mgr.newQuery(I.class);
+			qi.setFilter("o==oParam && w==wParam && a==aParam");
+			qi.declareParameters("Long oParam,Long wParam,Long aParam");
+			try{
+				List<I> r=(List<I>)qi.execute(timed.o,timed.w,135);
+				if(!r.isEmpty()){
+					I i=r.get(0);
+					i.setModifyTime(now);
+					mgr.makePersistent(i);
+				}
+			}
+			finally{
+				qi.closeAll();
 				mgr.close();
 			}
 		}
@@ -132,19 +151,12 @@ public class Fat {
 		Long site=Long.parseLong(base.split("\\.")[1]);
 		
 		PersistenceManager mgr=Helper.getMgr();
-		Query q1=mgr.newQuery(I.class);
+		Query q1=mgr.newQuery(I135.class);
 		q1.setFilter("o==oParam && w==wParam");
 		q1.declareParameters("Long oParam,Long wParam");
-		q1.setOrdering("m desc");
+		q1.setOrdering("t desc");
 		try{
-			List<I> r=(List<I>)q1.execute(id,site);
-			List<I135> r135 = new LinkedList<I135>();
-			for(I i:r){
-				if(i.getClassId()==135){
-					I135 i135 = i.geti135();
-					r135.add(i135);
-				}
-			}
+			
 			
 			
 			
@@ -152,20 +164,17 @@ public class Fat {
 		finally{
 			q1.closeAll();
 		}
-		
-		Query q2=mgr.newQuery(I.class);
+		Query q2=mgr.newQuery(I135.class);
 		q2.setFilter("o==oParam && w==wParam");
 		q2.declareParameters("Long oParam,Long wParam");
-		q2.setOrdering("m desc");
+		q2.setOrdering("t desc");
 		try{
-			List<I> r=(List<I>)q2.execute(id,site);
-			if(!r.isEmpty()){
-				for(I i:r){
-					if(i.getClassId()==135){
-						long t = i.geti135().gettime().getTime();
-						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-						page.Out(time.format(t)+"<br>"+base+":  Fat: "+i.geti135().getfat()+" Water: "+i.geti135().getwat()+" <a href=/post/fat?i="+i.geti135().geti()+"."+i.geti135().getj()+"."+i.geti135().gettime().getTime()+">修改</a><br>");
-					}
+			List<I135> r=(List<I135>)q2.execute(id,site);
+			if(!r.isEmpty()){			
+				for(I135 i135:r){
+					long t = i135.gettime().getTime();
+					SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					page.Out(time.format(t)+"<br>"+base+":  Fat: "+i135.getfat()+" Water: "+i135.getwat()+" <a href=/post/fat?i="+i135.geto()+"."+i135.getw()+"."+i135.gettime().getTime()+">修改</a><br>");
 				}
 			}
 		}

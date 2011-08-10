@@ -10,11 +10,11 @@ import javax.jdo.annotations.PrimaryKey;
 public class I135 extends Single{
 	@PrimaryKey
 	@SuppressWarnings("unused")
-	private String key;
+	private String _key;
 	@Persistent
-	private Long i;
+	private Long o;
 	@Persistent
-	private Long j;
+	private Long w;
 	@Persistent
 	private Date t;
 	@Persistent
@@ -23,26 +23,26 @@ public class I135 extends Single{
 	private Long wat;
 
 	public I135(I i,Long fat,Long wat,Date time){
-		this.key=i+"."+j+"."+time;
-		this.i=i.getId();
-		this.j=i.getSite();
+		this._key=o+"."+w+"."+time;
+		this.o=i.getId();
+		this.w=i.getSite();
 		this.fat=fat;
 		this.wat=wat;
 		this.t=time;
 	}
-	public I135(Long i,Long j,Long fat,Long wat,Date time){
-		this.key=i+"."+j+"."+time;
-		this.i=i;
-		this.j=j;
+	public I135(Long o,Long w,Long fat,Long wat,Date time){
+		this._key=o+"."+w+"."+time;
+		this.o=o;
+		this.w=w;
 		this.fat=fat;
 		this.wat=wat;
 		this.t=time;
 	}
-	public long geti(){
-	    return i;
+	public long geto(){
+	    return o;
 	}
-	public long getj(){
-		return j;
+	public long getw(){
+		return w;
 	}
 	public long getfat(){
 	    return fat;
