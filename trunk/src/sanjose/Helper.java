@@ -1,18 +1,9 @@
 package sanjose;
 
 import java.io.*;
-//import java.net.MalformedURLException;
-//import java.net.URL;
-//import java.text.DateFormat;
-//import java.text.ParseException;
-//import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.cache.*;
 import javax.jdo.*;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-import com.google.appengine.api.memcache.stdimpl.GCacheFactory;
-//import com.google.appengine.api.users.*;
 
 public final class Helper{
 	private static final PersistenceManagerFactory pi=
@@ -24,15 +15,15 @@ public final class Helper{
 	public static PersistenceManager getMgr(){
 	    return pi.getPersistenceManager();
 	}
-	@SuppressWarnings("unchecked")
+	//@SuppressWarnings("unchecked")
 	public static Cache get_mem(){
-		try{
-			Map p=new HashMap();
-	        p.put(GCacheFactory.EXPIRATION_DELTA,57600);
-			return CacheManager.getInstance().getCacheFactory().createCache(p);
-		}catch(CacheException e){
-			e.printStackTrace();
-		}
+		//try{
+			//Map p=new HashMap();
+	        //p.put(GCacheFactory.EXPIRATION_DELTA,57600);
+			//return CacheManager.getInstance().getCacheFactory().createCache(p);
+		//}catch(CacheException e){
+			//e.printStackTrace();
+		//}
 		return null;
 	}
 
@@ -47,8 +38,8 @@ public final class Helper{
 //			mem.put(pnk,i.getval()+","+i.gettxt());
 			return i;
 		}
-		String s[];
-		s=v.split(",");
+		//String s[];
+		//s=v.split(",");
 //		i=new I(pnk,s[8],0);
 //		i.setval(v);
 		return null;
