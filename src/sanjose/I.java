@@ -80,19 +80,17 @@ public class I{
 		this.e=new Text("");
 	}
 	public I(String text,String guid,long classid,long rate,long ownerid,long ownersite){
-		Date c=new Date();
+		Date current=new Date();
 		this.i=0L;
 		this.j=9L;
 		this.a=classid;
-		this.b=o;
-		this.c=c;
-		this.m=c;
+		this.b=ownerid;
+		this.m=current;
 		this.o=ownerid;
 		this.w=ownersite;
 		this.p=guid;
 		this.r=rate;
-		this.s=w;
-		this.t=c;
+		this.s=ownersite;
 		this.x=text;
 		this.e=new Text("");
 	}
