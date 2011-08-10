@@ -16,13 +16,13 @@ public class RegList extends HttpServlet {
 					x="<i>(Untitled)</i>";
 				switch((int)o.getClassId()){
 				case 1:
-					page.Out("<div class=post>"+x+"<a href=/"+i+"/><img src=/icons/"+i+" class=icon></a></div>");
+					page.Out("<div class=post><a href=/"+i+"/><img src=/icons/"+i+" class=icon></a><div>"+x+"<br>"+o.getModifyTime().getTime()+"</div></div>");
 					break;
 				case 12:
-					page.Out("<div class=post>"+x+"<a href=/"+w+"/"+i+"><img src=/thumbnails/"+i+"></a><a href=/"+w+"/><img src=/icons/"+w+" class=icon></a></div>");
+					page.Out("<div class=post><a href=/"+w+"/"+i+"><img src=/thumbnails/"+i+"></a><a href=/"+w+"/><img src=/icons/"+w+" class=icon></a><div>"+x+"<br>"+o.getModifyTime().getTime()+"</div></div>");
 					break;
 				default:
-					page.Out("<div class=post>"+x+"<a href=/"+w+"/><img src=/icons/"+w+" class=icon></a></div>");
+					page.Out("<div class=post><a href=/"+w+"/><img src=/icons/"+w+" class=icon></a><div>"+x+"<br>"+o.getModifyTime().getTime()+"</div></div>");
 				}
 			}
 		}	
