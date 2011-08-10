@@ -45,6 +45,7 @@ textarea{width:100%}
 .list th{font-weight:normal}
 .list td{text-align:right}
 .post{clear:left;padding-top:1ex}
+.post div{margin-left:70px}
 
 .c504{border:solid 1px #000;height:400px;overflow:hidden;position:relative}
 .c504 div{border:none}
