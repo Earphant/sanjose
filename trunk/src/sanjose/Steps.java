@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -23,14 +24,14 @@ public class Steps {
 		if(timed.t!=null){
 			PersistenceManager mgr=Helper.getMgr();
 			Query q=mgr.newQuery(I139.class);
-			q.setFilter("i==iParam && j==jParam && t==tParam");	
+			q.setFilter("o==oParam && w==wParam && m==mParam");	
 			q.declareImports("import java.util.Date");
-			q.declareParameters("Long iParam,Long jParam,Date tParam");
+			q.declareParameters("Long oParam,Long wParam,Date mParam");
 			try{
 				@SuppressWarnings("unchecked")
-				List<I139> r=(List<I139>)q.execute(timed.i,timed.j,timed.t);
+				List<I> r=(List<I>)q.execute(timed.i,timed.j,timed.t);
 				if(!r.isEmpty()){
-					I139 i139=r.get(0);
+					I139 i139=r.get(0).geti139();
 					Long v=i139.getvol();
 					Date t=i139.gettime();
 					Calendar cal = Calendar.getInstance();
@@ -94,16 +95,19 @@ public class Steps {
 			}
 		}
 		else{
-			Query q=mgr.newQuery(I139.class);
-			q.setFilter("i==iParam && j==jParam && t==tParam");
+			Query q=mgr.newQuery(I.class);
+			q.setFilter("o==oParam && w==wParam && m==mParam");
 			q.declareImports("import java.util.Date");
-			q.declareParameters("Long iParam,Long jParam,Date tParam");
+			q.declareParameters("Long oParam,Long wParam,Date mParam");
 			try{
 				@SuppressWarnings("unchecked")
-				List<I139> r=(List<I139>)q.execute(timed.i,timed.j,timed.t);
+				List<I> r=(List<I>)q.execute(timed.i,timed.j,timed.t);
 				if(!r.isEmpty()){
-					I139 i139=r.get(0);
+					I i=r.get(0);
+					I139 i139=i.geti139();
 					i139.setvol(vol);
+					i.seti139(i139);
+					mgr.makePersistent(i);
 				}
 			}
 			finally{
@@ -113,6 +117,7 @@ public class Steps {
 		}
 		rsp.sendRedirect("/"+s.id+"."+s.site+"/steps");
 	}
+	@SuppressWarnings("unchecked")
 	public void Out(String plink,Page page) throws IOException{
 		String[]s=plink.split("/");
 		String base=s[1];
@@ -122,24 +127,33 @@ public class Steps {
 		Long site=Long.parseLong(base.split("\\.")[1]);
 		
 		PersistenceManager mgr=Helper.getMgr();
-		Query q1=mgr.newQuery(I139.class);
+		Query q1=mgr.newQuery(I.class);
+		q1.setFilter("o==oParam && w==wParam");
+		q1.declareParameters("Long oParam,Long wParam");
+		q1.setOrdering("m desc");
 		try{
-			@SuppressWarnings("unchecked")
-			List<I138> r=(List<I138>)q1.execute();
-			String as="steps";
+			List<I> r=(List<I>)q1.execute(id,site);
+			List<I139> r139 = new LinkedList<I139>();
+			for(I i:r){
+				if(i.getClassId()==139){
+					I139 i139 = i.geti139();
+					r139.add(i139);
+				}
+			}
+			String abc="steps";
 			page.Out("<div class=graf>");
-			page.Out(new Graph().Daily(r,as));
+			page.Out(new Graph().Daily(r139,abc));
 			page.Out("</div>");
 		}
 		finally{
 			q1.closeAll();
 		}
+		
 		Query q2=mgr.newQuery(I.class);
 		q2.setFilter("o==oParam && w==wParam");
 		q2.declareParameters("Long oParam,Long wParam");
-		q2.setOrdering("t desc");
+		q2.setOrdering("m desc");
 		try{
-			@SuppressWarnings("unchecked")
 			List<I> r=(List<I>)q2.execute(id,site);
 			if(!r.isEmpty()){
 				for(I i:r){

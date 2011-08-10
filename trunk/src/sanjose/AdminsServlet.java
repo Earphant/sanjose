@@ -78,22 +78,22 @@ public class AdminsServlet extends HttpServlet{
 					if(i.getClassId()==135){
 						long t = i.geti135().gettime().getTime();
 						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-						page.Out(time.format(t)+"  Fat:"+i.geti135().getfat()+"  Water:"+i.geti135().getwat()+"<br>");
+						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/fat>"+time.format(t)+"  Fat:"+i.geti135().getfat()+"  Water:"+i.geti135().getwat()+"</a><br>");
 					}
 					if(i.getClassId()==136){
 						long t = i.geti136().gettime().getTime();
 						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-						page.Out(time.format(t)+"  Heart Rate:"+i.geti136().getvol()+"<br>");
+						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/heartrate>"+time.format(t)+"  Heart Rate:"+i.geti136().getvol()+"</a><br>");
 					}
 					if(i.getClassId()==138){
 						long t = i.geti138().gettime().getTime();
 						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-						page.Out(time.format(t)+"  Weight:"+i.geti138().getvol()+"<br>");
+						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/weight>"+time.format(t)+"  Weight:"+i.geti138().getvol()+"</a><br>");
 					}
 					if(i.getClassId()==139){
 						long t = i.geti139().gettime().getTime();
 						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-						page.Out(time.format(t)+"  Steps:"+i.geti139().getvol()+"<br>");
+						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/steps>"+time.format(t)+"  Steps:"+i.geti139().getvol()+"</a><br>");
 					}	
 				}
 			}

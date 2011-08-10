@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -22,14 +23,14 @@ public class Weight {
 		if(timed.t!=null){
 			PersistenceManager mgr=Helper.getMgr();
 			Query q=mgr.newQuery(I138.class);
-			q.setFilter("i==iParam && j==jParam && t==tParam");
+			q.setFilter("o==oParam && w==wParam && m==mParam");
 			q.declareImports("import java.util.Date");
-			q.declareParameters("Long iParam,Long jParam,Date tParam");
+			q.declareParameters("Long oParam,Long wParam,Date mParam");
 			try{
 				@SuppressWarnings("unchecked")
-				List<I138> r=(List<I138>)q.execute(timed.i,timed.j,timed.t);
+				List<I> r=(List<I>)q.execute(timed.i,timed.j,timed.t);
 				if(!r.isEmpty()){
-					I138 i138=r.get(0);
+					I138 i138=r.get(0).geti138();
 					Long v=i138.getvol();
 					Date t=i138.gettime();
 					Calendar cal = Calendar.getInstance();
@@ -73,7 +74,6 @@ public class Weight {
         int hour = Integer.parseInt(req.getParameter("hour"));
         int min = Integer.parseInt(req.getParameter("min"));
         int sec = Integer.parseInt(req.getParameter("sec"));
-        
         Calendar calendar = Calendar.getInstance();
         calendar.set(year,month,date,hour,min,sec);
         Date t = calendar.getTime();
@@ -84,6 +84,7 @@ public class Weight {
 			try{
 				I i=new I("","",138L,0L,s.id,s.site);
 				mgr.makePersistent(i);
+				i.setm(t);
 				i.setId();
 				I138 i138=new I138(i,vol,t);
 				i.seti138(i138);
@@ -94,16 +95,19 @@ public class Weight {
 			}
 		}
 		else{
-			Query q=mgr.newQuery(I138.class);
-			q.setFilter("i==iParam && j==jParam && t==tParam");
+			Query q=mgr.newQuery(I.class);
+			q.setFilter("o==oParam && w==wParam && m==mParam");
 			q.declareImports("import java.util.Date");
-			q.declareParameters("Long iParam,Long jParam,Date tParam");
+			q.declareParameters("Long oParam,Long wParam,Date mParam");
 			try{
 				@SuppressWarnings("unchecked")
-				List<I138> r=(List<I138>)q.execute(timed.i,timed.j,timed.t);
+				List<I> r=(List<I>)q.execute(timed.i,timed.j,timed.t);
 				if(!r.isEmpty()){
-					I138 i138=r.get(0);
+					I i=r.get(0);
+					I138 i138=i.geti138();
 					i138.setvol(vol);
+					i.seti138(i138);
+					mgr.makePersistent(i);
 				}
 			}
 			finally{
@@ -113,6 +117,7 @@ public class Weight {
 		}
 		rsp.sendRedirect("/"+s.id+"."+s.site+"/weight");
 	}
+	@SuppressWarnings("unchecked")
 	public void Out(String plink,Page page) throws IOException{
 		String[]s=plink.split("/");
 		String base=s[1];
@@ -122,26 +127,32 @@ public class Weight {
 		Long site=Long.parseLong(base.split("\\.")[1]);
 		
 		PersistenceManager mgr=Helper.getMgr();
-		Query q1=mgr.newQuery(I138.class);
-		q1.setOrdering("t desc");
+		Query q1=mgr.newQuery(I.class);
+		q1.setFilter("o==oParam && w==wParam");
+		q1.declareParameters("Long oParam,Long wParam");
+		q1.setOrdering("m desc");
 		try{
-			@SuppressWarnings("unchecked")
-			List<I138> r=(List<I138>)q1.execute();
+			List<I> r= (List<I>) q1.execute(id,site);
+			List<I138> r138 = new LinkedList<I138>();
+			for(I i:r){
+				if(i.getClassId()==138){
+					I138 i138 = i.geti138();
+					r138.add(i138);
+				}
+			}
 			page.Out("<div class=graf>");
 			String abc="weight";
-			page.Out(new Graph().Daily(r,abc));
+			page.Out(new Graph().Daily(r138,abc));
 			page.Out("</div>");
 		}
 		finally{
 			q1.closeAll();
 		}
-
 		Query q2=mgr.newQuery(I.class);
 		q2.setFilter("o==oParam && w==wParam");
 		q2.declareParameters("Long oParam,Long wParam");
-		q2.setOrdering("t desc");
+		q2.setOrdering("m desc");
 		try{
-			@SuppressWarnings("unchecked")
 			List<I> r=(List<I>)q2.execute(id,site);
 			if(!r.isEmpty()){
 				for(I i:r){

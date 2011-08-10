@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -21,15 +22,15 @@ public class Fat {
 		p.Out("<form method=post action=/post/fat>");
 		if(timed.t!=null){
 			PersistenceManager mgr=Helper.getMgr();
-			Query q=mgr.newQuery(I135.class);
-			q.setFilter("i==jParam && i==jParam && t==tParam");
+			Query q=mgr.newQuery(I.class);
+			q.setFilter("o==oParam && w==wParam && m==mParam");
 			q.declareImports("import java.util.Date");
-			q.declareParameters("Long iParam,Long jParam,Date tParam");
+			q.declareParameters("Long oParam,Long wParam,Date mParam");
 			try{
 				@SuppressWarnings("unchecked")
-				List<I135> r=(List<I135>)q.execute(timed.i,timed.j,timed.t);
+				List<I> r=(List<I>)q.execute(timed.i,timed.j,timed.t);
 				if(!r.isEmpty()){
-					I135 i135=r.get(0);
+					I135 i135=r.get(0).geti135();
 					Long f=i135.getfat();
 					Long w=i135.getwat();
 					Date t=i135.gettime();
@@ -98,18 +99,20 @@ public class Fat {
 			}
 		}
 		else{
-			Query q=mgr.newQuery(I135.class);
-			q.setFilter("i==iParam && j==jParam && t==tParam");
+			Query q=mgr.newQuery(I.class);
+			q.setFilter("o==oParam && w==wParam && m==mParam");
 			q.declareImports("import java.util.Date");
-			q.declareParameters("Long iParam,Long jParam,Date tParam");
+			q.declareParameters("Long oParam,Long wParam,Date mParam");
 			try{
 				@SuppressWarnings("unchecked")
-				List<I135> r=(List<I135>)q.execute(timed.i,timed.j,timed.t);
+				List<I> r=(List<I>)q.execute(timed.i,timed.j,timed.t);
 				if(!r.isEmpty()){
-					I135 i135=r.get(0);
+					I i=r.get(0);
+					I135 i135=i.geti135();
 					i135.setfat(fat);
 					i135.setwat(wat);
-					i135.sett(t);
+					i.seti135(i135);
+					mgr.makePersistent(i);
 				}
 			}
 			finally{
@@ -119,6 +122,7 @@ public class Fat {
 		}
 		rsp.sendRedirect("/"+s.id+"."+s.site+"/fat");
 	}
+	@SuppressWarnings("unchecked")
 	public void Out(String plink,Page page) throws IOException{
 		String[]s=plink.split("/");
 		String base=s[1];
@@ -128,37 +132,22 @@ public class Fat {
 		Long site=Long.parseLong(base.split("\\.")[1]);
 		
 		PersistenceManager mgr=Helper.getMgr();
-		Query q1=mgr.newQuery(I135.class);
-		q1.setOrdering("t asc");
+		Query q1=mgr.newQuery(I.class);
+		q1.setFilter("o==oParam && w==wParam");
+		q1.declareParameters("Long oParam,Long wParam");
+		q1.setOrdering("m desc");
 		try{
-			@SuppressWarnings("unchecked")
-			List<I135> r=(List<I135>)q1.execute();
-			
-			final long MAX=40;
-			final long MIN=0;
-			if(!r.isEmpty()){
-				Long T =0L;
-                Long W =0L;
-                int n;               
-                for(n=0;(n+1)<r.size();n++){
-                	Long ti=r.get(n).gettime().getTime();
-                	Long tii=r.get(n+1).gettime().getTime();
-                	Long txi=(tii-ti)/3600000;
-                	
-                	Long vol=r.get(n).getfat();
-                	Long volL=r.get(n+1).getfat();
-					Long wid=(vol-MIN)*100/(MAX-MIN);
-					page.Out("<div style="+"background-color:#000;height:"+txi+"px;width:"+wid+"%"+">&nbsp;</div>");
-					T=tii;
-					W=volL;	
-                }
-                Date t=new Date();
-                Long tnow=t.getTime();
-                Long txL=(tnow-T)/3600000;
-                Long widL=(W-MIN)*100/(MAX-MIN);
-                page.Out("<div style="+"background-color:#000;height:"+txL+"px;width:"+widL+"%"+">&nbsp;</div>");
-                
+			List<I> r=(List<I>)q1.execute(id,site);
+			List<I135> r135 = new LinkedList<I135>();
+			for(I i:r){
+				if(i.getClassId()==135){
+					I135 i135 = i.geti135();
+					r135.add(i135);
+				}
 			}
+			
+			
+			
 		}
 		finally{
 			q1.closeAll();
@@ -167,14 +156,13 @@ public class Fat {
 		Query q2=mgr.newQuery(I.class);
 		q2.setFilter("o==oParam && w==wParam");
 		q2.declareParameters("Long oParam,Long wParam");
-		q2.setOrdering("t desc");
+		q2.setOrdering("m desc");
 		try{
-			@SuppressWarnings("unchecked")
 			List<I> r=(List<I>)q2.execute(id,site);
 			if(!r.isEmpty()){
 				for(I i:r){
-					if(i.getClassId()==139){
-						long t = i.geti139().gettime().getTime();
+					if(i.getClassId()==135){
+						long t = i.geti135().gettime().getTime();
 						SimpleDateFormat time=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
 						page.Out(time.format(t)+"<br>"+base+":  Fat: "+i.geti135().getfat()+" Water: "+i.geti135().getwat()+" <a href=/post/fat?i="+i.geti135().geti()+"."+i.geti135().getj()+"."+i.geti135().gettime().getTime()+">修改</a><br>");
 					}
