@@ -22,44 +22,44 @@ public class I135 extends Single{
 	@Persistent
 	private Long wat;
 
-	public I135(I i,Long fat,Long wat,Date time){
-		this._key=o+"."+w+"."+time;
-		this.o=i.getId();
-		this.w=i.getSite();
+	public I135(I owner,long fat,long wat,Date time){
+		this.o=owner.getId();
+		this.w=owner.getSite();
+		this.t=time;
 		this.fat=fat;
 		this.wat=wat;
-		this.t=time;
+		this._key=this.o+"."+this.w+"."+time.getTime();
 	}
-	public I135(Long o,Long w,Long fat,Long wat,Date time){
-		this._key=o+"."+w+"."+time;
-		this.o=o;
-		this.w=w;
+	public I135(long ownerId,long ownerSite,long fat,long wat,Date time){
+		this.o=ownerId;
+		this.w=ownerSite;
+		this.t=time;
 		this.fat=fat;
 		this.wat=wat;
-		this.t=time;
+		this._key=this.o+"."+this.w+"."+time.getTime();
 	}
-	public long geto(){
+	public long getOwnerId(){
 	    return o;
-	}
-	public long getw(){
+	}	
+	public long getOwnerSite(){
 		return w;
 	}
-	public long getfat(){
-	    return fat;
-	}
-	public long getwat(){
-	    return wat;
-	}
-	public Date gettime(){
+	public Date getTime(){
 		return t;
 	}
-	public void setfat(long fat){
+	public long getFat(){
+	    return fat;
+	}
+	public long getWater(){
+	    return wat;
+	}
+	public void setFat(long fat){
 		this.fat=fat;
 	}
-	public void setwat(long wat){
+	public void setWater(long wat){
 		this.wat=wat;
 	}
-	public void sett(Date t){
+	public void setTime(Date t){
 		this.t=t;
 	}
 }
