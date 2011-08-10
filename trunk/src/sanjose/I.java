@@ -30,7 +30,6 @@ public class I{
 	private Long o;
 	@Persistent
 	private Long w;
-	@SuppressWarnings("unused")
 	@Persistent
 	private Long r;
 	@Persistent
@@ -39,7 +38,6 @@ public class I{
     private Date c;
 	@Persistent
     private Date m;
-	@SuppressWarnings("unused")
 	@Persistent
     private Date t;
 	@Persistent
@@ -84,17 +82,20 @@ public class I{
 		this.x=text;
 		this.e=new Text("");
 	}
-	public long getClassId(){
-	    return a;
-	}
-	public Date getm(){
-	    return m;
+	public long getAccessTick(){
+	    return c.getTime()/1000;
 	}
 	public long getBaseId(){
 	    return b;
 	}
 	public long getBaseSite(){
 	    return s;
+	}
+	public long getClassId(){
+	    return a;
+	}
+	public long getCreateTick(){
+	    return t.getTime()/1000;
 	}
 	public String gete(){
 	    return e.getValue();
@@ -110,6 +111,9 @@ public class I{
 	}
 	public Date getModifyTime(){
 	    return m;
+	}
+	public long getRate(){
+	    return r;
 	}
 	public long getSite(){
 	    return j;

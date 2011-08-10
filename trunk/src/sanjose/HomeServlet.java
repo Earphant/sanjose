@@ -111,7 +111,7 @@ public class HomeServlet extends HttpServlet{
 							Long[] ii={0L,0L,0L};			
 			                ii[0]=i.getOwnerId();
 							ii[1]=i.getOwnerSite();
-							ii[2]=(i.getm()).getTime();	
+							ii[2]=(i.getModifyTime()).getTime();	
 							IJM.add(ii);		                    
 						}
 					}			   
