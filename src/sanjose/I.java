@@ -17,7 +17,7 @@ import javax.jdo.annotations.PrimaryKey;
 public class I{
 	@PrimaryKey
 	@Persistent(valueStrategy=IdGeneratorStrategy.IDENTITY)
-	private Key key;
+	private Key _key;
 	@Persistent
 	private Long i;
 	@Persistent
@@ -35,7 +35,6 @@ public class I{
 	private Long r;
 	@Persistent
 	private Long s;
-	@SuppressWarnings("unused")
 	@Persistent
     private Date c;
 	@Persistent
@@ -51,18 +50,10 @@ public class I{
 	private String xtr;
 	@Persistent
 	private Text e;
-	@Persistent
-	private I135 i135;
-	@Persistent
-	private I136 i136;
-	@Persistent
-	private I138 i138;
-	@Persistent
-	private I139 i139;
 
 	public I(Long i,Long j,String x,String p,Long a,Long r,Long o,Long w){
 		Date c=new Date();
-		this.key=KeyFactory.createKey(I.class.getSimpleName(),i+"."+j);
+		this._key=KeyFactory.createKey(I.class.getSimpleName(),i+"."+j);
 		this.i=i;
 		this.j=j;
 		this.a=a;
@@ -135,18 +126,6 @@ public class I{
 	public String getx(){
 	    return x;
 	}
-	public I135 geti135(){
-	    return i135;
-	}
-	public I136 geti136(){
-	    return i136;
-	}
-	public I138 geti138(){
-	    return i138;
-	}
-	public I139 geti139(){
-	    return i139;
-	}
 	public void sete(String e){
 		this.e=new Text(e);
 	}
@@ -155,7 +134,7 @@ public class I{
 	}
 	public void setId(){
 		if(this.i==0L){
-			this.i=key.getId();
+			this.i=_key.getId();
 			this.c=this.m;
 			this.t=this.m;
 		}
@@ -169,17 +148,5 @@ public class I{
 	}
 	public void setx(String val){
 	    this.x=val;
-	}
-	public void seti135(I135 i135){
-	    this.i135=i135;
-	}
-	public void seti136(I136 i136){
-	    this.i136=i136;
-	}
-	public void seti138(I138 i138){
-	    this.i138=i138;
-	}
-	public void seti139(I139 i139){
-	    this.i139=i139;
 	}
 }

@@ -49,10 +49,8 @@ public class SystemServlet extends HttpServlet{
 		throws IOException{	
 		page.title="Settings";
 		
-		PersistenceManager mgr=Helper.getMgr();	
-		
 		Session s=new Session("");
-		
+		PersistenceManager mgr=Helper.getMgr();	
 		Query q12=mgr.newQuery(I12.class);
 		q12.setFilter("i==iParam && j==jParam");
 		q12.declareParameters("Long iParam,Long jParam");
@@ -62,7 +60,7 @@ public class SystemServlet extends HttpServlet{
 				page.Out("<a href=/post/upload?i="+s.id+"."+s.site+"><img src=/icons/"+s.id+"."+s.site+"></a><br>");
 			}
 			else
-				page.Out("<a href=/post/upload?i="+s.id+"."+s.site+"><div style=background-color:#EEE;height:48px;width:48px>&nbsp;</div></a>");
+				page.Out("<a href=/post/upload?i="+s.id+"."+s.site+"><img src=/icons/"+s.id+"."+s.site+" class=icon></a><br>");
 		}
 		finally{
 			q12.closeAll();
@@ -244,6 +242,7 @@ public class SystemServlet extends HttpServlet{
 				q11.closeAll();
 			}
 		
+		Date now=new Date();
 		String x = req.getParameter("x");
 		Query q=mgr.newQuery(I.class);
         q.setFilter("i==iParam && j==jParam");
@@ -253,6 +252,7 @@ public class SystemServlet extends HttpServlet{
 				if(!r.isEmpty()){
 					I i=r.get(0);
 					i.setx(x);
+					i.setModifyTime(now);
 				}
 			}
 			finally{
