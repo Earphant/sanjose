@@ -114,7 +114,7 @@ public class Weight {
 				List<I138> r=(List<I138>)q.execute(timed.o,timed.w,timed.t);
 				if(!r.isEmpty()){
 					I138 i138=r.get(0);
-					i138.setvol(vol);
+					i138.setVol(vol);
 					mgr.makePersistent(i138);
 				}
 			}
@@ -174,7 +174,7 @@ public class Weight {
 				for(I138 i138:r){
 					long t = i138.gettime().getTime();
 					SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					page.Out(time.format(t)+"<br>"+base+": "+i138.getvol()+" <a href=/post/weight?i="+i138.geto()+"."+i138.getw()+"."+i138.gettime().getTime()+">ÐÞ¸Ä</a><br>");					
+					page.Out(time.format(t)+"<br>"+base+": "+i138.getvol()+" <a href=/post/weight?i="+i138.getOwnerId()+"."+i138.getOwnerSite()+"."+i138.gettime().getTime()+">ÐÞ¸Ä</a><br>");					
 				}
 			}
 		}

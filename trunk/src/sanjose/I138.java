@@ -16,34 +16,34 @@ public class I138 extends Single{
 	private Date t;
 	@Persistent
 	private Long vol;
-	
-	public I138(I i,Long vol,Date time){
-		this._key=o+"."+w+"."+time;
-		this.o=i.getId();
-		this.w=i.getSite();
+
+	public I138(I owner,long vol,Date time){
+		this.o=owner.getId();
+		this.w=owner.getSite();
 		this.t=time;
 		this.vol=vol;
+		this._key=this.o+"."+this.w+"."+time.getTime();
 	}
-	public I138(Long o,Long w,Long vol,Date time){
-		this._key=o+"."+w+"."+time;
-		this.o=o;
-		this.w=w;
-		this.vol=vol;
+	public I138(long ownerId,long ownerSite,long vol,Date time){
+		this.o=ownerId;
+		this.w=ownerSite;
 		this.t=time;
+		this.vol=vol;
+		this._key=this.o+"."+this.w+"."+time.getTime();
 	}
-	public Long geto(){
+	public long getOwnerId(){
 	    return o;
 	}	
-	public Long getw(){
+	public long getOwnerSite(){
 		return w;
 	}
-	public Date gettime(){
+	public Date getTime(){
 		return t;
 	}
-	public Long getvol(){
+	public long getVol(){
 		return vol;
 	}
-	public void setvol(long vol){
+	public void setVol(long vol){
 		this.vol=vol;
 	}
 }

@@ -30,8 +30,8 @@ public class Fat {
 				List<I135> r=(List<I135>)q.execute(timed.o,timed.w,timed.t);
 				if(!r.isEmpty()){
 					I135 i135=r.get(0);
-					Long f=i135.getfat();
-					Long w=i135.getwat();
+					Long f=i135.getFat();
+					Long w=i135.getWater();
 					Date t=i135.gettime();
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(t);
@@ -115,8 +115,8 @@ public class Fat {
 				List<I135> r=(List<I135>)q.execute(timed.o,timed.w,timed.t);
 				if(!r.isEmpty()){
 					I135 i135=r.get(0);
-					i135.setfat(fat);
-					i135.setwat(wat);
+					i135.setFat(fat);
+					i135.setWater(wat);
 					mgr.makePersistent(i135);
 				}
 			}
@@ -174,7 +174,7 @@ public class Fat {
 				for(I135 i135:r){
 					long t = i135.gettime().getTime();
 					SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					page.Out(time.format(t)+"<br>"+base+":  Fat: "+i135.getfat()+" Water: "+i135.getwat()+" <a href=/post/fat?i="+i135.geto()+"."+i135.getw()+"."+i135.gettime().getTime()+">ÐÞ¸Ä</a><br>");
+					page.Out(time.format(t)+"<br>"+base+":  Fat: "+i135.getFat()+" Water: "+i135.getWater()+" <a href=/post/fat?i="+i135.getOwnerId()+"."+i135.getOwnerSite()+"."+i135.gettime().getTime()+">ÐÞ¸Ä</a><br>");
 				}
 			}
 		}
