@@ -109,6 +109,9 @@ public class I{
 	public String getDescription(){
 	    return y.getValue();
 	}
+	public String getExtension(){
+	    return e;
+	}
 	public String getExtra(){
 	    return z;
 	}
