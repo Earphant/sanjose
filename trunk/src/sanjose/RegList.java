@@ -16,13 +16,13 @@ public class RegList extends HttpServlet {
 					x="<i>(Untitled)</i>";
 				switch((int)o.getClassId()){
 				case 1:
-					page.Out("<div class=post><a href=/"+i+"/><img src=/icons/"+i+" class=icon></a><div>"+x+"<div class=c2 t="+o.getModifyTick()+"></div></div></div>");
+					page.Out("<div class=post><a href=/"+i+"><img src=/icons/"+i+" class=icon></a><div>"+x+"<div class=c2 t="+o.getModifyTick()+"></div></div></div>");
 					break;
 				case 12:
-					page.Out("<div class=post><a href=/"+w+"/"+i+"><img src=/thumbnails/"+i+"></a><a href=/"+w+"/><img src=/icons/"+w+" class=icon></a><div>"+x+"<div class=c2 t="+o.getModifyTick()+"></span></div></div>");
+					page.Out("<div class=post><a href=/"+w+"/"+i+"><img src=/thumbnails/"+i+"></a><a href=/"+w+"/><img src=/icons/"+w+" class=icon></a><div>"+x+"<div class=c2 t="+o.getModifyTick()+"></div>Re</div></div>");
 					break;
 				default:
-					page.Out("<div class=post><a href=/"+w+"/><img src=/icons/"+w+" class=icon></a><div>"+x+"<div class=c2 t="+o.getModifyTick()+"></div></div></div>");
+					page.Out("<div class=post><a href=/"+w+"><img src=/icons/"+w+" class=icon></a><div>"+x+"<div class=c2 t="+o.getModifyTick()+"></div><a href=/post?re="+i+">Re</a></div></div>");
 				}
 			}
 		}	
