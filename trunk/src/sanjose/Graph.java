@@ -1,6 +1,7 @@
 package sanjose;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -117,9 +118,10 @@ public class Graph{
 		long interval){
 		if(((List<Single>)list).isEmpty())
 			return "";
-		long max=0x7fffffffffffffffL;
-		long min=-0x7fffffffffffffffL;
+		long max=-0x7fffffffffffffL;
+		long min=0x7fffffffffffffL;
 		long cnt=0,sum=0,y=0;
+		List<Single> dst=new ArrayList<Single>();
 		for(Single i:(List<Single>)list){
 			long v=i.getVal();
 			long t=i.getTick()/interval;
@@ -128,11 +130,19 @@ public class Graph{
 				sum+=v;
 			}
 			else{
-				if(t==y+1){
+				if(y>0){
+					for(y++;y<t;y++){
+						Single e=new Single();
+						e.setTick(t);
+						e.setVal((sum+v)/(cnt+1));
+						dst.add(e);
+					}
 				}
-				else{
-				}
-				v=(sum+v)/(cnt+1);
+				Single e=new Single();
+				e.real=true;
+				e.setTick(t);
+				e.setVal((sum+v)/(cnt+1));
+				dst.add(e);
 				y=t;
 				cnt=
 				sum=0;
@@ -149,8 +159,8 @@ public class Graph{
 		min-=10000/k;
 		int n=10;
 		String s="";
-		for(Single i:(List<Single>)list){
-			s+="<div style=left:"+n+"px;height:"+(i.getVal()-min)*k/1000+"%;background-color:#f0f></div>";
+		for(Single i:(List<Single>)dst){
+			s+="<div style=left:"+n+"px;height:"+(i.getVal()-min)*k/1000+"%"+(i.real?" class=real":"")+"></div>";
 			n+=16;
 		}
 		return s;
