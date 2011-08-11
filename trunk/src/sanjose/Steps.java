@@ -157,6 +157,10 @@ public class Steps {
 			List<I139> r=(List<I139>)q1.execute(id,site);
 			String abc="steps";
 			page.Out("<div class=graf>");
+			page.Out(new Graph().Daily(r,abc));
+			page.Out("</div>");
+			
+			page.Out("<div class=graf>");
 			page.Out(new Graph().html(r,"",0,0,86400));
 			page.Out("</div>");
 		}
