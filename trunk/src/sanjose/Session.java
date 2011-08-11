@@ -27,7 +27,7 @@ public class Session{
 			PersistenceManager m=Helper.getMgr();
 			try{
 				u=m.getObjectById(I11.class,email);
-				email=u.geteml();
+				email=u.getEmail();
 			}
 			catch(JDOObjectNotFoundException e) {
 				i=new I(name,"",1L,0L,1L,1L);
@@ -41,8 +41,8 @@ public class Session{
 			finally{
 				m.close();
 			}
-			id=u.geti();
-			site=u.getj();
+			id=u.getId();
+			site=u.getSite();
 			cookie=new Cookie("us",id+"."+site+":10&"+id+"."+site+"&"+name+"&"+email);
 		}
 		else{

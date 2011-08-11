@@ -100,7 +100,7 @@ public class AdminsServlet extends HttpServlet{
 				List<I11> r=(List<I11>)q11.execute();
 				if(!r.isEmpty()){
 					for(I11 i11:r){
-						page.Out("<a href=/admins/users?i="+i11.geti()+"."+i11.getj()+">"+i11.geteml()+"</a><br>");
+						page.Out("<a href=/admins/users?i="+i11.getId()+"."+i11.getSite()+">"+i11.getEmail()+"</a><br>");
 					}
 				}
 			}
@@ -134,7 +134,7 @@ public class AdminsServlet extends HttpServlet{
 				List<I11> r11=(List<I11>)q11.execute(id.i,id.j);
 				if(!r11.isEmpty()){	
 					I11 i11=r11.get(0);
-					String eml=i11.geteml();
+					String eml=i11.getEmail();
 					page.Out("Account:<input type=text name=eml value="+eml+"><br>"
 							+"Password:<input type=password name=pwd1 value=><input type=text name=pwd2 value=><br>");		
 				}
@@ -256,8 +256,6 @@ public class AdminsServlet extends HttpServlet{
 	Id id = new Id(req.getParameter("i"));
 	if(id.i!=0L){
 		PersistenceManager mgr=Helper.getMgr();
-		
-		String eml = req.getParameter("eml");
 		String pwd1 = req.getParameter("pwd1");
 		String pwd2 = req.getParameter("pwd2");
 		   String pwd=null;
@@ -270,9 +268,8 @@ public class AdminsServlet extends HttpServlet{
 				List<I11> r11=(List<I11>)q11.execute(id.i,id.j);
 				if(!r11.isEmpty()){
 					I11 i11=r11.get(0);
-					i11.seteml(eml);
 					if(pwd!=null)
-						i11.setpwd(pwd);
+						i11.setPassword(pwd);
 				}
 			}
 			finally{

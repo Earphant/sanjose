@@ -23,22 +23,25 @@ public class I11{
 		this.eml=eml;
 		this.pwd="";
 	}
-	public Long geti(){
+	public Long getId(){
 	    return i;
 	}
-	public Long getj(){
+	public Long getSite(){
 	    return j;
 	}
-	public String geteml(){
+	public String getEmail(){
 	    return eml;
 	}
-	public String getpwd(){
+	public String getPassword(){
 	    return pwd;
 	}
-	public void seteml(String x){
-	    eml=x;
+	public Long getRank(){
+	    return rnk;
 	}
-	public void setpwd(String x){
-	    pwd=x;
+	public void setPassword(String val){
+	    pwd=val;
+	}
+	public void setRank(long val){
+	    rnk=val;
 	}
 }

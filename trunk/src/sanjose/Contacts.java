@@ -24,9 +24,9 @@ public class Contacts {
 			List<I11> r=(List<I11>)q.execute();
 			if(!r.isEmpty()){
 				for(I11 i:r){
-					String d=i.geti()+"."+i.getj();
-					String x=i.geteml();
-					String base=i.geti()+"."+i.getj();
+					String d=i.getId()+"."+i.getSite();
+					String x=i.getEmail();
+					String base=i.getId()+"."+i.getSite();
 					
 					page.Out("<a href=/"+base+"/><img src=/icons/"+d+".jpg></a>");
 					page.Out("<a href=/"+base+"/>"+x+"</a><br>");
