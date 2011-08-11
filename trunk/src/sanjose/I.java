@@ -53,6 +53,24 @@ public class I{
 	@Persistent
 	private String z;
 
+	public I(String path){
+		String[]t;
+		if(path.charAt(0)=='/'){
+			String[]s=path.split("/");
+			t=s[1].split("\\.");
+			this.o=Long.parseLong(t[0]);
+			this.w=Long.parseLong(t[1]);
+			if(s.length<2)
+				return;
+			t=s[2].split("\\.");
+		}
+		else
+			t=path.split("\\.");
+		this.i=Long.parseLong(t[0]);
+		this.j=Long.parseLong(t[1]);
+		if(t.length>2)
+			this.z=t[3];
+	}
 	public I(Long id,Long site,String text,String plink,long classid,long rate,
 		long ownerid,long ownersite){
 		Date current=new Date();
