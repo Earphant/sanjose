@@ -31,7 +31,7 @@ public class Steps {
 				List<I139> r=(List<I139>)q.execute(timed.o,timed.w,timed.t);
 				if(!r.isEmpty()){
 					I139 i139=r.get(0);
-					Long v=i139.getVol();
+					Long v=i139.getVal();
 					Date t=i139.getTime();
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(t);
@@ -114,7 +114,7 @@ public class Steps {
 				List<I139> r=(List<I139>)q.execute(timed.o,timed.w,timed.t);
 				if(!r.isEmpty()){
 					I139 i139=r.get(0);
-					i139.setVol(vol);
+					i139.setVal(vol);
 					mgr.makePersistent(i139);
 				}
 			}
@@ -173,7 +173,7 @@ public class Steps {
 				for(I139 i139:r){
 					long t = i139.getTime().getTime();
 					SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					page.Out(time.format(t)+"<br>"+base+": "+i139.getVol()+" <a href=/post/steps?i="+i139.getOwnerId()+"."+i139.getOwnerSite()+"."+i139.getTime().getTime()+">ÐÞ¸Ä</a><br>");
+					page.Out(time.format(t)+"<br>"+base+": "+i139.getVal()+" <a href=/post/steps?i="+i139.getOwnerId()+"."+i139.getOwnerSite()+"."+i139.getTime().getTime()+">ÐÞ¸Ä</a><br>");
 				}
 			}
 		}

@@ -30,7 +30,7 @@ public class Weight {
 				List<I138> r=(List<I138>)q.execute(timed.o,timed.w,timed.t);
 				if(!r.isEmpty()){
 					I138 i138=r.get(0);
-					Long v=i138.getVol();
+					Long v=i138.getVal();
 					Date t=i138.getTime();
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(t);
@@ -114,7 +114,7 @@ public class Weight {
 				List<I138> r=(List<I138>)q.execute(timed.o,timed.w,timed.t);
 				if(!r.isEmpty()){
 					I138 i138=r.get(0);
-					i138.setVol(vol);
+					i138.setVal(vol);
 					mgr.makePersistent(i138);
 				}
 			}
@@ -174,7 +174,7 @@ public class Weight {
 				for(I138 i138:r){
 					long t = i138.getTime().getTime();
 					SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					page.Out(time.format(t)+"<br>"+base+": "+i138.getVol()+" <a href=/post/weight?i="+i138.getOwnerId()+"."+i138.getOwnerSite()+"."+i138.getTime().getTime()+">ÐÞ¸Ä</a><br>");					
+					page.Out(time.format(t)+"<br>"+base+": "+i138.getVal()+" <a href=/post/weight?i="+i138.getOwnerId()+"."+i138.getOwnerSite()+"."+i138.getTime().getTime()+">ÐÞ¸Ä</a><br>");					
 				}
 			}
 		}

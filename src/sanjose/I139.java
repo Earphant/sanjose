@@ -15,20 +15,20 @@ public class I139 extends Single{
 	@Persistent
 	private Date t;
 	@Persistent
-	private Long vol;
+	private Long val;
 	
-	public I139(I owner,long vol,Date time){
+	public I139(I owner,long val,Date time){
 		this.o=owner.getId();
 		this.w=owner.getSite();
 		this.t=time;
-		this.vol=vol;
+		this.val=val;
 		this._key=this.o+"."+this.w+"."+this.getTick();
 	}
-	public I139(long ownerId,long ownerSite,long vol,Date time){
+	public I139(long ownerId,long ownerSite,long val,Date time){
 		this.o=ownerId;
 		this.w=ownerSite;
 		this.t=time;
-		this.vol=vol;
+		this.val=val;
 		this._key=this.o+"."+this.w+"."+this.getTick();
 	}
 	public long getOwnerId(){
@@ -43,10 +43,10 @@ public class I139 extends Single{
 	public Date getTime(){
 		return t;
 	}
-	public long getVol(){
-		return vol;
+	public long getVal(){
+		return val;
 	}
-	public void setVol(Long vol){
-		this.vol=vol;
+	public void setVal(Long val){
+		this.val=val;
 	}
 }
