@@ -27,6 +27,12 @@ public class I{
 	@Persistent
     private Date c;
 	@Persistent
+	private Long d;
+	@Persistent
+	private String e;
+	@Persistent
+	private Long h;
+	@Persistent
     private Date m;
 	@Persistent
 	private Long o;
@@ -56,6 +62,8 @@ public class I{
 		this.a=classid;
 		this.b=ownerid;
 		this.s=ownersite;
+		this.d=1L;
+		this.h=1L;
 		this.o=ownerid;
 		this.w=ownersite;
 		this.p=plink;
@@ -72,6 +80,8 @@ public class I{
 		this.j=9L;
 		this.a=classid;
 		this.b=ownerid;
+		this.d=1L;
+		this.h=1L;
 		this.m=current;
 		this.o=ownerid;
 		this.w=ownersite;
