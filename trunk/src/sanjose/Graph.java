@@ -119,21 +119,21 @@ public class Graph{
 			return "";
 		long max=0x7fffffffffffffffL;
 		long min=-0x7fffffffffffffffL;
-		long cnt=0,s=0,sum=0;
+		long cnt=0,sum=0,y=0;
 		for(Single i:(List<Single>)list){
 			long v=i.getVal();
 			long t=i.getTick()/interval;
-			if(t==s){
+			if(t==y){
 				cnt++;
 				sum+=v;
 			}
 			else{
-				if(t==s+1){
+				if(t==y+1){
 				}
 				else{
 				}
 				v=(sum+v)/(cnt+1);
-				s=t;
+				y=t;
 				cnt=
 				sum=0;
 			}
