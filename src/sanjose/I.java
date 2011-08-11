@@ -74,7 +74,6 @@ public class I{
 		this.r=rate;
 		this.t=current;
 		this.x=text;
-		this.y=new Text("");
 	}
 	public I(String text,String plink,long classid,long rate,long ownerid,long ownersite){
 		Date current=new Date();
@@ -91,7 +90,6 @@ public class I{
 		this.r=rate;
 		this.s=ownersite;
 		this.x=text;
-		this.y=new Text("");
 	}
 	public long getAccessTick(){
 	    return c.getTime()/1000;
