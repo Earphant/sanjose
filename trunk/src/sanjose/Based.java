@@ -49,7 +49,7 @@ public class Based{
 			if(!r.isEmpty()){
 				for(I i:r){
 					String d=i.getId()+"."+i.getSite();
-					String t=i.getx();
+					String t=i.getText();
 					String base=i.getOwnerId()+"."+i.getOwnerSite();
 				
 					if(t==null || t.equals(""))
@@ -89,7 +89,7 @@ public class Based{
 					I i=r.get(0);
 					if(i.getClassId()==12)
 						page.Out("<a href=/originals/"+id+".jpg title=test><img src=/"+base+"/"+id+".jpg></a>");
-					page.Out(i.getx());
+					page.Out(i.getText());
 				}
 			}
 			finally{
