@@ -47,10 +47,10 @@ public class I136 extends Single{
 	public Date getTime(){
 		return t;
 	}
-	public long getVol(){
+	public long getVal(){
 		return vol;
 	}
-	public void setVol(Long vol){
+	public void setVal(Long vol){
 		this.vol=vol;
 	}
 }

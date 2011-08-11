@@ -43,10 +43,10 @@ public class I138 extends Single{
 	public Date getTime(){
 		return t;
 	}
-	public long getVol(){
+	public long getVal(){
 		return vol;
 	}
-	public void setVol(long vol){
+	public void setVal(long vol){
 		this.vol=vol;
 	}
 }

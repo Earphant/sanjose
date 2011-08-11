@@ -29,7 +29,7 @@ public class HeartRate {
 				List<I136> r=(List<I136>)q.execute(timed.o,timed.w,timed.t);
 				if(!r.isEmpty()){
 					I136 i136=r.get(0);
-					Long v=i136.getVol();
+					Long v=i136.getVal();
 					Date t=i136.getTime();
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(t);
@@ -115,7 +115,7 @@ public class HeartRate {
 				List<I136> r=(List<I136>)q.execute(timed.o,timed.w,timed.t);
 				if(!r.isEmpty()){
 					I136 i136=r.get(0);
-					i136.setVol(vol);
+					i136.setVal(vol);
 					mgr.makePersistent(i136);
 				}
 			}
@@ -175,7 +175,7 @@ public class HeartRate {
 				for(I136 i136:r){
 					long t =i136.getTime().getTime();
 					SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");					
-					page.Out(time.format(t)+"<br>"+base+": "+i136.getVol()+" <a href=/post/heartrate?i="+i136.getOwnerId()+"."+i136.getOwnerSite()+"."+i136.getTime().getTime()+">ÐÞ¸Ä</a><br>");									
+					page.Out(time.format(t)+"<br>"+base+": "+i136.getVal()+" <a href=/post/heartrate?i="+i136.getOwnerId()+"."+i136.getOwnerSite()+"."+i136.getTime().getTime()+">ÐÞ¸Ä</a><br>");									
 				}
 			}
 		}
