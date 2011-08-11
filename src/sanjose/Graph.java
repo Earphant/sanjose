@@ -119,9 +119,24 @@ public class Graph{
 			return "";
 		long max=0x7fffffffffffffffL;
 		long min=-0x7fffffffffffffffL;
+		long cnt=0,s=0,sum=0;
 		for(Single i:(List<Single>)list){
 			long v=i.getVal();
-			long t=i.getTick();
+			long t=i.getTick()/interval;
+			if(t==s){
+				cnt++;
+				sum+=v;
+			}
+			else{
+				if(t==s+1){
+				}
+				else{
+				}
+				v=(sum+v)/(cnt+1);
+				s=t;
+				cnt=
+				sum=0;
+			}
 			if(min>v)
 				min=v;
 			if(max<v)
