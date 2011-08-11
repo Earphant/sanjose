@@ -10,6 +10,8 @@ public class I11{
 	private Long i;
 	@Persistent
 	private Long j;
+	@Persistent
+	private Long rnk;
 	@PrimaryKey
 	private String eml;
 	@Persistent
