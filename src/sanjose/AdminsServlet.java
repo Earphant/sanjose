@@ -54,27 +54,27 @@ public class AdminsServlet extends HttpServlet{
 					SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					if(i.getClassId()==1){
 						long t = i.getModifyTime().getTime();
-						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/>"+time.format(t)+" "+i.getx()+" uploaded settings</a><br>");
+						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/>"+time.format(t)+" "+i.getText()+" uploaded settings</a><br>");
 					}
 					if(i.getClassId()==12){
 						long t = i.getModifyTime().getTime();
-						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/"+i.getId()+"."+i.getSite()+"/>"+time.format(t)+" "+i.getx()+" uploaded a picture</a><br>");
+						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/"+i.getId()+"."+i.getSite()+"/>"+time.format(t)+" "+i.getText()+" uploaded a picture</a><br>");
 					}
 					if(i.getClassId()==135){
 						long t = i.getModifyTime().getTime();
-						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/fat>"+time.format(t)+" "+i.getx()+" uploaded fat and water</a><br>");
+						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/fat>"+time.format(t)+" "+i.getText()+" uploaded fat and water</a><br>");
 					}
 					if(i.getClassId()==136){
 						long t = i.getModifyTime().getTime();
-						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/heartrate>"+time.format(t)+" "+i.getx()+" uploaded heart rate</a><br>");
+						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/heartrate>"+time.format(t)+" "+i.getText()+" uploaded heart rate</a><br>");
 					}
 					if(i.getClassId()==138){
 						long t = i.getModifyTime().getTime();
-						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/weight>"+time.format(t)+" "+i.getx()+" uploaded weight</a><br>");
+						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/weight>"+time.format(t)+" "+i.getText()+" uploaded weight</a><br>");
 					}
 					if(i.getClassId()==139){
 						long t = i.getModifyTime().getTime();
-						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/steps>"+time.format(t)+" "+i.getx()+" uploaded steps</a><br>");
+						page.Out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/steps>"+time.format(t)+" "+i.getText()+" uploaded steps</a><br>");
 					}	
 				}
 			}
@@ -149,7 +149,7 @@ public class AdminsServlet extends HttpServlet{
 				List<I> r=(List<I>)q.execute(id.i,id.j);
 				if(!r.isEmpty()){
 					I i=r.get(0);
-					String x=i.getx();
+					String x=i.getText();
 					page.Out("<br>Nick Name:<input type=text name=x value="+x+"><br>");
 				}
 			}
@@ -284,7 +284,7 @@ public class AdminsServlet extends HttpServlet{
 				List<I> r=(List<I>)q.execute(id.i,id.j);
 				if(!r.isEmpty()){
 					I i=r.get(0);
-					i.setx(x);
+					i.setText(x);
 				}
 			}
 			finally{

@@ -57,7 +57,7 @@ public class PostServlet extends HttpServlet {
 				List<I> r=(List<I>)q.execute(id.i,id.j);
 				if(!r.isEmpty()){
 					I i=r.get(0);
-					p.Out(i.getx());
+					p.Out(i.getText());
 				}
 			}
 			finally{
@@ -123,7 +123,7 @@ public class PostServlet extends HttpServlet {
 				List<I> r=(List<I>)q.execute(id.i,id.j);
 				if(!r.isEmpty()){
 					I i=r.get(0);
-					i.setx(v);
+					i.setText(v);
 				}
 			}
 			finally{

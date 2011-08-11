@@ -39,6 +39,8 @@ public class I{
 	@Persistent
 	private String p;
 	@Persistent
+	private Text q;
+	@Persistent
 	private Long r;
 	@Persistent
 	private Long s;
@@ -48,8 +50,6 @@ public class I{
 	private Long w;
 	@Persistent
 	private String x;
-	@Persistent
-	private Text y;
 	@Persistent
 	private String z;
 
@@ -104,9 +104,6 @@ public class I{
 	public long getCreateTick(){
 	    return t.getTime()/1000;
 	}
-	public String getDescription(){
-	    return y.getValue();
-	}
 	public String getExtension(){
 	    return e;
 	}
@@ -121,6 +118,9 @@ public class I{
 	}
 	public Date getModifyTime(){
 	    return m;
+	}
+	public String getQuotation(){
+	    return q.getValue();
 	}
 	public long getRate(){
 	    return r;
@@ -143,11 +143,8 @@ public class I{
 	public long getOwnerSite(){
 	    return w;
 	}
-	public String getx(){
+	public String getText(){
 	    return x;
-	}
-	public void setDescription(String val){
-		this.y=new Text(val);
 	}
 	public void setExtra(String val){
 	    this.z=val;
@@ -166,7 +163,10 @@ public class I{
 	public void setModifyTime(Date val){
 		this.m=val;
 	}
-	public void setx(String val){
+	public void setQuotation(String val){
+		this.q=new Text(val);
+	}
+	public void setText(String val){
 	    this.x=val;
 	}
 }

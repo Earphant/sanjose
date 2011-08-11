@@ -10,7 +10,7 @@ public class RegList extends HttpServlet {
 		if(!rs.isEmpty()){
 			for(I o:rs){
 				String i=o.getId()+"."+o.getSite();
-				String x=o.getx();
+				String x=o.getText();
 				String w=o.getOwnerId()+"."+o.getOwnerSite();
 				if(x==null || x.equals(""))
 					x="<i>(Untitled)</i>";

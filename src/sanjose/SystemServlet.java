@@ -87,7 +87,7 @@ public class SystemServlet extends HttpServlet{
 			List<I> r=(List<I>)q.execute(s.id,s.site);
 			if(!r.isEmpty()){
 				I i=r.get(0);
-				String x=i.getx();
+				String x=i.getText();
 				page.Out("<br>Nick Name:<input type=text name=x value="+x+"><br>");
 			}
 		}
@@ -144,7 +144,7 @@ public class SystemServlet extends HttpServlet{
 					add=i1.getadd();
 				page.Out("First Name:<input type=text name=fsn style=width:60px; value="+fsn+">Middle Name:<input type=text name=mdn style=width:60px; value="+mdn+">Last Name:<input type=text name=lsn style=width:60px; value="+lsn+"><br>"
 						+"Gender:<input type=radio name=gnd value=female "+gnd1+">Female<input type=radio name=gnd value=male "+gnd2+">Male<br>"
-						+"Birthday:<input type=text name=year style=width:40px; value="+year+">Äê<input type=text name=month style=width:20px; value="+month+">ÔÂ<input type=text name=date style=width:20px; value="+date+">ÈÕ<br>"
+						+"Birthday:<input type=text name=year style=width:40px; value="+year+">ï¿½ï¿½<input type=text name=month style=width:20px; value="+month+">ï¿½ï¿½<input type=text name=date style=width:20px; value="+date+">ï¿½ï¿½<br>"
 						+"Occupation:<input type=text name=ocp value="+ocp+"><br>"
 						+"Postal Code:<input type=text name=zip style=width:40px; value="+zip+">Telephone Number:<input type=text name=tel style=width:110px; value="+tel+"><br>"
 						+"Address:<textarea name=add rows=1>"+add+"</textarea><br>");
@@ -249,7 +249,7 @@ public class SystemServlet extends HttpServlet{
 				List<I> r=(List<I>)q.execute(current.id,current.site);
 				if(!r.isEmpty()){
 					I i=r.get(0);
-					i.setx(x);
+					i.setText(x);
 					i.setModifyTime(now);
 				}
 			}
