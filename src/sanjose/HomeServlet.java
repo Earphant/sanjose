@@ -7,8 +7,6 @@ import java.util.List;
 import javax.jdo.*;
 import javax.servlet.http.*;
 
-
-
 @SuppressWarnings("serial")
 public class HomeServlet extends HttpServlet{
 	@SuppressWarnings("unchecked")
@@ -17,19 +15,25 @@ public class HomeServlet extends HttpServlet{
 		page.Out("<form method=post action=/post/><textarea name=text rows=5></textarea><input type=submit name=ok></form>");
 					
 		Session	s=new Session("OW");
+		List <Long[]> IJM=new ArrayList<Long[]>();	
+		List <Long[]> IJ=new ArrayList<Long[]>();
 		Long o=s.id;
 		Long w=s.site;
 		String AA=null;
+		Long[] ii={o,w};			
+		IJ.add(ii);
+		
 		PersistenceManager m=Helper.getMgr();
 		Query q=m.newQuery(I21.class);		
-		q.setOrdering("i desc");
 		q.setFilter("o==oParam && w==wParam ");	
 		q.declareParameters("Long oParam,Long wParam");
 		try{
 			List<I21> r=(List<I21>)q.execute(o,w);
 			if(!r.isEmpty()){
 				for(I21 i21:r){
-					 AA=i21.geti()+"."+i21.getj();						                    
+					 AA=i21.geti()+"."+i21.getj();	
+					 Long[] i={i21.geti(),i21.getj()};							
+	                 IJ.add(i);
 				}
 			}
 		}
@@ -38,8 +42,7 @@ public class HomeServlet extends HttpServlet{
 		}
 		
 		if(AA==null){
-			 PersistenceManager mgr1=Helper.getMgr();
-             Query q1=mgr1.newQuery(I.class);            
+             Query q1=m.newQuery(I.class);            
              q1.setOrdering("m desc");
              try{
                  new RegList((List<I>)q1.execute(),page);
@@ -47,105 +50,48 @@ public class HomeServlet extends HttpServlet{
              finally{
                  q1.closeAll();
              }
-		}
+		}		
 		
-		
-		else{		
-			
-			List <Long[]> IJM=new ArrayList<Long[]>();	
-			List <Long[]> ij=new ArrayList<Long[]>();
-			
-		    PersistenceManager m1=Helper.getMgr();
-			Query q1=m1.newQuery(I.class);		
-			q1.setOrdering("m desc");
-			q1.setFilter("o==oParam && w==wParam ");	
-			q1.declareParameters("Long oParam,Long wParam");			
-			try{
-				List<I> r=(List<I>)q1.execute(o,w);				
-				if(!r.isEmpty()){
-					I i=r.get(0);
-					Long[] ii={0L,0L};			
-	                ii[0]=i.getOwnerId();
-					ii[1]=i.getOwnerSite();
-					ij.add(ii);
-				}
-			}
-			finally{
-				q1.closeAll();
-			}
-	
-			
-			PersistenceManager m21=Helper.getMgr();
-			Query q21=m21.newQuery(I21.class);		
-			q21.setOrdering("t desc");
-			q21.setFilter("o==oParam && w==wParam");	
-			q21.declareParameters("Long oParam,Long wParam");	
-			try{			
-				List<I21> r=(List<I21>)q21.execute(o,w);					
-				if(!r.isEmpty()){
-					for(I21 i21:r){
-						Long[] i={0L,0L};			
-		                i[0]=i21.geti();
-						i[1]=i21.getj();					
-	                    ij.add(i);
-					}
-				}
-			}
-			finally{
-				q21.closeAll();
-			}			
-				
-
-			PersistenceManager m2=Helper.getMgr();
-			Query q2=m2.newQuery(I.class);		
-			q2.setOrdering("m desc");
+		else{						
+			Query q2=m.newQuery(I.class);		
 			q2.setFilter("o==oParam && w==wParam ");	
 			q2.declareParameters("Long oParam,Long wParam"); 
 			try{			
-                for(int k=0;k<ij.size();k++){
-			       Long ownerid=ij.get(k)[0];
-			       Long ownersite=ij.get(k)[1];
+                for(int k=0;k<IJ.size();k++){
+			       Long ownerid=IJ.get(k)[0];
+			       Long ownersite=IJ.get(k)[1];
 				   List<I> r=(List<I>)q2.execute(ownerid,ownersite);				  
 				   if(!r.isEmpty()){
 						for(I i:r){
-							Long[] ii={0L,0L,0L};			
-			                ii[0]=i.getOwnerId();
-							ii[1]=i.getOwnerSite();
-							ii[2]=(i.getModifyTime()).getTime();	
-							IJM.add(ii);		                    
+							Long[] ijm={i.getOwnerId(),i.getOwnerSite(),(i.getModifyTime()).getTime()};				
+							IJM.add(ijm);		                    
 						}
 					}			   
                 }
 			}
 			finally{
 				q2.closeAll();					
-			}
-			
+			}		
 			
 			for(int i=0;i<IJM.size()-1;i++) {
 				int index=i;
-				Long temp0,temp1,temp2;
+				Long[] temp;
 				for(int j=i+1;j<IJM.size();j++) 				   
 				   if((IJM.get(j))[2]>IJM.get(index)[2])
 					   index=j;
-				   temp0=IJM.get(index)[0];
-				   temp1=IJM.get(index)[1];
-				   temp2=IJM.get(index)[2];
+				   temp=IJM.get(index);
 				   IJM.get(index)[0]=IJM.get(i)[0];
 				   IJM.get(index)[1]=IJM.get(i)[1];
 				   IJM.get(index)[2]=IJM.get(i)[2];
-				   IJM.get(i)[0]=temp0;
-				   IJM.get(i)[1]=temp1;
-				   IJM.get(i)[2]=temp2;   				    				    
-				
+				   IJM.get(i)[0]=temp[0];
+				   IJM.get(i)[1]=temp[1];
+				   IJM.get(i)[2]=temp[2];   				    				    				
 			}
-
 			
-			PersistenceManager m3=Helper.getMgr();
-		    Query q3=m3.newQuery(I.class);		
-			q3.setOrdering("m desc");
-			q3.setFilter("o==oParam && w==wParam && c==cParam");	
-			q3.declareParameters("Long oParam,Long wParam,Long cParam");
+		    Query q3=m.newQuery(I.class);		
+			q3.setFilter("o==oParam && w==wParam && m==mParam");	
+			q3.declareImports("import java.util.Date");
+			q3.declareParameters("Long oParam,Long wParam,Date mParam");
 			try{			               
 				for(int k=0;k<IJM.size();k++){
 				    Long ownerid=IJM.get(k)[0];
@@ -159,10 +105,9 @@ public class HomeServlet extends HttpServlet{
 			    q3.closeAll();					
 			}
 		}
-	
+	    m.close();
 		page.End(null);
-    }
-		
+    }		
 
 	private void Unsigned(Page page,Session ssn)
 		throws IOException{
@@ -184,7 +129,5 @@ public class HomeServlet extends HttpServlet{
 		}
 		else
 			new Based(n,rsp,req);
-	}
-		
-
+	}	
 }
