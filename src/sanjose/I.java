@@ -7,12 +7,10 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Text;
 import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.IdGeneratorStrategy;
-//import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-//@PersistenceCapable(identityType = IdentityType.APPLICATION)
 @PersistenceCapable
 public class I{
 	@PrimaryKey
@@ -27,47 +25,48 @@ public class I{
 	@Persistent
 	private Long b;
 	@Persistent
+    private Date c;
+	@Persistent
+    private Date m;
+	@Persistent
 	private Long o;
 	@Persistent
-	private Long w;
+	private String p;
 	@Persistent
 	private Long r;
 	@Persistent
 	private Long s;
 	@Persistent
-    private Date c;
-	@Persistent
-    private Date m;
-	@Persistent
     private Date t;
 	@Persistent
-	private String p;
+	private Long w;
 	@Persistent
 	private String x;
 	@Persistent
-	private String xtr;
+	private Text y;
 	@Persistent
-	private Text e;
+	private String z;
 
-	public I(Long i,Long j,String x,String p,Long a,Long r,Long o,Long w){
-		Date c=new Date();
-		this._key=KeyFactory.createKey(I.class.getSimpleName(),i+"."+j);
-		this.i=i;
-		this.j=j;
-		this.a=a;
-		this.b=o;
-		this.s=w;
-		this.o=o;
-		this.w=w;
-		this.c=c;
-		this.m=c;
-		this.r=r;
-		this.t=c;
-		this.p=p;
-		this.x=x;
-		this.e=new Text("");
+	public I(Long id,Long site,String text,String plink,long classid,long rate,
+		long ownerid,long ownersite){
+		Date current=new Date();
+		this._key=KeyFactory.createKey(I.class.getSimpleName(),id+"."+site);
+		this.i=id;
+		this.j=site;
+		this.a=classid;
+		this.b=ownerid;
+		this.s=ownersite;
+		this.o=ownerid;
+		this.w=ownersite;
+		this.p=plink;
+		this.c=current;
+		this.m=current;
+		this.r=rate;
+		this.t=current;
+		this.x=text;
+		this.y=new Text("");
 	}
-	public I(String text,String guid,long classid,long rate,long ownerid,long ownersite){
+	public I(String text,String plink,long classid,long rate,long ownerid,long ownersite){
 		Date current=new Date();
 		this.i=0L;
 		this.j=9L;
@@ -76,11 +75,11 @@ public class I{
 		this.m=current;
 		this.o=ownerid;
 		this.w=ownersite;
-		this.p=guid;
+		this.p=plink;
 		this.r=rate;
 		this.s=ownersite;
 		this.x=text;
-		this.e=new Text("");
+		this.y=new Text("");
 	}
 	public long getAccessTick(){
 	    return c.getTime()/1000;
@@ -97,11 +96,11 @@ public class I{
 	public long getCreateTick(){
 	    return t.getTime()/1000;
 	}
-	public String gete(){
-	    return e.getValue();
+	public String getDescription(){
+	    return y.getValue();
 	}
 	public String getExtra(){
-	    return xtr;
+	    return z;
 	}
 	public long getId(){
 	    return i;
@@ -130,11 +129,11 @@ public class I{
 	public String getx(){
 	    return x;
 	}
-	public void sete(String e){
-		this.e=new Text(e);
+	public void setDescription(String val){
+		this.y=new Text(val);
 	}
 	public void setExtra(String val){
-	    this.xtr=val;
+	    this.z=val;
 	}
 	public void setId(){
 		if(this.i==0L){
