@@ -46,7 +46,7 @@ public class I139 extends Single{
 	public long getVal(){
 		return val;
 	}
-	public void setVal(Long val){
+	public void setVal(long val){
 		this.val=val;
 	}
 }

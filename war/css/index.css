@@ -35,6 +35,7 @@ textarea{width:100%}
 
 .graf{position:relative;height:200px;border:solid 1px #000}
 .graf div{position:absolute;bottom:0;width:10px;border:solid 1px #000;border-bottom:none}
+.graf .real{background-color:#888}
 .graf a{font-size:13pt;}
     .graf a:hover{color:red;}
     .graf a:active{color:black;}
