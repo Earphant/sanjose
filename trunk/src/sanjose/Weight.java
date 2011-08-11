@@ -153,12 +153,16 @@ public class Weight {
 		Query q1=mgr.newQuery(I138.class);
 		q1.setFilter("o==oParam && w==wParam");
 		q1.declareParameters("Long oParam,Long wParam");
-		q1.setOrdering("t desc");
+		q1.setOrdering("t");
 		try{
 			List<I138> r=(List<I138>)q1.execute(id,site);
 			page.Out("<div class=graf>");
 			String abc="weight";
 			page.Out(new Graph().Daily(r,abc));
+			page.Out("</div>");
+
+			page.Out("<div class=graf>");
+			page.Out(new Graph().html(r,"",0,0,86400));
 			page.Out("</div>");
 		}
 		finally{

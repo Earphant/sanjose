@@ -120,7 +120,7 @@ public class Graph{
 			return "";
 		long max=-0x7fffffffffffffL;
 		long min=0x7fffffffffffffL;
-		long cnt=0,sum=0,y=0;
+		long cnt=0,d,sum=0,u=0,y=0;
 		List<Single> dst=new ArrayList<Single>();
 		for(Single i:(List<Single>)list){
 			long v=i.getVal();
@@ -131,18 +131,22 @@ public class Graph{
 			}
 			else{
 				if(y>0){
+					v=(sum+v)/(cnt+1);
+					d=(v*256-u)/(t-y);
 					for(y++;y<t;y++){
+						u+=d;
 						Single e=new Single();
 						e.setTick(t);
-						e.setVal((sum+v)/(cnt+1));
+						e.setVal(u/256);
 						dst.add(e);
 					}
 				}
 				Single e=new Single();
 				e.real=true;
 				e.setTick(t);
-				e.setVal((sum+v)/(cnt+1));
+				e.setVal(v);
 				dst.add(e);
+				u=v*256;
 				y=t;
 				cnt=
 				sum=0;
