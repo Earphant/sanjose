@@ -33,6 +33,8 @@ public class I{
 	@Persistent
 	private Long h;
 	@Persistent
+	private Long k;
+	@Persistent
     private Date m;
 	@Persistent
 	private Long o;
@@ -124,8 +126,17 @@ public class I{
 	public Date getModifyTime(){
 	    return m;
 	}
+	public long getRank(){
+	    return k;
+	}
 	public long getRate(){
 	    return r;
+	}
+	public long getRefId(){
+	    return d;
+	}
+	public long getRefSite(){
+	    return h;
 	}
 	public long getSite(){
 	    return j;
