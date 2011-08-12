@@ -114,7 +114,7 @@ public class Graph{
 		return s;
 	}
 	@SuppressWarnings("unchecked")
-	public String html(Object list,String type,long end,long length,
+	public String html(Object list,String post,long end,long length,
 		long interval){
 		if(((List<Single>)list).isEmpty())
 			return "";
@@ -136,14 +136,13 @@ public class Graph{
 					for(y++;y<t;y++){
 						u+=d;
 						Single e=new Single();
-						e.setTick(t);
 						e.setVal(u/256);
 						dst.add(e);
 					}
 				}
 				Single e=new Single();
 				e.real=true;
-				e.setTick(t);
+				e.setTick(i.getTick());
 				e.setVal(v);
 				dst.add(e);
 				u=v*256;
@@ -164,7 +163,12 @@ public class Graph{
 		int n=10;
 		String s="";
 		for(Single i:(List<Single>)dst){
-			s+="<div style=left:"+n+"px;height:"+(i.getVal()-min)*k/1000+"%"+(i.real?" class=real":"")+"></div>";
+			if(i.real){
+				s+=post==null?"<div style=left:"+n+"px;height:"+(i.getVal()-min)*k/1000+"% class=real></div>":
+					"<a href="+post+i.getTick()+"><div style=left:"+n+"px;height:"+(i.getVal()-min)*k/1000+"% class=real></div></a>";
+			}
+			else
+				s+="<div style=left:"+n+"px;height:"+(i.getVal()-min)*k/1000+"%></div>";
 			n+=16;
 		}
 		return s;

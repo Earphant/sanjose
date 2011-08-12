@@ -34,7 +34,7 @@ textarea{width:100%}
 .c99 li{margin-left:1.5ex;margin-right:0}
 
 .graf{position:relative;height:200px;border:solid 1px #000}
-.graf div{position:absolute;bottom:0;width:10px;border:solid 1px #000;border-bottom:none}
+.graf div{position:absolute;bottom:0;width:10px;border:solid 1px #000;border-bottom:none;background-color:#ccc}
 .graf .real{background-color:#888}
 .graf a{font-size:13pt;}
     .graf a:hover{color:red;}

@@ -7,20 +7,21 @@ import java.util.Date;
 //import javax.jdo.annotations.PrimaryKey;
 
 public class Single{
-	private long tick;
+	private long t;
 	private long val;
 	public boolean real=false;
+
 	public long getTick(){
-		return tick;
+		return this.t;
 	}
 	public Date getTime(){
 		return null;
 	}
 	public long getVal(){
-		return val;
+		return this.val;
 	}
-	public void setTick(long tick){
-		this.tick=val;
+	public void setTick(long val){
+		this.t=val;
 	}
 	public void setVal(long val){
 		this.val=val;

@@ -12,8 +12,7 @@ public class Timed {
 			if(s.length>0){
 				o=Long.parseLong(s[0]);
 				w=Long.parseLong(s[1]);
-                t=new Date(Long.parseLong(s[2]));
-
+                t=new Date(Long.parseLong(s[2])*1000);
 			}
 		}
 	}
