@@ -138,7 +138,7 @@ public class I{
 	    return m;
 	}
 	public String getQuotation(){
-	    return q.getValue();
+	    return q==null?"":q.getValue();
 	}
 	public long getRate(){
 	    return r;
