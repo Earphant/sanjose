@@ -69,7 +69,7 @@ public class Steps extends DataText{
 		try{
 			I139 i139=new I139(s.id,s.site,v,i.t);
 			mgr.makePersistent(i139);
-			updatePost(i,139,"<div class=graf>"+html(i,false,mgr)+"</div>",mgr);
+			updatePost(i,139,html(i,false,mgr),mgr);
 		}
 		finally{
 			mgr.close();
@@ -81,7 +81,7 @@ public class Steps extends DataText{
 		String b=s[1];
 		page.title="Steps";
 		page.aside="<ul><li><a href=/post/steps>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+b+"/profile>Profile</a><li><a href=/"+b+"/contacts>Contacts</a><li><a href=/"+b+"/tags>Tags</a></ul><ul><li><a href=/"+b+"/dashboard>Dashboard</a><li><a href=/"+b+"/activities>Activities</a><li><a href=/"+b+"/historical>Historical</a></ul><ul><li><a href=/"+b+"/weight>Weight</a><li><a href=/"+b+"/heartrate>Heart Rate</a><li><a href=/"+b+"/steps>Steps</a><li><a href=/"+b+"/fat>Fat</a></ul>";
-		page.Out("<div class=graf>");
+		page.Out("<div class=graf style=height:200px>");
 		page.Out(html(new Timed(b),true,Helper.getMgr()));
 		page.Out("</div>");		
 		page.End(null);
