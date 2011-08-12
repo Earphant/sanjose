@@ -34,13 +34,10 @@ textarea{width:100%}
 .c99{float:right}
 .c99 li{margin-left:1.5ex;margin-right:0}
 
-.graf{position:relative;border:solid 1px #000}
-.graf div{position:absolute;bottom:0;width:1%;border:solid 1px #000;border-bottom:none;background-color:#ccc}
-.graf .real{background-color:#888}
-.graf a{font-size:13pt;}
-    .graf a:hover{color:red;}
-    .graf a:active{color:black;}
-    .graf a:visited{color:#000;}
+.grf1{position:relative;border:solid 1px #000;height:100px}
+.grf2{position:relative;border:solid 1px #000;height:200px}
+.grf1 div,.grf2 div{position:absolute;bottom:0;width:1%;border:solid 1px #000;border-bottom:none;background-color:#ccc}
+.grf1 .real,.grf2 .real{background-color:#888}
     
 .icon{width:48px;height:48px;margin-top:1ex;float:left}
 .list{table-layout:fixed;border-collapse:collapse}
