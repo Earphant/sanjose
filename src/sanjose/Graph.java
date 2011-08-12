@@ -160,16 +160,16 @@ public class Graph{
 			return "";
 		long k=80000/max;
 		min-=10000/k;
-		int n=10;
+		int n=2;
 		String s="";
 		for(Single i:(List<Single>)dst){
 			if(i.real){
-				s+=post==null?"<div style=left:"+n+"px;height:"+(i.getVal()-min)*k/1000+"% class=real></div>":
-					"<a href="+post+i.getTick()+"><div style=left:"+n+"px;height:"+(i.getVal()-min)*k/1000+"% class=real></div></a>";
+				s+=post==null?"<div style=left:"+n+"%;height:"+(i.getVal()-min)*k/1000+"% class=real></div>":
+					"<a href="+post+i.getTick()+"><div style=left:"+n+"%;height:"+(i.getVal()-min)*k/1000+"% class=real></div></a>";
 			}
 			else
-				s+="<div style=left:"+n+"px;height:"+(i.getVal()-min)*k/1000+"%></div>";
-			n+=16;
+				s+="<div style=left:"+n+"%;height:"+(i.getVal()-min)*k/1000+"%></div>";
+			n+=3;
 		}
 		return s;
 	}

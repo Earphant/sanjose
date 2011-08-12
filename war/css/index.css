@@ -17,6 +17,7 @@ footer li{list-style-type:none;display:inline;margin-right:1.5ex}
 h1{font-size:170%;font-weight:normal}
 h2{font-size:130%;font-weight:normal;margin:2ex 0 0}
 header{height:100px;background-color:#eee;margin-bottom:2ex;display:block}
+img{border:none}
 nav{clear:both;display:block}
 nav a{color:#888}
 nav li{list-style-type:none;display:inline;margin-right:1.5ex}
@@ -34,7 +35,7 @@ textarea{width:100%}
 .c99 li{margin-left:1.5ex;margin-right:0}
 
 .graf{position:relative;border:solid 1px #000}
-.graf div{position:absolute;bottom:0;width:10px;border:solid 1px #000;border-bottom:none;background-color:#ccc}
+.graf div{position:absolute;bottom:0;width:1%;border:solid 1px #000;border-bottom:none;background-color:#ccc}
 .graf .real{background-color:#888}
 .graf a{font-size:13pt;}
     .graf a:hover{color:red;}
@@ -46,10 +47,7 @@ textarea{width:100%}
 .list th{font-weight:normal}
 .list td{text-align:right}
 .post{clear:left;padding-top:2ex}
-.post div{margin-left:70px}
-.post .c2{margin:0}
-.post .graf{margin:0}
-.post .graf div{margin:0}
+.post .text{margin-left:70px}
 .thmb{float:right}
 
 .c504{border:solid 1px #000;height:400px;overflow:hidden;position:relative}
