@@ -112,15 +112,17 @@ public class DataText{
 		try{
 			@SuppressWarnings("unchecked")
 			List<I> r=(List<I>)q.execute(id.o,id.w,139);
-			if(!r.isEmpty()){
-				I i=r.get(0);
+			I i;
+			if(r.isEmpty())
+				i=new I("",null,type,0,id.o,id.w);
+			else{
+				i=r.get(0);
 				i.setModifyTime(new Date());
-				mgr.makePersistent(i);
 			}
+			mgr.makePersistent(i);
 		}
 		finally{
 			q.closeAll();
-			mgr.close();
 		}
 	}
 }

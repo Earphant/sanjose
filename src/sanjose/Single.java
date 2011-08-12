@@ -2,26 +2,22 @@ package sanjose;
 
 import java.util.Date;
 
-//import java.util.Date;
-//import javax.jdo.annotations.Persistent;
-//import javax.jdo.annotations.PrimaryKey;
-
 public class Single{
-	private long t;
+	private Date t;
 	private long val;
 	public boolean real=false;
 
 	public long getTick(){
-		return this.t;
+		return this.t.getTime()/1000;
 	}
 	public Date getTime(){
-		return null;
+		return t;
 	}
 	public long getVal(){
 		return this.val;
 	}
 	public void setTick(long val){
-		this.t=val;
+		this.t=new Date(val*1000);
 	}
 	public void setVal(long val){
 		this.val=val;
