@@ -14,7 +14,7 @@ import javax.jdo.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class Datatxt{
+public class DataText{
 	@SuppressWarnings("unchecked")
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp,
 		InputStream stream,Long id,Long site)throws IOException{

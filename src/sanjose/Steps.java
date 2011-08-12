@@ -74,7 +74,7 @@ public class Steps {
 				q.closeAll();
 			}
 		}
-		new Datatxt().update(timed,139,mgr);
+		new DataText().update(timed,139,mgr);
 		rsp.sendRedirect("/"+s.id+"."+s.site+"/steps");
 	}
 	@SuppressWarnings("unchecked")

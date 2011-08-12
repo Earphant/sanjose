@@ -38,7 +38,7 @@ public class Upload{
 			        String extension=t.getName().substring(t.getName().lastIndexOf(".")+1,t.getName().length());
 			        Session session=new Session("/post");
 			        if(extension.equals("txt"))
-			        	new Datatxt().doPost(req,rsp,s,session.id,session.site);
+			        	new DataText().doPost(req,rsp,s,session.id,session.site);
 			        else
 			        	new Picture().doPost(req,rsp,s,session.id,session.site);
 			    }
