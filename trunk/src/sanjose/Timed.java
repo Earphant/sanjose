@@ -3,8 +3,8 @@ package sanjose;
 import java.util.Date;
 
 public class Timed {
-	public Long o=0L;
-	public Long w=0L;
+	public long o=0L;
+	public long w=0L;
 	public Date t=null;
 	public Timed(String timed){
 		if(timed!=null){
@@ -12,8 +12,12 @@ public class Timed {
 			if(s.length>0){
 				o=Long.parseLong(s[0]);
 				w=Long.parseLong(s[1]);
-                t=new Date(Long.parseLong(s[2])*1000);
+				if(s.length>2)
+					t=new Date(Long.parseLong(s[2])*1000);
 			}
 		}
+	}
+	public String toString(){
+		return this.o+"."+w;
 	}
 }
