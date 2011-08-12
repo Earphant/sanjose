@@ -8,7 +8,7 @@ import javax.jdo.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class Steps {
+public class Steps extends DataText{
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		Page p=new Page(rsp);
@@ -74,7 +74,7 @@ public class Steps {
 				q.closeAll();
 			}
 		}
-		new DataText().update(timed,139,mgr);
+		updatePost(timed,139,mgr);
 		rsp.sendRedirect("/"+s.id+"."+s.site+"/steps");
 	}
 	@SuppressWarnings("unchecked")

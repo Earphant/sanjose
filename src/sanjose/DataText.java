@@ -105,7 +105,7 @@ public class DataText{
 		r.close();
 		rsp.sendRedirect("/"+id+"."+site+"/");
 	}
-	public void update(Timed id,long type,PersistenceManager mgr){
+	public void updatePost(Timed id,long type,PersistenceManager mgr){
 		Query q=mgr.newQuery(I.class);
 		q.setFilter("o==oParam && w==wParam && a==aParam");
 		q.declareParameters("Long oParam,Long wParam,Long aParam");
