@@ -14,6 +14,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class DataText{
+	protected String getHtml(I owner,boolean post,PersistenceManager mgr){
+		String ret=null;
+		Query q=mgr.newQuery(I139.class);
+		q.setFilter("o==oParam && w==wParam");
+		q.declareParameters("Long oParam,Long wParam");
+		q.setOrdering("t");
+		try{
+			@SuppressWarnings("unchecked")
+			List<I139> r=(List<I139>)q.execute(owner.getId(),owner.getSite());
+			ret=new Graph().html(r,post?"/post/steps?i="+owner+".":null,0,0,
+				86400);
+		}
+		finally{
+			q.closeAll();
+		}
+		return ret;
+	}
 	@SuppressWarnings("unchecked")
 	public boolean doPost(HttpServletRequest req,HttpServletResponse rsp,
 		InputStream stream,Long id,Long site)throws IOException{
@@ -21,19 +38,19 @@ public class DataText{
 		SimpleDateFormat fmt=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String v;
 		if(!r.readLine().equalsIgnoreCase("<!doctype palo-alto>"))
-			return false;
+			;//return false;
 		r.readLine();
-		while((v=r.readLine())!=null){
-			String s[]=v.split(" ");
-			Session current=new Session("");
-			Date t;
-			Date now=new Date();
-			PersistenceManager mgr=Helper.getMgr();
-			Query qi=mgr.newQuery(I.class);
-			qi.setFilter("o==oParam && w==wParam && a==aParam");
-			qi.declareParameters("Long oParam,Long wParam,Long aParam");
-			try {
+		PersistenceManager mgr=Helper.getMgr();
+		Session current=new Session("");
+		Date now=new Date();
+		Date t;
+		try {
+			while((v=r.readLine())!=null){
 				t=fmt.parse(v);
+				String s[]=v.split(" ");
+				Query qi=mgr.newQuery(I.class);
+				qi.setFilter("o==oParam && w==wParam && a==aParam");
+				qi.declareParameters("Long oParam,Long wParam,Long aParam");
 
 				List<I> r138=(List<I>)qi.execute(id,site,138);
 				if(r138.isEmpty()){
@@ -90,31 +107,32 @@ public class DataText{
 				}
 				I139 i139=new I139(id,site,Long.parseLong(s[6]),t);
 				mgr.makePersistent(i139);
-			} 
-			catch(ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-			finally{
-				mgr.close();
-			}
+			I i=null;
+			//updatePost(i,139,getHtml(i,false,mgr),mgr);
+		} 
+		catch(ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		//I139.updatePost(i,139,html(i,false,mgr),mgr);
+		finally{
+			mgr.close();
+		}
 		r.close();
 		rsp.sendRedirect("/"+id+"."+site+"/");
 		return true;
 	}
-	public void updatePost(Timed id,long type,String html,
+	public void updatePost(I owner,long type,String html,
 		PersistenceManager mgr){
 		Query q=mgr.newQuery(I.class);
 		q.setFilter("o==oParam && w==wParam && a==aParam");
 		q.declareParameters("Long oParam,Long wParam,Long aParam");
 		try{
 			@SuppressWarnings("unchecked")
-			List<I> r=(List<I>)q.execute(id.o,id.w,139);
+			List<I> r=(List<I>)q.execute(owner.getId(),owner.getSite(),139);
 			I i;
 			if(r.isEmpty()){
-				i=new I(html,null,type,0,id.o,id.w);
+				i=new I(html,null,type,0,owner);
 				mgr.makePersistent(i);
 				i.setId(mgr);
 			}

@@ -69,7 +69,7 @@ public class Steps extends DataText{
 		try{
 			I139 i139=new I139(s.id,s.site,v,i.t);
 			mgr.makePersistent(i139);
-			updatePost(i,139,html(i,false,mgr),mgr);
+			//updatePost(i,139,html(i,false,mgr),mgr);
 		}
 		finally{
 			mgr.close();
