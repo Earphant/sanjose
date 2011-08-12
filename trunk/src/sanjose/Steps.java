@@ -18,7 +18,9 @@ public class Steps extends DataText{
 		p.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";
 		p.Out("<form method=post action=/post/steps?i="+i+">");
 		
-		if(timed.t!=null){
+		if(timed.t==null)
+			p.Out("Value<br><input type=text name=v>");
+		else{
 			Query q=Helper.getMgr().newQuery(I139.class);
 			q.setFilter("o==oParam && w==wParam && t==tParam");
 			q.declareImports("import java.util.Date");
@@ -36,45 +38,24 @@ public class Steps extends DataText{
 				q.closeAll();
 			}
 		}
-		else
-			p.Out("Value<br><input type=text name=v>");
 		p.End("<br><input type=submit name=ok></form>");
 	}
-	@SuppressWarnings("unchecked")
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
+		Timed i=new Timed(req.getParameter("i"));
+		Long v=Long.parseLong(req.getParameter("v"));
+		if(i.t==null)
+			i.t=new Date();
 		PersistenceManager mgr=Helper.getMgr();
-		Long val=Long.parseLong(req.getParameter("v"));
-		Date now=new Date();
 		Session s=new Session("/post");
-		Timed timed=new Timed(req.getParameter("i"));
-		if(timed.t==null){
-			try{
-				I139 i139=new I139(s.id,s.site,val,now);
-				mgr.makePersistent(i139);
-			}
-			finally{
-				mgr.close();
-			}
+		try{
+			I139 i139=new I139(s.id,s.site,v,i.t);
+			mgr.makePersistent(i139);
+			updatePost(i,139,mgr);
 		}
-		else{
-			Query q=mgr.newQuery(I139.class);
-			q.setFilter("o==oParam && w==wParam && t==tParam");
-			q.declareImports("import java.util.Date");
-			q.declareParameters("Long oParam,Long wParam,Date tParam");
-			try{
-				List<I139> r=(List<I139>)q.execute(timed.o,timed.w,timed.t);
-				if(!r.isEmpty()){
-					I139 i139=r.get(0);
-					i139.setVal(val);
-					mgr.makePersistent(i139);
-				}
-			}
-			finally{
-				q.closeAll();
-			}
+		finally{
+			mgr.close();
 		}
-		updatePost(timed,139,mgr);
 		rsp.sendRedirect("/"+s.id+"."+s.site+"/steps");
 	}
 	@SuppressWarnings("unchecked")
