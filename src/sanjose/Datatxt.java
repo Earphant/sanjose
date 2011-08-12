@@ -105,4 +105,22 @@ public class Datatxt{
 		r.close();
 		rsp.sendRedirect("/"+id+"."+site+"/");
 	}
+	public void update(Timed id,long type,PersistenceManager mgr){
+		Query q=mgr.newQuery(I.class);
+		q.setFilter("o==oParam && w==wParam && a==aParam");
+		q.declareParameters("Long oParam,Long wParam,Long aParam");
+		try{
+			@SuppressWarnings("unchecked")
+			List<I> r=(List<I>)q.execute(id.o,id.w,139);
+			if(!r.isEmpty()){
+				I i=r.get(0);
+				i.setModifyTime(new Date());
+				mgr.makePersistent(i);
+			}
+		}
+		finally{
+			q.closeAll();
+			mgr.close();
+		}
+	}
 }

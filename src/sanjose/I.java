@@ -187,4 +187,7 @@ public class I{
 	public void setText(String val){
 	    this.x=val;
 	}
+	public String toString(){
+		return this.i+"."+j;
+	}
 }
