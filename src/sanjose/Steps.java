@@ -9,6 +9,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class Steps extends DataText{
+	private String html(Timed i,boolean post,PersistenceManager mgr){
+		String ret=null;
+		Query q=mgr.newQuery(I139.class);
+		q.setFilter("o==oParam && w==wParam");
+		q.declareParameters("Long oParam,Long wParam");
+		q.setOrdering("t");
+		try{
+			@SuppressWarnings("unchecked")
+			List<I139> r=(List<I139>)q.execute(i.o,i.w);
+			ret=new Graph().html(r,post?"/post/steps?i="+i+".":null,0,0,
+				86400);
+		}
+		finally{
+			q.closeAll();
+		}
+		return ret;
+	}
+
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		Page p=new Page(rsp);
@@ -51,40 +69,21 @@ public class Steps extends DataText{
 		try{
 			I139 i139=new I139(s.id,s.site,v,i.t);
 			mgr.makePersistent(i139);
-			updatePost(i,139,mgr);
+			updatePost(i,139,"<div class=graf>"+html(i,false,mgr)+"</div>",mgr);
 		}
 		finally{
 			mgr.close();
 		}
 		rsp.sendRedirect("/"+s.id+"."+s.site+"/steps");
 	}
-	@SuppressWarnings("unchecked")
-	public void Out(String plink,Page page) throws IOException{
+	public void Out(String plink,Page page)throws IOException{
 		String[]s=plink.split("/");
-		String base=s[1];
+		String b=s[1];
 		page.title="Steps";
-		page.aside="<ul><li><a href=/post/steps>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+base+"/profile>Profile</a><li><a href=/"+base+"/contacts>Contacts</a><li><a href=/"+base+"/tags>Tags</a></ul><ul><li><a href=/"+base+"/dashboard>Dashboard</a><li><a href=/"+base+"/activities>Activities</a><li><a href=/"+base+"/historical>Historical</a></ul><ul><li><a href=/"+base+"/weight>Weight</a><li><a href=/"+base+"/heartrate>Heart Rate</a><li><a href=/"+base+"/steps>Steps</a><li><a href=/"+base+"/fat>Fat</a></ul>";
-		I d=new I(s[1]);
-		
-		PersistenceManager mgr=Helper.getMgr();
-		Query q1=mgr.newQuery(I139.class);
-		q1.setFilter("o==oParam && w==wParam");
-		q1.declareParameters("Long oParam,Long wParam");
-		q1.setOrdering("t");
-		try{
-			List<I139> r=(List<I139>)q1.execute(d.getId(),d.getSite());
-			String abc="steps";
-			page.Out("<div class=graf>");
-			page.Out(new Graph().Daily(r,abc));
-			page.Out("</div>");
-			
-			page.Out("<div class=graf>");
-			page.Out(new Graph().html(r,"/post/steps?i="+d+".",0,0,86400));
-			page.Out("</div>");
-		}
-		finally{
-			q1.closeAll();
-		}
+		page.aside="<ul><li><a href=/post/steps>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+b+"/profile>Profile</a><li><a href=/"+b+"/contacts>Contacts</a><li><a href=/"+b+"/tags>Tags</a></ul><ul><li><a href=/"+b+"/dashboard>Dashboard</a><li><a href=/"+b+"/activities>Activities</a><li><a href=/"+b+"/historical>Historical</a></ul><ul><li><a href=/"+b+"/weight>Weight</a><li><a href=/"+b+"/heartrate>Heart Rate</a><li><a href=/"+b+"/steps>Steps</a><li><a href=/"+b+"/fat>Fat</a></ul>";
+		page.Out("<div class=graf>");
+		page.Out(html(new Timed(b),true,Helper.getMgr()));
+		page.Out("</div>");		
 		page.End(null);
     }
 }

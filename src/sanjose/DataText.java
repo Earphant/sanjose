@@ -94,7 +94,7 @@ public class DataText{
 				I139 i139=new I139(id,site,Long.parseLong(s[6]),t);
 				mgr.makePersistent(i139);
 			} 
-			catch (ParseException e) {
+			catch(ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -105,7 +105,8 @@ public class DataText{
 		r.close();
 		rsp.sendRedirect("/"+id+"."+site+"/");
 	}
-	public void updatePost(Timed id,long type,PersistenceManager mgr){
+	public void updatePost(Timed id,long type,String html,
+		PersistenceManager mgr){
 		Query q=mgr.newQuery(I.class);
 		q.setFilter("o==oParam && w==wParam && a==aParam");
 		q.declareParameters("Long oParam,Long wParam,Long aParam");
@@ -114,9 +115,10 @@ public class DataText{
 			List<I> r=(List<I>)q.execute(id.o,id.w,139);
 			I i;
 			if(r.isEmpty())
-				i=new I("",null,type,0,id.o,id.w);
+				i=new I(html,null,type,0,id.o,id.w);
 			else{
 				i=r.get(0);
+				i.setQuotation(html);
 				i.setModifyTime(new Date());
 			}
 			mgr.makePersistent(i);
