@@ -53,6 +53,23 @@ public class I{
 	@Persistent
 	private String z;
 
+	private void init(String text,String plink,long classid,long rate,
+		long ownerid,long ownersite){
+		Date current=new Date();
+		this.i=0L;
+		this.j=9L;
+		this.a=classid;
+		this.b=ownerid;
+		this.d=1L;
+		this.h=1L;
+		this.m=current;
+		this.o=ownerid;
+		this.w=ownersite;
+		this.p=plink;
+		this.r=rate;
+		this.s=ownersite;
+		this.x=text;
+	}
 	public I(String path){
 		String[]t;
 		if(path.charAt(0)=='/'){
@@ -69,43 +86,36 @@ public class I{
 		this.i=Long.parseLong(t[0]);
 		this.j=Long.parseLong(t[1]);
 		if(t.length>2)
-			this.z=t[3];
+			this.z=t[2];
 	}
 	public I(Long id,Long site,String text,String plink,long classid,long rate,
 		long ownerid,long ownersite){
-		Date current=new Date();
-		this._key=KeyFactory.createKey(I.class.getSimpleName(),id+"."+site);
+		init(text,plink,classid,rate,ownerid,ownersite);
 		this.i=id;
 		this.j=site;
-		this.a=classid;
-		this.b=ownerid;
-		this.s=ownersite;
-		this.d=1L;
-		this.h=1L;
-		this.o=ownerid;
-		this.w=ownersite;
-		this.p=plink;
-		this.c=current;
-		this.m=current;
-		this.r=rate;
-		this.t=current;
-		this.x=text;
+		this._key=KeyFactory.createKey(I.class.getSimpleName(),id+"."+site);
 	}
-	public I(String text,String plink,long classid,long rate,long ownerid,long ownersite){
-		Date current=new Date();
-		this.i=0L;
-		this.j=9L;
-		this.a=classid;
-		this.b=ownerid;
-		this.d=1L;
-		this.h=1L;
-		this.m=current;
-		this.o=ownerid;
-		this.w=ownersite;
-		this.p=plink;
-		this.r=rate;
-		this.s=ownersite;
-		this.x=text;
+	public I(Long id,Long site){
+		this.i=id;
+		this.j=site;
+	}
+	public I(String text,String plink,long classid,long rate,long ownerid,
+		long ownersite){
+		init(text,plink,classid,rate,ownerid,ownersite);
+	}
+	public I(String text,String plink,long classid,long rate,I owner){
+		init(text,plink,classid,rate,owner.getId(),owner.getSite());
+	}
+
+	static public I createTimed(String val){
+		if(val==null)
+			return null;
+		I i=new I(val);
+		i.o=i.i;
+		i.w=i.j;
+		if(i.z!=null)
+			i.t=new Date(Long.parseLong(i.z)*1000);
+		return i;
 	}
 	public long getAccessTick(){
 	    return c.getTime()/1000;
@@ -121,6 +131,9 @@ public class I{
 	}
 	public long getCreateTick(){
 	    return t.getTime()/1000;
+	}
+	public Date getCreateTime(){
+	    return t;
 	}
 	public String getExtension(){
 	    return e;
