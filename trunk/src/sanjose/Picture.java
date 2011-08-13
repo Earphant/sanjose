@@ -91,7 +91,7 @@ public class Picture{
 
 	@SuppressWarnings("unchecked")
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp,
-		InputStream stream,Long	id,Long	site)throws IOException, FileUploadException{
+		InputStream stream,I owner)throws IOException, FileUploadException{
 
 		Blob b=new Blob(IOUtils.toByteArray(stream));
 		ServletFileUpload upload=new ServletFileUpload();				

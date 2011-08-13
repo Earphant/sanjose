@@ -17,7 +17,7 @@ public class I139 extends Single{
 	@Persistent
 	private Long val;
 	
-	public I139(I owner,long val,Date time){
+	public I139(I owner,Date time,long val){
 		this.o=owner.getId();
 		this.w=owner.getSite();
 		this.t=time;

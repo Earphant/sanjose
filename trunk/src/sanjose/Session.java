@@ -13,6 +13,7 @@ public class Session{
 	public User user=UserServiceFactory.getUserService().getCurrentUser();
 	public String name;
 	public String email;
+	public I owner;
 	public Long id;
 	public Long site;
 	public Cookie cookie;
@@ -43,6 +44,7 @@ public class Session{
 			}
 			id=u.getId();
 			site=u.getSite();
+			owner=new I(id,site);
 			cookie=new Cookie("us",id+"."+site+":10&"+id+"."+site+"&"+name+"&"+email);
 		}
 		else{
