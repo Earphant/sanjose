@@ -9,22 +9,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class Weight extends DataText{
-	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
+	public void doGet(HttpServletRequest req,HttpServletResponse rsp,Page page)
 		throws IOException{
-		Page p=new Page(rsp);
 		I i=I.timed(req.getParameter("i"));
-		p.title="Weight";
-		p.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";
+		page.title="Weight";
+		page.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";
 		if(i==null){
-			p.out("<form method=post action=/post/weight>");
-			p.out("Value<br><input type=text name=v>");
+			page.out("<form method=post action=/post/weight>");
+			page.out("Value<br><input type=text name=v>");
 		}
 		else{
-			p.out("<form method=post action=/post/weight?i="+i.getTimed()+">");
-			p.out("Value<br><input type=text name=v value="+
+			page.out("<form method=post action=/post/weight?i="+i.getTimed()+">");
+			page.out("Value<br><input type=text name=v value="+
 				getSingleVal(i,I138.class)+">");
 		}
-		p.end("<br><input type=submit name=ok></form>");
+		page.end("<br><input type=submit name=ok></form>");
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
