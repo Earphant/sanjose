@@ -22,32 +22,31 @@ public class Upload{
 		p.Out("<form method=post action=/post/upload?i="+d.i+"."+d.j+" enctype=multipart/form-data> <input type=file name=file>");
 		p.End("<input type=submit name=ok></form>");
 	}
-	public void doPost(HttpServletRequest req, HttpServletResponse rsp)
+	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 	    throws IOException{
-		ServletFileUpload upload=new ServletFileUpload();				//创建对象	
-		FileItemIterator iterator;
-		try {
-			iterator = upload.getItemIterator(req);
-			while (iterator.hasNext()){
-			    FileItemStream t=iterator.next();        //从FileItemIterator集合中获得一个文件流
+        Session sn=new Session("/post");
+		ServletFileUpload up=new ServletFileUpload();
+		FileItemIterator ir;
+		try{
+			ir = up.getItemIterator(req);
+			while(ir.hasNext()){
+			    FileItemStream t=ir.next();
 			    InputStream s=t.openStream();
 			    if (t.isFormField())
 			        log.warning("Got a form field: "+t.getFieldName());
 			    else{ 
 			        log.warning("Got an uploaded file: "+t.getFieldName()+", name = "+t.getName());
 			        String extension=t.getName().substring(t.getName().lastIndexOf(".")+1,t.getName().length());
-			        Session session=new Session("/post");
 			        if(extension.equals("txt"))
-			        	new DataText().doPost(req,rsp,s,session.id,session.site);
+			        	new DataText().doPost(req,rsp,s,sn.owner);
 			        else
-			        	new Picture().doPost(req,rsp,s,session.id,session.site);
+			        	new Picture().doPost(req,rsp,s,sn.owner);
 			    }
 				s.close();
 			}
-		} catch (FileUploadException e) {
-			// TODO Auto-generated catch block
+		}
+		catch (FileUploadException e){
 			e.printStackTrace();
 		}
 	}
-}	
-	
+}

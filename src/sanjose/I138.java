@@ -17,7 +17,7 @@ public class I138 extends Single{
 	@Persistent
 	private Long vol;
 
-	public I138(I owner,long vol,Date time){
+	public I138(I owner,Date time,long vol){
 		this.o=owner.getId();
 		this.w=owner.getSite();
 		this.t=time;
