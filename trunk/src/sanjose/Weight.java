@@ -39,7 +39,7 @@ public class Weight extends DataText{
 		try{
 			I138 i138=new I138(i,i.getModifyTime(),v);
 			mgr.makePersistent(i138);
-			updatePost(i,138,getHtml(i,I138.class,null,mgr),mgr);
+			updatePost(i,138,getHtml(i,I138.class,null,mgr),"Weight",mgr);
 		}
 		finally{
 			mgr.close();

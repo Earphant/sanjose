@@ -39,7 +39,7 @@ public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 	try{
 		I136 I136=new I136(i,i.getModifyTime(),v);
 		mgr.makePersistent(I136);
-		updatePost(i,136,getHtml(i,I136.class,null,mgr),mgr);
+		updatePost(i,136,getHtml(i,I136.class,null,mgr),"Heart Rate",mgr);
 	}
 	finally{
 		mgr.close();
