@@ -1,11 +1,10 @@
 package sanjose;
 
-import java.util.Date;
-import java.util.List;
-
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Text;
+import java.util.Date;
+import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.annotations.IdGeneratorStrategy;
@@ -15,6 +14,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 @PersistenceCapable
 public class I{
+	//private static final Logger log = Logger.getLogger(Upload.class.getName());
 	@PrimaryKey
 	@Persistent(valueStrategy=IdGeneratorStrategy.IDENTITY)
 	private Key _key;
@@ -77,6 +77,18 @@ public class I{
 		return new Date(t*1000);
 	}
 
+	static public I create(String text,String plink,long type,long rate,
+		I owner,PersistenceManager mgr){
+		I ret=new I(text,plink,type,rate,owner);
+		mgr.makePersistent(ret);
+		if(ret.i==0L){
+			ret.i=ret._key.getId();
+			ret.c=ret.m;
+			ret.t=ret.m;
+			mgr.makePersistent(ret);
+		}
+		return ret;
+	}
 	static public I query(I id,PersistenceManager mgr){
 		I ret=null;
 		Query q=mgr.newQuery(I.class);
@@ -104,6 +116,20 @@ public class I{
 		return i;
 	}
 
+	public I(long id,long site,String text,String plink,long classid,long rate,
+		long ownerid,long ownersite){
+		init(text,plink,classid,rate,ownerid,ownersite);
+		this.i=id;
+		this.j=site;
+		this._key=KeyFactory.createKey(I.class.getSimpleName(),id+"."+site);
+	}
+	public I(String text,String plink,long classid,long rate,I owner){
+		init(text,plink,classid,rate,owner.getId(),owner.getSite());
+	}
+	public I(long id,long site){
+		this.i=id;
+		this.j=site;
+	}
 	public I(String path){
 		if(path==null){
 			this.i=0L;
@@ -128,32 +154,6 @@ public class I{
 			this.z=t[2];
 		this.m=now();
 		this.t=now();
-	}
-	public I(long id,long site,String text,String plink,long classid,long rate,
-		long ownerid,long ownersite){
-		init(text,plink,classid,rate,ownerid,ownersite);
-		this.i=id;
-		this.j=site;
-		this._key=KeyFactory.createKey(I.class.getSimpleName(),id+"."+site);
-	}
-	public I(long id,long site){
-		this.i=id;
-		this.j=site;
-	}
-	public I(String text,String plink,long classid,long rate,long ownerid,
-		long ownersite){
-		init(text,plink,classid,rate,ownerid,ownersite);
-	}
-	public I(String text,String plink,long classid,long rate,I owner){
-		init(text,plink,classid,rate,owner.getId(),owner.getSite());
-	}
-	public I(String text,String plink,long classid,long rate,I owner,
-		PersistenceManager mgr){
-		init(text,plink,classid,rate,owner.getId(),owner.getSite());
-		mgr.makePersistent(this);
-		this.i=_key.getId();
-		this.c=this.m;
-		this.t=this.m;
 	}
 	public long getAccessTick(){
 	    return c.getTime()/1000;
@@ -231,17 +231,6 @@ public class I{
 	}
 	public void setExtra(String val){
 	    this.z=val;
-	}
-	public void setId(){
-		if(this.i==0L){
-			this.i=_key.getId();
-			this.c=this.m;
-			this.t=this.m;
-		}
-	}
-	public void setId(PersistenceManager mgr){
-		setId();
-		mgr.makePersistent(this);
 	}
 	public void setModifyTime(Date val){
 		this.m=val==null?now():val;

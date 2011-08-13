@@ -98,14 +98,10 @@ public class DataText{
 		try{
 			@SuppressWarnings("unchecked")
 			List<I> r=(List<I>)q.execute(owner.getId(),owner.getSite(),type);
-			I i;
-			if(r.isEmpty()){
-				i=new I(text,plink,type,0,owner);
-				mgr.makePersistent(i);
-				i.setId(mgr);
-			}
+			if(r.isEmpty())
+				I.create(text,plink,type,0,owner,mgr);
 			else{
-				i=r.get(0);
+				I i=r.get(0);
 				i.setText(text);
 				i.setPlink(plink);
 				i.setQuotation(html);

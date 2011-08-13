@@ -14,12 +14,9 @@ public class Session{
 	public String name;
 	public String email;
 	public I owner;
-	public Long id;
-	public Long site;
 	public Cookie cookie;
 
 	public Session(String jump){
-		I i;
 		I11 u;
 		if(user!=null && jump!=null){
 			name=user.getNickname();
@@ -31,9 +28,8 @@ public class Session{
 				email=u.getEmail();
 			}
 			catch(JDOObjectNotFoundException e) {
-				i=new I(name,null,1L,0L,1L,1L);
-				m.makePersistent(i);
-				i.setId(m);
+				I i=new I(1,1);
+				i=I.create(name,null,1,0,i,m);
 				u=new I11(i,email);
 				m.makePersistent(u);
 				I1 idt=new I1(i);
@@ -42,15 +38,12 @@ public class Session{
 			finally{
 				m.close();
 			}
-			id=u.getId();
-			site=u.getSite();
-			owner=new I(id,site);
-			cookie=new Cookie("us",id+"."+site+":10&"+id+"."+site+"&"+name+"&"+email);
+			owner=new I(u.getId(),u.getSite());
+			cookie=new Cookie("us",owner+":10&"+owner+"&"+name+"&"+email);
 		}
 		else{
 			email=null;
-			id=0L;
-			site=0L;
+			owner=null;
 			cookie=new Cookie("us",null);
 		}
 		cookie.setMaxAge(-1);

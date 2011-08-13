@@ -22,7 +22,7 @@ public class SystemServlet extends HttpServlet{
 		Session s=new Session("ow");
 		Id d=new Id(req.getParameter("i"));
 		PersistenceManager m=Helper.getMgr();   
-		I21 i=new I21(d.i,d.j,s.id,s.site,new Date());
+		I21 i=new I21(d.i,d.j,s.owner.getId(),s.owner.getSite(),new Date());
 		try{
 			m.makePersistent(i);
 		}finally {
@@ -35,7 +35,7 @@ public class SystemServlet extends HttpServlet{
 		Session s=new Session("ow");
 		Id d=new Id(req.getParameter("i"));
 		PersistenceManager m=Helper.getMgr();   
-		I21 i=new I21(d.i,d.j,s.id,s.site,new Date());
+		I21 i=new I21(d.i,d.j,s.owner.getId(),s.owner.getSite(),new Date());
 		try{
 			m.makePersistent(i);
 			m.deletePersistent(i);
@@ -55,12 +55,12 @@ public class SystemServlet extends HttpServlet{
 		q12.setFilter("i==iParam && j==jParam");
 		q12.declareParameters("Long iParam,Long jParam");
 		try{
-			List<I12> r12=(List<I12>)q12.execute(s.id,s.site);
+			List<I12> r12=(List<I12>)q12.execute(s.owner.getId(),s.owner.getSite());
 			if(!r12.isEmpty()){	
-				page.out("<a href=/post/upload?i="+s.id+"."+s.site+"><img src=/icons/"+s.id+"."+s.site+"></a><br>");
+				page.out("<a href=/post/upload?i="+s.owner+"><img src=/icons/"+s.owner+"></a><br>");
 			}
 			else
-				page.out("<a href=/post/upload?i="+s.id+"."+s.site+"><img src=/icons/"+s.id+"."+s.site+" class=icon></a><br>");
+				page.out("<a href=/post/upload?i="+s.owner+"><img src=/icons/"+s.owner+" class=icon></a><br>");
 		}
 		finally{
 			q12.closeAll();
@@ -69,7 +69,7 @@ public class SystemServlet extends HttpServlet{
 		q11.setFilter("i==iParam && j==jParam");
 		q11.declareParameters("Long iParam,Long jParam");
 		try{
-			List<I11> r11=(List<I11>)q11.execute(s.id,s.site);
+			List<I11> r11=(List<I11>)q11.execute(s.owner.getId(),s.owner.getSite());
 			if(!r11.isEmpty()){	
 				I11 i11=r11.get(0);
 				String eml=i11.getEmail();
@@ -84,7 +84,7 @@ public class SystemServlet extends HttpServlet{
 		q.setFilter("i==iParam && j==jParam");
 		q.declareParameters("Long iParam,Long jParam");
 		try{
-			List<I> r=(List<I>)q.execute(s.id,s.site);
+			List<I> r=(List<I>)q.execute(s.owner.getId(),s.owner.getSite());
 			if(!r.isEmpty()){
 				I i=r.get(0);
 				String x=i.getTitle();
@@ -98,7 +98,7 @@ public class SystemServlet extends HttpServlet{
 		q1.setFilter("i==iParam && j==jParam");
 		q1.declareParameters("Long iParam,Long jParam");
 		try{
-			List<I1> r1=(List<I1>)q1.execute(s.id,s.site);
+			List<I1> r1=(List<I1>)q1.execute(s.owner.getId(),s.owner.getSite());
 			if(!r1.isEmpty()){
 				I1 i1=r1.get(0);
 				String fsn="";
@@ -154,13 +154,13 @@ public class SystemServlet extends HttpServlet{
 			q1.closeAll();
 			mgr.close();
 		}
-		page.out("<input type=hidden name=i value="+s.id+"."+s.site+">");
+		page.out("<input type=hidden name=i value="+s.owner+">");
 		page.end("<input type=submit name=ok></form>");
 	}
 	private void Signin(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		Session s=new Session("");
-		if(s.site==0L){
+		if(s.owner==null){
 			rsp.sendRedirect(usv.createLoginURL("/system/signin"));
 			return;
 		}
@@ -229,7 +229,7 @@ public class SystemServlet extends HttpServlet{
         q11.setFilter("i==iParam && j==jParam");
 		q11.declareParameters("Long iParam,Long jParam");
 		   try{
-				List<I11> r11=(List<I11>)q11.execute(current.id,current.site);
+				List<I11> r11=(List<I11>)q11.execute(current.owner.getId(),current.owner.getSite());
 				if(!r11.isEmpty()){
 					I11 i11=r11.get(0);
 					if(pwd!=null)
@@ -246,7 +246,7 @@ public class SystemServlet extends HttpServlet{
         q.setFilter("i==iParam && j==jParam");
 		q.declareParameters("Long iParam,Long jParam");
 		   try{
-				List<I> r=(List<I>)q.execute(current.id,current.site);
+				List<I> r=(List<I>)q.execute(current.owner.getId(),current.owner.getSite());
 				if(!r.isEmpty()){
 					I i=r.get(0);
 					i.setText(x);
@@ -278,7 +278,7 @@ public class SystemServlet extends HttpServlet{
         q1.setFilter("i==iParam && j==jParam");
 		q1.declareParameters("Long iParam,Long jParam");
 		   try{
-				List<I1> r1=(List<I1>)q1.execute(current.id,current.site);
+				List<I1> r1=(List<I1>)q1.execute(current.owner.getId(),current.owner.getSite());
 				if(!r1.isEmpty()){
 					I1 i1=r1.get(0);
 					i1.setfsn(fsn);
@@ -296,6 +296,6 @@ public class SystemServlet extends HttpServlet{
 				q1.closeAll();
 				mgr.close();
 			}
-		rsp.sendRedirect("/"+current.id+"."+current.site+"/");
+		rsp.sendRedirect("/"+current.owner+"/");
 	}
 }
