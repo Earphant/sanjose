@@ -40,8 +40,8 @@ textarea{width:100%}
 .grf1 .real,.grf2 .real{background-color:#888}
     
 .icon{width:48px;height:48px;margin-top:1ex;float:left}
-.list{table-layout:fixed;border-collapse:collapse}
-.list th{font-weight:normal}
+.list{table-layout:fixed;border-collapse:collapse;width:100%}
+.list th{text-align:left;font-weight:normal}
 .list td{text-align:right}
 .post{clear:left;padding-top:2ex}
 .post .text{margin-left:70px}

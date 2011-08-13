@@ -133,9 +133,6 @@ public class I{
 	public long getBaseSite(){
 	    return s;
 	}
-	public long getClassId(){
-	    return a;
-	}
 	public long getCreateTick(){
 	    return t.getTime()/1000;
 	}
@@ -197,6 +194,9 @@ public class I{
 	}
 	public String getText(){
 	    return x;
+	}
+	public long getType(){
+	    return a;
 	}
 	public void setExtra(String val){
 	    this.z=val;
