@@ -1,13 +1,26 @@
 package sanjose;
 
 import java.io.IOException;
-import java.util.List;
+//import java.util.logging.Logger;
 import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
 import javax.servlet.http.*;
 
 @SuppressWarnings("serial")
 public class PostServlet extends HttpServlet{
+	//private static final Logger log=Logger.getLogger(PostServlet.class.getName());
+	private void getMessage(HttpServletRequest req,HttpServletResponse rsp,
+		Page page,PersistenceManager mgr)throws IOException{
+		I i=new I(req.getParameter("i"));
+		page.title="Post";
+		page.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/step>Step</a><li><a href=/post/fat>Fat</a></ul>";
+		page.out("<form method=post action=/post?i="+i+"><textarea name=text rows=10>");
+		if(i.getSite()!=0){
+			i=I.query(i,mgr);
+			page.out(i.getText());
+		}
+		page.out("</textarea>");
+		page.end("<input type=submit name=ok></form>");
+	}
 	private void postMessage(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		Session sn=new Session("/post");
@@ -84,33 +97,12 @@ public class PostServlet extends HttpServlet{
 				}
 			}
 		}
-		Id id=new Id(req.getParameter("i"));
-		p.title="Post";
-		p.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/step>Step</a><li><a href=/post/fat>Fat</a></ul>";
-		p.out("<form method=post action=/post?i="+id.i+"."+id.j+"><textarea name=text rows=10>");
-		if(id.i!=0){
-			Query q=m.newQuery(I.class);
-			q.setFilter("i==iParam && j==jParam");
-			q.declareParameters("Long iParam,Long jParam");
-			try{
-				@SuppressWarnings("unchecked")
-				List<I> r=(List<I>)q.execute(id.i,id.j);
-				if(!r.isEmpty()){
-					I i=r.get(0);
-					p.out(i.getText());
-				}
-			}
-			finally{
-				q.closeAll();
-			}
-		}
-		p.out("</textarea>");
-		p.end("<input type=submit name=ok></form>");
+		getMessage(req,rsp,p,m);
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		I i=new I(req.getParameter("re"));
-		if(i.getSite()==0){
+		if(i.getSite()!=0){
 			postReply(i,req,rsp);
 			return;
 		}
