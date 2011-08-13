@@ -84,14 +84,15 @@ public class I{
 	}
 
 	static public I create(String text,String plink,long type,long rate,
-		I owner,PersistenceManager mgr){
+		I owner,PersistenceManager mgr,boolean end){
 		I ret=new I(text,plink,type,rate,owner);
 		mgr.makePersistent(ret);
 		if(ret.i==0L){
 			ret.i=ret._key.getId();
 			ret.c=ret.m;
 			ret.t=ret.m;
-			mgr.makePersistent(ret);
+			if(end)
+				mgr.makePersistent(ret);
 		}
 		return ret;
 	}
@@ -241,6 +242,11 @@ public class I{
 	public long getVersion(){
 	    return v;
 	}
+	public boolean isPicture(){
+		if(e==null)
+			return false;
+		return e.equalsIgnoreCase("jpg");
+	}
 	public void setExtra(String val){
 	    this.z=val;
 	}
@@ -252,6 +258,10 @@ public class I{
 	}
 	public void setQuotation(String val){
 		this.q=new Text(val);
+	}
+	public void setRef(I val){
+		this.d=val.i;
+		this.h=val.j;
 	}
 	public void setText(String val){
 	    this.x=val;

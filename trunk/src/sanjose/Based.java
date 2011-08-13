@@ -71,30 +71,20 @@ public class Based{
 	}
 	private void Object(String id,String base,HttpServletResponse rsp,Page page)
 	    throws IOException{
-		//Id b=new Id(base);
-		Id d=new Id(id);
-		if(d.IsPicture()){
+		I d=new I(id);
+		if(d.isPicture()){
 			new Picture().Regular(d,rsp);
 		}
 		else{
-			page.title=id;
-			PersistenceManager mgr=Helper.getMgr();
-			Query q=mgr.newQuery(I.class);
-			q.setFilter("i==iParam && j==jParam");
-			q.declareParameters("Long iParam,Long jParam");
-			try{
-				@SuppressWarnings("unchecked")
-				List<I> r=(List<I>)q.execute(d.i,d.j);
-				if(!r.isEmpty()){
-					I i=r.get(0);
-					if(i.getType()==12)
-						page.out("<a href=/originals/"+id+".jpg title=test><img src=/"+base+"/"+id+".jpg></a>");
-					page.out(i.getTitle());
-				}
-			}
-			finally{
-				q.closeAll();
-			}
+			PersistenceManager m=Helper.getMgr();
+			d=I.query(d,m);
+			page.title=d.getTitle();
+			page.aside="<ul><li><a href=/post?i="+d+">Edit</a><li><a href=/post/mark?re="+d+">Mark</a></ul>";
+			if(d.getType()==12)
+				page.out("<a href=/originals/"+id+".jpg title=test><img src=/"+base+"/"+id+".jpg></a>");
+			page.out("<form method=post action=/post?re="+d+">");
+			page.out("<textarea name=text rows=5></textarea>");
+			page.out("<input type=submit name=ok value=Reply></form>");
 			page.end(null);
 		}
 	}
