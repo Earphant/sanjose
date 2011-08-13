@@ -2,15 +2,51 @@ package sanjose;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class HeartRate {
+public class HeartRate extends DataText{
+	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
+	throws IOException{
+	Page p=new Page(rsp);
+	I i=I.createTimed(req.getParameter("i"));
+	p.title="Steps";
+	p.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";
+	if(i==null){
+		p.Out("<form method=post action=/post/heartrate>");
+		p.Out("Value<br><input type=text name=v>");
+	}
+	else{
+		p.Out("<form method=post action=/post/heartrate?i="+i.getTimed()+">");
+		p.Out("Value<br><input type=text name=v value="+
+			getSingleVal(i,I136.class)+">");
+	}
+	p.End("<br><input type=submit name=ok></form>");
+}
+public void doPost(HttpServletRequest req,HttpServletResponse rsp)
+	throws IOException{
+	Session sn=new Session("/");
+	I i=I.createTimed(req.getParameter("i"));
+	long v=Long.parseLong(req.getParameter("v"));
+	if(i==null){
+		i=new I(sn.owner.getId(),sn.owner.getSite());
+		i.setModifyTime(null);
+	}
+	PersistenceManager mgr=Helper.getMgr();
+	try{
+		I136 I136=new I136(i,i.getModifyTime(),v);
+		mgr.makePersistent(I136);
+		updatePost(i,136,getHtml(i,I136.class,null,mgr),mgr);
+	}
+	finally{
+		mgr.close();
+	}
+	rsp.sendRedirect("/"+i+"/heartrate");
+}
+	/*
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		Page p=new Page(rsp);
@@ -140,14 +176,15 @@ public class HeartRate {
 		}
 		rsp.sendRedirect("/"+s.id+"."+s.site+"/heartrate");
 	}
+	*/
 	@SuppressWarnings("unchecked")
 	public void Out(String plink,Page page) throws IOException{
 		String[]s=plink.split("/");
-		String base=s[1];
+		String b=s[1];
 		page.title="Heart Rate";
-		page.aside="<ul><li><a href=/post/heartrate>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+base+"/profile>Profile</a><li><a href=/"+base+"/contacts>Contacts</a><li><a href=/"+base+"/tags>Tags</a></ul><ul><li><a href=/"+base+"/dashboard>Dashboard</a><li><a href=/"+base+"/activities>Activities</a><li><a href=/"+base+"/historical>Historical</a></ul><ul><li><a href=/"+base+"/weight>Weight</a><li><a href=/"+base+"/heartrate>Heart Rate</a><li><a href=/"+base+"/steps>Steps</a><li><a href=/"+base+"/fat>Fat</a></ul>";
-		Long id=Long.parseLong(base.split("\\.")[0]);
-		Long site=Long.parseLong(base.split("\\.")[1]);
+		page.aside="<ul><li><a href=/post/heartrate>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+b+"/profile>Profile</a><li><a href=/"+b+"/contacts>Contacts</a><li><a href=/"+b+"/tags>Tags</a></ul><ul><li><a href=/"+b+"/dashboard>Dashboard</a><li><a href=/"+b+"/activities>Activities</a><li><a href=/"+b+"/historical>Historical</a></ul><ul><li><a href=/"+b+"/weight>Weight</a><li><a href=/"+b+"/heartrate>Heart Rate</a><li><a href=/"+b+"/steps>Steps</a><li><a href=/"+b+"/fat>Fat</a></ul>";
+		Long id=Long.parseLong(b.split("\\.")[0]);
+		Long site=Long.parseLong(b.split("\\.")[1]);
 		
 		PersistenceManager mgr=Helper.getMgr();
 		Query q1=mgr.newQuery(I136.class);
@@ -162,7 +199,8 @@ public class HeartRate {
 			page.Out("</div>");
 
 			page.Out("<div class=grf2>");
-			page.Out(new Graph().html(r,"",0,0,86400));
+			page.Out(getHtml(new I(b),I136.class,"/post/heartrate?i="+b+".",
+				Helper.getMgr()));
 			page.Out("</div>");
 		}
 		finally{
@@ -179,7 +217,7 @@ public class HeartRate {
 				for(I136 i136:r){
 					long t =i136.getTime().getTime();
 					SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");					
-					page.Out(time.format(t)+"<br>"+base+": "+i136.getVal()+" <a href=/post/heartrate?i="+i136.getOwnerId()+"."+i136.getOwnerSite()+"."+i136.getTime().getTime()+">ÐÞ¸Ä</a><br>");									
+					page.Out(time.format(t)+"<br>"+b+": "+i136.getVal()+" <a href=/post/heartrate?i="+i136.getOwnerId()+"."+i136.getOwnerSite()+"."+i136.getTime().getTime()+">ÐÞ¸Ä</a><br>");									
 				}
 			}
 		}
