@@ -1,18 +1,53 @@
 package sanjose;
 
 import java.io.IOException;
-//import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class Weight {
+public class Weight extends DataText{
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
+		throws IOException{
+		Page p=new Page(rsp);
+		I i=I.createTimed(req.getParameter("i"));
+		p.title="Weight";
+		p.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";
+		if(i==null){
+			p.Out("<form method=post action=/post/weight>");
+			p.Out("Value<br><input type=text name=v>");
+		}
+		else{
+			p.Out("<form method=post action=/post/weight?i="+i.getTimed()+">");
+			p.Out("Value<br><input type=text name=v value="+
+				getSingleVal(i,I138.class)+">");
+		}
+		p.End("<br><input type=submit name=ok></form>");
+	}
+	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
+		throws IOException{
+		Session sn=new Session("/post");
+		I i=I.createTimed(req.getParameter("i"));
+		long v=Long.parseLong(req.getParameter("v"));
+		if(i==null){
+			i=new I(sn.owner.getId(),sn.owner.getSite());
+			i.setModifyTime(null);
+		}
+		PersistenceManager mgr=Helper.getMgr();
+		try{
+			I138 i138=new I138(i,i.getModifyTime(),v);
+			mgr.makePersistent(i138);
+			updatePost(i,138,getHtml(i,I138.class,null,mgr),mgr);
+		}
+		finally{
+			mgr.close();
+		}
+		rsp.sendRedirect("/"+i+"/weight");
+	}
+	/*
+	public void doGet0(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		Page p=new Page(rsp);
 		Timed timed=new Timed(req.getParameter("i"));
@@ -62,7 +97,7 @@ public class Weight {
 		}
 		p.End("<input type=submit name=ok></form>");
 	}
-	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
+	public void doPost0(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
         PersistenceManager mgr=Helper.getMgr(); 
         
@@ -140,14 +175,15 @@ public class Weight {
 		}
 		rsp.sendRedirect("/"+s.id+"."+s.site+"/weight");
 	}
+	*/
 	@SuppressWarnings("unchecked")
 	public void Out(String plink,Page page) throws IOException{
 		String[]s=plink.split("/");
-		String base=s[1];
+		String b=s[1];
 		page.title="Weight";
-		page.aside="<ul><li><a href=/post/weight>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+base+"/profile>Profile</a><li><a href=/"+base+"/contacts>Contacts</a><li><a href=/"+base+"/tags>Tags</a></ul><ul><li><a href=/"+base+"/dashboard>Dashboard</a><li><a href=/"+base+"/activities>Activities</a><li><a href=/"+base+"/historical>Historical</a></ul><ul><li><a href=/"+base+"/weight>Weight</a><li><a href=/"+base+"/heartrate>Heart Rate</a><li><a href=/"+base+"/steps>Steps</a><li><a href=/"+base+"/fat>Fat</a></ul>";
-		Long id=Long.parseLong(base.split("\\.")[0]);
-		Long site=Long.parseLong(base.split("\\.")[1]);
+		page.aside="<ul><li><a href=/post/weight>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+b+"/profile>Profile</a><li><a href=/"+b+"/contacts>Contacts</a><li><a href=/"+b+"/tags>Tags</a></ul><ul><li><a href=/"+b+"/dashboard>Dashboard</a><li><a href=/"+b+"/activities>Activities</a><li><a href=/"+b+"/historical>Historical</a></ul><ul><li><a href=/"+b+"/weight>Weight</a><li><a href=/"+b+"/heartrate>Heart Rate</a><li><a href=/"+b+"/steps>Steps</a><li><a href=/"+b+"/fat>Fat</a></ul>";
+		Long id=Long.parseLong(b.split("\\.")[0]);
+		Long site=Long.parseLong(b.split("\\.")[1]);
 		
 		PersistenceManager mgr=Helper.getMgr();
 		Query q1=mgr.newQuery(I138.class);
@@ -162,7 +198,8 @@ public class Weight {
 			page.Out("</div>");
 
 			page.Out("<div class=grf2>");
-			page.Out(new Graph().html(r,"",0,0,86400));
+			page.Out(getHtml(new I(b),I138.class,"/post/weight?i="+b+".",
+				Helper.getMgr()));
 			page.Out("</div>");
 		}
 		finally{
@@ -178,7 +215,7 @@ public class Weight {
 				for(I138 i138:r){
 					long t = i138.getTime().getTime();
 					SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					page.Out(time.format(t)+"<br>"+base+": "+i138.getVal()+" <a href=/post/weight?i="+i138.getOwnerId()+"."+i138.getOwnerSite()+"."+i138.getTime().getTime()+">ÐÞ¸Ä</a><br>");					
+					page.Out(time.format(t)+"<br>"+b+": "+i138.getVal()+" <a href=/post/weight?i="+i138.getOwnerId()+"."+i138.getOwnerSite()+"."+i138.getTime().getTime()+">ÐÞ¸Ä</a><br>");					
 				}
 			}
 		}
