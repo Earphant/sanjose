@@ -1,11 +1,13 @@
 package sanjose;
 
 import java.util.Date;
+import java.util.List;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Text;
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -75,6 +77,33 @@ public class I{
 		return new Date(t*1000);
 	}
 
+	static public I query(I id,PersistenceManager mgr){
+		I ret=null;
+		Query q=mgr.newQuery(I.class);
+		q.setFilter("i==iParam && j==jParam");
+		q.declareParameters("Long iParam,Long jParam");
+		try{
+			@SuppressWarnings("unchecked")
+			List<I> r=(List<I>)q.execute(id.i,id.j);
+			if(!r.isEmpty())
+				ret=r.get(0);
+		}
+		finally{
+			q.closeAll();
+		}
+		return ret;
+	}
+	static public I timed(String val){
+		if(val==null)
+			return null;
+		I i=new I(val);
+		i.o=i.i;
+		i.w=i.j;
+		i.m=i.z==null?now():new Date(Long.parseLong(i.z)*1000);
+		i.t=i.m;
+		return i;
+	}
+
 	public I(String path){
 		if(path==null){
 			this.i=0L;
@@ -117,17 +146,6 @@ public class I{
 	}
 	public I(String text,String plink,long classid,long rate,I owner){
 		init(text,plink,classid,rate,owner.getId(),owner.getSite());
-	}
-
-	static public I createTimed(String val){
-		if(val==null)
-			return null;
-		I i=new I(val);
-		i.o=i.i;
-		i.w=i.j;
-		i.m=i.z==null?now():new Date(Long.parseLong(i.z)*1000);
-		i.t=i.m;
-		return i;
 	}
 	public long getAccessTick(){
 	    return c.getTime()/1000;

@@ -9,7 +9,7 @@ public class Steps extends DataText{
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		Page p=new Page(rsp);
-		I i=I.createTimed(req.getParameter("i"));
+		I i=I.timed(req.getParameter("i"));
 		p.title="Steps";
 		p.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";
 		if(i==null){
@@ -26,7 +26,7 @@ public class Steps extends DataText{
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		Session sn=new Session("/post");
-		I i=I.createTimed(req.getParameter("i"));
+		I i=I.timed(req.getParameter("i"));
 		long v=Long.parseLong(req.getParameter("v"));
 		if(i==null){
 			i=new I(sn.owner.getId(),sn.owner.getSite());
