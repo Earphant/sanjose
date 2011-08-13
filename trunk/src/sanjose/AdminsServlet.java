@@ -26,10 +26,10 @@ public class AdminsServlet extends HttpServlet{
 			if(!r.isEmpty()){
 				page.out("<table class=list>");
 				for(I i:r)
-					page.out("<tr><th><a href=/"+i.getPath()+">"+i.getTitle()+
+					page.out("<tr><th width=40%><a href=/"+i.getPath()+">"+i.getTitle()+
 						"</a><th><a href=/post?i="+i+"&jmp=>"+i.getType()+
-						"</a><th>"+i.getOwner()+"<td class=c2 t="+
-						i.getModifyTick()+">");
+						"</a><th>"+i.getOwner()+"<th><a href=/post?i="+
+						i+"&jmp=>=</a><td class=c2 t="+i.getModifyTick()+">");
 				page.out("</table>");
 			}
 		}
@@ -38,7 +38,6 @@ public class AdminsServlet extends HttpServlet{
 			mgr.close();
 		}
 		page.End(null);
-			
 	}
 	@SuppressWarnings("unchecked")
 	private void Pictures(HttpServletRequest req,HttpServletResponse rsp) throws IOException{
