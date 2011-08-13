@@ -1,9 +1,7 @@
 package sanjose;
 
 import java.io.IOException;
-import java.util.List;
 import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,22 +17,9 @@ public class Steps extends DataText{
 			p.Out("Value<br><input type=text name=v>");
 		}
 		else{
-			p.Out("<form method=post action=/post/steps?i="+i.getTimed()+">");
-			Query q=Helper.getMgr().newQuery(I139.class);
-			q.setFilter("o==oParam && w==wParam && t==tParam");
-			q.declareImports("import java.util.Date");
-			q.declareParameters("Long oParam,Long wParam,Date tParam");
-			try{
-				@SuppressWarnings("unchecked")
-				List<I139> r=(List<I139>)q.execute(i.getId(),i.getSite(),
-					i.getCreateTime());
-				if(!r.isEmpty())
-					p.Out("Value<br><input type=text name=v value="+
-						r.get(0).getVal()+">");
-			}
-			finally{
-				q.closeAll();
-			}
+			p.Out("<form method=post action=/post/step?i="+i.getTimed()+">");
+			p.Out("Value<br><input type=text name=v value="+
+				getSingleVal(i,I139.class)+">");
 		}
 		p.End("<br><input type=submit name=ok></form>");
 	}
@@ -62,7 +47,7 @@ public class Steps extends DataText{
 		String[]s=plink.split("/");
 		String b=s[1];
 		page.title="Steps";
-		page.aside="<ul><li><a href=/post/steps>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+b+"/profile>Profile</a><li><a href=/"+b+"/contacts>Contacts</a><li><a href=/"+b+"/tags>Tags</a></ul><ul><li><a href=/"+b+"/dashboard>Dashboard</a><li><a href=/"+b+"/activities>Activities</a><li><a href=/"+b+"/historical>Historical</a></ul><ul><li><a href=/"+b+"/weight>Weight</a><li><a href=/"+b+"/heartrate>Heart Rate</a><li><a href=/"+b+"/steps>Steps</a><li><a href=/"+b+"/fat>Fat</a></ul>";
+		page.aside="<ul><li><a href=/post/step>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+b+"/profile>Profile</a><li><a href=/"+b+"/contacts>Contacts</a><li><a href=/"+b+"/tags>Tags</a></ul><ul><li><a href=/"+b+"/dashboard>Dashboard</a><li><a href=/"+b+"/activities>Activities</a><li><a href=/"+b+"/historical>Historical</a></ul><ul><li><a href=/"+b+"/weight>Weight</a><li><a href=/"+b+"/heartrate>Heart Rate</a><li><a href=/"+b+"/steps>Steps</a><li><a href=/"+b+"/fat>Fat</a></ul>";
 		page.Out("<div class=grf2>");
 		page.Out(getHtml(new I(b),true,Helper.getMgr()));
 		page.Out("</div>");		

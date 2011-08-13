@@ -61,7 +61,7 @@ public class DataText{
 		try{
 			@SuppressWarnings("unchecked")
 			List<I139> r=(List<I139>)q.execute(owner.getId(),owner.getSite());
-			ret=new Graph().html(r,post?"/post/steps?i="+owner+".":null,0,0,
+			ret=new Graph().html(r,post?"/post/step?i="+owner+".":null,0,0,
 				86400);
 		}
 		finally{
@@ -89,6 +89,25 @@ public class DataText{
 		rd.close();
 		rsp.sendRedirect("/"+owner+"/");
 		return false;
+	}
+	@SuppressWarnings("rawtypes")
+	public long getSingleVal(I i,java.lang.Class cls){
+		long ret=0;
+		Query q=Helper.getMgr().newQuery(cls);
+		q.setFilter("o==oParam && w==wParam && t==tParam");
+		q.declareImports("import java.util.Date");
+		q.declareParameters("Long oParam,Long wParam,Date tParam");
+		try{
+			@SuppressWarnings("unchecked")
+			List<Single> r=(List<Single>)q.execute(i.getId(),i.getSite(),
+				i.getCreateTime());
+			if(!r.isEmpty())
+				ret=r.get(0).getVal();
+		}
+		finally{
+			q.closeAll();
+		}
+		return ret;
 	}
 	public void updatePost(I owner,long type,String html,
 		PersistenceManager mgr){
