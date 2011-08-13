@@ -69,7 +69,7 @@ public class Contacts {
 		
 		
 		
-		page.End(null);
+		page.end(null);
 
 		}
 

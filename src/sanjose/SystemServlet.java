@@ -155,7 +155,7 @@ public class SystemServlet extends HttpServlet{
 			mgr.close();
 		}
 		page.out("<input type=hidden name=i value="+s.id+"."+s.site+">");
-		page.End("<input type=submit name=ok></form>");
+		page.end("<input type=submit name=ok></form>");
 	}
 	private void Signin(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{

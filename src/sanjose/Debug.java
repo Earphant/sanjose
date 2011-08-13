@@ -16,7 +16,7 @@ public class Debug{
 		for(Cookie i:s){
 			p.out(i.getName()+": "+i.getValue()+"<br>");
 		}
-		p.End(null);
+		p.end(null);
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{

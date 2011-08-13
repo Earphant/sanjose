@@ -106,14 +106,14 @@ public class HomeServlet extends HttpServlet{
 			}
 		}
 	    m.close();
-		page.End(null);
+		page.end(null);
     }		
 
 	private void Unsigned(Page page,Session ssn)
 		throws IOException{
 		page.title="Home";
 		page.Begin();
-		page.End(null);
+		page.end(null);
 	}
 
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
