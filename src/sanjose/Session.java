@@ -31,7 +31,7 @@ public class Session{
 				email=u.getEmail();
 			}
 			catch(JDOObjectNotFoundException e) {
-				i=new I(name,"",1L,0L,1L,1L);
+				i=new I(name,null,1L,0L,1L,1L);
 				m.makePersistent(i);
 				i.setId(m);
 				u=new I11(i,email);

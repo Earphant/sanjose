@@ -105,7 +105,7 @@ public class PostServlet extends HttpServlet {
 		Id id=new Id(req.getParameter("i"));
 		PersistenceManager m=Helper.getMgr();
 		if(id.i==0){
-			I i=new I(v,"",0L,0L,sn.id,sn.site);
+			I i=new I(v,null,0L,0L,sn.id,sn.site);
 			try{
 				m.makePersistent(i);
 				i.setId(m);
