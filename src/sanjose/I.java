@@ -147,6 +147,14 @@ public class I{
 	public I(String text,String plink,long classid,long rate,I owner){
 		init(text,plink,classid,rate,owner.getId(),owner.getSite());
 	}
+	public I(String text,String plink,long classid,long rate,I owner,
+		PersistenceManager mgr){
+		init(text,plink,classid,rate,owner.getId(),owner.getSite());
+		mgr.makePersistent(this);
+		this.i=_key.getId();
+		this.c=this.m;
+		this.t=this.m;
+	}
 	public long getAccessTick(){
 	    return c.getTime()/1000;
 	}

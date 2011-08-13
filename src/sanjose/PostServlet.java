@@ -10,6 +10,7 @@ import javax.servlet.http.*;
 public class PostServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
+		Page p=new Page(rsp);
 		String n=req.getPathInfo();
 		if(n!=null){
 			String[]s=n.split("/");
@@ -20,32 +21,31 @@ public class PostServlet extends HttpServlet {
 					return;
 				}
 				if(n.equalsIgnoreCase("heart-rate")){
-					new HeartRate().doGet(req,rsp);
+					new HeartRate().doGet(req,rsp,p);
 					return;
 				}
 				if(n.equalsIgnoreCase("organization")){
-					new Organization().doGet(req,rsp);
+					new Organization().doGet(req,rsp,p);
 					return;
 				}
 				if(n.equalsIgnoreCase("step")){
-					new Steps().doGet(req,rsp);
+					new Steps().doGet(req,rsp,p);
 					return;
 				}
 				if(n.equalsIgnoreCase("tags")){
-					new Tags().doGet(req,rsp);
+					new Tags().doGet(req,rsp,p);
 					return;
 				}
 				if(n.equalsIgnoreCase("upload")){
-					new Upload().doGet(req,rsp);
+					new Upload().doGet(req,rsp,p);
 					return;
 				}
 				if(n.equalsIgnoreCase("weight")){
-					new Weight().doGet(req,rsp);
+					new Weight().doGet(req,rsp,p);
 					return;
 				}
 			}
 		}
-		Page p=new Page(rsp);
 		Id id=new Id(req.getParameter("i"));
 		p.title="Post";
 		p.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/step>Step</a><li><a href=/post/fat>Fat</a></ul>";
@@ -107,36 +107,21 @@ public class PostServlet extends HttpServlet {
 				}
 			}
 		}
-		v=req.getParameter("text");
 		Session sn=new Session("/post");
-		Id id=new Id(req.getParameter("i"));
+		v=req.getParameter("text");
+		I i=new I(req.getParameter("i"));
 		PersistenceManager m=Helper.getMgr();
-		if(id.i==0){
-			I i=new I(v,null,0L,0L,sn.id,sn.site);
-			try{
-				m.makePersistent(i);
-				i.setId(m);
-			}
-			finally{
-				m.close();
+		try{
+			if(i.getSite()==0)
+				new I(v,null,0,0,sn.owner,m);
+			else{
+				I o=I.query(i,m);
+				o.setText(v);
+				o.setModifyTime(null);
 			}
 		}
-		else{
-			Query q=m.newQuery(I.class);
-			q.setFilter("i==iParam && j==jParam");
-			q.declareParameters("Long iParam,Long jParam");
-			try{
-				@SuppressWarnings("unchecked")
-				List<I> r=(List<I>)q.execute(id.i,id.j);
-				if(!r.isEmpty()){
-					I i=r.get(0);
-					i.setText(v);
-				}
-			}
-			finally{
-				q.closeAll();
-				m.close();
-			}
+		finally{
+			m.close();
 		}
 		rsp.sendRedirect("/");
 	}
