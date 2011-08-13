@@ -157,7 +157,7 @@ public class Picture{
 		else{
 			Session	s=new Session("");
 			try{
-				I i=new	I(s.name,null,12L,0L,s.id,s.site);
+				I i=new	I("",null,12L,0L,s.id,s.site);
 				m.makePersistent(i);
 				i.setId(m);
 				I12 i12=new I12(i,ext,b);			
