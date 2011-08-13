@@ -14,7 +14,7 @@ public class RegList extends HttpServlet {
 				String w=o.getOwnerId()+"."+o.getOwnerSite();
 				if(x==null || x.equals(""))
 					x="<i>(Untitled)</i>";
-				switch((int)o.getClassId()){
+				switch((int)o.getType()){
 				case 1:
 					page.out("<div class=post><a href=/"+i+"><img class=icon src=/icons/"+i+"></a><div class=text>"+x+"<div class=c2 t="+o.getModifyTick()+"></div></div></div>");
 					break;

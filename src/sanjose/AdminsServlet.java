@@ -23,8 +23,12 @@ public class AdminsServlet extends HttpServlet{
 		q.setOrdering("m desc");
 		try{
 			List<I> r=(List<I>)q.execute();
-			if(!r.isEmpty())for(I i:r)
-				page.out("<a href=/"+i.getPath()+">"+i.getText()+"</a><br>");
+			if(!r.isEmpty()){
+				page.out("<table class=list>");
+				for(I i:r)
+					page.out("<tr><th><a href=/"+i.getPath()+">"+i.getText()+"</a><th>"+i.getType()+"<td class=c2 t="+i.getModifyTick()+">");
+				page.out("</table>");
+			}
 		}
 		finally{
 			q.closeAll();
@@ -72,27 +76,27 @@ public class AdminsServlet extends HttpServlet{
 			if(!r.isEmpty()){	
 				for(I i:r){
 					SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					if(i.getClassId()==1){
+					if(i.getType()==1){
 						long t = i.getModifyTime().getTime();
 						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/>"+time.format(t)+" "+i.getText()+" uploaded settings</a><br>");
 					}
-					if(i.getClassId()==12){
+					if(i.getType()==12){
 						long t = i.getModifyTime().getTime();
 						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/"+i.getId()+"."+i.getSite()+"/>"+time.format(t)+" "+i.getText()+" uploaded a picture</a><br>");
 					}
-					if(i.getClassId()==135){
+					if(i.getType()==135){
 						long t = i.getModifyTime().getTime();
 						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/fat>"+time.format(t)+" "+i.getText()+" uploaded fat and water</a><br>");
 					}
-					if(i.getClassId()==136){
+					if(i.getType()==136){
 						long t = i.getModifyTime().getTime();
 						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/heartrate>"+time.format(t)+" "+i.getText()+" uploaded heart rate</a><br>");
 					}
-					if(i.getClassId()==138){
+					if(i.getType()==138){
 						long t = i.getModifyTime().getTime();
 						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/weight>"+time.format(t)+" "+i.getText()+" uploaded weight</a><br>");
 					}
-					if(i.getClassId()==139){
+					if(i.getType()==139){
 						long t = i.getModifyTime().getTime();
 						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/steps>"+time.format(t)+" "+i.getText()+" uploaded steps</a><br>");
 					}	

@@ -54,7 +54,7 @@ public class Based{
 				
 					if(t==null || t.equals(""))
 						t="<i>(Untitled)</i>";
-					if(i.getClassId()==12){
+					if(i.getType()==12){
 					 
 						page.out("<a href=/"+base+"/"+d+"><img src=/thumbnails/"+d+".jpg></a>");
 					}
@@ -87,7 +87,7 @@ public class Based{
 				List<I> r=(List<I>)q.execute(d.i,d.j);
 				if(!r.isEmpty()){
 					I i=r.get(0);
-					if(i.getClassId()==12)
+					if(i.getType()==12)
 						page.out("<a href=/originals/"+id+".jpg title=test><img src=/"+base+"/"+id+".jpg></a>");
 					page.out(i.getText());
 				}
