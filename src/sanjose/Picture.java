@@ -87,6 +87,23 @@ public class Picture{
 		}
 		return null;
 	}
+	private	I12 Get(I i){
+		PersistenceManager mgr=Helper.getMgr();
+		Query q=mgr.newQuery(I12.class);
+		q.setFilter("i==iParam && j==jParam");
+		q.declareParameters("Long iParam,Long jParam");
+		try{
+			@SuppressWarnings("unchecked")
+			List<I12> r=(List<I12>)q.execute(i.getId(),i.getSite());
+			if(!r.isEmpty()){
+				return r.get(0);
+			}
+		}
+		finally{
+			q.closeAll();
+		}
+		return null;
+	}
 
 	@SuppressWarnings("unchecked")
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp,
@@ -157,7 +174,7 @@ public class Picture{
 		else{
 			Session	s=new Session("");
 			try{
-				I12 i12=new I12(I.create("",null,12L,0L,s.owner,m),ext,b);		
+				I12 i12=new I12(I.create("",null,12L,0L,s.owner,m,true),ext,b);		
 				m.makePersistent(i12);
 				
 				byte[] oldImageData=b.getBytes();		    
@@ -209,10 +226,10 @@ public class Picture{
 		rsp.setContentType("image");
 		rsp.getOutputStream().write(i.getorg().getBytes());
 	}
-	public void Regular(Id id,HttpServletResponse rsp)throws IOException{
-		I12 i=Get(id);
+	public void Regular(I i,HttpServletResponse rsp)throws IOException{
+		I12 d=Get(i);
 		rsp.setContentType("image");
-		rsp.getOutputStream().write(i.getreg().getBytes());
+		rsp.getOutputStream().write(d.getreg().getBytes());
 	}
 	public void Thumbnail(String path,HttpServletResponse rsp)throws IOException{
 		I12 i=Get(path);

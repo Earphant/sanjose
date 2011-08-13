@@ -99,7 +99,7 @@ public class DataText{
 			@SuppressWarnings("unchecked")
 			List<I> r=(List<I>)q.execute(owner.getId(),owner.getSite(),type);
 			if(r.isEmpty())
-				I.create(text,plink,type,0,owner,mgr);
+				I.create(text,plink,type,0,owner,mgr,true);
 			else{
 				I i=r.get(0);
 				i.setText(text);
