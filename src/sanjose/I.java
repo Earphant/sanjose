@@ -55,14 +55,14 @@ public class I{
 
 	private void init(String text,String plink,long classid,long rate,
 		long ownerid,long ownersite){
-		Date current=new Date();
+		Date t=now();
 		this.i=0L;
 		this.j=9L;
 		this.a=classid;
 		this.b=ownerid;
 		this.d=1L;
 		this.h=1L;
-		this.m=current;
+		this.m=t;
 		this.o=ownerid;
 		this.w=ownersite;
 		this.p=plink;
@@ -70,6 +70,11 @@ public class I{
 		this.s=ownersite;
 		this.x=text;
 	}
+	private static Date now(){
+		long t=new Date().getTime()/1000;
+		return new Date(t*1000);
+	}
+
 	public I(String path){
 		String[]t;
 		if(path.charAt(0)=='/'){
@@ -87,15 +92,17 @@ public class I{
 		this.j=Long.parseLong(t[1]);
 		if(t.length>2)
 			this.z=t[2];
+		this.m=now();
+		this.t=now();
 	}
-	public I(Long id,Long site,String text,String plink,long classid,long rate,
+	public I(long id,long site,String text,String plink,long classid,long rate,
 		long ownerid,long ownersite){
 		init(text,plink,classid,rate,ownerid,ownersite);
 		this.i=id;
 		this.j=site;
 		this._key=KeyFactory.createKey(I.class.getSimpleName(),id+"."+site);
 	}
-	public I(Long id,Long site){
+	public I(long id,long site){
 		this.i=id;
 		this.j=site;
 	}
@@ -113,8 +120,8 @@ public class I{
 		I i=new I(val);
 		i.o=i.i;
 		i.w=i.j;
-		if(i.z!=null)
-			i.t=new Date(Long.parseLong(i.z)*1000);
+		i.m=i.z==null?now():new Date(Long.parseLong(i.z)*1000);
+		i.t=i.m;
 		return i;
 	}
 	public long getAccessTick(){
@@ -165,6 +172,9 @@ public class I{
 	public long getSite(){
 	    return j;
 	}
+	public String getTimed(){
+		return i+"."+j+"."+t.getTime()/1000;
+	}
 	public String getp(){
 	    return p;
 	}
@@ -192,7 +202,7 @@ public class I{
 		mgr.makePersistent(this);
 	}
 	public void setModifyTime(Date val){
-		this.m=val;
+		this.m=val==null?now():val;
 	}
 	public void setQuotation(String val){
 		this.q=new Text(val);
@@ -201,6 +211,6 @@ public class I{
 	    this.x=val;
 	}
 	public String toString(){
-		return this.i+"."+j;
+		return i+"."+j;
 	}
 }
