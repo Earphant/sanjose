@@ -15,31 +15,34 @@ public class PostServlet extends HttpServlet {
 			String[]s=n.split("/");
 			if(s.length>1){
 				n=s[1];
-				if(n.equalsIgnoreCase("tags")){
-					new Tags().doGet(req,rsp);
-					return;
-				}
-				if(n.equalsIgnoreCase("step")){
-					new Steps().doGet(req,rsp);
+				if(n.equalsIgnoreCase("fat")){
+					new Fat().doGet(req,rsp);
 					return;
 				}
 				if(n.equalsIgnoreCase("heart-rate")){
 					new HeartRate().doGet(req,rsp);
 					return;
 				}
-				if(n.equalsIgnoreCase("weight")){
-					new Weight().doGet(req,rsp);
+				if(n.equalsIgnoreCase("organization")){
+					new Organization().doGet(req,rsp);
 					return;
 				}
-				if(n.equalsIgnoreCase("fat")){
-					new Fat().doGet(req,rsp);
+				if(n.equalsIgnoreCase("step")){
+					new Steps().doGet(req,rsp);
+					return;
+				}
+				if(n.equalsIgnoreCase("tags")){
+					new Tags().doGet(req,rsp);
 					return;
 				}
 				if(n.equalsIgnoreCase("upload")){
 					new Upload().doGet(req,rsp);
 					return;
 				}
-
+				if(n.equalsIgnoreCase("weight")){
+					new Weight().doGet(req,rsp);
+					return;
+				}
 			}
 		}
 		Page p=new Page(rsp);
@@ -74,30 +77,34 @@ public class PostServlet extends HttpServlet {
 			String[]s=v.split("/");
 			if(s.length>1){
 				String n=s[1];
-				if(n.equalsIgnoreCase("tags")){
-					new Tags().doPost(req,rsp);
-					return;
-				}
-				if(n.equalsIgnoreCase("step")){
-					new Steps().doPost(req,rsp);
+				if(n.equalsIgnoreCase("fat")){
+					new Fat().doPost(req,rsp);
 					return;
 				}
 				if(n.equalsIgnoreCase("heart-rate")){
 					new HeartRate().doPost(req,rsp);
 					return;
 				}
-				if(n.equalsIgnoreCase("weight")){
-					new Weight().doPost(req,rsp);
+				if(n.equalsIgnoreCase("organization")){
+					new Organization().doPost(req,rsp);
 					return;
 				}
-				if(n.equalsIgnoreCase("fat")){
-					new Fat().doPost(req,rsp);
+				if(n.equalsIgnoreCase("step")){
+					new Steps().doPost(req,rsp);
+					return;
+				}
+				if(n.equalsIgnoreCase("tags")){
+					new Tags().doPost(req,rsp);
 					return;
 				}
 				if(n.equalsIgnoreCase("upload")){
 					new Upload().doPost(req,rsp);
 					return;
 				}   
+				if(n.equalsIgnoreCase("weight")){
+					new Weight().doPost(req,rsp);
+					return;
+				}
 			}
 		}
 		v=req.getParameter("text");

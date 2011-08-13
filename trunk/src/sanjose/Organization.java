@@ -18,8 +18,8 @@ public class Organization{
 		}
 		p.end("<br><input type=submit name=ok></form>");
 	}
-	public void doPost(HttpServletRequest req,HttpServletResponse rsp,
-		InputStream stream,I owner)throws IOException{
+	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
+		throws IOException{
 		Session	sn=new Session("");
 		rsp.sendRedirect("/");
 	}
