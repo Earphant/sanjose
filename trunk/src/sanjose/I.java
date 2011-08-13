@@ -76,6 +76,11 @@ public class I{
 	}
 
 	public I(String path){
+		if(path==null){
+			this.i=0L;
+			this.j=0L;
+			return;
+		}
 		String[]t;
 		if(path.charAt(0)=='/'){
 			String[]s=path.split("/");
