@@ -157,6 +157,18 @@ public class I{
 	public Date getModifyTime(){
 	    return m;
 	}
+	public I getOwner(){
+	    return new I(o,w);
+	}
+	public long getOwnerId(){
+	    return o;
+	}
+	public long getOwnerSite(){
+	    return w;
+	}
+	public String getPath(){
+	    return o+"."+w+"/"+(p==null?i+"."+j:p);
+	}
 	public String getQuotation(){
 	    return q==null?"":q.getValue();
 	}
@@ -178,12 +190,6 @@ public class I{
 	public String getp(){
 	    return p;
 	}
-	public long getOwnerId(){
-	    return o;
-	}
-	public long getOwnerSite(){
-	    return w;
-	}
 	public String getText(){
 	    return x;
 	}
@@ -203,6 +209,9 @@ public class I{
 	}
 	public void setModifyTime(Date val){
 		this.m=val==null?now():val;
+	}
+	public void setPlink(String val){
+	    this.p=val;
 	}
 	public void setQuotation(String val){
 		this.q=new Text(val);

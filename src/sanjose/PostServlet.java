@@ -23,7 +23,7 @@ public class PostServlet extends HttpServlet {
 					new Steps().doGet(req,rsp);
 					return;
 				}
-				if(n.equalsIgnoreCase("heartrate")){
+				if(n.equalsIgnoreCase("heart-rate")){
 					new HeartRate().doGet(req,rsp);
 					return;
 				}
@@ -45,7 +45,7 @@ public class PostServlet extends HttpServlet {
 		Page p=new Page(rsp);
 		Id id=new Id(req.getParameter("i"));
 		p.title="Post";
-		p.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/step>Step</a><li><a href=/post/fat>Fat</a></ul>";
+		p.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/step>Step</a><li><a href=/post/fat>Fat</a></ul>";
 		p.out("<form method=post action=/post?i="+id.i+"."+id.j+"><textarea name=text rows=10>");
 		if(id.i!=0){
 			PersistenceManager mgr=Helper.getMgr();
@@ -82,7 +82,7 @@ public class PostServlet extends HttpServlet {
 					new Steps().doPost(req,rsp);
 					return;
 				}
-				if(n.equalsIgnoreCase("heartrate")){
+				if(n.equalsIgnoreCase("heart-rate")){
 					new HeartRate().doPost(req,rsp);
 					return;
 				}

@@ -13,6 +13,27 @@ import javax.servlet.http.*;
 @SuppressWarnings("serial")
 public class AdminsServlet extends HttpServlet{
 	@SuppressWarnings("unchecked")
+	private void list(String title,String type,Page page)throws IOException{
+		page.title=title;
+		page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
+		PersistenceManager mgr=Helper.getMgr();	
+		Query q=mgr.newQuery(I.class);
+		if(type!=null)
+			q.setFilter("a=="+type);
+		q.setOrdering("m desc");
+		try{
+			List<I> r=(List<I>)q.execute();
+			if(!r.isEmpty())for(I i:r)
+				page.out("<a href=/"+i.getPath()+">"+i.getText()+"</a><br>");
+		}
+		finally{
+			q.closeAll();
+			mgr.close();
+		}
+		page.End(null);
+			
+	}
+	@SuppressWarnings("unchecked")
 	private void Pictures(HttpServletRequest req,HttpServletResponse rsp) throws IOException{
 		Page page=new Page(rsp);
 		page.title="Pictures";
@@ -36,8 +57,7 @@ public class AdminsServlet extends HttpServlet{
 			q.closeAll();
 			mgr.close();
 		}
-		page.End(null);
-			
+		page.End(null);			
 	}
 	@SuppressWarnings("unchecked")
 	private void Posts(HttpServletRequest req,HttpServletResponse rsp) throws IOException{
@@ -223,6 +243,7 @@ public class AdminsServlet extends HttpServlet{
 
     public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
+        Page page=new Page(rsp);
 	    String n=req.getPathInfo();
         if(n!=null){
     	    String[]s=n.split("/");
@@ -237,12 +258,11 @@ public class AdminsServlet extends HttpServlet{
                     return;
                 }               
                 if(n.equalsIgnoreCase("users")){
-                    Users(req,rsp);
+                    list("Posts",null,page);
                     return;
                 }                      
             }    
         }
-        Page page=new Page(rsp);
         page.title="Admins";
         page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
         page.out("<a href=/admins/pictures>Pictures</a><br>");
