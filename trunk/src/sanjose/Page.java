@@ -53,7 +53,7 @@ public class Page{
 		response.getWriter().println(cont);
 		head=true;
 	}
-	public void Out(String cont)throws IOException{
+	public void out(String cont)throws IOException{
 		if(!head)
 			Begin();
 		response.getWriter().println(cont);

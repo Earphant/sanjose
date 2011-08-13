@@ -56,11 +56,11 @@ public class Based{
 						t="<i>(Untitled)</i>";
 					if(i.getClassId()==12){
 					 
-						page.Out("<a href=/"+base+"/"+d+"><img src=/thumbnails/"+d+".jpg></a>");
+						page.out("<a href=/"+base+"/"+d+"><img src=/thumbnails/"+d+".jpg></a>");
 					}
 					else
-						page.Out(t);
-					page.Out(" <a href=/post?i="+d+">=</a><br>");
+						page.out(t);
+					page.out(" <a href=/post?i="+d+">=</a><br>");
 				}
 			}
 		}
@@ -88,8 +88,8 @@ public class Based{
 				if(!r.isEmpty()){
 					I i=r.get(0);
 					if(i.getClassId()==12)
-						page.Out("<a href=/originals/"+id+".jpg title=test><img src=/"+base+"/"+id+".jpg></a>");
-					page.Out(i.getText());
+						page.out("<a href=/originals/"+id+".jpg title=test><img src=/"+base+"/"+id+".jpg></a>");
+					page.out(i.getText());
 				}
 			}
 			finally{
@@ -105,35 +105,35 @@ public class Based{
 		if(s.length>2){
 			String n=s[2];
 			if(n.equalsIgnoreCase("profile")){
-				new Profile().Out(plink,p);
+				new Profile().out(plink,p);
 				return;
 			}
 			if(n.equalsIgnoreCase("dashboard")){
-				new Dashboard().Out(plink,p);
+				new Dashboard().out(plink,p);
 				return;
 			}
 			if(n.equalsIgnoreCase("contacts")){
-				new Contacts().Out(plink,p);
+				new Contacts().out(plink,p);
 				return;
 			}
 			if(n.equalsIgnoreCase("tags")){
-				new Tags().Out(plink,p);
+				new Tags().out(plink,p);
 				return;
 			}
 			if(n.equalsIgnoreCase("steps")){
-				new Steps().Out(plink,p);
+				new Steps().out(plink,p);
 				return;
 			}
 			if(n.equalsIgnoreCase("weight")){
-				new Weight().Out(plink,p);
+				new Weight().out(plink,p);
 				return;
 			}
 			if(n.equalsIgnoreCase("heartrate")){
-				new HeartRate().Out(plink,p);
+				new HeartRate().out(plink,p);
 				return;
 			}
 			if(n.equalsIgnoreCase("fat")){
-				new Fat().Out(plink,p);
+				new Fat().out(plink,p);
 				return;
 			}
 			Object(n,s[1],rsp,p);
