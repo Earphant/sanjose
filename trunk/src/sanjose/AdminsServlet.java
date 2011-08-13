@@ -27,8 +27,9 @@ public class AdminsServlet extends HttpServlet{
 				page.out("<table class=list>");
 				for(I i:r)
 					page.out("<tr><th><a href=/"+i.getPath()+">"+i.getTitle()+
-						"</a><th>"+i.getType()+"<th>"+i.getOwner()+
-						"<td class=c2 t="+i.getModifyTick()+">");
+						"</a><th><a href=/post?i="+i+"&jmp=>"+i.getType()+
+						"</a><th>"+i.getOwner()+"<td class=c2 t="+
+						i.getModifyTick()+">");
 				page.out("</table>");
 			}
 		}

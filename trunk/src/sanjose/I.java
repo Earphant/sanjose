@@ -192,7 +192,7 @@ public class I{
 	public String getTitle(){
 		return x.equals("")?"<i>(untitled)</i>":x;
 	}
-	public String getText_(){
+	public String getText(){
 	    return x;
 	}
 	public long getType(){
