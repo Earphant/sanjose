@@ -46,52 +46,33 @@ public class DataText{
 	}
 	private void unprepare(){
 		log.warning("unprep");
-		updatePost(own,136,getHtml(own,false,mgr),mgr);
-		updatePost(own,138,getHtml(own,false,mgr),mgr);
-		updatePost(own,139,getHtml(own,false,mgr),mgr);
+		updatePost(own,136,getHtml(own,I136.class,null,mgr),mgr);
+		updatePost(own,138,getHtml(own,I138.class,null,mgr),mgr);
+		updatePost(own,139,getHtml(own,I139.class,null,mgr),mgr);
 		mgr.close();
 	}
 
-	protected String getHtml(I owner,boolean post,PersistenceManager mgr){
+	@SuppressWarnings("rawtypes")
+	protected String getHtml(I owner,Class cls,String post,
+		PersistenceManager mgr){
 		String ret=null;
-		Query q=mgr.newQuery(I139.class);
+		Query q=mgr.newQuery(cls);
 		q.setFilter("o==oParam && w==wParam");
 		q.declareParameters("Long oParam,Long wParam");
 		q.setOrdering("t");
 		try{
 			@SuppressWarnings("unchecked")
-			List<I139> r=(List<I139>)q.execute(owner.getId(),owner.getSite());
-			ret=new Graph().html(r,post?"/post/step?i="+owner+".":null,0,0,
-				86400);
+			List<Single> r=(List<Single>)q.execute(owner.getId(),
+				owner.getSite());
+			ret=new Graph().html(r,post==null?null:post,0,0,86400);
 		}
 		finally{
 			q.closeAll();
 		}
 		return ret;
 	}
-
-	public boolean doPost(HttpServletRequest req,HttpServletResponse rsp,
-		InputStream stream,I owner)throws IOException{
-		BufferedReader rd=new BufferedReader(new InputStreamReader(stream));
-		if(checkType(rd.readLine())){
-			if(prepare(rd.readLine(),owner)){
-				try {
-					while(postLine(rd.readLine()));
-				} 
-				catch(ParseException e){
-					e.printStackTrace();
-				}
-				finally{
-					unprepare();
-				}
-			}
-		}
-		rd.close();
-		rsp.sendRedirect("/"+owner+"/");
-		return false;
-	}
 	@SuppressWarnings("rawtypes")
-	public long getSingleVal(I i,java.lang.Class cls){
+	protected long getSingleVal(I i,Class cls){
 		long ret=0;
 		Query q=Helper.getMgr().newQuery(cls);
 		q.setFilter("o==oParam && w==wParam && t==tParam");
@@ -109,7 +90,7 @@ public class DataText{
 		}
 		return ret;
 	}
-	public void updatePost(I owner,long type,String html,
+	protected void updatePost(I owner,long type,String html,
 		PersistenceManager mgr){
 		Query q=mgr.newQuery(I.class);
 		q.setFilter("o==oParam && w==wParam && a==aParam");
@@ -133,5 +114,26 @@ public class DataText{
 		finally{
 			q.closeAll();
 		}
+	}
+
+	public boolean doPost(HttpServletRequest req,HttpServletResponse rsp,
+		InputStream stream,I owner)throws IOException{
+		BufferedReader rd=new BufferedReader(new InputStreamReader(stream));
+		if(checkType(rd.readLine())){
+			if(prepare(rd.readLine(),owner)){
+				try {
+					while(postLine(rd.readLine()));
+				} 
+				catch(ParseException e){
+					e.printStackTrace();
+				}
+				finally{
+					unprepare();
+				}
+			}
+		}
+		rd.close();
+		rsp.sendRedirect("/"+owner+"/");
+		return false;
 	}
 }
