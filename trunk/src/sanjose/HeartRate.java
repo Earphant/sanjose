@@ -16,11 +16,11 @@ public class HeartRate extends DataText{
 	p.title="Steps";
 	p.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";
 	if(i==null){
-		p.out("<form method=post action=/post/heartrate>");
+		p.out("<form method=post action=/post/heart-rate>");
 		p.out("Value<br><input type=text name=v>");
 	}
 	else{
-		p.out("<form method=post action=/post/heartrate?i="+i.getTimed()+">");
+		p.out("<form method=post action=/post/heart-rate?i="+i.getTimed()+">");
 		p.out("Value<br><input type=text name=v value="+
 			getSingleVal(i,I136.class)+">");
 	}
@@ -39,12 +39,13 @@ public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 	try{
 		I136 I136=new I136(i,i.getModifyTime(),v);
 		mgr.makePersistent(I136);
-		updatePost(i,136,getHtml(i,I136.class,null,mgr),"Heart Rate",mgr);
+		updatePost(i,136,getHtml(i,I136.class,null,mgr),"Heart Rate",
+			"heart-rate",mgr);
 	}
 	finally{
 		mgr.close();
 	}
-	rsp.sendRedirect("/"+i+"/heartrate");
+	rsp.sendRedirect("/"+i+"/heart-rate");
 }
 	/*
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
@@ -52,8 +53,8 @@ public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		Page p=new Page(rsp);
 		Timed timed=new Timed(req.getParameter("i"));
 		p.title="Heart Rate";
-		p.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/step>Step</a><li><a href=/post/fat>Fat</a></ul>";
-		p.out("<form method=post action=/post/heartrate>");
+		p.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/step>Step</a><li><a href=/post/fat>Fat</a></ul>";
+		p.out("<form method=post action=/post/heart-rate>");
 		if(timed.t!=null){
 			PersistenceManager mgr=Helper.getMgr();
 			Query q=mgr.newQuery(I136.class);
@@ -174,7 +175,7 @@ public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 				mgr.close();
 			}
 		}
-		rsp.sendRedirect("/"+s.id+"."+s.site+"/heartrate");
+		rsp.sendRedirect("/"+s.id+"."+s.site+"/heart-rate");
 	}
 	*/
 	@SuppressWarnings("unchecked")
@@ -182,7 +183,7 @@ public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		String[]s=plink.split("/");
 		String b=s[1];
 		page.title="Heart Rate";
-		page.aside="<ul><li><a href=/post/heartrate>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+b+"/profile>Profile</a><li><a href=/"+b+"/contacts>Contacts</a><li><a href=/"+b+"/tags>Tags</a></ul><ul><li><a href=/"+b+"/dashboard>Dashboard</a><li><a href=/"+b+"/activities>Activities</a><li><a href=/"+b+"/historical>Historical</a></ul><ul><li><a href=/"+b+"/weight>Weight</a><li><a href=/"+b+"/heartrate>Heart Rate</a><li><a href=/"+b+"/steps>Steps</a><li><a href=/"+b+"/fat>Fat</a></ul>";
+		page.aside="<ul><li><a href=/post/heart-rate>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+b+"/profile>Profile</a><li><a href=/"+b+"/contacts>Contacts</a><li><a href=/"+b+"/tags>Tags</a></ul><ul><li><a href=/"+b+"/dashboard>Dashboard</a><li><a href=/"+b+"/activities>Activities</a><li><a href=/"+b+"/historical>Historical</a></ul><ul><li><a href=/"+b+"/weight>Weight</a><li><a href=/"+b+"/heart-rate>Heart Rate</a><li><a href=/"+b+"/steps>Steps</a><li><a href=/"+b+"/fat>Fat</a></ul>";
 		Long id=Long.parseLong(b.split("\\.")[0]);
 		Long site=Long.parseLong(b.split("\\.")[1]);
 		
@@ -194,12 +195,12 @@ public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		try{
 			List<I136> r=(List<I136>)q1.execute(id,site);
 			page.out("<div class=grf2>");
-			String abc="heartrate";
+			String abc="heart-rate";
 			page.out(new Graph().Daily(r,abc));
 			page.out("</div>");
 
 			page.out("<div class=grf2>");
-			page.out(getHtml(new I(b),I136.class,"/post/heartrate?i="+b+".",
+			page.out(getHtml(new I(b),I136.class,"/post/heart-rate?i="+b+".",
 				Helper.getMgr()));
 			page.out("</div>");
 		}
@@ -217,7 +218,7 @@ public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 				for(I136 i136:r){
 					long t =i136.getTime().getTime();
 					SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");					
-					page.out(time.format(t)+"<br>"+b+": "+i136.getVal()+" <a href=/post/heartrate?i="+i136.getOwnerId()+"."+i136.getOwnerSite()+"."+i136.getTime().getTime()+">ÐÞ¸Ä</a><br>");									
+					page.out(time.format(t)+"<br>"+b+": "+i136.getVal()+" <a href=/post/heart-rate?i="+i136.getOwnerId()+"."+i136.getOwnerSite()+"."+i136.getTime().getTime()+">ÐÞ¸Ä</a><br>");									
 				}
 			}
 		}
