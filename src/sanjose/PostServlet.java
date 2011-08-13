@@ -57,7 +57,7 @@ public class PostServlet extends HttpServlet {
 				List<I> r=(List<I>)q.execute(id.i,id.j);
 				if(!r.isEmpty()){
 					I i=r.get(0);
-					p.out(i.getText());
+					p.out(i.getTitle());
 				}
 			}
 			finally{

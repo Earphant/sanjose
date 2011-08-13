@@ -190,9 +190,9 @@ public class I{
 		return i+"."+j+"."+t.getTime()/1000;
 	}
 	public String getTitle(){
-		return x==null||x.equals("<i>(untitled)</i>")?"":x;
+		return x==null||x.equals("")?"<i>(untitled)</i>":x;
 	}
-	public String getText(){
+	public String getText_(){
 	    return x;
 	}
 	public long getType(){

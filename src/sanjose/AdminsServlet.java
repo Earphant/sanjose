@@ -26,7 +26,9 @@ public class AdminsServlet extends HttpServlet{
 			if(!r.isEmpty()){
 				page.out("<table class=list>");
 				for(I i:r)
-					page.out("<tr><th><a href=/"+i.getPath()+">"+i.getText()+"</a><th>"+i.getType()+"<td class=c2 t="+i.getModifyTick()+">");
+					page.out("<tr><th><a href=/"+i.getPath()+">"+i.getTitle()+
+						"</a><th>"+i.getType()+"<th>"+i.getOwner()+
+						"<td class=c2 t="+i.getModifyTick()+">");
 				page.out("</table>");
 			}
 		}
@@ -78,27 +80,27 @@ public class AdminsServlet extends HttpServlet{
 					SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					if(i.getType()==1){
 						long t = i.getModifyTime().getTime();
-						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/>"+time.format(t)+" "+i.getText()+" uploaded settings</a><br>");
+						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/>"+time.format(t)+" "+i.getTitle()+" uploaded settings</a><br>");
 					}
 					if(i.getType()==12){
 						long t = i.getModifyTime().getTime();
-						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/"+i.getId()+"."+i.getSite()+"/>"+time.format(t)+" "+i.getText()+" uploaded a picture</a><br>");
+						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/"+i.getId()+"."+i.getSite()+"/>"+time.format(t)+" "+i.getTitle()+" uploaded a picture</a><br>");
 					}
 					if(i.getType()==135){
 						long t = i.getModifyTime().getTime();
-						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/fat>"+time.format(t)+" "+i.getText()+" uploaded fat and water</a><br>");
+						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/fat>"+time.format(t)+" "+i.getTitle()+" uploaded fat and water</a><br>");
 					}
 					if(i.getType()==136){
 						long t = i.getModifyTime().getTime();
-						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/heartrate>"+time.format(t)+" "+i.getText()+" uploaded heart rate</a><br>");
+						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/heartrate>"+time.format(t)+" "+i.getTitle()+" uploaded heart rate</a><br>");
 					}
 					if(i.getType()==138){
 						long t = i.getModifyTime().getTime();
-						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/weight>"+time.format(t)+" "+i.getText()+" uploaded weight</a><br>");
+						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/weight>"+time.format(t)+" "+i.getTitle()+" uploaded weight</a><br>");
 					}
 					if(i.getType()==139){
 						long t = i.getModifyTime().getTime();
-						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/steps>"+time.format(t)+" "+i.getText()+" uploaded steps</a><br>");
+						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/steps>"+time.format(t)+" "+i.getTitle()+" uploaded steps</a><br>");
 					}	
 				}
 			}
@@ -173,7 +175,7 @@ public class AdminsServlet extends HttpServlet{
 				List<I> r=(List<I>)q.execute(id.i,id.j);
 				if(!r.isEmpty()){
 					I i=r.get(0);
-					String x=i.getText();
+					String x=i.getTitle();
 					page.out("<br>Nick Name:<input type=text name=x value="+x+"><br>");
 				}
 			}
@@ -262,7 +264,8 @@ public class AdminsServlet extends HttpServlet{
                     return;
                 }               
                 if(n.equalsIgnoreCase("users")){
-                    Users(req,rsp);
+                    list("Posts","1",page);
+                    //Users(req,rsp);
                     return;
                 }                      
             }    
