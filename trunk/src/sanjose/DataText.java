@@ -97,7 +97,7 @@ public class DataText{
 		q.declareParameters("Long oParam,Long wParam,Long aParam");
 		try{
 			@SuppressWarnings("unchecked")
-			List<I> r=(List<I>)q.execute(owner.getId(),owner.getSite(),139);
+			List<I> r=(List<I>)q.execute(owner.getId(),owner.getSite(),type);
 			I i;
 			if(r.isEmpty()){
 				i=new I("",null,type,0,owner);
