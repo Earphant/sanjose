@@ -52,7 +52,7 @@ public class Contacts {
      
 		try{
 			@SuppressWarnings("unchecked")
-			List<I21> r=(List<I21>)q21.execute(s.id,s.site);
+			List<I21> r=(List<I21>)q21.execute(s.owner.getId(),s.owner.getSite());
 		
 			if(!r.isEmpty()){
 				for(I21 i21:r){

@@ -17,8 +17,8 @@ public class HomeServlet extends HttpServlet{
 		Session	s=new Session("OW");
 		List <Long[]> IJM=new ArrayList<Long[]>();	
 		List <Long[]> IJ=new ArrayList<Long[]>();
-		Long o=s.id;
-		Long w=s.site;
+		Long o=s.owner.getId();
+		Long w=s.owner.getSite();
 		String AA=null;
 		Long[] ii={o,w};			
 		IJ.add(ii);

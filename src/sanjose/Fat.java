@@ -87,18 +87,15 @@ public class Fat {
 			qi.setFilter("o==oParam && w==wParam && a==aParam");
 			qi.declareParameters("Long oParam,Long wParam,Long aParam");
 			try{
-				List<I> r=(List<I>)qi.execute(s.id,s.site,135);
-				if(r.isEmpty()){
-					I i= new I(s.name,"",135L,0L,s.id,s.site);
-					i.setModifyTime(now);
-					mgr.makePersistent(i);
-				}
+				List<I> r=(List<I>)qi.execute(s.owner.getId(),s.owner.getSite(),135);
+				if(r.isEmpty())
+					I.create(s.name,"",135L,0L,s.owner,mgr);
 				else{
 					I i=r.get(0);
 					i.setModifyTime(now);
 					mgr.makePersistent(i);
 				}
-				I135 i135=new I135(s.id,s.site,fat,wat,t);
+				I135 i135=new I135(s.owner.getId(),s.owner.getSite(),fat,wat,t);
 				mgr.makePersistent(i135);
 			}
 			finally{
@@ -139,7 +136,7 @@ public class Fat {
 				mgr.close();
 			}
 		}
-		rsp.sendRedirect("/"+s.id+"."+s.site+"/fat");
+		rsp.sendRedirect("/"+s.owner+"/fat");
 	}
 	@SuppressWarnings("unchecked")
 	public void out(String plink,Page page) throws IOException{

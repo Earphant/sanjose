@@ -11,6 +11,7 @@ public class PostServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		Page p=new Page(rsp);
+		PersistenceManager m=Helper.getMgr();
 		String n=req.getPathInfo();
 		if(n!=null){
 			String[]s=n.split("/");
@@ -25,7 +26,7 @@ public class PostServlet extends HttpServlet {
 					return;
 				}
 				if(n.equalsIgnoreCase("organization")){
-					new Organization().doGet(req,rsp,p);
+					new Organization().doGet(req,rsp,p,m);
 					return;
 				}
 				if(n.equalsIgnoreCase("step")){
@@ -51,8 +52,7 @@ public class PostServlet extends HttpServlet {
 		p.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/step>Step</a><li><a href=/post/fat>Fat</a></ul>";
 		p.out("<form method=post action=/post?i="+id.i+"."+id.j+"><textarea name=text rows=10>");
 		if(id.i!=0){
-			PersistenceManager mgr=Helper.getMgr();
-			Query q=mgr.newQuery(I.class);
+			Query q=m.newQuery(I.class);
 			q.setFilter("i==iParam && j==jParam");
 			q.declareParameters("Long iParam,Long jParam");
 			try{
@@ -109,15 +109,16 @@ public class PostServlet extends HttpServlet {
 		}
 		Session sn=new Session("/post");
 		v=req.getParameter("text");
-		I i=new I(req.getParameter("i"));
+		I i=new I(req.getParameter("i")),o;
 		PersistenceManager m=Helper.getMgr();
 		try{
 			if(i.getSite()==0)
-				new I(v,null,0,0,sn.owner,m);
+				I.create(v,null,0,0,sn.owner,m);
 			else{
-				I o=I.query(i,m);
+				o=I.query(i,m);
 				o.setText(v);
 				o.setModifyTime(null);
+				m.makePersistent(o);
 			}
 		}
 		finally{

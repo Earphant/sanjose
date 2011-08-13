@@ -13,8 +13,8 @@ public class Based{
 		String currentbase=current[1];
 	    page.title=plink;	
 		Session sn=new Session("ow");
-		long ci=sn.id;
-		long cs=sn.site;
+		long ci=sn.owner.getId();
+		long cs=sn.owner.getSite();
 		String p=req.getPathInfo();
 		String[] s=p.split("/");
 		Id ow=new Id(s[1]);
