@@ -46,9 +46,9 @@ public class DataText{
 	}
 	private void unprepare(){
 		log.warning("unprep");
-		updatePost(own,136,getHtml(own,I136.class,null,mgr),mgr);
-		updatePost(own,138,getHtml(own,I138.class,null,mgr),mgr);
-		updatePost(own,139,getHtml(own,I139.class,null,mgr),mgr);
+		updatePost(own,136,getHtml(own,I136.class,null,mgr),"Heart Rate",mgr);
+		updatePost(own,138,getHtml(own,I138.class,null,mgr),"Weight",mgr);
+		updatePost(own,139,getHtml(own,I139.class,null,mgr),"Steps",mgr);
 		mgr.close();
 	}
 
@@ -90,7 +90,7 @@ public class DataText{
 		}
 		return ret;
 	}
-	protected void updatePost(I owner,long type,String html,
+	protected void updatePost(I owner,long type,String html,String text,
 		PersistenceManager mgr){
 		Query q=mgr.newQuery(I.class);
 		q.setFilter("o==oParam && w==wParam && a==aParam");
@@ -100,12 +100,13 @@ public class DataText{
 			List<I> r=(List<I>)q.execute(owner.getId(),owner.getSite(),type);
 			I i;
 			if(r.isEmpty()){
-				i=new I("",null,type,0,owner);
+				i=new I(text,null,type,0,owner);
 				mgr.makePersistent(i);
 				i.setId(mgr);
 			}
 			else{
 				i=r.get(0);
+				i.setText(text);
 				i.setQuotation(html);
 				i.setModifyTime(new Date());
 				mgr.makePersistent(i);
