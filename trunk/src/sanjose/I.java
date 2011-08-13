@@ -49,19 +49,24 @@ public class I{
 	@Persistent
     private Date t;
 	@Persistent
+	private Long u;
+	@Persistent
+	private Long v;
+	@Persistent
 	private Long w;
 	@Persistent
 	private String x;
 	@Persistent
 	private String z;
 
-	private void init(String text,String plink,long classid,long rate,
+	private void init(String text,String plink,long type,long rate,
 		long ownerid,long ownersite){
 		Date t=now();
 		this.i=0L;
 		this.j=9L;
-		this.a=classid;
+		this.a=type;
 		this.b=ownerid;
+		this.s=ownersite;
 		this.d=1L;
 		this.h=1L;
 		this.m=t;
@@ -69,7 +74,8 @@ public class I{
 		this.w=ownersite;
 		this.p=plink;
 		this.r=rate;
-		this.s=ownersite;
+		this.u=0L;
+		this.v=1L;
 		this.x=text;
 	}
 	private static Date now(){
@@ -214,6 +220,9 @@ public class I{
 	public long getRefSite(){
 	    return h;
 	}
+	public long getReplyCount(){
+	    return u;
+	}
 	public long getSite(){
 	    return j;
 	}
@@ -228,6 +237,9 @@ public class I{
 	}
 	public long getType(){
 	    return a;
+	}
+	public long getVersion(){
+	    return v;
 	}
 	public void setExtra(String val){
 	    this.z=val;
