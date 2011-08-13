@@ -6,9 +6,8 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
-
 public class Contacts {
-	public void Out(String plink,Page page) throws IOException{
+	public void out(String plink,Page page) throws IOException{
 		page.title="Contacts";
 		Session s=new Session("ow");
 		String[]current=plink.split("/");
@@ -28,8 +27,8 @@ public class Contacts {
 					String x=i.getEmail();
 					String base=i.getId()+"."+i.getSite();
 					
-					page.Out("<a href=/"+base+"/><img src=/icons/"+d+".jpg></a>");
-					page.Out("<a href=/"+base+"/>"+x+"</a><br>");
+					page.out("<a href=/"+base+"/><img src=/icons/"+d+".jpg></a>");
+					page.out("<a href=/"+base+"/>"+x+"</a><br>");
 				}
 			}
 		}
@@ -38,7 +37,7 @@ public class Contacts {
 		}
 		
 		
-		page.Out("<br>我关注的人：");
+		page.out("<br>我关注的人：");
 		
 		
 		
@@ -59,7 +58,7 @@ public class Contacts {
 				for(I21 i21:r){
 					String d=i21.geti()+"."+i21.getj();					
 
-                    page.Out("<a href=/"+d+"/><img src=/icons/"+d+".jpg></a>");
+                    page.out("<a href=/"+d+"/><img src=/icons/"+d+".jpg></a>");
 
 				}
 			}

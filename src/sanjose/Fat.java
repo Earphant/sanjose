@@ -18,7 +18,7 @@ public class Fat {
 		Timed timed=new Timed(req.getParameter("i"));
 		p.title="Fat";
 		p.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/step>Step</a><li><a href=/post/fat>Fat</a></ul>";
-		p.Out("<form method=post action=/post/fat>");
+		p.out("<form method=post action=/post/fat>");
 		if(timed.t!=null){
 			PersistenceManager mgr=Helper.getMgr();
 			Query q=mgr.newQuery(I135.class);
@@ -41,13 +41,13 @@ public class Fat {
 					int hour= cal.get(Calendar.HOUR_OF_DAY);
 					int min= cal.get(Calendar.MINUTE);
 					int sec = cal.get(Calendar.SECOND);
-					p.Out("Fat:<input type=text name=fat value="+f+">Water:<input type=text name=wat value="+w+"><br>Date:<input type=text name=year style=width:40px; value="+year+">-<input type=text name=month style=width:20px; value="+month+">-<input type=text name=date style=width:20px; value="+date+"> Time:<input type=text name=hour style=width:20px; value="+hour+">:<input type=text name=min style=width:20px; value="+min+">:<input type=text name=sec style=width:20px; value="+sec+">");
+					p.out("Fat:<input type=text name=fat value="+f+">Water:<input type=text name=wat value="+w+"><br>Date:<input type=text name=year style=width:40px; value="+year+">-<input type=text name=month style=width:20px; value="+month+">-<input type=text name=date style=width:20px; value="+date+"> Time:<input type=text name=hour style=width:20px; value="+hour+">:<input type=text name=min style=width:20px; value="+min+">:<input type=text name=sec style=width:20px; value="+sec+">");
 				}
 			}
 			finally{
 				q.closeAll();
 			}
-			p.Out("<input type=hidden name=i value="+timed.o+"."+timed.w+"."+timed.t.getTime()+">");
+			p.out("<input type=hidden name=i value="+timed.o+"."+timed.w+"."+timed.t.getTime()+">");
 		}
 		else{
 			Date now=new Date();
@@ -59,7 +59,7 @@ public class Fat {
 			int hour= cal.get(Calendar.HOUR_OF_DAY)+8;
 			int min= cal.get(Calendar.MINUTE);
 			int sec = cal.get(Calendar.SECOND);
-			p.Out("Fat:<input type=text name=fat value=>Water:<input type=text name=wat value=><br>Date:<input type=text name=year style=width:40px; value="+year+">-<input type=text name=month style=width:20px; value="+month+">-<input type=text name=date style=width:20px; value="+date+"> Time:<input type=text name=hour style=width:20px; value="+hour+">:<input type=text name=min style=width:20px; value="+min+">:<input type=text name=sec style=width:20px; value="+sec+">");
+			p.out("Fat:<input type=text name=fat value=>Water:<input type=text name=wat value=><br>Date:<input type=text name=year style=width:40px; value="+year+">-<input type=text name=month style=width:20px; value="+month+">-<input type=text name=date style=width:20px; value="+date+"> Time:<input type=text name=hour style=width:20px; value="+hour+">:<input type=text name=min style=width:20px; value="+min+">:<input type=text name=sec style=width:20px; value="+sec+">");
 		}
 		p.End("<input type=submit name=ok></form>");
 	}
@@ -142,7 +142,7 @@ public class Fat {
 		rsp.sendRedirect("/"+s.id+"."+s.site+"/fat");
 	}
 	@SuppressWarnings("unchecked")
-	public void Out(String plink,Page page) throws IOException{
+	public void out(String plink,Page page) throws IOException{
 		String[]s=plink.split("/");
 		String base=s[1];
 		page.title="Fat";
@@ -174,7 +174,7 @@ public class Fat {
 				for(I135 i135:r){
 					long t = i135.getTime().getTime();
 					SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					page.Out(time.format(t)+"<br>"+base+":  Fat: "+i135.getFat()+" Water: "+i135.getWater()+" <a href=/post/fat?i="+i135.getOwnerId()+"."+i135.getOwnerSite()+"."+i135.getTime().getTime()+">ÐÞ¸Ä</a><br>");
+					page.out(time.format(t)+"<br>"+base+":  Fat: "+i135.getFat()+" Water: "+i135.getWater()+" <a href=/post/fat?i="+i135.getOwnerId()+"."+i135.getOwnerSite()+"."+i135.getTime().getTime()+">ÐÞ¸Ä</a><br>");
 				}
 			}
 		}

@@ -57,10 +57,10 @@ public class SystemServlet extends HttpServlet{
 		try{
 			List<I12> r12=(List<I12>)q12.execute(s.id,s.site);
 			if(!r12.isEmpty()){	
-				page.Out("<a href=/post/upload?i="+s.id+"."+s.site+"><img src=/icons/"+s.id+"."+s.site+"></a><br>");
+				page.out("<a href=/post/upload?i="+s.id+"."+s.site+"><img src=/icons/"+s.id+"."+s.site+"></a><br>");
 			}
 			else
-				page.Out("<a href=/post/upload?i="+s.id+"."+s.site+"><img src=/icons/"+s.id+"."+s.site+" class=icon></a><br>");
+				page.out("<a href=/post/upload?i="+s.id+"."+s.site+"><img src=/icons/"+s.id+"."+s.site+" class=icon></a><br>");
 		}
 		finally{
 			q12.closeAll();
@@ -73,7 +73,7 @@ public class SystemServlet extends HttpServlet{
 			if(!r11.isEmpty()){	
 				I11 i11=r11.get(0);
 				String eml=i11.getEmail();
-				page.Out("Account:<input type=text name=eml value="+eml+"><br>"
+				page.out("Account:<input type=text name=eml value="+eml+"><br>"
 						+"Password:<input type=password name=pwd1 value=><input type=text name=pwd2 value=><br>");		
 			}
 		}
@@ -88,7 +88,7 @@ public class SystemServlet extends HttpServlet{
 			if(!r.isEmpty()){
 				I i=r.get(0);
 				String x=i.getText();
-				page.Out("<br>Nick Name:<input type=text name=x value="+x+"><br>");
+				page.out("<br>Nick Name:<input type=text name=x value="+x+"><br>");
 			}
 		}
 		finally{
@@ -142,7 +142,7 @@ public class SystemServlet extends HttpServlet{
 				String add="";
 				if(i1.getadd()!=null)
 					add=i1.getadd();
-				page.Out("First Name:<input type=text name=fsn style=width:60px; value="+fsn+">Middle Name:<input type=text name=mdn style=width:60px; value="+mdn+">Last Name:<input type=text name=lsn style=width:60px; value="+lsn+"><br>"
+				page.out("First Name:<input type=text name=fsn style=width:60px; value="+fsn+">Middle Name:<input type=text name=mdn style=width:60px; value="+mdn+">Last Name:<input type=text name=lsn style=width:60px; value="+lsn+"><br>"
 						+"Gender:<input type=radio name=gnd value=female "+gnd1+">Female<input type=radio name=gnd value=male "+gnd2+">Male<br>"
 						+"Birthday:<input type=text name=year style=width:40px; value="+year+">��<input type=text name=month style=width:20px; value="+month+">��<input type=text name=date style=width:20px; value="+date+">��<br>"
 						+"Occupation:<input type=text name=ocp value="+ocp+"><br>"
@@ -154,7 +154,7 @@ public class SystemServlet extends HttpServlet{
 			q1.closeAll();
 			mgr.close();
 		}
-		page.Out("<input type=hidden name=i value="+s.id+"."+s.site+">");
+		page.out("<input type=hidden name=i value="+s.id+"."+s.site+">");
 		page.End("<input type=submit name=ok></form>");
 	}
 	private void Signin(HttpServletRequest req,HttpServletResponse rsp)

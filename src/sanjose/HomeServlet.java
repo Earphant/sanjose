@@ -12,7 +12,7 @@ public class HomeServlet extends HttpServlet{
 	@SuppressWarnings("unchecked")
 	private void Signed(Page page,Session ssn)throws IOException{
 		page.title="Home";
-		page.Out("<form method=post action=/post/><textarea name=text rows=5></textarea><input type=submit name=ok></form>");
+		page.out("<form method=post action=/post/><textarea name=text rows=5></textarea><input type=submit name=ok></form>");
 					
 		Session	s=new Session("OW");
 		List <Long[]> IJM=new ArrayList<Long[]>();	
