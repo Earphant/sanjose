@@ -29,7 +29,7 @@ public class Page{
 				"</footer></body><script src=/js/adxon.js></script><script src=/js/></script></html>";
 		response.getWriter().println(cont);
 	}
-	public void End(String cont)throws IOException{
+	public void end(String cont)throws IOException{
 		if(!head)
 			Begin();
 		if(cont!=null)

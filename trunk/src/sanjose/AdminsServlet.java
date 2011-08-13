@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.*;
@@ -28,7 +27,7 @@ public class AdminsServlet extends HttpServlet{
 		default:
 			page.title="Form";
 		}
-		page.End(null);
+		page.end(null);
 	}
 	private void individualForm(I id,Page page,PersistenceManager mgr)
 		throws IOException{
@@ -85,7 +84,7 @@ public class AdminsServlet extends HttpServlet{
 			q.closeAll();
 			m.close();
 		}
-		page.End(null);
+		page.end(null);
 	}
 	private void organizationForm(I id,Page page,PersistenceManager mgr)
 		throws IOException{
@@ -171,53 +170,7 @@ public class AdminsServlet extends HttpServlet{
 			q.closeAll();
 			mgr.close();
 		}
-		page.End(null);			
-	}
-	@SuppressWarnings("unchecked")
-	private void Posts(HttpServletRequest req,HttpServletResponse rsp) throws IOException{
-		Page page=new Page(rsp);
-		page.title="Posts";
-		page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
-		PersistenceManager mgr=Helper.getMgr();	
-		Query q=mgr.newQuery(I.class);
-		q.setOrdering("m desc");
-		try{
-			List<I> r=(List<I>)q.execute();
-			if(!r.isEmpty()){	
-				for(I i:r){
-					SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					if(i.getType()==1){
-						long t = i.getModifyTime().getTime();
-						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/>"+time.format(t)+" "+i.getTitle()+" uploaded settings</a><br>");
-					}
-					if(i.getType()==12){
-						long t = i.getModifyTime().getTime();
-						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/"+i.getId()+"."+i.getSite()+"/>"+time.format(t)+" "+i.getTitle()+" uploaded a picture</a><br>");
-					}
-					if(i.getType()==135){
-						long t = i.getModifyTime().getTime();
-						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/fat>"+time.format(t)+" "+i.getTitle()+" uploaded fat and water</a><br>");
-					}
-					if(i.getType()==136){
-						long t = i.getModifyTime().getTime();
-						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/heartrate>"+time.format(t)+" "+i.getTitle()+" uploaded heart rate</a><br>");
-					}
-					if(i.getType()==138){
-						long t = i.getModifyTime().getTime();
-						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/weight>"+time.format(t)+" "+i.getTitle()+" uploaded weight</a><br>");
-					}
-					if(i.getType()==139){
-						long t = i.getModifyTime().getTime();
-						page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/steps>"+time.format(t)+" "+i.getTitle()+" uploaded steps</a><br>");
-					}	
-				}
-			}
-		}
-		finally{
-			q.closeAll();
-			mgr.close();
-		}
-		page.End(null);
+		page.end(null);			
 	}
 	@SuppressWarnings("unchecked")
 	private void Users(HttpServletRequest req,HttpServletResponse rsp) throws IOException{
@@ -241,7 +194,7 @@ public class AdminsServlet extends HttpServlet{
 			finally{
 				q11.closeAll();
 			}
-			page.End(null);	
+			page.end(null);	
 		}
 		else{
 			page.out("<form method=post action=/admins/users>");
@@ -351,7 +304,7 @@ public class AdminsServlet extends HttpServlet{
 				mgr.close();
 			}
 			page.out("<input type=hidden name=i value="+id.i+"."+id.j+">");
-			page.End("<input type=submit name=ok></form>");
+			page.end("<input type=submit name=ok></form>");
 		}
 	}
 
@@ -367,7 +320,7 @@ public class AdminsServlet extends HttpServlet{
 		        p.out("<a href=/admins?a=12>Pictures</a><br>");
 		        p.out("<a href=/admins?a=>Posts</a><br>");
 		        p.out("<a href=/admins?a=1>Users</a><br>");
-		        p.End(null);
+		        p.end(null);
 			}
 			else
 				form(i,p);

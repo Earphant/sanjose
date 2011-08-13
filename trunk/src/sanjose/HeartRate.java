@@ -24,7 +24,7 @@ public class HeartRate extends DataText{
 		p.out("Value<br><input type=text name=v value="+
 			getSingleVal(i,I136.class)+">");
 	}
-	p.End("<br><input type=submit name=ok></form>");
+	p.end("<br><input type=submit name=ok></form>");
 }
 public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 	throws IOException{
@@ -226,6 +226,6 @@ public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 			q2.closeAll();
 			mgr.close();
 		}
-		page.End(null);
+		page.end(null);
 	}
 }

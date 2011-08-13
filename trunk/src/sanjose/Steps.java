@@ -21,7 +21,7 @@ public class Steps extends DataText{
 			p.out("Value<br><input type=text name=v value="+
 				getSingleVal(i,I139.class)+">");
 		}
-		p.End("<br><input type=submit name=ok></form>");
+		p.end("<br><input type=submit name=ok></form>");
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
@@ -53,6 +53,6 @@ public class Steps extends DataText{
 		page.out(getHtml(new I(b),I139.class,"/post/step?i="+b+".",
 			Helper.getMgr()));
 		page.out("</div>");		
-		page.End(null);
+		page.end(null);
     }
 }

@@ -65,7 +65,7 @@ public class PostServlet extends HttpServlet {
 			}
 		}
 		p.out("</textarea>");
-		p.End("<input type=submit name=ok></form>");
+		p.end("<input type=submit name=ok></form>");
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{

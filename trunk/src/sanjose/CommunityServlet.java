@@ -24,6 +24,6 @@ public class CommunityServlet extends HttpServlet {
 		finally{
 			q.closeAll();
 		}
-		p.End(null);
+		p.end(null);
 	}
 }

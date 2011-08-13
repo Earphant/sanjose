@@ -67,7 +67,7 @@ public class Based{
 		finally{
 			q.closeAll();
 		}
-		page.End(null);
+		page.end(null);
 	}
 	private void Object(String id,String base,HttpServletResponse rsp,Page page)
 	    throws IOException{
@@ -95,7 +95,7 @@ public class Based{
 			finally{
 				q.closeAll();
 			}
-			page.End(null);
+			page.end(null);
 		}
 	}
 

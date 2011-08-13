@@ -24,7 +24,7 @@ public class Weight extends DataText{
 			p.out("Value<br><input type=text name=v value="+
 				getSingleVal(i,I138.class)+">");
 		}
-		p.End("<br><input type=submit name=ok></form>");
+		p.end("<br><input type=submit name=ok></form>");
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
@@ -178,7 +178,7 @@ public class Weight extends DataText{
 	}
 	*/
 	@SuppressWarnings("unchecked")
-	public void out(String plink,Page page) throws IOException{
+	public void out(String plink,Page page)throws IOException{
 		String[]s=plink.split("/");
 		String b=s[1];
 		page.title="Weight";
@@ -224,6 +224,6 @@ public class Weight extends DataText{
 			q2.closeAll();
 			mgr.close();
 		}
-		page.End(null);
+		page.end(null);
 	}
 }

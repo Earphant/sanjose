@@ -61,7 +61,7 @@ public class Fat {
 			int sec = cal.get(Calendar.SECOND);
 			p.out("Fat:<input type=text name=fat value=>Water:<input type=text name=wat value=><br>Date:<input type=text name=year style=width:40px; value="+year+">-<input type=text name=month style=width:20px; value="+month+">-<input type=text name=date style=width:20px; value="+date+"> Time:<input type=text name=hour style=width:20px; value="+hour+">:<input type=text name=min style=width:20px; value="+min+">:<input type=text name=sec style=width:20px; value="+sec+">");
 		}
-		p.End("<input type=submit name=ok></form>");
+		p.end("<input type=submit name=ok></form>");
 	}
 	@SuppressWarnings("unchecked")
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
@@ -182,6 +182,6 @@ public class Fat {
 			q2.closeAll();
 			mgr.close();
 		}
-		page.End(null);
+		page.end(null);
 	}
 }
