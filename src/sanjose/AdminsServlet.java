@@ -12,15 +12,59 @@ import javax.servlet.http.*;
 
 @SuppressWarnings("serial")
 public class AdminsServlet extends HttpServlet{
-	private void form(I i,Page page)throws IOException{
-		page.title="Form";
-		page.End("Form");
+	private void form(I id,Page page)throws IOException{
+		PersistenceManager m=Helper.getMgr();
+		I o=I.query(id,m);
+		switch((int)o.getType()){
+		case 1:
+			individualForm(id,page,m);
+			break;
+		case 2:
+			organizationForm(id,page,m);
+			break;
+		case 12:
+			pictureForm(id,page,m);
+			break;
+		default:
+			page.title="Form";
+		}
+		page.End(null);
+	}
+	private void individualForm(I id,Page page,PersistenceManager mgr)
+		throws IOException{
+		String nkn="nick+name";
+		String fsn="first+name";
+		String mdn="middle+name";
+		String lsn="last+name";
+		String gnf="";
+		String gnm="";
+		String yir="";
+		String mth="";
+		String dat="";
+		String ocp="";
+		String zip="";
+		String tel="";
+		String add="";
+		page.title="Individual";
+		page.out("<form method=post action=/post/individual?i="+id+">");
+		page.out("Nick Name<br><input type=text name=fsn value="+nkn+"><br>");
+		page.out("First Name<br><input type=text name=fsn value="+fsn+"><br>");
+		page.out("Middle Name<br><input type=text name=mdn value="+mdn+"><br>");
+		page.out("Last Name<br><input type=text name=lsn value="+lsn+"><br>");
+		page.out("Gender&nbsp;&nbsp;<input type=radio name=gnd value=female"+gnf+">Female<input type=radio name=gnd value=male"+gnm+">Male<br>");
+		page.out("Birthday<br><input type=text name=year value="+yir+"><input type=text name=month value="+mth+"><input type=text name=date value="+dat+"><br>");
+		page.out("Occupation<br><input type=text name=ocp value="+ocp+"><br>");
+		page.out("Postal Code<br><input type=text name=zip value="+zip+"><br>");
+		page.out("Telephone Number<br><input type=text name=tel value="+tel+"><br>");
+		page.out("Address<br><textarea name=add rows=1>"+add+"</textarea>");
+		page.out("<input type=submit name=ok value=Ok>");
+		page.out("</form>");
 	}
 	@SuppressWarnings("unchecked")
 	private void list(String title,String type,Page page)throws IOException{
 		page.title=title;
-		PersistenceManager mgr=Helper.getMgr();	
-		Query q=mgr.newQuery(I.class);
+		PersistenceManager m=Helper.getMgr();
+		Query q=m.newQuery(I.class);
 		if(type!=null)
 			q.setFilter("a=="+type);
 		q.setOrdering("m desc");
@@ -31,16 +75,77 @@ public class AdminsServlet extends HttpServlet{
 				for(I i:r)
 					page.out("<tr><th width=40%><a href=/"+i.getPath()+">"+i.getTitle()+
 						"</a><th><a href=/post?i="+i+"&jmp=>"+i.getType()+
-						"</a><th>"+i.getOwner()+"<th><a href=/admins?i="+
-						i+">=</a><td class=c2 t="+i.getModifyTick()+">");
+						"</a><th>"+i.getOwner()+"<td class=c2 t="+
+						i.getModifyTick()+"><td><a href=/admins?i="+i+
+						">=</a>");
 				page.out("</table>");
 			}
 		}
 		finally{
 			q.closeAll();
-			mgr.close();
+			m.close();
 		}
 		page.End(null);
+	}
+	private void organizationForm(I id,Page page,PersistenceManager mgr)
+		throws IOException{
+		String nkn="nick+name";
+		String fsn="first+name";
+		String mdn="middle+name";
+		String lsn="last+name";
+		String gnf="";
+		String gnm="";
+		String yir="";
+		String mth="";
+		String dat="";
+		String ocp="";
+		String zip="";
+		String tel="";
+		String add="";
+		page.title="Picture";
+		page.out("<form method=post action=/post/individual?i="+id+">");
+		page.out("Nick Name<br><input type=text name=fsn value="+nkn+"><br>");
+		page.out("First Name<br><input type=text name=fsn value="+fsn+"><br>");
+		page.out("Middle Name<br><input type=text name=mdn value="+mdn+"><br>");
+		page.out("Last Name<br><input type=text name=lsn value="+lsn+"><br>");
+		page.out("Gender&nbsp;&nbsp;<input type=radio name=gnd value=female"+gnf+">Female<input type=radio name=gnd value=male"+gnm+">Male<br>");
+		page.out("Birthday<br><input type=text name=year value="+yir+"><input type=text name=month value="+mth+"><input type=text name=date value="+dat+"><br>");
+		page.out("Occupation<br><input type=text name=ocp value="+ocp+"><br>");
+		page.out("Postal Code<br><input type=text name=zip value="+zip+"><br>");
+		page.out("Telephone Number<br><input type=text name=tel value="+tel+"><br>");
+		page.out("Address<br><textarea name=add rows=1>"+add+"</textarea>");
+		page.out("<input type=submit name=ok value=Ok>");
+		page.out("</form>");
+	}
+	private void pictureForm(I id,Page page,PersistenceManager mgr)
+		throws IOException{
+		String nkn="nick+name";
+		String fsn="first+name";
+		String mdn="middle+name";
+		String lsn="last+name";
+		String gnf="";
+		String gnm="";
+		String yir="";
+		String mth="";
+		String dat="";
+		String ocp="";
+		String zip="";
+		String tel="";
+		String add="";
+		page.title="Picture";
+		page.out("<form method=post action=/post/individual?i="+id+">");
+		page.out("Nick Name<br><input type=text name=fsn value="+nkn+"><br>");
+		page.out("First Name<br><input type=text name=fsn value="+fsn+"><br>");
+		page.out("Middle Name<br><input type=text name=mdn value="+mdn+"><br>");
+		page.out("Last Name<br><input type=text name=lsn value="+lsn+"><br>");
+		page.out("Gender&nbsp;&nbsp;<input type=radio name=gnd value=female"+gnf+">Female<input type=radio name=gnd value=male"+gnm+">Male<br>");
+		page.out("Birthday<br><input type=text name=year value="+yir+"><input type=text name=month value="+mth+"><input type=text name=date value="+dat+"><br>");
+		page.out("Occupation<br><input type=text name=ocp value="+ocp+"><br>");
+		page.out("Postal Code<br><input type=text name=zip value="+zip+"><br>");
+		page.out("Telephone Number<br><input type=text name=tel value="+tel+"><br>");
+		page.out("Address<br><textarea name=add rows=1>"+add+"</textarea>");
+		page.out("<input type=submit name=ok value=Ok>");
+		page.out("</form>");
 	}
 	@SuppressWarnings("unchecked")
 	private void Pictures(HttpServletRequest req,HttpServletResponse rsp) throws IOException{
