@@ -254,11 +254,11 @@ public class AdminsServlet extends HttpServlet{
                     return;              
                 }               
                 if(n.equalsIgnoreCase("posts")){
-                    Posts(req,rsp);
+                    list("Posts",null,page);
                     return;
                 }               
                 if(n.equalsIgnoreCase("users")){
-                    list("Posts",null,page);
+                    Users(req,rsp);
                     return;
                 }                      
             }    

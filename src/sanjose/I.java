@@ -167,7 +167,12 @@ public class I{
 	    return w;
 	}
 	public String getPath(){
+		if(a==1)
+			return i+"."+j;
 	    return o+"."+w+"/"+(p==null?i+"."+j:p);
+	}
+	public String getPlink(){
+	    return p;
 	}
 	public String getQuotation(){
 	    return q==null?"":q.getValue();
@@ -187,8 +192,8 @@ public class I{
 	public String getTimed(){
 		return i+"."+j+"."+t.getTime()/1000;
 	}
-	public String getp(){
-	    return p;
+	public String getTitle(){
+		return x==null||x.equals("<i>(untitled)</i>")?"":x;
 	}
 	public String getText(){
 	    return x;
