@@ -12,10 +12,13 @@ import javax.servlet.http.*;
 
 @SuppressWarnings("serial")
 public class AdminsServlet extends HttpServlet{
+	private void form(I i,Page page)throws IOException{
+		page.title="Form";
+		page.End("Form");
+	}
 	@SuppressWarnings("unchecked")
 	private void list(String title,String type,Page page)throws IOException{
 		page.title=title;
-		page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
 		PersistenceManager mgr=Helper.getMgr();	
 		Query q=mgr.newQuery(I.class);
 		if(type!=null)
@@ -28,8 +31,8 @@ public class AdminsServlet extends HttpServlet{
 				for(I i:r)
 					page.out("<tr><th width=40%><a href=/"+i.getPath()+">"+i.getTitle()+
 						"</a><th><a href=/post?i="+i+"&jmp=>"+i.getType()+
-						"</a><th>"+i.getOwner()+"<th><a href=/post?i="+
-						i+"&jmp=>=</a><td class=c2 t="+i.getModifyTick()+">");
+						"</a><th>"+i.getOwner()+"<th><a href=/admins?i="+
+						i+">=</a><td class=c2 t="+i.getModifyTick()+">");
 				page.out("</table>");
 			}
 		}
@@ -249,33 +252,27 @@ public class AdminsServlet extends HttpServlet{
 
     public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
-        Page page=new Page(rsp);
-	    String n=req.getPathInfo();
-        if(n!=null){
-    	    String[]s=n.split("/");
-            if(s.length>1){
-            	n=s[1];
-                if(n.equalsIgnoreCase("pictures")){
-                	Pictures(req,rsp);
-                    return;              
-                }               
-                if(n.equalsIgnoreCase("posts")){
-                    list("Posts",null,page);
-                    return;
-                }               
-                if(n.equalsIgnoreCase("users")){
-                    list("Posts","1",page);
-                    //Users(req,rsp);
-                    return;
-                }                      
-            }    
-        }
-        page.title="Admins";
-        page.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins/pictures>Pictures</a><li><a href=/admins/posts>Posts</a><li><a href=/admins/users>Users</a></ul>";
-        page.out("<a href=/admins/pictures>Pictures</a><br>");
-        page.out("<a href=/admins/posts>Posts</a><br>");
-        page.out("<a href=/admins/users>Users</a><br>");
-        page.End(null);
+        Page p=new Page(rsp);
+        p.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins?a=12>Pictures</a><li><a href=/admins?a=>Posts</a><li><a href=/admins?a=1>Users</a></ul>";
+		String a=req.getParameter("a");
+		if(a==null){
+			I i=new I(req.getParameter("i"));
+			if(i.getSite()==0){
+		        p.title="Admins";
+		        p.out("<a href=/admins?a=12>Pictures</a><br>");
+		        p.out("<a href=/admins?a=>Posts</a><br>");
+		        p.out("<a href=/admins?a=1>Users</a><br>");
+		        p.End(null);
+			}
+			else
+				form(i,p);
+		}
+		else{
+			if(a.equals(""))
+                list("Posts",null,p);
+			else
+                list("Pictures",a,p);
+		}
 	}
     @SuppressWarnings("unchecked")
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
