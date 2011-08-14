@@ -131,7 +131,7 @@ public class I{
 		this._key=KeyFactory.createKey(I.class.getSimpleName(),id+"."+site);
 	}
 	public I(String text,String plink,long classid,long rate,I owner){
-		init(text,plink,classid,rate,owner.getId(),owner.getSite());
+		init(text,plink,classid,rate,owner.i,owner.j);
 	}
 	public I(long id,long site){
 		this.i=id;
