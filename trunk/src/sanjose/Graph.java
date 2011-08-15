@@ -141,24 +141,22 @@ public class Graph{
 					dlt=(v-u)/(t-y);
 					if(y<t0){
 						u+=dlt*(t0-y);
-						y=u/256;
-						if(min>y)
-							min=y;
-						if(max<y)
-							max=y;
+						if(min>u)
+							min=u;
+						if(max<u)
+							max=u;
 						y=t0;
 					}
 					for(y++;y<t;y++){
 						u+=dlt;
 						Single e=new Single();
-						e.setVal(u/256);
+						e.setVal(u);
 						dst.add(e);
 					}
 				}
 				u=v;
 				y=t;
 				cnt=sum=0;
-				v/=256;
 				Single e=new Single();
 				e.real=true;
 				e.setTick(i.getTick());
