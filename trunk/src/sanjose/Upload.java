@@ -3,12 +3,17 @@ package sanjose;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Logger;
+
+import javax.jdo.PersistenceManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.IOUtils;
+
+import com.google.appengine.api.datastore.Blob;
 
 public class Upload{
 	private static final Logger log = Logger.getLogger(Upload.class.getName());
@@ -38,6 +43,14 @@ public class Upload{
 			        String extension=t.getName().substring(t.getName().lastIndexOf(".")+1,t.getName().length());
 			        if(extension.equals("txt"))
 			        	new DataText().doPost(req,rsp,s,sn.owner);
+			        else if(extension.equals("bin")){
+			        	Blob b=new Blob(IOUtils.toByteArray(s));
+			        	PersistenceManager m=Helper.getMgr();
+			        	I12 i12=new I12(I.create("",null,12L,0L,sn.owner,m,true),extension,b);		
+						m.makePersistent(i12);		
+						m.close();		
+						rsp.sendRedirect("/downloads/");
+			        }
 			        else
 			        	new Picture().doPost(req,rsp,s,sn.owner);
 			    }
