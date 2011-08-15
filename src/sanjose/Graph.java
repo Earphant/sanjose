@@ -120,11 +120,17 @@ public class Graph{
 			return "";
 		long max=-0x7fffffffffffffL;
 		long min=0x7fffffffffffffL;
-		long cnt=0,d,sum=0,u=0,y=0;
+		long cnt=0,dlt,sum=0,u=0,y=0;
+		long t0=end/interval-length;
 		List<Single> dst=new ArrayList<Single>();
 		for(Single i:(List<Single>)list){
-			long v=i.getVal();
+			long v=i.getVal()*256;
 			long t=i.getTick()/interval;
+			if(t<t0){
+				u=v;
+				y=t;
+				continue;
+			}
 			if(t==y){
 				cnt++;
 				sum+=v;
@@ -132,23 +138,32 @@ public class Graph{
 			else{
 				if(y>0){
 					v=(sum+v)/(cnt+1);
-					d=(v*256-u)/(t-y);
+					dlt=(v-u)/(t-y);
+					if(y<t0){
+						u+=dlt*(t0-y);
+						y=u/256;
+						if(min>y)
+							min=y;
+						if(max<y)
+							max=y;
+						y=t0;
+					}
 					for(y++;y<t;y++){
-						u+=d;
+						u+=dlt;
 						Single e=new Single();
 						e.setVal(u/256);
 						dst.add(e);
 					}
 				}
+				u=v;
+				y=t;
+				cnt=sum=0;
+				v/=256;
 				Single e=new Single();
 				e.real=true;
 				e.setTick(i.getTick());
 				e.setVal(v);
 				dst.add(e);
-				u=v*256;
-				y=t;
-				cnt=
-				sum=0;
 			}
 			if(min>v)
 				min=v;
@@ -156,10 +171,15 @@ public class Graph{
 				max=v;
 		}
 		max-=min;
-		if(max==0)
-			return "";
-		long k=80000/max;
-		min-=10000/k;
+		long k;
+		if(max==0){
+			k=1000;
+			min-=50;
+		}
+		else{
+			k=80000/max;
+			min-=10000/k;
+		}
 		int n=2;
 		String s="";
 		for(Single i:(List<Single>)dst){

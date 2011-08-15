@@ -38,7 +38,7 @@ public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 	try{
 		I136 I136=new I136(i,i.getModifyTime(),v);
 		mgr.makePersistent(I136);
-		updatePost(i,136,getHtml(i,I136.class,null,mgr),"Heart Rate",
+		updatePost(i,136,getHtml(i,I136.class,null,28,mgr),"Heart Rate",
 			"heart-rate",mgr);
 	}
 	finally{
@@ -177,54 +177,19 @@ public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		rsp.sendRedirect("/"+s.id+"."+s.site+"/heart-rate");
 	}
 	*/
-	@SuppressWarnings("unchecked")
 	public void out(String plink,Page page) throws IOException{
 		String[]s=plink.split("/");
-		String b=s[1];
+		I w=new I(s[1]);
 		page.title="Heart Rate";
-		page.aside="<ul><li><a href=/post/heart-rate>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+b+"/profile>Profile</a><li><a href=/"+b+"/contacts>Contacts</a><li><a href=/"+b+"/tags>Tags</a></ul><ul><li><a href=/"+b+"/dashboard>Dashboard</a><li><a href=/"+b+"/activities>Activities</a><li><a href=/"+b+"/historical>Historical</a></ul><ul><li><a href=/"+b+"/weight>Weight</a><li><a href=/"+b+"/heart-rate>Heart Rate</a><li><a href=/"+b+"/steps>Steps</a><li><a href=/"+b+"/fat>Fat</a></ul>";
-		Long id=Long.parseLong(b.split("\\.")[0]);
-		Long site=Long.parseLong(b.split("\\.")[1]);
-		
-		PersistenceManager mgr=Helper.getMgr();
-		Query q1=mgr.newQuery(I136.class);
-		q1.setFilter("o==oParam && w==wParam");
-		q1.declareParameters("Long oParam,Long wParam");
-		q1.setOrdering("t");
-		try{
-			List<I136> r=(List<I136>)q1.execute(id,site);
-			page.out("<div class=grf2>");
-			String abc="heart-rate";
-			page.out(new Graph().Daily(r,abc));
-			page.out("</div>");
-
-			page.out("<div class=grf2>");
-			page.out(getHtml(new I(b),I136.class,"/post/heart-rate?i="+b+".",
-				Helper.getMgr()));
-			page.out("</div>");
-		}
-		finally{
-			q1.closeAll();
-		}	
-
-		Query q2=mgr.newQuery(I136.class);
-		q2.setFilter("o==oParam && w==wParam");
-		q2.declareParameters("Long oParam,Long wParam");
-		q2.setOrdering("t desc");
-		try{
-			List<I136> r=(List<I136>)q2.execute(id,site);
-			if(!r.isEmpty()){			
-				for(I136 i136:r){
-					long t =i136.getTime().getTime();
-					SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");					
-					page.out(time.format(t)+"<br>"+b+": "+i136.getVal()+" <a href=/post/heart-rate?i="+i136.getOwnerId()+"."+i136.getOwnerSite()+"."+i136.getTime().getTime()+">ÐÞ¸Ä</a><br>");									
-				}
-			}
-		}
-		finally{
-			q2.closeAll();
-			mgr.close();
-		}
+		page.aside="<ul><li><a href=/post/heart-rate>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+w+"/profile>Profile</a><li><a href=/"+w+"/contacts>Contacts</a><li><a href=/"+w+"/tags>Tags</a></ul><ul><li><a href=/"+w+"/dashboard>Dashboard</a><li><a href=/"+w+"/activities>Activities</a><li><a href=/"+w+"/historical>Historical</a></ul><ul><li><a href=/"+w+"/weight>Weight</a><li><a href=/"+w+"/heart-rate>Heart Rate</a><li><a href=/"+w+"/steps>Steps</a><li><a href=/"+w+"/fat>Fat</a></ul>";
+		page.out("<div class=grf2>");
+		page.out(getHtml(w,I136.class,"/post/heart-rate?i="+w+".",28,
+			Helper.getMgr()));
+		page.out("</div>");
+		page.out("<div class=grf2>");
+		page.out(getHtml(w,I136.class,"/post/heart-rate?i="+w+".",88,
+			Helper.getMgr()));
+		page.out("</div>");
 		page.end(null);
 	}
 }

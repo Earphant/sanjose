@@ -46,14 +46,14 @@ public class DataText{
 	}
 	private void unprepare(){
 		log.warning("unprep");
-		updatePost(own,136,getHtml(own,I136.class,null,mgr),"Heart Rate","heart-rate",mgr);
-		updatePost(own,138,getHtml(own,I138.class,null,mgr),"Weight","weight",mgr);
-		updatePost(own,139,getHtml(own,I139.class,null,mgr),"Steps","steps",mgr);
+		updatePost(own,136,getHtml(own,I136.class,null,28,mgr),"Heart Rate","heart-rate",mgr);
+		updatePost(own,138,getHtml(own,I138.class,null,28,mgr),"Weight","weight",mgr);
+		updatePost(own,139,getHtml(own,I139.class,null,28,mgr),"Steps","steps",mgr);
 		mgr.close();
 	}
 
 	@SuppressWarnings("rawtypes")
-	protected String getHtml(I owner,Class cls,String post,
+	protected String getHtml(I owner,Class cls,String post,long length,
 		PersistenceManager mgr){
 		String ret=null;
 		Query q=mgr.newQuery(cls);
@@ -64,7 +64,8 @@ public class DataText{
 			@SuppressWarnings("unchecked")
 			List<Single> r=(List<Single>)q.execute(owner.getId(),
 				owner.getSite());
-			ret=new Graph().html(r,post==null?null:post,0,0,86400);
+			ret=new Graph().html(r,post==null?null:post,
+				new Date().getTime()/1000,length,86400);
 		}
 		finally{
 			q.closeAll();
