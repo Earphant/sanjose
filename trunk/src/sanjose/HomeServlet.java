@@ -14,11 +14,10 @@ public class HomeServlet extends HttpServlet{
 		page.title="Home";
 		page.out("<form method=post action=/post/><textarea name=text rows=5></textarea><input type=submit name=ok></form>");
 					
-		Session	s=new Session("OW");
 		List <Long[]> IJM=new ArrayList<Long[]>();	
 		List <Long[]> IJ=new ArrayList<Long[]>();
-		Long o=s.owner.getId();
-		Long w=s.owner.getSite();
+		Long o=ssn.owner.getId();
+		Long w=ssn.owner.getSite();
 		String AA=null;
 		Long[] ii={o,w};			
 		IJ.add(ii);
@@ -120,7 +119,7 @@ public class HomeServlet extends HttpServlet{
 		throws IOException{
 		String n=req.getPathInfo();
 		Page p=new Page(rsp);
-		Session s=new Session("");
+		Session s=new Session("/");
 		if(n.equals("/")){
 			if(s.email==null)
 				Unsigned(p,s);
