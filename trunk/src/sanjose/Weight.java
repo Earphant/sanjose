@@ -38,7 +38,7 @@ public class Weight extends DataText{
 		try{
 			I138 i138=new I138(i,i.getModifyTime(),v);
 			mgr.makePersistent(i138);
-			updatePost(i,138,getHtml(i,I138.class,null,mgr),"Weight","weight",
+			updatePost(i,138,getHtml(i,I138.class,null,28,mgr),"Weight","weight",
 				mgr);
 		}
 		finally{
@@ -197,14 +197,14 @@ public class Weight extends DataText{
 			page.out(new Graph().Daily(r,abc));
 			page.out("</div>");
 
-			page.out("<div class=grf2>");
-			page.out(getHtml(new I(b),I138.class,"/post/weight?i="+b+".",
-				Helper.getMgr()));
-			page.out("</div>");
 		}
 		finally{
 			q1.closeAll();
 		}
+		page.out("<div class=grf2>");
+		page.out(getHtml(new I(b),I138.class,"/post/weight?i="+b+".",28,
+			Helper.getMgr()));
+		page.out("</div>");
 		Query q2=mgr.newQuery(I138.class);
 		q2.setFilter("o==oParam && w==wParam");
 		q2.declareParameters("Long oParam,Long wParam");
