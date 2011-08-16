@@ -17,11 +17,14 @@ public class Organization{
 		if(i.getSite()==0)
 			page.out("<form method=post action=/post/organization><input type=text name=text>");
 		else{
-			page.out("<form method=post action=/post/organization?i="+i+">");
 			i=I.query(i,mgr);
-			page.out("<input type=text name=text value="+i.getText()+">");
+			page.out("<a href=/post/upload?i="+i.getId()+"."+i.getSite()+"><img src=/icons/"+i.getId()+"."+i.getSite()+" class=icon></a><br>");
+			page.out("<form method=post action=/post/organization?i="+i+">");
+			page.out("Group Name<br><input type=text name=text value="+i.getText()+"><br>");
+			page.out("Quotation<br><textarea name=q rows=10>"+i.getQuotation()+"</textarea><br>");
 		}
-		page.end("<br><input type=submit name=ok></form>");
+		page.out("<input type=hidden name=i value="+i.getId()+"."+i.getSite()+">");
+		page.end("<input type=submit name=ok></form>");
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
@@ -30,11 +33,15 @@ public class Organization{
 		I i=new I(req.getParameter("i")),o;
 		PersistenceManager m=Helper.getMgr();
 		try{
-			if(i.getSite()==0)
+			if(i.getSite()==0){
 				o=I.create(v,null,2,0,sn.owner,m,true);
+				
+			}
 			else{
+				String q=req.getParameter("q");
 				o=I.query(i,m);
 				o.setText(v);
+				o.setQuotation(q);
 				o.setModifyTime(null);
 			}
 		}
@@ -55,7 +62,7 @@ public class Organization{
 			@SuppressWarnings("unchecked")
 			List<I21> r=(List<I21>)q.execute();
 			page.aside=r.isEmpty()?"<ul><li><a href=/system/follow?i="+id+">Follow</a></ul>":
-				"<ul><li><a href=/system/unfollow?i="+id+">Unfollow</a></ul>";
+				"<ul><li><a href=/system/unfollow?i="+id+">Unfollow</a><li><a href=/post/organization?i="+id+">Setting</a></ul>";
 		}
 		finally{
 			q.closeAll();
