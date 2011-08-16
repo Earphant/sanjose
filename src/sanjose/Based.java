@@ -2,13 +2,26 @@ package sanjose;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class Based{
-	private void Index(String plink,Page page,HttpServletRequest req)throws IOException{
+	private static final Logger log = Logger.getLogger(Based.class.getName());
+
+	private void Index(I id,Page page,Session ssn)throws IOException{
+		PersistenceManager m=Helper.getMgr();
+		I d=I.query(id,m);
+		if(d.getType()==1)
+			new Individual().out(d,page,m,ssn);
+		else
+			new Organization().out(d,page,m,ssn);		
+	}
+	private void Index(String plink,Page page,HttpServletRequest req)
+		throws IOException{
 		String[]current=plink.split("/");
 		String currentbase=current[1];
 	    page.title=plink;	
@@ -69,15 +82,15 @@ public class Based{
 		}
 		page.end(null);
 	}
-	private void Object(String id,String base,HttpServletResponse rsp,Page page)
+	private void Object(I id,String base,HttpServletResponse rsp,Page page)
 	    throws IOException{
-		I d=new I(id);
-		if(d.isPicture()){
-			new Picture().Regular(d,rsp);
+		log.warning("Object");
+		if(id.isPicture()){
+			new Picture().Regular(id,rsp);
 		}
 		else{
 			PersistenceManager m=Helper.getMgr();
-			d=I.query(d,m);
+			I d=I.query(id,m);
 			page.title=d.getTitle();
 			page.aside="<ul><li><a href=/post?i="+d+">Edit</a><li><a href=/post/mark?re="+d+">Mark</a></ul>";
 			if(d.getType()==12)
@@ -89,7 +102,9 @@ public class Based{
 		}
 	}
 
-	public Based(String plink,HttpServletResponse rsp,HttpServletRequest req)throws IOException{
+	public Based(HttpServletResponse rsp,HttpServletRequest req,String plink,
+		Session ssn)throws IOException{
+		log.warning("Based");
 		String[]s=plink.split("/");
 		Page p=new Page(rsp);
 		if(s.length>2){
@@ -126,9 +141,10 @@ public class Based{
 				new Fat().out(plink,p);
 				return;
 			}
-			Object(n,s[1],rsp,p);
+			Object(new I(n),s[1],rsp,p);
 			return;
 		}
-		Index(plink,p,req);
+		log.warning(plink);
+		Index(new I(s[1]),p,ssn);
 	}
 }
