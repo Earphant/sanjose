@@ -60,7 +60,7 @@ public class Organization{
 		finally{
 			q.closeAll();
 		}
-		page.out("<form method=post action=/post?re="+id+">");
+		page.out("<form method=post action=/post?b="+id+">");
 		page.out("<textarea name=text rows=5></textarea>");
 		page.out("<input type=submit name=ok value=Reply></form>");
 		page.end(null);
