@@ -162,6 +162,9 @@ public class I{
 		this.m=now();
 		this.t=now();
 	}
+	public boolean equals(I i){
+		return this.i==i.i && this.j==i.j;
+	}
 	public long getAccessTick(){
 	    return c.getTime()/1000;
 	}
