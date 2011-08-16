@@ -5,6 +5,8 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Text;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.annotations.IdGeneratorStrategy;
@@ -14,7 +16,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 @PersistenceCapable
 public class I{
-	//private static final Logger log = Logger.getLogger(Upload.class.getName());
+	private static final Logger log = Logger.getLogger(I.class.getName());
 	@PrimaryKey
 	@Persistent(valueStrategy=IdGeneratorStrategy.IDENTITY)
 	private Key _key;
@@ -271,6 +273,7 @@ public class I{
 	public void setRef(I val){
 		this.d=val.i;
 		this.h=val.j;
+		log.warning(this+"/"+val);
 	}
 	public void setText(String val){
 	    this.x=val;

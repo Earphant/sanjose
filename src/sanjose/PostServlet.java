@@ -1,19 +1,21 @@
 package sanjose;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 //import java.util.logging.Logger;
 import javax.jdo.PersistenceManager;
 import javax.servlet.http.*;
 
 @SuppressWarnings("serial")
 public class PostServlet extends HttpServlet{
-	//private static final Logger log=Logger.getLogger(PostServlet.class.getName());
+	private static final Logger log=Logger.getLogger(PostServlet.class.getName());
 	private void getMessage(HttpServletRequest req,HttpServletResponse rsp,
 		Page page,PersistenceManager mgr)throws IOException{
 		I i=new I(req.getParameter("i"));
+		I r=new I(req.getParameter("re"));
 		page.title="Post";
 		page.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/step>Step</a><li><a href=/post/fat>Fat</a></ul>";
-		page.out("<form method=post action=/post?i="+i+"><textarea name=text rows=10>");
+		page.out("<form method=post action=/post?i="+i+"&re="+r+"><textarea name=text rows=10>");
 		if(i.getSite()!=0){
 			i=I.query(i,mgr);
 			page.out(i.getText());
@@ -106,6 +108,7 @@ public class PostServlet extends HttpServlet{
 		throws IOException{
 		I i=new I(req.getParameter("re"));
 		if(i.getSite()!=0){
+			log.warning("reply");
 			postReply(i,req,rsp);
 			return;
 		}
