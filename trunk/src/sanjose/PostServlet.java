@@ -28,8 +28,12 @@ public class PostServlet extends HttpServlet{
 		I i=new I(req.getParameter("i"));
 		PersistenceManager m=Helper.getMgr();
 		try{
-			if(i.getSite()==0)
-				I.create(v,null,0,0,sn.owner,m,true);
+			if(i.getSite()==0){
+				i=I.create(v,null,0,0,sn.owner,m,false);
+				I b=new I(req.getParameter("b"));
+				i.setBase(b);
+				m.makePersistent(i);
+			}
 			else{
 				i=I.query(i,m);
 				i.setText(v);

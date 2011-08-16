@@ -250,6 +250,12 @@ public class I{
 			return false;
 		return e.equalsIgnoreCase("jpg");
 	}
+	public void setBase(I val){
+		if(val.j!=0){
+		    this.b=val.i;
+		    this.s=val.j;
+		}
+	}
 	public void setExtra(String val){
 	    this.z=val;
 	}
