@@ -32,14 +32,13 @@ public class PostServlet extends HttpServlet{
 				i=I.create(v,null,0,0,sn.owner,m,false);
 				I b=new I(req.getParameter("b"));
 				i.setBase(b);
-				m.makePersistent(i);
 			}
 			else{
 				i=I.query(i,m);
 				i.setText(v);
 				i.setModifyTime(null);
-				m.makePersistent(i);
 			}
+			m.makePersistent(i);
 		}
 		finally{
 			m.close();
