@@ -41,18 +41,18 @@ public class AdminsServlet extends HttpServlet{
 		try{
 			List<I1> r1=(List<I1>)q1.execute(id.getId(),id.getSite());
 			I1 i1=r1.get(0);
-			String fsn=i1.getfsn()==null?"first+name":i1.getfsn();
-			String mdn=i1.getmdn()==null?"middle+name":i1.getmdn();
-			String lsn=i1.getlsn()==null?"last+name":i1.getlsn();
+			String fsn=i1.getfsn()==""?"first+name":i1.getfsn();
+			String mdn=i1.getmdn()==""?"middle+name":i1.getmdn();
+			String lsn=i1.getlsn()==""?"last+name":i1.getlsn();
 			String gnf=i1.getgnd()=="female"?"":"checked";
 			String gnm=i1.getgnd()=="male"?"":"checked";
 			String yir="";
 			String mth="";
 			String dat="";
-			String ocp=i1.getocp()==null?"":i1.getocp();
-			String zip=i1.getzip()==0?"":i1.getzip().toString();
-			String tel=i1.gettel()==0?"":i1.gettel().toString();
-			String add=i1.getadd()==null?"":i1.getadd();
+			String ocp=i1.getocp()==""?"":i1.getocp();
+			String zip=i1.getzip()==0L?"":i1.getzip().toString();
+			String tel=i1.gettel()==0L?"":i1.gettel().toString();
+			String add=i1.getadd()==""?"":i1.getadd();
 			if(i1.gett()!=null){
 				Date t=i1.gett();
 				Calendar cal = Calendar.getInstance();
@@ -63,25 +63,23 @@ public class AdminsServlet extends HttpServlet{
 			}
 			page.title="Individual";
 			page.out("<form method=post action=/post/individual?i="+id+">");
-			page.out("Nick Name<br><input type=text name=fsn value="+nkn+"><br>");
+			page.out("Nick Name<br><input type=text name=nkn value="+nkn+"><br>");
 			page.out("First Name<br><input type=text name=fsn value="+fsn+"><br>");
 			page.out("Middle Name<br><input type=text name=mdn value="+mdn+"><br>");
 			page.out("Last Name<br><input type=text name=lsn value="+lsn+"><br>");
-			page.out("Gender&nbsp;&nbsp;<input type=radio name=gnd value=female"+gnf+">Female<input type=radio name=gnd value=male"+gnm+">Male<br>");
-			page.out("Birthday<br><input type=text name=year value="+yir+"><input type=text name=month value="+mth+"><input type=text name=date value="+dat+"><br>");
+			page.out("Gender&nbsp;&nbsp;<input type=radio name=gnd value=female "+gnf+">Female<input type=radio name=gnd value=male "+gnm+">Male<br>");
+			page.out("Birthday<br><input type=text name=yir value="+yir+"><input type=text name=mth value="+mth+"><input type=text name=dat value="+dat+"><br>");
 			page.out("Occupation<br><input type=text name=ocp value="+ocp+"><br>");
 			page.out("Postal Code<br><input type=text name=zip value="+zip+"><br>");
 			page.out("Telephone Number<br><input type=text name=tel value="+tel+"><br>");
 			page.out("Address<br><textarea name=add rows=1>"+add+"</textarea>");
-			page.out("<input type=submit name=ok value=Ok>");
-			page.out("</form>");
 		}
 		finally{
 			q1.closeAll();
 			mgr.close();
 		}
 		page.out("<input type=hidden name=i value="+id.getId()+"."+id.getSite()+">");
-		page.end("<input type=submit name=ok></form>");
+		page.end("<input type=submit name=ok value=Ok></form>");
 	}
 	@SuppressWarnings("unchecked")
 	private void list(String title,String type,Page page)throws IOException{
@@ -195,8 +193,8 @@ public class AdminsServlet extends HttpServlet{
 			PersistenceManager mgr=Helper.getMgr();
 			String pwd1 = req.getParameter("pwd1");
 			String pwd2 = req.getParameter("pwd2");
-			   String pwd=null;
-			   if(pwd1==pwd2 && pwd1!=null)
+			   String pwd="";
+			   if(pwd1==pwd2 && pwd1!="")
 				   pwd= pwd1;
 			Query q11=mgr.newQuery(I11.class);
 	        q11.setFilter("i==iParam && j==jParam");
@@ -214,21 +212,9 @@ public class AdminsServlet extends HttpServlet{
 				finally{
 					q11.closeAll();
 				}
-			String nkn = req.getParameter("nkn");
-			Query q=mgr.newQuery(I.class);
-	        q.setFilter("i==iParam && j==jParam");
-			q.declareParameters("Long iParam,Long jParam");
-			   try{
-					List<I> r=(List<I>)q.execute(i.getId(),i.getSite());
-					if(!r.isEmpty()){
-						I ii=r.get(0);
-						ii.setText(nkn);
-						mgr.makePersistent(ii);
-					}
-				}
-				finally{
-					q.closeAll();
-				}
+			I ii=I.query(i,mgr);
+			ii.setText(req.getParameter("nkn"));
+			
 			String fsn = req.getParameter("fsn");
 			String mdn = req.getParameter("mdn");
 			String lsn = req.getParameter("lsn");
@@ -238,10 +224,10 @@ public class AdminsServlet extends HttpServlet{
 	        String dat = req.getParameter("dat");
 	           Calendar calendar = Calendar.getInstance();
 	           Date t=null;
-	           if(yir!="" || mth!="" || dat!=""){
-	        	   calendar.set(Integer.parseInt(yir),Integer.parseInt(yir),Integer.parseInt(yir));
-	        	   t = calendar.getTime();
-	           }
+	        if(yir!="" && mth!="" && dat!=""){
+	        	calendar.set(Integer.parseInt(yir),Integer.parseInt(mth),Integer.parseInt(dat));
+	        	t = calendar.getTime();
+	        }
 	        String ocp = req.getParameter("ocp");
 	        Long zip=req.getParameter("zip")==""?0L:Long.parseLong(req.getParameter("zip"));
 	        Long tel=req.getParameter("tel")==""?0L:Long.parseLong(req.getParameter("tel"));
@@ -269,7 +255,7 @@ public class AdminsServlet extends HttpServlet{
 					q1.closeAll();
 					mgr.close();
 				}   
-		    rsp.sendRedirect("/admins/users");
+		    rsp.sendRedirect("/admins?a=1");
 		}
 	}
 }

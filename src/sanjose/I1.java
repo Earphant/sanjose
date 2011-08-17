@@ -40,6 +40,15 @@ public class I1{
 		this.i=i.getId();
 		this.j=i.getSite();
 		this._key=this.i+"."+this.j;
+		this.fsn="";
+		this.mdn="";
+		this.lsn="";
+		this.gnd="";
+		this.t=null;
+		this.ocp="";
+		this.zip=0L;
+		this.tel=0L;
+		this.add="";
 	}
 	public I1(I i,String fsn,String mdn,String lsn,String gnd,Date t,String ocp,Long zip,Long tel,String add){
 		this.i=i.getId();
