@@ -12,7 +12,7 @@ public class Page{
 		response=resp;
 	}
 
-	public void Begin()throws IOException{
+	public void begin()throws IOException{
 		if(!head)
 			Head(null);
 		response.getWriter().println("<body class=c90><nav>"+system+nav+
@@ -31,7 +31,7 @@ public class Page{
 	}
 	public void end(String cont)throws IOException{
 		if(!head)
-			Begin();
+			begin();
 		if(cont!=null)
 			response.getWriter().println(cont);
 		if(!full)
@@ -55,7 +55,7 @@ public class Page{
 	}
 	public void out(String cont)throws IOException{
 		if(!head)
-			Begin();
+			begin();
 		response.getWriter().println(cont);
 	}
 	public String articale="";

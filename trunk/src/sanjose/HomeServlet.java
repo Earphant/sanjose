@@ -10,16 +10,30 @@ import javax.servlet.http.*;
 @SuppressWarnings("serial")
 public class HomeServlet extends HttpServlet{
 	@SuppressWarnings("unchecked")
-	private void Signed(Page page,Session ssn)throws IOException{
+	private void followed(List<I21> list,Page page,PersistenceManager mgr)
+		throws IOException{
+		Query q=mgr.newQuery(I.class);		
+		q.setFilter("o==oParam && w==wParam ");	
+		q.declareParameters("Long oParam,Long wParam");
+		try{
+			for(I21 o:list){
+				List<I> r=(List<I>)q.execute(o.geti(),o.getj());				  
+                new RegList(r,page);
+			}
+		}
+        finally{
+            q.closeAll();
+        }
+	}
+	@SuppressWarnings("unchecked")
+	private void signed(Page page,Session ssn)throws IOException{
+		I owner=ssn.owner;
 		page.title="Home";
 		page.out("<form method=post action=/post/><textarea name=text rows=5></textarea><input type=submit name=ok></form>");
-		Session sn=new Session("/");;	
 		List <Long[]> IJM=new ArrayList<Long[]>();	
 		List <Long[]> IJ=new ArrayList<Long[]>();
-		Long o=ssn.owner.getId();
-		Long w=ssn.owner.getSite();
 		String AA=null;
-		Long[] ii={o,w};			
+		Long[] ii={owner.getId(),owner.getSite()};			
 		IJ.add(ii);
 		
 		PersistenceManager m=Helper.getMgr();
@@ -27,19 +41,25 @@ public class HomeServlet extends HttpServlet{
 		q.setFilter("o==oParam && w==wParam ");	
 		q.declareParameters("Long oParam,Long wParam");
 		try{
-			List<I21> r=(List<I21>)q.execute(o,w);
-			if(!r.isEmpty()){
+			List<I21> r=(List<I21>)q.execute(owner.getId(),owner.getSite());
+			if(r.isEmpty())
+				unfollowed(page,m);
+			else
+				followed(r,page,m);
+				/*
 				for(I21 i21:r){
 					 AA=i21.geti()+"."+i21.getj();	
 					 Long[] i={i21.geti(),i21.getj()};							
 	                 IJ.add(i);
 				}
-			}
+				*/
 		}
 		finally{
 			q.closeAll();
 		}
-		
+		page.end(null);
+		return;
+		/*
 		if(AA==null){
              Query q1=m.newQuery(I.class);            
              q1.setOrdering("m desc");
@@ -129,7 +149,7 @@ public class HomeServlet extends HttpServlet{
 							   if(!r.isEmpty()){
 									for(I i:r){
 										
-										page.out("»Ø¸´£º");
+										page.out("ï¿½Ø¸ï¿½ï¿½ï¿½");
 										page.out(i.getText()+"****");
 		                 }}}
 					finally{
@@ -138,12 +158,23 @@ public class HomeServlet extends HttpServlet{
 		}}
 	    m.close();
 		page.end(null);
+		*/
     }		
-
-	private void Unsigned(Page page,Session ssn)
+	@SuppressWarnings("unchecked")
+	private void unfollowed(Page page,PersistenceManager mgr)
 		throws IOException{
+		Query q=mgr.newQuery(I.class);
+        q.setOrdering("m desc");
+		try{
+            new RegList((List<I>)q.execute(),page);
+		}
+		finally{
+			q.closeAll();
+		}
+	}
+	private void unsigned(Page page,Session ssn)throws IOException{
 		page.title="Home";
-		page.Begin();
+		page.begin();
 		page.end(null);
 	}
 
@@ -154,9 +185,9 @@ public class HomeServlet extends HttpServlet{
 		Session s=new Session("/");
 		if(n.equals("/")){
 			if(s.email==null)
-				Unsigned(p,s);
+				unsigned(p,s);
 			else
-				Signed(p,s);
+				signed(p,s);
 		}
 		else
 			new Based(rsp,req,n,s);
