@@ -13,7 +13,7 @@ public class HomeServlet extends HttpServlet{
 	private void Signed(Page page,Session ssn)throws IOException{
 		page.title="Home";
 		page.out("<form method=post action=/post/><textarea name=text rows=5></textarea><input type=submit name=ok></form>");
-					
+		Session sn=new Session("/");;	
 		List <Long[]> IJM=new ArrayList<Long[]>();	
 		List <Long[]> IJ=new ArrayList<Long[]>();
 		Long o=ssn.owner.getId();
@@ -62,8 +62,8 @@ public class HomeServlet extends HttpServlet{
 				   List<I> r=(List<I>)q2.execute(ownerid,ownersite);				  
 				   if(!r.isEmpty()){
 						for(I i:r){
-							Long[] ijm={i.getOwnerId(),i.getOwnerSite(),(i.getModifyTime()).getTime()};				
-							IJM.add(ijm);		                    
+							Long[] owmij={i.getOwnerId(),i.getOwnerSite(),(i.getModifyTime()).getTime(),i.getId(),i.getSite()};				
+							IJM.add(owmij);		                    
 						}
 					}			   
                 }
@@ -82,28 +82,59 @@ public class HomeServlet extends HttpServlet{
 				   IJM.get(index)[0]=IJM.get(i)[0];
 				   IJM.get(index)[1]=IJM.get(i)[1];
 				   IJM.get(index)[2]=IJM.get(i)[2];
+				   IJM.get(index)[3]=IJM.get(i)[3];
+				   IJM.get(index)[4]=IJM.get(i)[4];
 				   IJM.get(i)[0]=temp[0];
 				   IJM.get(i)[1]=temp[1];
-				   IJM.get(i)[2]=temp[2];   				    				    				
+				   IJM.get(i)[2]=temp[2];
+				   IJM.get(i)[3]=temp[3];
+				   IJM.get(i)[4]=temp[4];
+				   
 			}
-			
-		    Query q3=m.newQuery(I.class);		
-			q3.setFilter("o==oParam && w==wParam && m==mParam");	
-			q3.declareImports("import java.util.Date");
-			q3.declareParameters("Long oParam,Long wParam,Date mParam");
-			try{			               
-				for(int k=0;k<IJM.size();k++){
-				    Long ownerid=IJM.get(k)[0];
-				    Long ownersite=IJM.get(k)[1];
-				    Long M1=IJM.get(k)[2];
-				    Date M2=new Date(M1);
-					new RegList((List<I>)q3.execute(ownerid,ownersite,M2),page);
-                }
-		    }
-			finally{
-			    q3.closeAll();					
-			}
-		}
+				  
+				   
+				   
+				  
+			for(int k=0;k<IJM.size();k++){
+		  
+			 Query q4=m.newQuery(I.class);		
+				q4.setFilter(" m==mParam&&i==iParam&&j==jParam");	
+				q4.declareImports("import java.util.Date");
+				q4.declareParameters("Date mParam,Long iParam,Long jParam");
+				try{			               
+					    Long i=IJM.get(k)[3];
+					    Long j=IJM.get(k)[4];
+					    Long ownerid=IJM.get(k)[0];
+					    Long ownersite=IJM.get(k)[1];
+					    Long M1=IJM.get(k)[2];
+					    Date M2=new Date(M1);
+						new RegList((List<I>)q4.execute(M2,i,j),page);
+	                }
+			    
+				finally{
+				    q4.closeAll();					
+				}
+				  Query q3=m.newQuery(I.class);		
+					q3.setFilter("d==dParam && h==hParam ");	
+					q3.declareImports("import java.util.Date");
+					q3.declareParameters("Long dParam,Long hParam");
+					try{			               
+						  
+						    Long d=IJM.get(k)[3];
+						    Long h=IJM.get(k)[4];
+						    
+							   List<I> r=(List<I>)q3.execute(d,h);			  
+							   if(!r.isEmpty()){
+									for(I i:r){
+										
+										  page.out("huifuren:???@example");
+										page.out(i.getText()+"...");
+		                
+				    }}}
+					finally{
+					    q3.closeAll();					
+					}
+		}}
 	    m.close();
 		page.end(null);
     }		
