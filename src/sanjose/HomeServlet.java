@@ -57,14 +57,16 @@ public class HomeServlet extends HttpServlet{
 			q2.declareParameters("Long oParam,Long wParam"); 
 			try{			
                 for(int k=0;k<IJ.size();k++){
+                
 			       Long ownerid=IJ.get(k)[0];
 			       Long ownersite=IJ.get(k)[1];
 				   List<I> r=(List<I>)q2.execute(ownerid,ownersite);				  
 				   if(!r.isEmpty()){
 						for(I i:r){
+							if(i.getRefId()==1&&i.getRefSite()==1){
 							Long[] owmij={i.getOwnerId(),i.getOwnerSite(),(i.getModifyTime()).getTime(),i.getId(),i.getSite()};				
 							IJM.add(owmij);		                    
-						}
+						}}
 					}			   
                 }
 			}
@@ -127,10 +129,9 @@ public class HomeServlet extends HttpServlet{
 							   if(!r.isEmpty()){
 									for(I i:r){
 										
-										  page.out("huifuren:???@example");
-										page.out(i.getText()+"...");
-		                
-				    }}}
+										page.out("»Ø¸´£º");
+										page.out(i.getText()+"****");
+		                 }}}
 					finally{
 					    q3.closeAll();					
 					}
@@ -161,3 +162,5 @@ public class HomeServlet extends HttpServlet{
 			new Based(rsp,req,n,s);
 	}	
 }
+ 
+				  
