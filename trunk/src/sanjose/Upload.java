@@ -1,9 +1,9 @@
 package sanjose;
 
+import com.google.appengine.api.datastore.Blob;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Logger;
-
 import javax.jdo.PersistenceManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,8 +12,6 @@ import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
-
-import com.google.appengine.api.datastore.Blob;
 
 public class Upload{
 	private static final Logger log = Logger.getLogger(Upload.class.getName());
@@ -41,24 +39,27 @@ public class Upload{
 				else{ 
 					log.warning("Got an uploaded file: "+t.getFieldName()+", name = "+t.getName());
 					//String x=t.getName().substring(t.getName().lastIndexOf(".")+1,t.getName().length());
-					if(!new DataText().doPost(req,rsp,s,sn.owner)){
+					byte[] a=IOUtils.toByteArray(s);
+					if(!new DataText().doPost(req,rsp,a,sn.owner)){
 						PersistenceManager m=Helper.getMgr();
 						I i=new I(req.getParameter("i"));
 						if(i.getSite()==0)
 							i=I.create("",null,12,0,sn.owner,m,true);
-						I12 o=new I12(i,new Blob(IOUtils.toByteArray(s)));		
-						Picture.doPost(o);
+						I12 o=new I12(i,new Blob(a));
+						o.setPicture();
 						m.makePersistent(o);
 						m.close();
+						rsp.sendRedirect("/");
+						/*
+						log.warning(ImagesServiceFactory.makeImage(o.getOriginal().getBytes()).getFormat().toString());
 						rsp.setContentType("image");
-						rsp.getOutputStream().write(IOUtils.toByteArray(s));
-						log.warning("Org");
-//						rsp.sendRedirect("/");
+						rsp.getOutputStream().write(o.getRegular().getBytes());
+						*/
 					}
 					else log.warning("DataText");
+					break;
 			    }
 				s.close();
-				break;
 			}
 		}
 		catch (FileUploadException e){

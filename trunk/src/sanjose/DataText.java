@@ -118,15 +118,15 @@ public class DataText{
 	}
 
 	public boolean doPost(HttpServletRequest req,HttpServletResponse rsp,
-		InputStream stream,I owner)throws IOException{
-		return false;
-		/*
+		byte[] bytes,I owner)throws IOException{
 		boolean ret=false;
-		BufferedReader rd=new BufferedReader(new InputStreamReader(stream));
-		if(checkType(rd.readLine())){
-			if(prepare(rd.readLine(),owner)){
-				try {
-					while(postLine(rd.readLine()));
+		String v=new String(bytes);
+		String[]s=v.split("\n");
+		if(s.length>2 && checkType(s[0])){
+			if(prepare(s[1],owner)){
+				try{
+					for(String i:s)
+						postLine(i);
 					rsp.sendRedirect("/"+owner+"/");
 					ret=true;
 				} 
@@ -138,8 +138,6 @@ public class DataText{
 				}
 			}
 		}
-		rd.close();
 		return ret;
-		*/
 	}
 }

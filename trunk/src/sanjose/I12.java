@@ -1,6 +1,11 @@
 package sanjose;
 
 import com.google.appengine.api.datastore.Blob;
+import com.google.appengine.api.images.Image;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.Transform;
+
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
@@ -52,14 +57,33 @@ public class I12{
 	public Blob getIcon(){
 	    return ico;
 	}
-	public Blob getreg(){
+	public Blob getRegular(){
 	    return reg;
 	}
-	public Blob getthm(){
+	public Blob getThumbnail(){
 	    return thm;
 	}
 	public void setExtension(String val){
 		ext=val;
+	}
+	public void setPicture(){
+		ImagesService isv=ImagesServiceFactory.getImagesService();
+		Image o=ImagesServiceFactory.makeImage(org.getBytes());
+		try{
+			ext=o.getFormat().toString();
+			Transform rez=ImagesServiceFactory.makeResize(500,500);
+			Image img=isv.applyTransform(rez,o);
+			reg=new Blob(img.getImageData());
+			rez=ImagesServiceFactory.makeResize(96,96);
+			img=isv.applyTransform(rez,o);
+			thm=new Blob(img.getImageData());
+			rez=ImagesServiceFactory.makeResize(48,48);
+			img=isv.applyTransform(rez,o);
+			ico=new Blob(img.getImageData());
+		}
+		catch(IllegalArgumentException e){
+			e.printStackTrace();
+		}
 	}
 	public void setRegular(Blob val){
 		this.reg=val;
