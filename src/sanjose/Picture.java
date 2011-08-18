@@ -1,21 +1,10 @@
 package	sanjose;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
 import java.util.List;
-
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.fileupload.FileItemIterator;
-import org.apache.commons.fileupload.FileItemStream;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.io.IOUtils;
-
 import com.google.appengine.api.datastore.Blob;
 import com.google.appengine.api.images.Image;
 import com.google.appengine.api.images.ImagesService;
@@ -23,7 +12,7 @@ import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.Transform;
 
 public class Picture{
-	private	String Mime(String ext){
+	static public String Mime(String ext){
 		if (ext.equalsIgnoreCase("gif"))
 			return "image/gif";
 		if(ext.equalsIgnoreCase("jpeg"))
@@ -105,11 +94,28 @@ public class Picture{
 		return null;
 	}
 
+	static public void doPost(I12 record)throws IOException{
+		byte[] b=record.getOriginal().getBytes();
+		ImagesService isv=ImagesServiceFactory.getImagesService();
+		Image org=ImagesServiceFactory.makeImage(b);
+		//int	w=org.getWidth();
+		//int	h=org.getHeight();
+		Transform rez=ImagesServiceFactory.makeResize(48,48);
+		Image img=isv.applyTransform(rez,org);
+		record.setIcon(new Blob(img.getImageData()));
+		rez=ImagesServiceFactory.makeResize(96,96);
+		img=isv.applyTransform(rez,org);
+		record.setThumbnail(new Blob(img.getImageData()));
+		rez=ImagesServiceFactory.makeResize(500,500);
+		img=isv.applyTransform(rez,org);
+		record.setRegular(new Blob(img.getImageData()));
+	}
+
+	/*
 	@SuppressWarnings("unchecked")
-	public void doPost(HttpServletRequest req,HttpServletResponse rsp,
+	public void doPost2(HttpServletRequest req,HttpServletResponse rsp,
 		InputStream stream,I owner)throws IOException, FileUploadException{
 		Blob b=new Blob(IOUtils.toByteArray(stream));
-		/*
 		ServletFileUpload upload=new ServletFileUpload();				
 		FileItemIterator iterator=upload.getItemIterator(req); 
 		String ext = null;
@@ -118,7 +124,6 @@ public class Picture{
 			ext=t.getName().substring(t.getName().lastIndexOf(".")+1,t.getName().length());
 			rsp.setContentType(Mime(ext));
 		}
-		*/
 		//String base=null;
 		Id icon=new Id(req.getParameter("i"));
 		PersistenceManager m=Helper.getMgr();	
@@ -139,12 +144,12 @@ public class Picture{
 				List<I12> r=(List<I12>)q.execute(icon.i,icon.j);
 				if(!r.isEmpty()){
 					I12 i12	= r.get(0);
-				    i12.setico(ico);
+				    i12.setIcon(ico);
 				    m.makePersistent(i12);
 				}
 				else{
-					I12 i12	= new I12(icon.i,icon.j,ico);
-				    m.makePersistent(i12);
+					//I12 i12	= new I12(icon.i,icon.j,ico);
+				    //m.makePersistent(i12);
 				}
 			}
 			finally{
@@ -201,7 +206,7 @@ public class Picture{
 			    Image newImage3 = imagesService.applyTransform(resize3, oldImage);
 			    byte[] newImageData3 = newImage3.getImageData();
 			    Blob ico=new Blob(newImageData3);
-			    i12.setico(ico);
+			    i12.setIcon(ico);
 
 			}
 			finally{
@@ -210,8 +215,8 @@ public class Picture{
 			rsp.sendRedirect("/"+s.owner+"/");
 		}
 	}
-	
-	
+		*/
+
 	public void Icon(String	path,HttpServletResponse rsp)throws IOException{
 		I12 i=Get(path);
 		if(i==null){
@@ -219,12 +224,12 @@ public class Picture{
 			return;
 		}
 		rsp.setContentType("image");
-		rsp.getOutputStream().write(i.getico().getBytes());
+		rsp.getOutputStream().write(i.getIcon().getBytes());
 	}
 	public void Original(String path,HttpServletResponse rsp)throws	IOException{
 		I12 i=Get(path);
 		rsp.setContentType("image");
-		rsp.getOutputStream().write(i.getorg().getBytes());
+		rsp.getOutputStream().write(i.getOriginal().getBytes());
 	}
 	public void Regular(I i,HttpServletResponse rsp)throws IOException{
 		I12 d=Get(i);

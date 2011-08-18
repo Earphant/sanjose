@@ -15,6 +15,8 @@ public class I12{
 	@Persistent
 	private Long j;
 	@Persistent
+	private String ext;
+	@Persistent
 	private Blob org;
 	@Persistent
 	private Blob reg;
@@ -29,7 +31,7 @@ public class I12{
 		this.org=org;
 		this._key=this.i+"."+this.j;
 	}
-	public I12(Long i,Long j,Blob ico){
+	public I12(Long i,Long j,Blob ico,boolean b){
 		this.i=i;
 		this.j=j;
 		this.ico=ico;
@@ -41,10 +43,13 @@ public class I12{
 	public Long getj(){
 	    return j;
 	}
-	public Blob getorg(){
+	public String getExtension(){
+		return ext;
+	}
+	public Blob getOriginal(){
 	    return org;
 	}
-	public Blob getico(){
+	public Blob getIcon(){
 	    return ico;
 	}
 	public Blob getreg(){
@@ -53,13 +58,16 @@ public class I12{
 	public Blob getthm(){
 	    return thm;
 	}
-	public void setreg(Blob reg){
-		this.reg=reg;
+	public void setExtension(String val){
+		ext=val;
 	}
-	public void setthm(Blob thm){
-		this.thm=thm;
+	public void setRegular(Blob val){
+		this.reg=val;
 	}
-	public void setico(Blob ico){
-		this.ico=ico;
+	public void setThumbnail(Blob val){
+		this.thm=val;
+	}
+	public void setIcon(Blob val){
+		this.ico=val;
 	}
 }
