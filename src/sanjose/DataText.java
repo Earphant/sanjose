@@ -119,6 +119,8 @@ public class DataText{
 
 	public boolean doPost(HttpServletRequest req,HttpServletResponse rsp,
 		InputStream stream,I owner)throws IOException{
+		return false;
+		/*
 		boolean ret=false;
 		BufferedReader rd=new BufferedReader(new InputStreamReader(stream));
 		if(checkType(rd.readLine())){
@@ -138,5 +140,6 @@ public class DataText{
 		}
 		rd.close();
 		return ret;
+		*/
 	}
 }

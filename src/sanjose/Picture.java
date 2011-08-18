@@ -95,9 +95,9 @@ public class Picture{
 	}
 
 	static public void doPost(I12 record)throws IOException{
-		byte[] b=record.getOriginal().getBytes();
 		ImagesService isv=ImagesServiceFactory.getImagesService();
-		Image org=ImagesServiceFactory.makeImage(b);
+		Image org=ImagesServiceFactory.makeImage(record.getOriginal().
+			getBytes());
 		//int	w=org.getWidth();
 		//int	h=org.getHeight();
 		Transform rez=ImagesServiceFactory.makeResize(48,48);
