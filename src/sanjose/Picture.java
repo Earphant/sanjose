@@ -5,11 +5,6 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.HttpServletResponse;
-import com.google.appengine.api.datastore.Blob;
-import com.google.appengine.api.images.Image;
-import com.google.appengine.api.images.ImagesService;
-import com.google.appengine.api.images.ImagesServiceFactory;
-import com.google.appengine.api.images.Transform;
 
 public class Picture{
 	static public String Mime(String ext){
@@ -92,23 +87,6 @@ public class Picture{
 			q.closeAll();
 		}
 		return null;
-	}
-
-	static public void doPost(I12 record)throws IOException{
-		ImagesService isv=ImagesServiceFactory.getImagesService();
-		Image org=ImagesServiceFactory.makeImage(record.getOriginal().
-			getBytes());
-		//int	w=org.getWidth();
-		//int	h=org.getHeight();
-		Transform rez=ImagesServiceFactory.makeResize(48,48);
-		Image img=isv.applyTransform(rez,org);
-		record.setIcon(new Blob(img.getImageData()));
-		rez=ImagesServiceFactory.makeResize(96,96);
-		img=isv.applyTransform(rez,org);
-		record.setThumbnail(new Blob(img.getImageData()));
-		rez=ImagesServiceFactory.makeResize(500,500);
-		img=isv.applyTransform(rez,org);
-		record.setRegular(new Blob(img.getImageData()));
 	}
 
 	/*
@@ -234,11 +212,11 @@ public class Picture{
 	public void Regular(I i,HttpServletResponse rsp)throws IOException{
 		I12 d=Get(i);
 		rsp.setContentType("image");
-		rsp.getOutputStream().write(d.getreg().getBytes());
+		rsp.getOutputStream().write(d.getRegular().getBytes());
 	}
 	public void Thumbnail(String path,HttpServletResponse rsp)throws IOException{
 		I12 i=Get(path);
 		rsp.setContentType("image");
-		rsp.getOutputStream().write(i.getthm().getBytes());
+		rsp.getOutputStream().write(i.getThumbnail().getBytes());
 	}
 }
