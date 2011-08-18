@@ -18,7 +18,7 @@ public class HomeServlet extends HttpServlet{
 		try{
 			for(I21 o:list){
 				List<I> r=(List<I>)q.execute(o.geti(),o.getj());				  
-                new RegList(r,page);
+                I.list(r,page);
 			}
 		}
         finally{
@@ -30,12 +30,12 @@ public class HomeServlet extends HttpServlet{
 		I owner=ssn.owner;
 		page.title="Home";
 		page.out("<form method=post action=/post/><textarea name=text rows=5></textarea><input type=submit name=ok></form>");
-		List <Long[]> IJM=new ArrayList<Long[]>();	
-		List <Long[]> IJ=new ArrayList<Long[]>();
-		String AA=null;
-		Long[] ii={owner.getId(),owner.getSite()};			
-		IJ.add(ii);
-		
+		//List <Long[]> IJM=new ArrayList<Long[]>();	
+		//List <Long[]> IJ=new ArrayList<Long[]>();
+		//String AA=null;
+		//Long[] ii={owner.getId(),owner.getSite()};			
+		//IJ.add(ii);
+
 		PersistenceManager m=Helper.getMgr();
 		Query q=m.newQuery(I21.class);		
 		q.setFilter("o==oParam && w==wParam ");	
