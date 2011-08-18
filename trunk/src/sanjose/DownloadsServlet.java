@@ -42,7 +42,7 @@ public class DownloadsServlet extends HttpServlet {
 			List<I12> r=(List<I12>)q.execute("bin");
 			if(!r.isEmpty()){
 				for(I12 i12:r){	
-					p.out(i12.geti()+"."+i12.getj()+"."+i12.getext()+"<form method=post action=/downloads/"+i12.geti()+"."+i12.getj()+"><input type=hidden name=download><input type=submit name=ok value=download></form>");					
+					p.out(i12.geti()+"."+i12.getj()+".bin<form method=post action=/downloads/"+i12.geti()+"."+i12.getj()+"><input type=hidden name=download><input type=submit name=ok value=download></form>");					
 				}
 			}
 		}
@@ -73,7 +73,7 @@ public class DownloadsServlet extends HttpServlet {
 			@SuppressWarnings("unchecked")
 			List<I12> r=(List<I12>)q.execute(i,j);
 			if(!r.isEmpty()){				
-			    b=r.get(0).getorg();
+			    b=r.get(0).getOriginal();
 			}		
 		}
 		finally{

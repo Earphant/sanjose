@@ -34,27 +34,31 @@ public class Upload{
 		try{
 			ir = up.getItemIterator(req);
 			while(ir.hasNext()){
-			    FileItemStream t=ir.next();
-			    InputStream s=t.openStream();
-			    if (t.isFormField())
-			        log.warning("Got a form field: "+t.getFieldName());
-			    else{ 
-			        log.warning("Got an uploaded file: "+t.getFieldName()+", name = "+t.getName());
-			        String extension=t.getName().substring(t.getName().lastIndexOf(".")+1,t.getName().length());
-			        if(new DataText().doPost(req,rsp,s,sn.owner))
-			        	log.warning("DataText");
-			        else if(extension.equals("bin")){
-			        	Blob b=new Blob(IOUtils.toByteArray(s));
-			        	PersistenceManager m=Helper.getMgr();
-			        	I12 i12=new I12(I.create("",null,12L,0L,sn.owner,m,true),b);		
-						m.makePersistent(i12);		
-						m.close();		
-						rsp.sendRedirect("/downloads/");
-			        }
-			        else
-			        	new Picture().doPost(req,rsp,s,sn.owner);
+				FileItemStream t=ir.next();
+				InputStream s=t.openStream();
+				if (t.isFormField())
+					log.warning("Got a form field: "+t.getFieldName());
+				else{ 
+					log.warning("Got an uploaded file: "+t.getFieldName()+", name = "+t.getName());
+					//String x=t.getName().substring(t.getName().lastIndexOf(".")+1,t.getName().length());
+					if(!new DataText().doPost(req,rsp,s,sn.owner)){
+						PersistenceManager m=Helper.getMgr();
+						I i=new I(req.getParameter("i"));
+						if(i.getSite()==0)
+							i=I.create("",null,12,0,sn.owner,m,true);
+						I12 o=new I12(i,new Blob(IOUtils.toByteArray(s)));		
+						Picture.doPost(o);
+						m.makePersistent(o);
+						m.close();
+						rsp.setContentType("image");
+						rsp.getOutputStream().write(IOUtils.toByteArray(s));
+						log.warning("Org");
+//						rsp.sendRedirect("/");
+					}
+					else log.warning("DataText");
 			    }
 				s.close();
+				break;
 			}
 		}
 		catch (FileUploadException e){

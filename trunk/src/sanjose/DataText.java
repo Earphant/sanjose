@@ -125,6 +125,7 @@ public class DataText{
 			if(prepare(rd.readLine(),owner)){
 				try {
 					while(postLine(rd.readLine()));
+					rsp.sendRedirect("/"+owner+"/");
 					ret=true;
 				} 
 				catch(ParseException e){
@@ -136,7 +137,6 @@ public class DataText{
 			}
 		}
 		rd.close();
-		rsp.sendRedirect("/"+owner+"/");
 		return ret;
 	}
 }
