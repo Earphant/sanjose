@@ -46,7 +46,7 @@ public class Individual{
 	//@SuppressWarnings("unchecked")
 	public void out(I id,Page page,PersistenceManager mgr,Session ssn)
 		throws IOException{
-		page.title=id.getTitle();
+		page.title=id.getTitle(false);
 		if(id.equals(ssn.owner))
 			page.aside="<ul><li><a href=/post>Post</a><li><a href=/system/settings>Settings</a></ul>";
 		else{

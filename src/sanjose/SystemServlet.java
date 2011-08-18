@@ -87,7 +87,7 @@ public class SystemServlet extends HttpServlet{
 			List<I> r=(List<I>)q.execute(s.owner.getId(),s.owner.getSite());
 			if(!r.isEmpty()){
 				I i=r.get(0);
-				String x=i.getTitle();
+				String x=i.getTitle(true);
 				page.out("<br>Nick Name:<input type=text name=x value="+x+"><br>");
 			}
 		}

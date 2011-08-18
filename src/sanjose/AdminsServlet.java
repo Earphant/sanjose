@@ -94,7 +94,7 @@ public class AdminsServlet extends HttpServlet{
 			if(!r.isEmpty()){
 				page.out("<table class=list>");
 				for(I i:r)
-					page.out("<tr><th width=40%><a href=/"+i.getPath()+">"+i.getTitle()+
+					page.out("<tr><th width=40%><a href=/"+i.getPath()+">"+i.getTitle(true)+
 						"</a><th><a href=/post?i="+i+"&jmp=>"+i.getType()+
 						"</a><th>"+i.getOwner()+"<td class=c2 t="+
 						i.getModifyTick()+"><td><a href=/admins?i="+i+
@@ -149,7 +149,7 @@ public class AdminsServlet extends HttpServlet{
 			List<I> r=(List<I>)q.execute(12);
 			if(!r.isEmpty()){	
 				for(I i:r){
-					page.out("<a href=/"+i.getOwnerId()+"."+i.getOwnerSite()+"/"+i.getId()+"."+i.getSite()+"><img src=/thumbnails/"+i.getId()+"."+i.getSite()+"></a><br>");
+					page.out("<a href=/"+i.getOwner()+"/"+i.getId()+"."+i.getSite()+"><img src=/thumbnails/"+i.getId()+"."+i.getSite()+"></a><br>");
 				}
 			}
 		}

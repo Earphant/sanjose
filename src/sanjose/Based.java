@@ -62,8 +62,8 @@ public class Based{
 			if(!r.isEmpty()){
 				for(I i:r){
 					String d=i.getId()+"."+i.getSite();
-					String t=i.getTitle();
-					String base=i.getOwnerId()+"."+i.getOwnerSite();
+					String t=i.getTitle(true);
+					String base=i.getOwner().toString();
 				
 					if(t==null || t.equals(""))
 						t="<i>(Untitled)</i>";
@@ -91,7 +91,7 @@ public class Based{
 		else{
 			PersistenceManager m=Helper.getMgr();
 			I d=I.query(id,m);
-			page.title=d.getTitle();
+			page.title=d.getTitle(true);
 			page.aside="<ul><li><a href=/post?i="+d+">Edit</a><li><a href=/post/mark?re="+d+">Mark</a></ul>";
 			if(d.getType()==12)
 				page.out("<a href=/originals/"+id+".jpg title=test><img src=/"+base+"/"+id+".jpg></a>");
