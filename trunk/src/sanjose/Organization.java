@@ -53,7 +53,7 @@ public class Organization{
 	//@SuppressWarnings("unchecked")
 	public void out(I id,Page page,PersistenceManager mgr,Session ssn)
 		throws IOException{
-		page.title=id.getTitle();
+		page.title=id.getTitle(false);
 		Query q=mgr.newQuery(I21.class);
 		I o=ssn.owner;
 		q.setFilter("o=="+o.getId()+" && w=="+o.getSite()+" && i=="+

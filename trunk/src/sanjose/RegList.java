@@ -1,9 +1,8 @@
 package sanjose;
 
 import java.io.IOException;
-import java.util.Date;
+//import java.util.Date;
 import java.util.List;
-
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.*;
@@ -13,10 +12,14 @@ public class RegList extends HttpServlet {
 	public RegList(List<I> rs, Page page)throws IOException{
 		if(!rs.isEmpty()){
 			for(I o:rs){
-				String i=o.getId()+"."+o.getSite();
-				String x=o.getTitle();
-				String w=o.getOwnerId()+"."+o.getOwnerSite();
-				if(o.getRefId()==1){
+				String b=o.getBase().toString();
+				String i=o.toString();
+				I f=o.getRef();
+				String t="<a href=/"+b+"/"+i+" class=c2 t="+o.getModifyTick()+
+					"></a>";
+				String w=o.getOwner().toString();
+				String x=o.getTitle(true);
+				if(f.getId()==1&&f.getSite()==1){
 					switch((int)o.getType()){
 					case 1:
 					case 2:
@@ -39,7 +42,11 @@ public class RegList extends HttpServlet {
 						page.out("<div class=post><a href=/"+w+"><img src=/icons/"+w+" class=icon></a><div class=text><a href=/"+w+"/steps>"+x+"</a><div class=grf1>"+o.getQuotation()+"</div><div class=c2 t="+o.getModifyTick()+"></div><a href=/post?re="+i+"&jmp=%2F>Re</a></div></div>");
 						break;
 					default:
-						page.out("<div class=post><a href=/"+w+"><img src=/icons/"+w+" class=icon></a><div class=text>"+x+"<div class=c2 t="+o.getModifyTick()+"></div><a href=/post?re="+i+"&jmp=%2F>Re</a></div></div>");
+						page.out("<div class=post><a href=/"+
+							w+"><img src=/icons/"+
+							w+" class=icon></a><div class=text>"+
+							x+"<br>"+t+"</br><a href=/post?re="+
+							i+"&jmp=%2F>Re</a></div></div>");
 					}
 				}
 			}
@@ -59,9 +66,10 @@ public class RegList extends HttpServlet {
 				if(!r.isEmpty()){
 					for(I o:r){
 						String i=o.getId()+"."+o.getSite();
-						String x=o.getTitle();
-						String w=o.getOwnerId()+"."+o.getOwnerSite();
-						if(o.getRefId()==1l&&o.getRefSite()==1l){
+						I f=o.getRef();
+						String w=o.getOwner().toString();
+						String x=o.getTitle(true);
+						if(f.getId()==1l&&f.getSite()==1l){
 							switch((int)o.getType()){
 							case 1:
 							case 2:

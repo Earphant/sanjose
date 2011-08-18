@@ -170,11 +170,8 @@ public class I{
 	public long getAccessTick(){
 	    return c.getTime()/1000;
 	}
-	public long getBaseId(){
-	    return b;
-	}
-	public long getBaseSite(){
-	    return s;
+	public I getBase(){
+	    return new I(b,s);
 	}
 	public long getCreateTick(){
 	    return t.getTime()/1000;
@@ -200,12 +197,6 @@ public class I{
 	public I getOwner(){
 	    return new I(o,w);
 	}
-	public long getOwnerId(){
-	    return o;
-	}
-	public long getOwnerSite(){
-	    return w;
-	}
 	public String getPath(){
 		if(a==1)
 			return i+"."+j;
@@ -220,11 +211,8 @@ public class I{
 	public long getRate(){
 	    return r;
 	}
-	public long getRefId(){
-	    return d;
-	}
-	public long getRefSite(){
-	    return h;
+	public I getRef(){
+	    return new I(d,h);
 	}
 	public long getReplyCount(){
 	    return u;
@@ -235,8 +223,8 @@ public class I{
 	public String getTimed(){
 		return i+"."+j+"."+t.getTime()/1000;
 	}
-	public String getTitle(){
-		return x.equals("")?"<i>(untitled)</i>":x;
+	public String getTitle(boolean html){
+		return x.equals("")?(html?"<i>(untitled)</i>":"(untitled)"):x;
 	}
 	public String getText(){
 	    return x;
