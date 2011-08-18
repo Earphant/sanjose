@@ -3,6 +3,8 @@ package sanjose;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Text;
+
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -124,6 +126,49 @@ public class I{
 		i.t=i.m;
 		return i;
 	}
+	static public void list(List<I> rs, Page page)throws IOException{
+		if(!rs.isEmpty()){
+			for(I o:rs){
+				String b=o.getBase().toString();
+				String i=o.toString();
+				I f=o.getRef();
+				String t="<a href=/"+b+"/"+i+" class=c2 t="+o.getModifyTick()+
+					"></a>";
+				String w=o.getOwner().toString();
+				String x=o.getTitle(true);
+				if(f.getId()==1&&f.getSite()==1){
+					switch((int)o.getType()){
+					case 1:
+					case 2:
+						page.out("<div class=post><a href=/"+i+
+							"><img class=icon src=/icons/"+i+
+							"></a><div class=text><a href=/"+i+
+							">"+x+"</a><div class=c2 t="+
+							o.getModifyTick()+"></div></div></div>");
+						break;
+					case 12:
+						page.out("<div class=post><a href=/"+w+"/"+i+"><img class=thmb src=/thumbnails/"+i+"></a><a href=/"+w+"/><img src=/icons/"+w+" class=icon></a><div class=text>"+x+"<div class=c2 t="+o.getModifyTick()+"></div><a href=/post?re="+i+"&jmp=%2F>Re</a></div></div>");
+						break;
+					case 136:
+						page.out("<div class=post><a href=/"+w+"><img src=/icons/"+w+" class=icon></a><div class=text><a href=/"+w+"/heart-rate>"+x+"</a><div class=grf1>"+o.getQuotation()+"</div><div class=c2 t="+o.getModifyTick()+"></div><a href=/post?re="+i+"&jmp=%2F>Re</a></div></div>");
+						break;
+					case 138:
+						page.out("<div class=post><a href=/"+w+"><img src=/icons/"+w+" class=icon></a><div class=text><a href=/"+w+"/weight>"+x+"</a><div class=grf1>"+o.getQuotation()+"</div><div class=c2 t="+o.getModifyTick()+"></div><a href=/post?re="+i+"&jmp=%2F>Re</a></div></div>");
+						break;
+					case 139:
+						page.out("<div class=post><a href=/"+w+"><img src=/icons/"+w+" class=icon></a><div class=text><a href=/"+w+"/steps>"+x+"</a><div class=grf1>"+o.getQuotation()+"</div><div class=c2 t="+o.getModifyTick()+"></div><a href=/post?re="+i+"&jmp=%2F>Re</a></div></div>");
+						break;
+					default:
+						page.out("<div class=post><a href=/"+
+							w+"><img src=/icons/"+
+							w+" class=icon></a><div class=text>"+
+							x+"<br>"+t+"</br><a href=/post?re="+
+							i+"&jmp=%2F>Re</a></div></div>");
+					}
+				}
+			}
+		}
+	}  	
 
 	public I(long id,long site,String text,String plink,long classid,long rate,
 		long ownerid,long ownersite){
