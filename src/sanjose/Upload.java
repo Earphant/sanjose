@@ -41,12 +41,12 @@ public class Upload{
 			    else{ 
 			        log.warning("Got an uploaded file: "+t.getFieldName()+", name = "+t.getName());
 			        String extension=t.getName().substring(t.getName().lastIndexOf(".")+1,t.getName().length());
-			        if(extension.equals("txt"))
-			        	new DataText().doPost(req,rsp,s,sn.owner);
+			        if(new DataText().doPost(req,rsp,s,sn.owner))
+			        	log.warning("DataText");
 			        else if(extension.equals("bin")){
 			        	Blob b=new Blob(IOUtils.toByteArray(s));
 			        	PersistenceManager m=Helper.getMgr();
-			        	I12 i12=new I12(I.create("",null,12L,0L,sn.owner,m,true),extension,b);		
+			        	I12 i12=new I12(I.create("",null,12L,0L,sn.owner,m,true),b);		
 						m.makePersistent(i12);		
 						m.close();		
 						rsp.sendRedirect("/downloads/");

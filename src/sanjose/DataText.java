@@ -119,11 +119,13 @@ public class DataText{
 
 	public boolean doPost(HttpServletRequest req,HttpServletResponse rsp,
 		InputStream stream,I owner)throws IOException{
+		boolean ret=false;
 		BufferedReader rd=new BufferedReader(new InputStreamReader(stream));
 		if(checkType(rd.readLine())){
 			if(prepare(rd.readLine(),owner)){
 				try {
 					while(postLine(rd.readLine()));
+					ret=true;
 				} 
 				catch(ParseException e){
 					e.printStackTrace();
@@ -135,6 +137,6 @@ public class DataText{
 		}
 		rd.close();
 		rsp.sendRedirect("/"+owner+"/");
-		return false;
+		return ret;
 	}
 }
