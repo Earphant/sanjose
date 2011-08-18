@@ -15,8 +15,6 @@ public class I12{
 	@Persistent
 	private Long j;
 	@Persistent
-	private String ext;
-	@Persistent
 	private Blob org;
 	@Persistent
 	private Blob reg;
@@ -25,17 +23,15 @@ public class I12{
 	@Persistent
 	private Blob ico;
 
-	public I12(I i,String ext,Blob org){
+	public I12(I i,Blob org){
 		this.i=i.getId();
 		this.j=i.getSite();
-		this.ext=ext;
 		this.org=org;
 		this._key=this.i+"."+this.j;
 	}
-	public I12(Long i,Long j,String ext,Blob ico){
+	public I12(Long i,Long j,Blob ico){
 		this.i=i;
 		this.j=j;
-		this.ext=ext;
 		this.ico=ico;
 		this._key=this.i+"."+this.j;
 	}
@@ -44,9 +40,6 @@ public class I12{
 	}
 	public Long getj(){
 	    return j;
-	}
-	public String getext(){
-	    return ext;
 	}
 	public Blob getorg(){
 	    return org;

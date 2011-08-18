@@ -108,8 +108,8 @@ public class Picture{
 	@SuppressWarnings("unchecked")
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp,
 		InputStream stream,I owner)throws IOException, FileUploadException{
-
 		Blob b=new Blob(IOUtils.toByteArray(stream));
+		/*
 		ServletFileUpload upload=new ServletFileUpload();				
 		FileItemIterator iterator=upload.getItemIterator(req); 
 		String ext = null;
@@ -118,7 +118,7 @@ public class Picture{
 			ext=t.getName().substring(t.getName().lastIndexOf(".")+1,t.getName().length());
 			rsp.setContentType(Mime(ext));
 		}
-  
+		*/
 		//String base=null;
 		Id icon=new Id(req.getParameter("i"));
 		PersistenceManager m=Helper.getMgr();	
@@ -143,7 +143,7 @@ public class Picture{
 				    m.makePersistent(i12);
 				}
 				else{
-					I12 i12	= new I12(icon.i,icon.j,ext,ico);
+					I12 i12	= new I12(icon.i,icon.j,ico);
 				    m.makePersistent(i12);
 				}
 			}
@@ -174,7 +174,7 @@ public class Picture{
 		else{
 			Session	s=new Session("");
 			try{
-				I12 i12=new I12(I.create("",null,12L,0L,s.owner,m,true),ext,b);		
+				I12 i12=new I12(I.create("",null,12L,0L,s.owner,m,true),b);		
 				m.makePersistent(i12);
 				
 				byte[] oldImageData=b.getBytes();		    
