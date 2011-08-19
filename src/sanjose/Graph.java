@@ -73,6 +73,8 @@ public class Graph{
 		else{
 			log.warning("============ "+min+"/"+max);
 			k=80000/max;
+			if(k==0)
+				k=1;
 			min-=10000/k;
 		}
 		int n=2;
