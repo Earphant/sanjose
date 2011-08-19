@@ -9,7 +9,7 @@ import javax.servlet.http.*;
 public class HomeServlet extends HttpServlet{
 	private void followed(List<I21> list,Page page,PersistenceManager mgr)
 		throws IOException{
-		Query q=mgr.newQuery(I.class);		
+		Query q=mgr.newQuery(I.class);
 		q.setFilter("o==oParam && w==wParam ");	
 		q.declareParameters("Long oParam,Long wParam");
 		try{
@@ -27,7 +27,7 @@ public class HomeServlet extends HttpServlet{
 		page.title="Home";
 		page.out("<form method=post action=/post/><textarea name=text rows=5></textarea><input type=submit name=ok></form>");
 		PersistenceManager m=Helper.getMgr();
-		Query q=m.newQuery(I21.class);		
+		Query q=m.newQuery(I21.class);
 		q.setFilter("o==oParam && w==wParam ");	
 		q.declareParameters("Long oParam,Long wParam");
 		try{

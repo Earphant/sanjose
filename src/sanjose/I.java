@@ -211,7 +211,7 @@ public class I{
 		this.t=now();
 	}
 	public boolean equals(I i){
-		return this.i==i.i && this.j==i.j;
+		return this.i.equals(i.i)&&this.j.equals(i.j);
 	}
 	public long getAccessTick(){
 	    return c.getTime()/1000;
