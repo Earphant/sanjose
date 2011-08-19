@@ -126,9 +126,10 @@ public class I{
 		i.t=i.m;
 		return i;
 	}
-	static public void list(List<I> rs, Page page)throws IOException{
-		if(!rs.isEmpty()){
-			for(I o:rs){
+	@SuppressWarnings("unchecked")
+	static public void list(Object rs, Page page)throws IOException{
+		if(!((List<I>)rs).isEmpty()){
+			for(I o:(List<I>)rs){
 				String b=o.getBase().toString();
 				String i=o.toString();
 				I f=o.getRef();

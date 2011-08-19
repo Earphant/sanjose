@@ -180,7 +180,7 @@ public class AdminsServlet extends HttpServlet{
 			if(a.equals(""))
                 list("Posts",null,p);
 			if(a.equals("12"))
-				form(i,p);
+                list("Pictures",a,p);
 			if(a.equals("1"))
                 list("Users",a,p);
 		}
