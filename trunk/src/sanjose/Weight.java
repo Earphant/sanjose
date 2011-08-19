@@ -176,53 +176,15 @@ public class Weight extends DataText{
 		rsp.sendRedirect("/"+s.id+"."+s.site+"/weight");
 	}
 	*/
-	@SuppressWarnings("unchecked")
 	public void out(String plink,Page page)throws IOException{
 		String[]s=plink.split("/");
 		String b=s[1];
 		page.title="Weight";
 		page.aside="<ul><li><a href=/post/weight>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+b+"/profile>Profile</a><li><a href=/"+b+"/contacts>Contacts</a><li><a href=/"+b+"/tags>Tags</a></ul><ul><li><a href=/"+b+"/dashboard>Dashboard</a><li><a href=/"+b+"/activities>Activities</a><li><a href=/"+b+"/historical>Historical</a></ul><ul><li><a href=/"+b+"/weight>Weight</a><li><a href=/"+b+"/heart-rate>Heart Rate</a><li><a href=/"+b+"/steps>Steps</a><li><a href=/"+b+"/fat>Fat</a></ul>";
-		Long id=Long.parseLong(b.split("\\.")[0]);
-		Long site=Long.parseLong(b.split("\\.")[1]);
-		
-		PersistenceManager mgr=Helper.getMgr();
-		Query q1=mgr.newQuery(I138.class);
-		q1.setFilter("o==oParam && w==wParam");
-		q1.declareParameters("Long oParam,Long wParam");
-		q1.setOrdering("t");
-		try{
-			List<I138> r=(List<I138>)q1.execute(id,site);
-			page.out("<div class=grf2>");
-			String abc="weight";
-			page.out(new Graph().Daily(r,abc));
-			page.out("</div>");
-
-		}
-		finally{
-			q1.closeAll();
-		}
 		page.out("<div class=grf2>");
 		page.out(getHtml(new I(b),I138.class,"/post/weight?i="+b+".",28,
 			Helper.getMgr()));
 		page.out("</div>");
-		Query q2=mgr.newQuery(I138.class);
-		q2.setFilter("o==oParam && w==wParam");
-		q2.declareParameters("Long oParam,Long wParam");
-		q2.setOrdering("t desc");
-		try{
-			List<I138> r=(List<I138>)q2.execute(id,site);
-			if(!r.isEmpty()){			
-				for(I138 i138:r){
-					long t = i138.getTime().getTime();
-					SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					page.out(time.format(t)+"<br>"+b+": "+i138.getVal()+" <a href=/post/weight?i="+i138.getOwnerId()+"."+i138.getOwnerSite()+"."+i138.getTime().getTime()+">ÐÞ¸Ä</a><br>");					
-				}
-			}
-		}
-		finally{
-			q2.closeAll();
-			mgr.close();
-		}
 		page.end(null);
 	}
 }

@@ -25,12 +25,19 @@ public class DataText{
 	private boolean postLine(String line)throws ParseException{
 		if(line==null)
 			return false;
-		Date t=fmt.parse(line);
-		String[]s=line.split(" ");
-		mgr.makePersistent(new I135(own,t,Long.parseLong(s[3]),Long.parseLong(s[4])));
-		mgr.makePersistent(new I136(own,t,Long.parseLong(s[5])));
-		mgr.makePersistent(new I138(own,t,Long.parseLong(s[2])));
-		mgr.makePersistent(new I139(own,t,Long.parseLong(s[6])));
+		try{
+			line=line.trim();
+			Date t=fmt.parse(line);
+			String[]s=line.split(" ");
+			mgr.makePersistent(new I135(own,t,Long.parseLong(s[3]),
+				Long.parseLong(s[4])));
+			mgr.makePersistent(new I136(own,t,Long.parseLong(s[5])));
+			mgr.makePersistent(new I138(own,t,Long.parseLong(s[2])));
+			mgr.makePersistent(new I139(own,t,Long.parseLong(s[6])));
+		}
+		catch(ParseException e){
+			e.printStackTrace();
+		}
 		return true;
 	}
 	private boolean prepare(String line,I owner)throws IOException{
@@ -126,7 +133,7 @@ public class DataText{
 						postLine(i);
 					rsp.sendRedirect("/"+owner+"/");
 					ret=true;
-				} 
+				}
 				catch(ParseException e){
 					e.printStackTrace();
 				}
