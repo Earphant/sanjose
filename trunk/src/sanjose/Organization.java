@@ -9,6 +9,37 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class Organization{
+	//@SuppressWarnings("unchecked")
+	static public void out(I id,Page page,PersistenceManager mgr,Session ssn)
+		throws IOException{
+		page.title=id.getTitle(false);
+		Query q=mgr.newQuery(I21.class);
+		I o=ssn.owner;
+		q.setFilter("o=="+o.getId()+" && w=="+o.getSite()+" && i=="+
+			id.getId()+" && j=="+id.getSite());
+		try{
+			@SuppressWarnings("unchecked")
+			List<I21> r=(List<I21>)q.execute();
+			page.aside=r.isEmpty()?"<ul><li><a href=/system/follow?i="+id+">Follow</a><li><a href=/post?b="+id+">Post</a></ul>":
+				"<ul><li><a href=/system/unfollow?i="+id+">Unfollow</a><li><a href=/post/organization?i="+id+">Setting</a></ul>";
+		}
+		finally{
+			q.closeAll();
+		}
+		q=mgr.newQuery(I.class);
+		q.setFilter("b==oParam && s==wParam ");	
+		q.declareParameters("Long oParam,Long wParam");
+        q.setOrdering("m desc");
+		try{
+            I.table(q.execute(id.getId(),id.getSite()),page);
+//            I.table(q.execute(),page);
+		}
+		finally{
+			q.closeAll();
+		}
+		page.end(null);
+	}
+
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp,Page page,
 		PersistenceManager mgr)throws IOException{
 		I i=new I(req.getParameter("i"));
@@ -49,27 +80,5 @@ public class Organization{
 			m.close();
 		}
 		rsp.sendRedirect("/"+o);
-	}
-	//@SuppressWarnings("unchecked")
-	static public void out(I id,Page page,PersistenceManager mgr,Session ssn)
-		throws IOException{
-		page.title=id.getTitle(false);
-		Query q=mgr.newQuery(I21.class);
-		I o=ssn.owner;
-		q.setFilter("o=="+o.getId()+" && w=="+o.getSite()+" && i=="+
-			id.getId()+" && j=="+id.getSite());
-		try{
-			@SuppressWarnings("unchecked")
-			List<I21> r=(List<I21>)q.execute();
-			page.aside=r.isEmpty()?"<ul><li><a href=/system/follow?i="+id+">Follow</a></ul>":
-				"<ul><li><a href=/system/unfollow?i="+id+">Unfollow</a><li><a href=/post/organization?i="+id+">Setting</a></ul>";
-		}
-		finally{
-			q.closeAll();
-		}
-		page.out("<form method=post action=/post?b="+id+">");
-		page.out("<textarea name=text rows=5></textarea>");
-		page.out("<input type=submit name=ok value=Reply></form>");
-		page.end(null);
 	}
 }

@@ -12,10 +12,12 @@ public class PostServlet extends HttpServlet{
 	private void getMessage(HttpServletRequest req,HttpServletResponse rsp,
 		Page page,PersistenceManager mgr)throws IOException{
 		I i=new I(req.getParameter("i"));
+		I b=new I(req.getParameter("b"));
 		I r=new I(req.getParameter("re"));
 		page.title="Post";
 		page.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/step>Step</a><li><a href=/post/fat>Fat</a></ul>";
-		page.out("<form method=post action=/post?i="+i+"&re="+r+"><textarea name=text rows=10>");
+		page.out("<form method=post action=/post?i="+i+"&b="+b+"&re="+r+
+			"><textarea name=text rows=10>");
 		if(i.getSite()!=0){
 			i=I.query(i,mgr);
 			page.out(i.getText());
@@ -32,8 +34,8 @@ public class PostServlet extends HttpServlet{
 		try{
 			if(i.getSite()==0){
 				i=I.create(v,null,0,0,sn.owner,m,false);
-				I b=new I(req.getParameter("b"));
-				i.setBase(b);
+				i.setBase(new I(req.getParameter("b")));
+				i.setRef(new I(req.getParameter("re")));
 			}
 			else{
 				i=I.query(i,m);
