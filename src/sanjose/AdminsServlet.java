@@ -92,7 +92,6 @@ public class AdminsServlet extends HttpServlet{
 		page.out("<input type=hidden name=i value="+id.getId()+"."+id.getSite()+">");
 		page.out("<input type=submit name=ok value=Ok></form>");
 	}
-	@SuppressWarnings("unchecked")
 	private void list(String title,String type,Page page)throws IOException{
 		page.title=title;
 		PersistenceManager m=Helper.getMgr();
@@ -102,18 +101,7 @@ public class AdminsServlet extends HttpServlet{
 		q.setOrdering("m desc");
 		q.setRange(0,100);
 		try{
-			List<I> r=(List<I>)q.execute();
-			if(!((List<I>)r).isEmpty()){
-				page.out("<table class=list>");
-				for(I o:(List<I>)r){
-					page.out("<tr><th width=40%><a href=/"+o.getPath()+">"+o.getTitle(true)+
-						"</a><th><a href=/post?i="+o+"&jmp=>"+o.getType()+
-						"</a><th>"+o.getOwner()+"<td class=c2 t="+
-						o.getModifyTick()+"><td><a href=/admins?i="+o+
-						">=</a>");
-				}
-				page.out("</table>");
-			}
+			I.tableEx(q.execute(),page);
 		}
 		finally{
 			q.closeAll();

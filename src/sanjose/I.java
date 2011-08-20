@@ -169,9 +169,23 @@ public class I{
 				}
 			}
 		}
-	}  	
+	}
 	@SuppressWarnings("unchecked")
 	static public void table(Object rs,Page page)throws IOException{
+		if(!((List<I>)rs).isEmpty()){
+			page.out("<table class=list>");
+			for(I o:(List<I>)rs){
+				I b=o.getBase();
+				page.out("<tr><th width=40%><a href=/"+o.getPath()+">"+o.getTitle(true)+
+					"</a><th><a href=/"+b+">"+b+
+					"</a><th>"+o.getOwner()+"<td class=c2 t="+
+					o.getModifyTick()+">");
+			}
+			page.out("</table>");
+		}
+	}
+	@SuppressWarnings("unchecked")
+	static public void tableEx(Object rs,Page page)throws IOException{
 		if(!((List<I>)rs).isEmpty()){
 			page.out("<table class=list>");
 			for(I o:(List<I>)rs){
@@ -258,9 +272,9 @@ public class I{
 	    return new I(o,w);
 	}
 	public String getPath(){
-		if(a==1)
+		if(a==1 || a==2)
 			return i+"."+j;
-	    return o+"."+w+"/"+(p==null?i+"."+j:p);
+	    return b+"."+s+"/"+(p==null?i+"."+j:p);
 	}
 	public String getPlink(){
 	    return p;
@@ -322,8 +336,10 @@ public class I{
 		this.q=new Text(val);
 	}
 	public void setRef(I val){
-		this.d=val.i;
-		this.h=val.j;
+		if(val.j!=0){
+			this.d=val.i;
+			this.h=val.j;
+		}
 		log.warning(this+"/"+val);
 	}
 	public void setReplyTime(Date val){
