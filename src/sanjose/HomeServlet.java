@@ -2,13 +2,18 @@ package sanjose;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
+
 import javax.jdo.*;
 import javax.servlet.http.*;
 
 @SuppressWarnings("serial")
 public class HomeServlet extends HttpServlet{
+	private static final Logger log = Logger.getLogger(HomeServlet.class.getName());
+
 	private void followed(List<I21> list,Page page,PersistenceManager mgr)
 		throws IOException{
+		log.warning("followed");
 		Query q=mgr.newQuery(I.class);
 		q.setFilter("o==oParam && w==wParam ");	
 		q.declareParameters("Long oParam,Long wParam");
@@ -45,6 +50,7 @@ public class HomeServlet extends HttpServlet{
     }		
 	private void unfollowed(Page page,PersistenceManager mgr)
 		throws IOException{
+		log.warning("unfollowed");
 		Query q=mgr.newQuery(I.class);
         q.setOrdering("m desc");
 		try{
