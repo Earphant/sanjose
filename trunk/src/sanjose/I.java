@@ -127,49 +127,60 @@ public class I{
 		return i;
 	}
 	@SuppressWarnings("unchecked")
-	static public void list(Object rs, Page page)throws IOException{
+	static public void list(Object rs,Page page)throws IOException{
 		if(!((List<I>)rs).isEmpty()){
 			for(I o:(List<I>)rs){
 				String b=o.getBase().toString();
 				String i=o.toString();
-				I f=o.getRef();
 				String t="<a href=/"+b+"/"+i+" class=c2 t="+o.getModifyTick()+
 					"></a>";
 				String w=o.getOwner().toString();
 				String x=o.getTitle(true);
-				if(f.getId()==1&&f.getSite()==1){
-					switch((int)o.getType()){
-					case 1:
-					case 2:
-						page.out("<div class=post><a href=/"+i+
-							"><img class=icon src=/icons/"+i+
-							"></a><div class=text><a href=/"+i+
-							">"+x+"</a><div class=c2 t="+
-							o.getModifyTick()+"></div></div></div>");
-						break;
-					case 12:
-						page.out("<div class=post><a href=/"+w+"/"+i+"><img class=thmb src=/thumbnails/"+i+"></a><a href=/"+w+"/><img src=/icons/"+w+" class=icon></a><div class=text><a href=/"+w+"/"+i+">"+x+"</a><div class=c2 t="+o.getModifyTick()+"></div><a href=/post?re="+i+"&jmp=%2F>Re</a></div></div>");
-						break;
-					case 136:
-						page.out("<div class=post><a href=/"+w+"><img src=/icons/"+w+" class=icon></a><div class=text><a href=/"+w+"/heart-rate>"+x+"</a><div class=grf1>"+o.getQuotation()+"</div><div class=c2 t="+o.getModifyTick()+"></div><a href=/post?re="+i+"&jmp=%2F>Re</a></div></div>");
-						break;
-					case 138:
-						page.out("<div class=post><a href=/"+w+"><img src=/icons/"+w+" class=icon></a><div class=text><a href=/"+w+"/weight>"+x+"</a><div class=grf1>"+o.getQuotation()+"</div><div class=c2 t="+o.getModifyTick()+"></div><a href=/post?re="+i+"&jmp=%2F>Re</a></div></div>");
-						break;
-					case 139:
-						page.out("<div class=post><a href=/"+w+"><img src=/icons/"+w+" class=icon></a><div class=text><a href=/"+w+"/steps>"+x+"</a><div class=grf1>"+o.getQuotation()+"</div><div class=c2 t="+o.getModifyTick()+"></div><a href=/post?re="+i+"&jmp=%2F>Re</a></div></div>");
-						break;
-					default:
-						page.out("<div class=post><a href=/"+
-							w+"><img src=/icons/"+
-							w+" class=icon></a><div class=text>"+
-							x+"<br>"+t+"</br><a href=/post?re="+
-							i+"&jmp=%2F>Re</a></div></div>");
-					}
+				switch((int)o.getType()){
+				case 1:
+				case 2:
+					page.out("<div class=post><a href=/"+i+
+						"><img class=icon src=/icons/"+i+
+						"></a><div class=text><a href=/"+i+
+						">"+x+"</a><div class=c2 t="+
+						o.getModifyTick()+"></div></div></div>");
+					break;
+				case 12:
+					page.out("<div class=post><a href=/"+w+"/"+i+"><img class=thmb src=/thumbnails/"+i+"></a><a href=/"+w+"/><img src=/icons/"+w+" class=icon></a><div class=text><a href=/"+w+"/"+i+">"+x+"</a><div class=c2 t="+o.getModifyTick()+"></div><a href=/post?re="+i+"&jmp=%2F>Re</a></div></div>");
+					break;
+				case 136:
+					page.out("<div class=post><a href=/"+w+"><img src=/icons/"+w+" class=icon></a><div class=text><a href=/"+w+"/heart-rate>"+x+"</a><div class=grf1>"+o.getQuotation()+"</div><div class=c2 t="+o.getModifyTick()+"></div><a href=/post?re="+i+"&jmp=%2F>Re</a></div></div>");
+					break;
+				case 138:
+					page.out("<div class=post><a href=/"+w+"><img src=/icons/"+w+" class=icon></a><div class=text><a href=/"+w+"/weight>"+x+"</a><div class=grf1>"+o.getQuotation()+"</div><div class=c2 t="+o.getModifyTick()+"></div><a href=/post?re="+i+"&jmp=%2F>Re</a></div></div>");
+					break;
+				case 139:
+					page.out("<div class=post><a href=/"+w+"><img src=/icons/"+w+" class=icon></a><div class=text><a href=/"+w+"/steps>"+x+"</a><div class=grf1>"+o.getQuotation()+"</div><div class=c2 t="+o.getModifyTick()+"></div><a href=/post?re="+i+"&jmp=%2F>Re</a></div></div>");
+					break;
+				default:
+					page.out("<div class=post><a href=/"+
+						w+"><img src=/icons/"+
+						w+" class=icon></a><div class=text>"+
+						x+"<br>"+t+"</br><a href=/post?re="+
+						i+"&jmp=%2F>Re</a></div></div>");
 				}
 			}
 		}
 	}  	
+	@SuppressWarnings("unchecked")
+	static public void table(Object rs,Page page)throws IOException{
+		if(!((List<I>)rs).isEmpty()){
+			page.out("<table class=list>");
+			for(I o:(List<I>)rs){
+				page.out("<tr><th width=40%><a href=/"+o.getPath()+">"+o.getTitle(true)+
+					"</a><th><a href=/post?i="+o+"&jmp=>"+o.getType()+
+					"</a><th>"+o.getOwner()+"<td class=c2 t="+
+					o.getModifyTick()+"><td><a href=/admins?i="+o+
+					">=</a>");
+			}
+			page.out("</table>");
+		}
+	}
 
 	public I(long id,long site,String text,String plink,long classid,long rate,
 		long ownerid,long ownersite){

@@ -31,7 +31,10 @@ public class AdminsServlet extends HttpServlet{
 			page.out("Base<br><input name=b value="+o.getBase()+"><br>");
 			page.out("Owner<br><input name=o value="+o.getOwner()+"><br>");
 			page.out("Ref<br><input name=re value="+o.getRef()+"><br>");
-			page.out("<input type=submit name=ok value=Ok>");
+			page.out("Create<br><input name=t value="+o.getCreateTick()+"><br>");
+			page.out("Modify<br><input name=m value="+o.getModifyTick()+"><br>");
+			page.out("Rate<br><input name=r value="+o.getRate()+"><br>");
+			page.out("<br><input type=submit name=ok value=Ok>");
 			page.out("</form>");
 		}
 		page.end(null);
@@ -99,16 +102,7 @@ public class AdminsServlet extends HttpServlet{
 		q.setOrdering("m desc");
 		try{
 			List<I> r=(List<I>)q.execute();
-			if(!r.isEmpty()){
-				page.out("<table class=list>");
-				for(I i:r)
-					page.out("<tr><th width=40%><a href=/"+i.getPath()+">"+i.getTitle(true)+
-						"</a><th><a href=/post?i="+i+"&jmp=>"+i.getType()+
-						"</a><th>"+i.getOwner()+"<td class=c2 t="+
-						i.getModifyTick()+"><td><a href=/admins?i="+i+
-						">=</a>");
-				page.out("</table>");
-			}
+			I.table(r,page);
 		}
 		finally{
 			q.closeAll();

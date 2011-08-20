@@ -34,7 +34,7 @@ public class DownloadsServlet extends HttpServlet {
 		finally{
 			q.closeAll();
 		}
-	}	
+	}
 	
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 	throws IOException{	
@@ -51,7 +51,7 @@ public class DownloadsServlet extends HttpServlet {
 		PersistenceManager mgr=Helper.getMgr();
 		Query q=mgr.newQuery(I12.class);
 		q.setOrdering("i desc");
-		q.setFilter("i==iParam && j==jParam ");	
+		q.setFilter("i==iParam && j==jParam ");
 		q.declareParameters("Long iParam,Long jParam");
 		Blob b = null;
 		try{
