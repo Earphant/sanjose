@@ -53,6 +53,7 @@ public class HomeServlet extends HttpServlet{
 		log.warning("unfollowed");
 		Query q=mgr.newQuery(I.class);
         q.setOrdering("m desc");
+		q.setRange(0,25);
 		try{
             I.list(q.execute(),page);
 		}

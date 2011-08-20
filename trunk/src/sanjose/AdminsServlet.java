@@ -100,9 +100,20 @@ public class AdminsServlet extends HttpServlet{
 		if(type!=null)
 			q.setFilter("a=="+type);
 		q.setOrdering("m desc");
+		q.setRange(0,100);
 		try{
 			List<I> r=(List<I>)q.execute();
-			I.table(r,page);
+			if(!((List<I>)r).isEmpty()){
+				page.out("<table class=list>");
+				for(I o:(List<I>)r){
+					page.out("<tr><th width=40%><a href=/"+o.getPath()+">"+o.getTitle(true)+
+						"</a><th><a href=/post?i="+o+"&jmp=>"+o.getType()+
+						"</a><th>"+o.getOwner()+"<td class=c2 t="+
+						o.getModifyTick()+"><td><a href=/admins?i="+o+
+						">=</a>");
+				}
+				page.out("</table>");
+			}
 		}
 		finally{
 			q.closeAll();
