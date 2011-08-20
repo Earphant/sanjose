@@ -61,6 +61,8 @@ public class I{
 	@Persistent
 	private String x;
 	@Persistent
+	private Date y;
+	@Persistent
 	private String z;
 
 	private void init(String text,String plink,long type,long rate,
@@ -81,6 +83,7 @@ public class I{
 		this.u=0L;
 		this.v=1L;
 		this.x=text;
+		this.y=t;
 	}
 	private static Date now(){
 		long t=new Date().getTime()/1000;
@@ -274,6 +277,9 @@ public class I{
 	public long getReplyCount(){
 	    return u;
 	}
+	public Date getReplyTime(){
+		return y;
+	}	
 	public long getSite(){
 	    return j;
 	}
@@ -320,11 +326,13 @@ public class I{
 		this.h=val.j;
 		log.warning(this+"/"+val);
 	}
+	public void setReplyTime(Date val){
+		this.y=val==null?now():val;
+	}	
 	public void setText(String val){
 	    this.x=val;
 	}
 	public String toString(){
 		return i+"."+j;
 	}
-	
 }
