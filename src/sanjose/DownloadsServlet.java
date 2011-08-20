@@ -1,27 +1,12 @@
 package sanjose;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
+import com.google.appengine.api.datastore.Blob;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.List;
-
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.*;
-
-import com.google.appengine.api.datastore.Blob;
 
 @SuppressWarnings("serial")
 public class DownloadsServlet extends HttpServlet {

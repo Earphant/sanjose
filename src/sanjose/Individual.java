@@ -44,7 +44,6 @@ public class Individual{
 			id+"/weight>Weight</a><li><a href=/"+
 			id+"/heart-rate>Heart Rate</a><li><a href=/"+
 			id+"/steps>Steps</a><li><a href=/"+id+"/fat>Fat</a></ul>";
-		page.out(id+"/"+ssn.owner);
 		page.out("<form method=post action=/post?re="+id+">");
 		page.out("<textarea name=text rows=5></textarea>");
 		page.out("<input type=submit name=ok value=Reply></form>");
