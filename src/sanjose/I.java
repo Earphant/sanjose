@@ -206,7 +206,7 @@ public class I{
 		this.i=Long.parseLong(t[0]);
 		this.j=Long.parseLong(t[1]);
 		if(t.length>2)
-			this.z=t[2];
+			this.e=t[2];
 		this.m=now();
 		this.t=now();
 	}

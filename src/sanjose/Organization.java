@@ -51,7 +51,7 @@ public class Organization{
 		rsp.sendRedirect("/"+o);
 	}
 	//@SuppressWarnings("unchecked")
-	public void out(I id,Page page,PersistenceManager mgr,Session ssn)
+	static public void out(I id,Page page,PersistenceManager mgr,Session ssn)
 		throws IOException{
 		page.title=id.getTitle(false);
 		Query q=mgr.newQuery(I21.class);
