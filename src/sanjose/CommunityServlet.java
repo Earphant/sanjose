@@ -16,8 +16,9 @@ public class CommunityServlet extends HttpServlet {
 		Query q=mgr.newQuery(I.class);
 		q.setFilter("r==0");
 		q.setOrdering("m desc");
+		q.setRange(0,50);
 		try{
-			I.list(q.execute(),p);
+			I.table(q.execute(),p);
 		}
 		finally{
 			q.closeAll();
