@@ -8,6 +8,7 @@ public class ToolsServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		String n=req.getPathInfo();
+		Session ssn=new Session("");
 		if(n!=null){
 			String[]s=n.split("/");
 			if(s.length>1){
@@ -21,8 +22,16 @@ public class ToolsServlet extends HttpServlet {
 		Page page=new Page(rsp);
 		page.title="Tools";
 		page.aside="<ul><li><a href=/post>Post</a><li><a href=/system/settings>Settings</a><li><a href=/12.3/dashboard>Dashboard</a></ul>";
-		page.out("<a href=/tools/debug>Debug</a><br>");
 		page.out("<a href=/admins>Admins</a><br>");
+		page.out("<a href=/tools/debug>Debug</a><br>");
+		if(ssn.owner==null){
+			page.out("<a href=/system/signin?jmp=%2Ftools>Sign in</a><br>");
+			page.out("<a href=/system/signup?jmp=%2Ftools>Sign up</a><br>");
+		}
+		else{
+			page.out("<a href=/system/signout?jmp=%2Ftools>Sign out</a><br>");
+			page.out("<a href=/post/upload>Upload</a><br>");
+		}
 		page.end(null);
 	}
 }

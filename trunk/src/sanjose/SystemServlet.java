@@ -16,8 +16,9 @@ import com.google.appengine.api.users.UserServiceFactory;
 public class SystemServlet extends HttpServlet{
 	private UserService usv=UserServiceFactory.getUserService();
 	private Page page;
+	private String jmp;
 
-	private void Follow(HttpServletRequest req,HttpServletResponse rsp)
+	private void follow(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		Session s=new Session("ow");
 		Id d=new Id(req.getParameter("i"));
@@ -25,56 +26,28 @@ public class SystemServlet extends HttpServlet{
 		I21 i=new I21(d.i,d.j,s.owner.getId(),s.owner.getSite(),new Date());
 		try{
 			m.makePersistent(i);
-		}finally {
-			m.close();
-		}
-		rsp.sendRedirect("/"+d.i+"."+d.j+"/");
-	}
-	private void Unfollow(HttpServletRequest req,HttpServletResponse rsp)
-		throws IOException{
-		Session s=new Session("ow");
-		Id d=new Id(req.getParameter("i"));
-		PersistenceManager m=Helper.getMgr();   
-		I21 i=new I21(d.i,d.j,s.owner.getId(),s.owner.getSite(),new Date());
-		try{
-			m.makePersistent(i);
-			m.deletePersistent(i);
 		}finally {
 			m.close();
 		}
 		rsp.sendRedirect("/"+d.i+"."+d.j+"/");
 	}
 	@SuppressWarnings("unchecked")
-	private void Settings(HttpServletRequest req,HttpServletResponse rsp)
+	private void settings(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{	
 		page.title="Settings";
-		
-		Session s=new Session("");
+		I owner=new Session("/tools/settings").owner;
 		PersistenceManager mgr=Helper.getMgr();	
-		Query q12=mgr.newQuery(I12.class);
-		q12.setFilter("i==iParam && j==jParam");
-		q12.declareParameters("Long iParam,Long jParam");
-		try{
-			List<I12> r12=(List<I12>)q12.execute(s.owner.getId(),s.owner.getSite());
-			if(!r12.isEmpty()){	
-				page.out("<a href=/post/upload?i="+s.owner+"><img src=/icons/"+s.owner+"></a><br>");
-			}
-			else
-				page.out("<a href=/post/upload?i="+s.owner+"><img src=/icons/"+s.owner+" class=icon></a><br>");
-		}
-		finally{
-			q12.closeAll();
-		}
+		page.out("<a href=/post/upload?i="+owner+"><img src=/icons/"+owner+" class=icon></a><br>");
 		Query q11=mgr.newQuery(I11.class);
 		q11.setFilter("i==iParam && j==jParam");
 		q11.declareParameters("Long iParam,Long jParam");
 		try{
-			List<I11> r11=(List<I11>)q11.execute(s.owner.getId(),s.owner.getSite());
+			List<I11> r11=(List<I11>)q11.execute(owner.getId(),owner.getSite());
 			if(!r11.isEmpty()){	
 				I11 i11=r11.get(0);
 				String eml=i11.getEmail();
-				page.out("Account:<input type=text name=eml value="+eml+"><br>"
-						+"Password:<input type=password name=pwd1 value=><input type=text name=pwd2 value=><br>");		
+				page.out("Account<br><input type=text name=eml value="+
+					eml+"><br>Password<br><input type=password name=pwd1 value=><input type=text name=pwd2 value=><br>");
 			}
 		}
 		finally{
@@ -84,11 +57,11 @@ public class SystemServlet extends HttpServlet{
 		q.setFilter("i==iParam && j==jParam");
 		q.declareParameters("Long iParam,Long jParam");
 		try{
-			List<I> r=(List<I>)q.execute(s.owner.getId(),s.owner.getSite());
+			List<I> r=(List<I>)q.execute(owner.getId(),owner.getSite());
 			if(!r.isEmpty()){
 				I i=r.get(0);
 				String x=i.getTitle(true);
-				page.out("<br>Nick Name:<input type=text name=x value="+x+"><br>");
+				page.out("<br>Nick Name<br><input type=text name=x value="+x+"><br>");
 			}
 		}
 		finally{
@@ -98,7 +71,7 @@ public class SystemServlet extends HttpServlet{
 		q1.setFilter("i==iParam && j==jParam");
 		q1.declareParameters("Long iParam,Long jParam");
 		try{
-			List<I1> r1=(List<I1>)q1.execute(s.owner.getId(),s.owner.getSite());
+			List<I1> r1=(List<I1>)q1.execute(owner.getId(),owner.getSite());
 			if(!r1.isEmpty()){
 				I1 i1=r1.get(0);
 				String fsn="";
@@ -154,60 +127,76 @@ public class SystemServlet extends HttpServlet{
 			q1.closeAll();
 			mgr.close();
 		}
-		page.out("<input type=hidden name=i value="+s.owner+">");
+		page.out("<input type=hidden name=i value="+owner+">");
 		page.end("<input type=submit name=ok></form>");
 	}
-	private void Signin(HttpServletRequest req,HttpServletResponse rsp)
+	private void signin(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		Session s=new Session("");
 		if(s.owner==null){
-			rsp.sendRedirect(usv.createLoginURL("/system/signin"));
+			rsp.sendRedirect(usv.createLoginURL(jmp==null?"/system/signin":
+				"/system/signin?jmp="+jmp));
 			return;
 		}
 		page.title="Sign In";
 		rsp.addCookie(s.cookie);
-		rsp.sendRedirect("/");
+		rsp.sendRedirect(jmp==null?"/":jmp);
 	}
-	private void Signout(HttpServletRequest req,HttpServletResponse rsp)
+	private void signout(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		Session ss=new Session(null);
 		rsp.addCookie(ss.cookie);
-		rsp.sendRedirect(usv.createLogoutURL("/"));
+		rsp.sendRedirect(usv.createLogoutURL(jmp==null?"/":jmp));
 	}
-	private void Signup(HttpServletRequest req,HttpServletResponse rsp)
+	private void signup(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{	
 		page.title="Sign Up";
 	}
+	private void unfollow(HttpServletRequest req,HttpServletResponse rsp)
+	throws IOException{
+	Session s=new Session("ow");
+	Id d=new Id(req.getParameter("i"));
+	PersistenceManager m=Helper.getMgr();   
+	I21 i=new I21(d.i,d.j,s.owner.getId(),s.owner.getSite(),new Date());
+	try{
+		m.makePersistent(i);
+		m.deletePersistent(i);
+	}finally {
+		m.close();
+	}
+	rsp.sendRedirect("/"+d.i+"."+d.j+"/");
+}
 
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		page=new Page(rsp);
 		String p=req.getPathInfo();
+		jmp=req.getParameter("jmp");
 
 		if(p.equals("/"))
 			page.title="System";
 		else if(p.equalsIgnoreCase("/follow")){
-			Follow(req,rsp);
+			follow(req,rsp);
 			return;
 		}
 		else if(p.equalsIgnoreCase("/settings")){
-			Settings(req,rsp);
+			settings(req,rsp);
 			return;
 		}
 		else if(p.equalsIgnoreCase("/signin")){
-			Signin(req,rsp);
+			signin(req,rsp);
 			return;
 		}
 		else if(p.equalsIgnoreCase("/signout")){
-			Signout(req,rsp);
+			signout(req,rsp);
 			return;
 		}
 		else if(p.equals("/signup")){
-			Signup(req,rsp);
+			signup(req,rsp);
 			return;
 		}
 		else if(p.equalsIgnoreCase("/unfollow")){
-			Unfollow(req,rsp);
+			unfollow(req,rsp);
 			return;
 		}
 		else

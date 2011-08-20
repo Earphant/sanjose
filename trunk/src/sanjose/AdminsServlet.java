@@ -67,7 +67,7 @@ public class AdminsServlet extends HttpServlet{
 			page.out("First Name<br><input type=text name=fsn value="+fsn+"><br>");
 			page.out("Middle Name<br><input type=text name=mdn value="+mdn+"><br>");
 			page.out("Last Name<br><input type=text name=lsn value="+lsn+"><br>");
-			page.out("Gender&nbsp;&nbsp;<input type=radio name=gnd value=female "+gnf+">Female<input type=radio name=gnd value=male "+gnm+">Male<br>");
+			page.out("Gender<br><input type=radio name=gnd value=female "+gnf+">Female<input type=radio name=gnd value=male "+gnm+">Male<br>");
 			page.out("Birthday<br><input type=text name=yir value="+yir+"><input type=text name=mth value="+mth+"><input type=text name=dat value="+dat+"><br>");
 			page.out("Occupation<br><input type=text name=ocp value="+ocp+"><br>");
 			page.out("Postal Code<br><input type=text name=zip value="+zip+"><br>");
@@ -79,7 +79,7 @@ public class AdminsServlet extends HttpServlet{
 			mgr.close();
 		}
 		page.out("<input type=hidden name=i value="+id.getId()+"."+id.getSite()+">");
-		page.end("<input type=submit name=ok value=Ok></form>");
+		page.out("<input type=submit name=ok value=Ok></form>");
 	}
 	@SuppressWarnings("unchecked")
 	private void list(String title,String type,Page page)throws IOException{
