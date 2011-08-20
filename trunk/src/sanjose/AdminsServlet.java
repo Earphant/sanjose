@@ -25,6 +25,14 @@ public class AdminsServlet extends HttpServlet{
 			break;
 		default:
 			page.title="Form";
+			page.out("<form method=post action=/post?i="+o+"&jmp=/admins?i="+
+				o+">");
+			page.out("Text<br><input name=text value="+o.getText()+"><br>");
+			page.out("Base<br><input name=b value="+o.getBase()+"><br>");
+			page.out("Owner<br><input name=o value="+o.getOwner()+"><br>");
+			page.out("Ref<br><input name=re value="+o.getRef()+"><br>");
+			page.out("<input type=submit name=ok value=Ok>");
+			page.out("</form>");
 		}
 		page.end(null);
 	}
