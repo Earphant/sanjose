@@ -1,21 +1,27 @@
 package sanjose;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 import javax.jdo.PersistenceManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class Steps extends DataText{
+	private static final Logger log = Logger.getLogger(Steps.class.getName());
+
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp,Page page)
 		throws IOException{
 		I i=I.timed(req.getParameter("i"));
 		page.title="Steps";
 		page.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";
 		if(i==null){
+			log.warning("null");
 			page.out("<form method=post action=/post/step>");
 			page.out("Value<br><input type=text name=v>");
 		}
 		else{
+			log.warning("value");
+			page.out(req.getParameter("i")+"/"+i.getTimed());
 			page.out("<form method=post action=/post/step?i="+i.getTimed()+">");
 			page.out("Value<br><input type=text name=v value="+
 				getSingleVal(i,I139.class)+">");
@@ -51,11 +57,7 @@ public class Steps extends DataText{
 		page.out("<div class=grf2>");
 		page.out(getHtml(new I(b),I139.class,"/post/step?i="+b+".",28,
 			Helper.getMgr()));
-		page.out("</div>");		
-		page.out("<div class=grf2>");
-		page.out(getHtml(new I(b),I139.class,"/post/step?i="+b+".",88,
-			Helper.getMgr()));
-		page.out("</div>");		
+		page.out("</div>");
 		page.end(null);
     }
 }
