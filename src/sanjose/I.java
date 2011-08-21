@@ -319,6 +319,7 @@ public class I{
 	}
 	public void setBase(I val){
 		if(val.j!=0){
+			log.warning("base: "+val);
 		    this.b=val.i;
 		    this.s=val.j;
 		}
@@ -337,6 +338,7 @@ public class I{
 	}
 	public void setRef(I val){
 		if(val.j!=0){
+			log.warning("ref: "+val);
 			this.d=val.i;
 			this.h=val.j;
 		}

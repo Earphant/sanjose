@@ -34,29 +34,16 @@ public class PostServlet extends HttpServlet{
 		try{
 			if(i.getSite()==0){
 				i=I.create(v,null,0,0,sn.owner,m,false);
-				i.setBase(new I(req.getParameter("b")));
+				log.warning("post");
 				i.setRef(new I(req.getParameter("re")));
+				i.setBase(new I(req.getParameter("re")));
+				i.setBase(new I(req.getParameter("b")));
 			}
 			else{
 				i=I.query(i,m);
 				i.setText(v);
 				i.setModifyTime(null);
 			}
-			m.makePersistent(i);
-		}
-		finally{
-			m.close();
-		}
-		rsp.sendRedirect("/");
-	}
-	private void postReply(I re,HttpServletRequest req,
-		HttpServletResponse rsp)throws IOException{
-		Session sn=new Session("/post");
-		String v=req.getParameter("text");
-		PersistenceManager m=Helper.getMgr();
-		try{
-			I i=I.create(v,null,0,0,sn.owner,m,false);
-			i.setRef(re);
 			m.makePersistent(i);
 		}
 		finally{
@@ -108,12 +95,6 @@ public class PostServlet extends HttpServlet{
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
-		I i=new I(req.getParameter("re"));
-		if(i.getSite()!=0){
-			log.warning("reply");
-			postReply(i,req,rsp);
-			return;
-		}
 		String v=req.getPathInfo();
 		if(v!=null){
 			String[]s=v.split("/");

@@ -163,12 +163,13 @@ public class AdminsServlet extends HttpServlet{
     public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
         Page p=new Page(rsp);
-        p.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins?a=12>Pictures</a><li><a href=/admins?a=>Posts</a><li><a href=/admins?a=1>Users</a></ul>";
+        p.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins?a=2>Groups</a><li><a href=/admins?a=12>Pictures</a><li><a href=/admins?a=>Posts</a><li><a href=/admins?a=1>Users</a></ul>";
 		String a=req.getParameter("a");
 		I i=new I(req.getParameter("i"));
 		if(a==null){
 			if(i.getSite()==0){
 		        p.title="Admins";
+		        p.out("<a href=/admins?a=2>Groups</a><br>");
 		        p.out("<a href=/admins?a=12>Pictures</a><br>");
 		        p.out("<a href=/admins?a=>Posts</a><br>");
 		        p.out("<a href=/admins?a=1>Users</a><br>");
@@ -184,6 +185,8 @@ public class AdminsServlet extends HttpServlet{
                 list("Pictures",a,p);
 			if(a.equals("1"))
                 list("Users",a,p);
+			if(a.equals("2"))
+                list("Groups",a,p);
 		}
 	}
     @SuppressWarnings("unchecked")
