@@ -3,14 +3,12 @@ package	sanjose;
 import java.io.IOException;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.logging.Logger;
-
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.HttpServletResponse;
 
 public class Picture{
-	private static final Logger log = Logger.getLogger(Picture.class.getName());
+	//private static final Logger log = Logger.getLogger(Picture.class.getName());
 
 	static public String Mime(String ext){
 		if (ext.equalsIgnoreCase("gif"))
@@ -93,112 +91,6 @@ public class Picture{
 		}
 		return null;
 	}
-
-	/*
-	@SuppressWarnings("unchecked")
-	public void doPost2(HttpServletRequest req,HttpServletResponse rsp,
-		InputStream stream,I owner)throws IOException, FileUploadException{
-		Blob b=new Blob(IOUtils.toByteArray(stream));
-		ServletFileUpload upload=new ServletFileUpload();				
-		FileItemIterator iterator=upload.getItemIterator(req); 
-		String ext = null;
-		while (iterator.hasNext()) {
-			FileItemStream t=iterator.next(); 
-			ext=t.getName().substring(t.getName().lastIndexOf(".")+1,t.getName().length());
-			rsp.setContentType(Mime(ext));
-		}
-		//String base=null;
-		Id icon=new Id(req.getParameter("i"));
-		PersistenceManager m=Helper.getMgr();	
-		if(icon.i!=0){
-			byte[] oldImageData=b.getBytes();
-			ImagesService imagesService = ImagesServiceFactory.getImagesService();
-		    Image oldImage = ImagesServiceFactory.makeImage(oldImageData);
-		    
-		    Transform resize3 =	ImagesServiceFactory.makeResize(48, 48);
-		    Image newImage3 = imagesService.applyTransform(resize3, oldImage);
-		    byte[] newImageData3 = newImage3.getImageData();
-		    Blob ico=new Blob(newImageData3);
-		    
-			Query q=m.newQuery(I12.class);
-			q.setFilter("i==iParam && j==jParam");
-			q.declareParameters("Long iParam,Long jParam");
-			try{
-				List<I12> r=(List<I12>)q.execute(icon.i,icon.j);
-				if(!r.isEmpty()){
-					I12 i12	= r.get(0);
-				    i12.setIcon(ico);
-				    m.makePersistent(i12);
-				}
-				else{
-					//I12 i12	= new I12(icon.i,icon.j,ico);
-				    //m.makePersistent(i12);
-				}
-			}
-			finally{
-				q.closeAll();
-			}
-			if(icon.ext!=null)
-				rsp.sendRedirect("/admins/users?i="+icon.i+"."+icon.j);
-			else{
-				Date now=new Date();
-				Query qi=m.newQuery(I.class);
-		        qi.setFilter("i==iParam && j==jParam");
-				qi.declareParameters("Long iParam,Long jParam");
-				   try{
-						List<I> r=(List<I>)qi.execute(icon.i,icon.j);
-						if(!r.isEmpty()){
-							I i=r.get(0);
-							i.setModifyTime(now);
-						}
-					}
-					finally{
-						qi.closeAll();
-						m.close();
-					}
-				rsp.sendRedirect("/system/settings");
-			}
-		}
-		else{
-			Session	s=new Session("");
-			try{
-				I12 i12=new I12(I.create("",null,12L,0L,s.owner,m,true),b);		
-				m.makePersistent(i12);
-				
-				byte[] oldImageData=b.getBytes();		    
-				ImagesService imagesService = ImagesServiceFactory.getImagesService();
-			    Image oldImage = ImagesServiceFactory.makeImage(oldImageData);
-			    int	wid=oldImage.getWidth();
-			    int	height=oldImage.getHeight();
-			    
-			    if(wid>500){
-				Transform resize1 = ImagesServiceFactory.makeResize(500, 500*height/wid);
-				    Image newImage1 = imagesService.applyTransform(resize1, oldImage);
-				    byte[] newImageData1 = newImage1.getImageData();
-				    Blob reg=new Blob(newImageData1);
-				    i12.setreg(reg);							       
-			    }
-			    
-			    Transform resize2 =	ImagesServiceFactory.makeResize(96, 96);
-			    Image newImage2 = imagesService.applyTransform(resize2, oldImage);
-			    byte[] newImageData2 = newImage2.getImageData();
-			    Blob thm=new Blob(newImageData2);
-			    i12.setthm(thm);
-			    
-			    Transform resize3 =	ImagesServiceFactory.makeResize(48, 48);
-			    Image newImage3 = imagesService.applyTransform(resize3, oldImage);
-			    byte[] newImageData3 = newImage3.getImageData();
-			    Blob ico=new Blob(newImageData3);
-			    i12.setIcon(ico);
-
-			}
-			finally{
-				m.close();
-			}	    
-			rsp.sendRedirect("/"+s.owner+"/");
-		}
-	}
-		*/
 
 	public void Icon(String	path,HttpServletResponse rsp)throws IOException{
 		I12 i=Get(path);
