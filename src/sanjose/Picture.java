@@ -2,11 +2,16 @@ package	sanjose;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.StringTokenizer;
+import java.util.logging.Logger;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.HttpServletResponse;
 
 public class Picture{
+	private static final Logger log = Logger.getLogger(Picture.class.getName());
+
 	static public String Mime(String ext){
 		if (ext.equalsIgnoreCase("gif"))
 			return "image/gif";
@@ -48,9 +53,9 @@ public class Picture{
 	}
 	private	I12 Get(String path){		
 		if(path!=null){
-			String[]s=path.split("/");
-			if(s.length>1)
-				return Get(new Id(s[1]));
+			StringTokenizer n=new StringTokenizer(path,"/");
+			if(n.countTokens()>0)
+				return Get(new Id(n.nextToken()));
 		}
 		return null;
 	}
