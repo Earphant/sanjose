@@ -32,6 +32,7 @@ import org.apache.commons.fileupload.FileItemHeaders;
  * @author Michael C. Macaluso
  * @since 1.3
  */
+@SuppressWarnings("rawtypes")
 public class FileItemHeadersImpl implements FileItemHeaders, Serializable {
     private static final long serialVersionUID = -4455695752627032559L;
 
@@ -39,7 +40,7 @@ public class FileItemHeadersImpl implements FileItemHeaders, Serializable {
      * Map of <code>String</code> keys to a <code>List</code> of
      * <code>String</code> instances.
      */
-    private final Map headerNameToValueListMap = new HashMap();
+	private final Map headerNameToValueListMap = new HashMap();
 
     /**
      * List to preserve order of headers as added.  This would not be
@@ -76,7 +77,8 @@ public class FileItemHeadersImpl implements FileItemHeaders, Serializable {
      * @param name name of this header
      * @param value value of this header
      */
-    public synchronized void addHeader(String name, String value) {
+    @SuppressWarnings("unchecked")
+	public synchronized void addHeader(String name, String value) {
         String nameLower = name.toLowerCase();
         List headerValueList = (List) headerNameToValueListMap.get(nameLower);
         if (null == headerValueList) {

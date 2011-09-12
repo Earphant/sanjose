@@ -29,7 +29,11 @@ import java.util.Comparator;
  */
 class ReverseComparator extends AbstractFileComparator implements Serializable {
 
-    private final Comparator<File> delegate;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private final Comparator<File> delegate;
 
     /**
      * Construct an instance with the sepecified delegate {@link Comparator}.
