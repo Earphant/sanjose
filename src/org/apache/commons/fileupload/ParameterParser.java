@@ -32,6 +32,7 @@ import java.util.Map;
  * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
  */
 
+@SuppressWarnings("rawtypes")
 public class ParameterParser {
     /**
      * String to be parsed.
@@ -224,7 +225,7 @@ public class ParameterParser {
      *
      * @return a map of name/value pairs
      */
-    public Map parse(final String str, char[] separators) {
+	public Map parse(final String str, char[] separators) {
         if (separators == null || separators.length == 0) {
             return new HashMap();
         }
@@ -289,7 +290,8 @@ public class ParameterParser {
      *
      * @return a map of name/value pairs
      */
-    public Map parse(
+    @SuppressWarnings("unchecked")
+	public Map parse(
         final char[] chars,
         int offset,
         int length,
