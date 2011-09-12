@@ -46,7 +46,12 @@ import java.util.Comparator;
  */
 public class DefaultFileComparator extends AbstractFileComparator implements Serializable {
 
-    /** Singleton default comparator instance */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/** Singleton default comparator instance */
     public static final Comparator<File> DEFAULT_COMPARATOR = new DefaultFileComparator();
 
     /** Singleton reverse default comparator instance */

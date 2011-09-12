@@ -50,7 +50,12 @@ import java.io.Serializable;
  */
 public class HiddenFileFilter extends AbstractFileFilter implements Serializable {
     
-    /** Singleton instance of <i>hidden</i> filter */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/** Singleton instance of <i>hidden</i> filter */
     public static final IOFileFilter HIDDEN  = new HiddenFileFilter();
     
     /** Singleton instance of <i>visible</i> filter */
