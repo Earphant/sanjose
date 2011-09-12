@@ -14,7 +14,7 @@ public class CommunityServlet extends HttpServlet {
 		p.aside="<ul><li><a href=/post/organization>Create a group</a></ul>";
 		PersistenceManager mgr=Helper.getMgr();
 		Query q=mgr.newQuery(I.class);
-		q.setFilter("r==0");
+		q.setFilter("r==0 && d==1 && h==1");
 		q.setOrdering("m desc");
 		q.setRange(0,50);
 		try{

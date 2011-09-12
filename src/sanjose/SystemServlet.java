@@ -21,15 +21,15 @@ public class SystemServlet extends HttpServlet{
 	private void follow(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		Session s=new Session("ow");
-		Id d=new Id(req.getParameter("i"));
+		I d=new I(req.getParameter("i"));
 		PersistenceManager m=Helper.getMgr();   
-		I21 i=new I21(d.i,d.j,s.owner.getId(),s.owner.getSite(),new Date());
+		I21 i=new I21(d,s.owner,new Date());
 		try{
 			m.makePersistent(i);
 		}finally {
 			m.close();
 		}
-		rsp.sendRedirect("/"+d.i+"."+d.j+"/");
+		rsp.sendRedirect("/"+d+"/");
 	}
 	@SuppressWarnings("unchecked")
 	private void settings(HttpServletRequest req,HttpServletResponse rsp)
@@ -155,16 +155,16 @@ public class SystemServlet extends HttpServlet{
 	private void unfollow(HttpServletRequest req,HttpServletResponse rsp)
 	throws IOException{
 	Session s=new Session("ow");
-	Id d=new Id(req.getParameter("i"));
+	I d=new I(req.getParameter("i"));
 	PersistenceManager m=Helper.getMgr();   
-	I21 i=new I21(d.i,d.j,s.owner.getId(),s.owner.getSite(),new Date());
+	I21 i=new I21(d,s.owner,new Date());
 	try{
 		m.makePersistent(i);
 		m.deletePersistent(i);
 	}finally {
 		m.close();
 	}
-	rsp.sendRedirect("/"+d.i+"."+d.j+"/");
+	rsp.sendRedirect("/"+d+"/");
 }
 
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp)

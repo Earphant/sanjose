@@ -90,19 +90,6 @@ public class I{
 		return new Date(t*1000);
 	}
 
-	static public I create(String text,String plink,long type,long rate,
-		I owner,PersistenceManager mgr,boolean end){
-		I ret=new I(text,plink,type,rate,owner);
-		mgr.makePersistent(ret);
-		if(ret.i==0L){
-			ret.i=ret._key.getId();
-			ret.c=ret.m;
-			ret.t=ret.m;
-			if(end)
-				mgr.makePersistent(ret);
-		}
-		return ret;
-	}
 	static public I query(I id,PersistenceManager mgr){
 		I ret=null;
 		Query q=mgr.newQuery(I.class);
@@ -119,6 +106,19 @@ public class I{
 		}
 		return ret;
 	}
+	static public I store(String text,String plink,long type,long rate,
+			I owner,PersistenceManager mgr,boolean end){
+			I ret=new I(text,plink,type,rate,owner);
+			mgr.makePersistent(ret);
+			if(ret.i==0L){
+				ret.i=ret._key.getId();
+				ret.c=ret.m;
+				ret.t=ret.m;
+				if(end)
+					mgr.makePersistent(ret);
+			}
+			return ret;
+		}
 	static public I timed(String val){
 		if(val==null)
 			return null;
@@ -312,16 +312,20 @@ public class I{
 	public long getVersion(){
 	    return v;
 	}
+	public long incReplyCounter(){
+		return ++u;
+	}
 	public boolean isPicture(){
 		if(e==null)
 			return false;
 		return e.equalsIgnoreCase("jpg");
 	}
-	public void setBase(I val){
-		if(val.j!=0){
-			log.warning("base: "+val);
-		    this.b=val.i;
-		    this.s=val.j;
+	public void setBase(I base,I owner){
+		if(base==null || base.j==0)
+			base=owner;
+		if(base.j!=0){
+		    this.b=base.i;
+		    this.s=base.j;
 		}
 	}
 	public void setExtra(String val){

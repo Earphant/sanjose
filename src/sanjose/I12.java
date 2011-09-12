@@ -1,11 +1,16 @@
 package sanjose;
 
+import java.util.List;
+import java.util.StringTokenizer;
+
 import com.google.appengine.api.datastore.Blob;
 import com.google.appengine.api.images.Image;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.Transform;
 
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
@@ -29,6 +34,35 @@ public class I12{
 	private Blob thm;
 	@Persistent
 	private Blob ico;
+
+	static public I12 create(){
+		return null;
+	}
+	static public I12 create(String path){
+		if(path!=null){
+			StringTokenizer n=new StringTokenizer(path,"/");
+			if(n.countTokens()>0)
+				return create(new I(n.nextToken()));
+		}
+		return null;
+	}
+	static public I12 create(I i){
+		PersistenceManager mgr=Helper.getMgr();
+		Query q=mgr.newQuery(I12.class);
+		q.setFilter("i==iParam && j==jParam");
+		q.declareParameters("Long iParam,Long jParam");
+		try{
+			@SuppressWarnings("unchecked")
+			List<I12> r=(List<I12>)q.execute(i.getId(),i.getSite());
+			if(!r.isEmpty()){
+				return r.get(0);
+			}
+		}
+		finally{
+			q.closeAll();
+		}
+		return null;
+	}
 
 	public I12(I i,Blob org){
 		this.i=i.getId();

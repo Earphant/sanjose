@@ -105,7 +105,7 @@ public class DataText{
 			List<I> r=(List<I>)q.execute(owner.getId(),owner.getSite(),type);
 			I i;
 			if(r.isEmpty()){
-				i=I.create(text,plink,type,0,owner,mgr,false);
+				i=I.store(text,plink,type,0,owner,mgr,false);
 			}
 			else{
 				i=r.get(0);

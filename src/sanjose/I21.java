@@ -23,13 +23,13 @@ public class I21{
 	@Persistent
 	private Long w;;
 
-	public I21(long id,long site,long ownerid,long ownersite,Date time){
-		i=id;
-		j=site;
-		o=ownerid;
-		w=ownersite;
+	public I21(I i,I owner,Date time){
+		this.i=i.getId();
+		this.j=i.getSite();
+		this.o=owner.getId();
+		this.w=owner.getSite();
 		t=time;
-		_key=i+"."+j+"."+o+"."+w;
+		_key=i+"."+owner;
 	}
 	public Long geti(){
 	    return i;
