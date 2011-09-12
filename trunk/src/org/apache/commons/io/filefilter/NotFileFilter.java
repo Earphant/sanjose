@@ -30,7 +30,11 @@ import java.io.Serializable;
  */
 public class NotFileFilter extends AbstractFileFilter implements Serializable {
     
-    /** The filter */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/** The filter */
     private final IOFileFilter filter;
 
     /**

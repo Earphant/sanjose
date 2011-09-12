@@ -31,6 +31,10 @@ import java.io.Serializable;
 public class TrueFileFilter implements IOFileFilter, Serializable {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
      * Singleton instance of true filter.
      * @since Commons IO 1.3
      */
