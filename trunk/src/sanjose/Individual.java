@@ -81,7 +81,7 @@ public class Individual{
 		PersistenceManager m=Helper.getMgr();
 		try{
 			if(i.getSite()==0)
-				o=I.create(v,null,2,0,sn.owner,m,true);
+				o=I.store(v,null,2,0,sn.owner,m,true);
 			else{
 				o=I.query(i,m);
 				o.setText(v);

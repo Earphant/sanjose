@@ -19,9 +19,9 @@ public class Upload{
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp,Page page)
 		throws IOException{
 		page.title="Upload";
-		Id d=new Id(req.getParameter("i"));
+		I i=new I(req.getParameter("i"));
 		page.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/uploads>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";		
-		page.out("<form method=post action=/post/upload?i="+d.i+"."+d.j+" enctype=multipart/form-data> <input type=file name=file>");
+		page.out("<form method=post action=/post/upload?i="+i+" enctype=multipart/form-data> <input type=file name=file>");
 		page.end("<input type=submit name=ok></form>");
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
@@ -44,7 +44,7 @@ public class Upload{
 						PersistenceManager m=Helper.getMgr();
 						I i=new I(req.getParameter("i"));
 						if(i.getSite()==0)
-							i=I.create("",null,12,0,sn.owner,m,true);
+							i=I.store("",null,12,0,sn.owner,m,true);
 						I12 o=new I12(i,new Blob(a));
 						o.setPicture();
 						m.makePersistent(o);

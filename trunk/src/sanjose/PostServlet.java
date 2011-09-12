@@ -1,14 +1,12 @@
 package sanjose;
 
 import java.io.IOException;
-import java.util.logging.Logger;
-//import java.util.logging.Logger;
 import javax.jdo.PersistenceManager;
 import javax.servlet.http.*;
 
 @SuppressWarnings("serial")
 public class PostServlet extends HttpServlet{
-	private static final Logger log=Logger.getLogger(PostServlet.class.getName());
+	//private static final Logger log=Logger.getLogger(PostServlet.class.getName());
 	private void getMessage(HttpServletRequest req,HttpServletResponse rsp,
 		Page page,PersistenceManager mgr)throws IOException{
 		I i=new I(req.getParameter("i"));
@@ -29,15 +27,20 @@ public class PostServlet extends HttpServlet{
 		throws IOException{
 		Session sn=new Session("/post");
 		String v=req.getParameter("text");
+		I b=new I(req.getParameter("b"));
 		I i=new I(req.getParameter("i"));
+		I re=new I(req.getParameter("re"));
 		PersistenceManager m=Helper.getMgr();
 		try{
 			if(i.getSite()==0){
-				i=I.create(v,null,0,0,sn.owner,m,false);
-				log.warning("post");
-				i.setRef(new I(req.getParameter("re")));
-				i.setBase(new I(req.getParameter("re")));
-				i.setBase(new I(req.getParameter("b")));
+				i=I.store(v,null,0,0,sn.owner,m,false);
+				i.setRef(re);
+				i.setBase(b,re);
+				if(re.getSite()!=0){
+					re=I.query(re,m);
+					re.incReplyCounter();
+					m.makePersistent(re);
+				}
 			}
 			else{
 				i=I.query(i,m);
