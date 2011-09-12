@@ -164,12 +164,12 @@ public class I{
 	static public void table(Object rs,Page page)throws IOException{
 		if(!((List<I>)rs).isEmpty()){
 			page.out("<table class=list>");
-			for(I o:(List<I>)rs){
-				I b=o.getBase();
-				page.out("<tr><th width=40%><a href=/"+o.getPath()+">"+o.getTitle(true)+
-					"</a><th><a href=/"+b+">"+b+
-					"</a><th>"+o.getOwner()+"<td class=c2 t="+
-					o.getModifyTick()+">");
+			for(I i:(List<I>)rs){
+				I b=i.getBase();
+				page.out("<tr><th width=40%><a href=/"+i.getPath()+">"+
+					i.getTitle(true)+"</a><th><a href=/"+b+">"+b+
+					"</a><th>"+i.getOwner()+"<td class=c2 t="+
+					i.getModifyTick()+">");
 			}
 			page.out("</table>");
 		}
