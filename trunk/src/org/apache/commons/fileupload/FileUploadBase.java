@@ -60,6 +60,7 @@ import org.apache.commons.fileupload.util.Streams;
  *
  * @version $Id: FileUploadBase.java 963609 2010-07-13 06:56:47Z jochen $
  */
+@SuppressWarnings("rawtypes")
 public abstract class FileUploadBase {
 
     // ---------------------------------------------------------- Class methods
@@ -305,7 +306,7 @@ public abstract class FileUploadBase {
      *
      * @deprecated Use the method in <code>ServletFileUpload</code> instead.
      */
-    public List /* FileItem */ parseRequest(HttpServletRequest req)
+	public List /* FileItem */ parseRequest(HttpServletRequest req)
     throws FileUploadException {
         return parseRequest(new ServletRequestContext(req));
     }
@@ -343,7 +344,8 @@ public abstract class FileUploadBase {
      * @throws FileUploadException if there are problems reading/parsing
      *                             the request or storing files.
      */
-    public List /* FileItem */ parseRequest(RequestContext ctx)
+    @SuppressWarnings("unchecked")
+	public List /* FileItem */ parseRequest(RequestContext ctx)
             throws FileUploadException {
         List items = new ArrayList();
         boolean successful = false;
@@ -622,7 +624,8 @@ public abstract class FileUploadBase {
      * @return A <code>Map</code> containing the parsed HTTP request headers.
      * @deprecated Use {@link #getParsedHeaders(String)}
      */
-    protected Map /* String, String */ parseHeaders(String headerPart) {
+    @SuppressWarnings("unchecked")
+	protected Map /* String, String */ parseHeaders(String headerPart) {
         FileItemHeaders headers = getParsedHeaders(headerPart);
         Map result = new HashMap();
         for (Iterator iter = headers.getHeaderNames();  iter.hasNext();) {
