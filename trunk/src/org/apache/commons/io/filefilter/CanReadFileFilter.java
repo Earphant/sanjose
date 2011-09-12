@@ -62,7 +62,12 @@ import java.io.Serializable;
  */
 public class CanReadFileFilter extends AbstractFileFilter implements Serializable {
     
-    /** Singleton instance of <i>readable</i> filter */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/** Singleton instance of <i>readable</i> filter */
     public static final IOFileFilter CAN_READ = new CanReadFileFilter();
 
     /** Singleton instance of not <i>readable</i> filter */

@@ -43,6 +43,10 @@ import java.io.Serializable;
 public class DirectoryFileFilter extends AbstractFileFilter implements Serializable {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
      * Singleton instance of directory filter.
      * @since Commons IO 1.3
      */
