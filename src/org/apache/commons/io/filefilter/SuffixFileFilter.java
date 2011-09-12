@@ -49,7 +49,12 @@ import org.apache.commons.io.IOCase;
  */
 public class SuffixFileFilter extends AbstractFileFilter implements Serializable {
     
-    /** The filename suffixes to search for */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/** The filename suffixes to search for */
     private final String[] suffixes;
 
     /** Whether the comparison is case sensitive. */

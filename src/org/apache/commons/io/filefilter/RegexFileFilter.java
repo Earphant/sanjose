@@ -45,7 +45,11 @@ import org.apache.commons.io.IOCase;
  */
 public class RegexFileFilter extends AbstractFileFilter implements Serializable {
 
-    /** The regular expression pattern that will be used to match filenames */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/** The regular expression pattern that will be used to match filenames */
     private final Pattern pattern;
 
     /**

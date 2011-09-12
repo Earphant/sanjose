@@ -43,7 +43,11 @@ import java.io.Serializable;
  */
 public class SizeFileFilter extends AbstractFileFilter implements Serializable {
 
-    /** The size threshold. */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/** The size threshold. */
     private final long size;
     /** Whether the files accepted will be larger or smaller. */
     private final boolean acceptLarger;
