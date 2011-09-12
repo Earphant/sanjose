@@ -1,5 +1,6 @@
 package	sanjose;
 
+import com.google.appengine.api.datastore.Blob;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 
@@ -48,12 +49,12 @@ public class Picture{
 
 	public void Icon(String	path,HttpServletResponse rsp)throws IOException{
 		I12 i=I12.create(path);
-		if(i==null){
+		if(i==null)
 			rsp.sendRedirect("/icon.jpg");
-			return;
+		else{
+			rsp.setContentType("image");
+			rsp.getOutputStream().write(i.getIcon().getBytes());
 		}
-		rsp.setContentType("image");
-		rsp.getOutputStream().write(i.getIcon().getBytes());
 	}
 	public void Original(String path,HttpServletResponse rsp)throws	IOException{
 		I12 i=I12.create(path);
@@ -67,7 +68,12 @@ public class Picture{
 	}
 	public void Thumbnail(String path,HttpServletResponse rsp)throws IOException{
 		I12 i=I12.create(path);
-		rsp.setContentType("image");
-		rsp.getOutputStream().write(i.getThumbnail().getBytes());
+		Blob b=i.getThumbnail();
+		if(b==null)
+			rsp.sendRedirect("/icon.jpg");
+		else{
+			rsp.setContentType("image");
+			rsp.getOutputStream().write(b.getBytes());
+		}
 	}
 }

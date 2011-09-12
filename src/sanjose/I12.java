@@ -1,14 +1,12 @@
 package sanjose;
 
-import java.util.List;
-import java.util.StringTokenizer;
-
 import com.google.appengine.api.datastore.Blob;
 import com.google.appengine.api.images.Image;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.Transform;
-
+import java.util.List;
+import java.util.StringTokenizer;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.annotations.PersistenceCapable;
