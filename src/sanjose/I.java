@@ -90,45 +90,6 @@ public class I{
 		return new Date(t*1000);
 	}
 
-	static public I query(I id,PersistenceManager mgr){
-		I ret=null;
-		Query q=mgr.newQuery(I.class);
-		q.setFilter("i==iParam && j==jParam");
-		q.declareParameters("Long iParam,Long jParam");
-		try{
-			@SuppressWarnings("unchecked")
-			List<I> r=(List<I>)q.execute(id.i,id.j);
-			if(!r.isEmpty())
-				ret=r.get(0);
-		}
-		finally{
-			q.closeAll();
-		}
-		return ret;
-	}
-	static public I store(String text,String plink,long type,long rate,
-			I owner,PersistenceManager mgr,boolean end){
-			I ret=new I(text,plink,type,rate,owner);
-			mgr.makePersistent(ret);
-			if(ret.i==0L){
-				ret.i=ret._key.getId();
-				ret.c=ret.m;
-				ret.t=ret.m;
-				if(end)
-					mgr.makePersistent(ret);
-			}
-			return ret;
-		}
-	static public I timed(String val){
-		if(val==null)
-			return null;
-		I i=new I(val);
-		i.o=i.i;
-		i.w=i.j;
-		i.m=i.e==null?now():new Date(Long.parseLong(i.e)*1000);
-		i.t=i.m;
-		return i;
-	}
 	@SuppressWarnings("unchecked")
 	static public void list(Object rs,Page page)throws IOException{
 		if(!((List<I>)rs).isEmpty()){
@@ -170,6 +131,35 @@ public class I{
 			}
 		}
 	}
+	static public I query(I id,PersistenceManager mgr){
+		I ret=null;
+		Query q=mgr.newQuery(I.class);
+		q.setFilter("i==iParam && j==jParam");
+		q.declareParameters("Long iParam,Long jParam");
+		try{
+			@SuppressWarnings("unchecked")
+			List<I> r=(List<I>)q.execute(id.i,id.j);
+			if(!r.isEmpty())
+				ret=r.get(0);
+		}
+		finally{
+			q.closeAll();
+		}
+		return ret;
+	}
+	static public I store(String text,String plink,long type,long rate,
+		I owner,PersistenceManager mgr,boolean end){
+		I ret=new I(text,plink,type,rate,owner);
+		mgr.makePersistent(ret);
+		if(ret.i==0L){
+			ret.i=ret._key.getId();
+			ret.c=ret.m;
+			ret.t=ret.m;
+			if(end)
+				mgr.makePersistent(ret);
+		}
+		return ret;
+	}
 	@SuppressWarnings("unchecked")
 	static public void table(Object rs,Page page)throws IOException{
 		if(!((List<I>)rs).isEmpty()){
@@ -197,6 +187,16 @@ public class I{
 			}
 			page.out("</table>");
 		}
+	}
+	static public I timed(String val){
+		if(val==null)
+			return null;
+		I i=new I(val);
+		i.o=i.i;
+		i.w=i.j;
+		i.m=i.e==null?now():new Date(Long.parseLong(i.e)*1000);
+		i.t=i.m;
+		return i;
 	}
 
 	public I(long id,long site,String text,String plink,long classid,long rate,

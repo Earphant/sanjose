@@ -41,6 +41,7 @@ textarea{width:100%}
     
 .icon{width:48px;height:48px;margin-top:1ex;float:left}
 .list{table-layout:fixed;border-collapse:collapse;width:100%}
+.list th,.list td{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .list th{text-align:left;font-weight:normal}
 .list td{text-align:right}
 .post{clear:left;padding-top:2ex}
