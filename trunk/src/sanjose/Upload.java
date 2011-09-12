@@ -26,7 +26,11 @@ public class Upload{
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 	    throws IOException{
-        Session sn=new Session("/post");
+		I w=new I(req.getParameter("i"));
+		if(w.getSite()==0){
+			Session s=new Session("/post");
+			w=s.owner;
+		}
 		ServletFileUpload up=new ServletFileUpload();
 		FileItemIterator ir;
 		try{
@@ -38,13 +42,15 @@ public class Upload{
 					log.warning("Got a form field: "+t.getFieldName());
 				else{ 
 					log.warning("Got an uploaded file: "+t.getFieldName()+", name = "+t.getName());
-					//String x=t.getName().substring(t.getName().lastIndexOf(".")+1,t.getName().length());
 					byte[] a=IOUtils.toByteArray(s);
-					if(!new DataText().doPost(req,rsp,a,sn.owner)){
+					if(!new DataText().doPost(req,rsp,a,w)){
 						PersistenceManager m=Helper.getMgr();
 						I i=new I(req.getParameter("i"));
-						if(i.getSite()==0)
-							i=I.store("",null,12,0,sn.owner,m,true);
+						if(i.getSite()==0){
+							String x=t.getName();
+							x=x.substring(x.lastIndexOf(".")+1,x.length());
+							i=I.store(x,null,12,0,w,m,true);
+						}
 						I12 o=new I12(i,new Blob(a));
 						o.setPicture();
 						m.makePersistent(o);
