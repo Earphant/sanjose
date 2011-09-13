@@ -49,7 +49,7 @@ public class Page{
 	public void Head(String cont)throws IOException{
 		response.setContentType(content_type);
 		if(cont==null)
-			cont="<!doctype html><html><head><meta http-equiv=content-type content="+content_type+"><link rel=stylesheet type=text/css href=/css/><title>"+title+"</title></head>";
+			cont="<!doctype html><html><head><meta http-equiv=content-type content="+content_type+"><link rel=stylesheet type=text/css href=/css/><title>"+title+"</title></head><script>document.createElement('article');document.createElement('aside');document.createElement('footer');document.createElement('header');document.createElement('nav');</script>";
 		response.getWriter().println(cont);
 		head=true;
 	}
