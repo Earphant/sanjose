@@ -91,7 +91,8 @@ public class I{
 	}
 
 	@SuppressWarnings("unchecked")
-	static public void list(Object rs,Page page)throws IOException{
+	static public long list(Object rs,Page page)throws IOException{
+		long ret=0;
 		if(!((List<I>)rs).isEmpty()){
 			for(I o:(List<I>)rs){
 				String b=o.getBase().toString();
@@ -128,8 +129,10 @@ public class I{
 						x+"<br>"+t+"</br><a href=/post?re="+
 						i+"&jmp=%2F>Re</a></div></div>");
 				}
+				ret++;
 			}
 		}
+		return ret;
 	}
 	static public I query(I id,PersistenceManager mgr){
 		I ret=null;
@@ -169,7 +172,7 @@ public class I{
 				page.out("<tr><th width=40%><a href=/"+i.getPath()+">"+
 					i.getTitle(true)+"</a><th><a href=/"+b+">"+b+
 					"</a><th>"+i.getOwner()+"<td>"+i.getReplyString()+
-					"<td class=c2 t="+i.getModifyTick()+">");
+					"<td class=c2 t="+i.getReplyTick()+">");
 			}
 			page.out("</table>");
 		}
@@ -294,9 +297,9 @@ public class I{
 	public String getReplyString(){
 	    return u==0?"":u.toString();
 	}
-	public Date getReplyTime(){
-		return y;
-	}	
+	public long getReplyTick(){
+	    return y.getTime()/1000;
+	}
 	public long getSite(){
 	    return j;
 	}
@@ -350,6 +353,9 @@ public class I{
 			this.h=val.j;
 		}
 		log.warning(this+"/"+val);
+	}
+	public void setReplyCount(long val){
+	    u=val;
 	}
 	public void setReplyTime(Date val){
 		this.y=val==null?now():val;

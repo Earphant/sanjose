@@ -30,7 +30,11 @@ public class Based{
 			page.aside="<ul><li><a href=/post?i="+d+">Edit</a><li><a href=/post/mark?re="+d+">Mark</a></ul>";
 			if(d.getType()==12)
 				page.out("<a href=/originals/"+d+".jpg title=test><img src=/"+base+"/"+d+".jpg></a>");
-			Replies.list(d,page,m);
+			long r=Replies.list(d,page,m);
+			if(r!=d.getReplyCount()){
+				d.setReplyCount(r);
+				m.makePersistent(d);
+			}
 			page.out("<form method=post action=/post?re="+d+">");
 			page.out("<textarea name=text rows=5></textarea>");
 			page.out("<input type=submit name=ok value=Reply></form>");
