@@ -26,6 +26,7 @@ import java.util.Iterator;
  * @author Michael C. Macaluso
  * @since 1.3
  */
+@SuppressWarnings("rawtypes")
 public interface FileItemHeaders {
     /**
      * Returns the value of the specified part header as a <code>String</code>.
@@ -57,7 +58,6 @@ public interface FileItemHeaders {
      *         requested header. If the item does not have any headers of
      *         that name, return an empty <code>Enumeration</code>
      */
-    @SuppressWarnings("rawtypes")
 	Iterator getHeaders(String name);
 
     /**
@@ -74,6 +74,5 @@ public interface FileItemHeaders {
      *         requested header. If the item does not have any headers of
      *         that name return an empty <code>Enumeration</code>
      */
-    @SuppressWarnings("rawtypes")
 	Iterator getHeaderNames();
 }
