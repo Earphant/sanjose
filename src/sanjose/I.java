@@ -168,8 +168,8 @@ public class I{
 				I b=i.getBase();
 				page.out("<tr><th width=40%><a href=/"+i.getPath()+">"+
 					i.getTitle(true)+"</a><th><a href=/"+b+">"+b+
-					"</a><th>"+i.getOwner()+"<td class=c2 t="+
-					i.getModifyTick()+">");
+					"</a><th>"+i.getOwner()+"<td>"+i.getReplyString()+
+					"<td class=c2 t="+i.getModifyTick()+">");
 			}
 			page.out("</table>");
 		}
@@ -290,6 +290,9 @@ public class I{
 	}
 	public long getReplyCount(){
 	    return u;
+	}
+	public String getReplyString(){
+	    return u==0?"":u.toString();
 	}
 	public Date getReplyTime(){
 		return y;
