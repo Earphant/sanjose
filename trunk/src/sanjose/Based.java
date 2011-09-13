@@ -17,19 +17,20 @@ public class Based{
 		else
 			Organization.out(d,page,m,ssn);		
 	}
-	private void Object(I id,String base,HttpServletResponse rsp,Page page)
+	private void Object(I i,String base,HttpServletResponse rsp,Page page)
 	    throws IOException{
 		log.warning("Object");
-		if(id.isPicture()){
-			new Picture().Regular(id,rsp);
+		if(i.isPicture()){
+			new Picture().Regular(i,rsp);
 		}
 		else{
 			PersistenceManager m=Helper.getMgr();
-			I d=I.query(id,m);
+			I d=I.query(i,m);
 			page.title=d.getTitle(true);
 			page.aside="<ul><li><a href=/post?i="+d+">Edit</a><li><a href=/post/mark?re="+d+">Mark</a></ul>";
 			if(d.getType()==12)
-				page.out("<a href=/originals/"+id+".jpg title=test><img src=/"+base+"/"+id+".jpg></a>");
+				page.out("<a href=/originals/"+d+".jpg title=test><img src=/"+base+"/"+d+".jpg></a>");
+			Replies.list(d,page,m);
 			page.out("<form method=post action=/post?re="+d+">");
 			page.out("<textarea name=text rows=5></textarea>");
 			page.out("<input type=submit name=ok value=Reply></form>");
