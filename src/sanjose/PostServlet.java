@@ -39,6 +39,7 @@ public class PostServlet extends HttpServlet{
 				if(re.getSite()!=0){
 					re=I.query(re,m);
 					re.incReplyCounter();
+					re.setReplyTime(null);
 					m.makePersistent(re);
 				}
 			}

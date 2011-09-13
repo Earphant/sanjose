@@ -15,7 +15,7 @@ public class CommunityServlet extends HttpServlet {
 		PersistenceManager mgr=Helper.getMgr();
 		Query q=mgr.newQuery(I.class);
 		q.setFilter("r==0 && d==1 && h==1");
-		q.setOrdering("m desc");
+		q.setOrdering("y desc");
 		q.setRange(0,50);
 		try{
 			I.table(q.execute(),p);
