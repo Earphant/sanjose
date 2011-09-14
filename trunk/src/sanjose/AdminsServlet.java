@@ -163,7 +163,8 @@ public class AdminsServlet extends HttpServlet{
     public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
         Page p=new Page(rsp);
-        p.aside="<ul><li><a href=/admins>Admins</a></ul><ul><li><a href=/admins?a=2>Groups</a><li><a href=/admins?a=12>Pictures</a><li><a href=/admins?a=>Posts</a><li><a href=/admins?a=1>Users</a></ul>";
+        p.nav="<ul><li><a href=/>Home</a><li><a href=/admins?a=2>Groups</a><li><a href=/admins?a=12>Pictures</a><li><a href=/admins?a=>Posts</a><li><a href=/admins?a=1>Users</a></ul>";
+        p.aside=null;
 		String a=req.getParameter("a");
 		I i=new I(req.getParameter("i"));
 		if(a==null){
