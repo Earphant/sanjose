@@ -1,33 +1,29 @@
 package sanjose;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.http.HttpServletResponse;
 
 public class Page{
 	private Boolean full=false;
 	private Boolean head=false;
 	private HttpServletResponse response;
+	private PrintWriter writer;
 
-	public Page(HttpServletResponse resp){
+	public Page(HttpServletResponse resp)throws IOException{
 		response=resp;
+		writer=resp.getWriter();
 	}
 
 	public void begin()throws IOException{
 		if(!head)
 			Head(null);
-		response.getWriter().println("<body class=c90><nav>"+system+nav+
-			"</nav><header>"+header+"</header><aside>"+aside+
-			"</aside><article><h1>"+title+"</h1>");
-	}
-	public void Body(String cont)throws IOException{
-		if(!head)
-			Head(null);
-		if(cont==null)
-			cont="<body class=c90><nav>"+system+nav+"</nav><header>"+header+
-				"</header><aside>"+aside+"</aside><article><h1>"+title+
-				"</h1>"+articale+"</article><footer>"+footer+
-				"</footer></body><script src=/js/adxon.js></script><script src=/js/></script></html>";
-		response.getWriter().println(cont);
+		writer.print("<body class=c90><nav>"+system+nav+"</nav><header>"+
+			header+"</header>");
+		if(aside==null)
+			writer.print("<article class=wide><h1>"+title+"</h1>");
+		else
+			writer.print("<aside>"+aside+"</aside><article><h1>"+title+"</h1>");
 	}
 	public void end(String cont)throws IOException{
 		if(!head)

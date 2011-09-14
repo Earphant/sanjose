@@ -201,8 +201,7 @@ public class SystemServlet extends HttpServlet{
 		}
 		else
 			page.title=p;
-		page.Head(null);
-		page.Body(null);
+		page.end(null);
 	}
 	@SuppressWarnings("unchecked")
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
