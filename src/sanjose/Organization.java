@@ -1,6 +1,7 @@
 package	sanjose;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -9,24 +10,54 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class Organization{
-	//@SuppressWarnings("unchecked")
-	static public void out(I id,Page page,PersistenceManager mgr,Session ssn)
-		throws IOException{
-		page.title=id.getTitle(false);
-		Query q=mgr.newQuery(I21.class);
-		I o=ssn.owner;
-		q.setFilter("o=="+o.getId()+" && w=="+o.getSite()+" && i=="+
-			id.getId()+" && j=="+id.getSite());
+	static public String menu(I id,Session ssn,PersistenceManager mgr){
+		String ret=null;
+		Long I=id.getId();
+		Long J=id.getSite();
+		Long O = null;
+		Long W = null;
+		Query q=mgr.newQuery(I.class);		
+		q.setFilter("i==iParam && j==jParam ");	
+		q.declareParameters("Long iParam,Long jParam");  
 		try{
 			@SuppressWarnings("unchecked")
-			List<I21> r=(List<I21>)q.execute();
-			page.aside=r.isEmpty()?"<ul><li><a href=/system/follow?i="+id+">Follow</a><li><a href=/post?b="+id+">Post</a></ul>":
-				"<ul><li><a href=/system/unfollow?i="+id+">Unfollow</a><li><a href=/post/organization?i="+id+">Setting</a></ul>";
+			List<I> r=(List<I>)q.execute(I,J);
+			if(!r.isEmpty()){
+				Long a=r.get(0).getType();	
+			    if(a==2){
+			    	O=r.get(0).getOwner().getId();
+			    	W=r.get(0).getOwner().getSite();
+			    }			    
+			}
 		}
 		finally{
 			q.closeAll();
 		}
-		q=mgr.newQuery(I.class);
+		if(O==ssn.owner.getId() && W==ssn.owner.getSite())
+			ret="<ul><li><a href=/post>Post</a><li><a href=/system/settings>Settings</a></ul><ul><li><a href=/"+id+"/contacts>members</a></ul>";
+		else{
+			Query q21=mgr.newQuery(I21.class);
+			I o=ssn.owner;
+			q21.setFilter("o=="+o.getId()+" && w=="+o.getSite()+" && i=="+
+				id.getId()+" && j=="+id.getSite());
+			try{
+				@SuppressWarnings("unchecked")
+				List<I21> r=(List<I21>)q21.execute();
+				ret=r.isEmpty()?"<ul><li><a href=/system/join?i="+id+">Join</a><li><a href=/post?b="+id+">Post</a></ul><ul><li><a href=/"+id+"/contacts>members</a></ul>":
+					"<ul><li><a href=/system/quit?i="+id+">Quit</a><li><a href=/post?b="+id+">Post</a></ul><ul><li><a href=/"+id+"/contacts>members</a></ul>";
+			}
+			finally{
+				q21.closeAll();
+			}
+		}
+		return ret;
+	}
+	//@SuppressWarnings("unchecked")
+	static public void out(I id,Page page,PersistenceManager mgr,Session ssn)
+		throws IOException{
+		page.title=id.getTitle(false);
+		page.aside=menu(id,ssn,mgr);		
+		Query q=mgr.newQuery(I.class);
 		q.setFilter("b==oParam && s==wParam ");	
 		q.declareParameters("Long oParam,Long wParam");
         q.setOrdering("m desc");
@@ -39,6 +70,7 @@ public class Organization{
 		}
 		page.end(null);
 	}
+
 
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp,Page page,
 		PersistenceManager mgr)throws IOException{
@@ -66,7 +98,8 @@ public class Organization{
 		try{
 			if(i.getSite()==0){
 				o=I.store(v,null,2,0,sn.owner,m,true);
-				
+				I21 i21=new I21(o,o.getOwner(),2,new Date());
+			    m.makePersistent(i21);
 			}
 			else{
 				String q=req.getParameter("q");

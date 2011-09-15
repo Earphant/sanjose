@@ -21,11 +21,14 @@ public class I21{
 	@Persistent
 	private Long o;
 	@Persistent
-	private Long w;;
+	private Long w;
+	@Persistent
+	private Long a;
 
-	public I21(I i,I owner,Date time){
+	public I21(I i,I owner,long A,Date time){
 		this.i=i.getId();
 		this.j=i.getSite();
+		this.a=A;
 		this.o=owner.getId();
 		this.w=owner.getSite();
 		t=time;
@@ -42,6 +45,9 @@ public class I21{
 	}
 	public Date gett(){
 	    return t;
+	}
+	public Long geta(){
+	    return a;
 	}
 	public Long getw(){
 	    return w;

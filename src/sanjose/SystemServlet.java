@@ -23,7 +23,7 @@ public class SystemServlet extends HttpServlet{
 		Session s=new Session("ow");
 		I d=new I(req.getParameter("i"));
 		PersistenceManager m=Helper.getMgr();   
-		I21 i=new I21(d,s.owner,new Date());
+		I21 i=new I21(d,s.owner,1,new Date());
 		try{
 			m.makePersistent(i);
 		}finally {
@@ -157,7 +157,34 @@ public class SystemServlet extends HttpServlet{
 	Session s=new Session("ow");
 	I d=new I(req.getParameter("i"));
 	PersistenceManager m=Helper.getMgr();   
-	I21 i=new I21(d,s.owner,new Date());
+	I21 i=new I21(d,s.owner,1,new Date());
+	try{
+		m.makePersistent(i);
+		m.deletePersistent(i);
+	}finally {
+		m.close();
+	}
+	rsp.sendRedirect("/"+d+"/");
+}
+	private void join(HttpServletRequest req,HttpServletResponse rsp)
+	throws IOException{
+		Session s=new Session("ow");
+		I d=new I(req.getParameter("i"));
+		PersistenceManager m=Helper.getMgr();   
+		I21 i=new I21(d,s.owner,2,new Date());
+		try{
+			m.makePersistent(i);
+		}finally {
+			m.close();
+		}
+		rsp.sendRedirect("/"+d+"/");
+}
+	private void quit(HttpServletRequest req,HttpServletResponse rsp)
+	throws IOException{
+	Session s=new Session("ow");
+	I d=new I(req.getParameter("i"));
+	PersistenceManager m=Helper.getMgr();   
+	I21 i=new I21(d,s.owner,2,new Date());
 	try{
 		m.makePersistent(i);
 		m.deletePersistent(i);
@@ -197,6 +224,14 @@ public class SystemServlet extends HttpServlet{
 		}
 		else if(p.equalsIgnoreCase("/unfollow")){
 			unfollow(req,rsp);
+			return;
+		}
+		else if(p.equalsIgnoreCase("/join")){
+			join(req,rsp);
+			return;
+		}
+		else if(p.equalsIgnoreCase("/quit")){
+			quit(req,rsp);
 			return;
 		}
 		else
