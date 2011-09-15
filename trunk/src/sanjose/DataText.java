@@ -17,23 +17,48 @@ public class DataText{
 	private SimpleDateFormat fmt=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private I own;
 	private PersistenceManager mgr;
+	private String[] head;
+	private int timeIdx;
+	private Date time;
+
 	private boolean checkType(String line){
 		if(line==null)
 			return false;
 		return line.trim().equalsIgnoreCase("<!doctype palo-alto>");
+	}
+	private Date getDate(String line)throws ParseException{
+		if(head[timeIdx].equalsIgnoreCase("DATE"))
+			return fmt.parse(line);
+		return null;
+	}
+	private void postItem(String type,String val)throws ParseException{
+		log.warning(type);
+		if(type.equalsIgnoreCase("heart-rate"))
+			mgr.makePersistent(new I136(own,time,Long.parseLong(val)));
+		if(type.equalsIgnoreCase("weight"))
+			mgr.makePersistent(new I138(own,time,Long.parseLong(val)));
+		if(type.equalsIgnoreCase("step"))
+			mgr.makePersistent(new I139(own,time,Long.parseLong(val)));
 	}
 	private boolean postLine(String line)throws ParseException{
 		if(line==null)
 			return false;
 		try{
 			line=line.trim();
-			Date t=fmt.parse(line);
+			time=getDate(line);
 			String[]s=line.split(" ");
-			mgr.makePersistent(new I135(own,t,Long.parseLong(s[3]),
+			int i;
+			for(i=s.length;i>0;){
+				i--;
+				postItem(head[i],s[i]);
+			}
+			mgr.makePersistent(new I135(own,time,Long.parseLong(s[3]),
 				Long.parseLong(s[4])));
+			/*
 			mgr.makePersistent(new I136(own,t,Long.parseLong(s[5])));
 			mgr.makePersistent(new I138(own,t,Long.parseLong(s[2])));
 			mgr.makePersistent(new I139(own,t,Long.parseLong(s[6])));
+			*/
 		}
 		catch(ParseException e){
 			e.printStackTrace();
@@ -44,6 +69,8 @@ public class DataText{
 		log.warning("prep");
 		if(line==null)
 			return false;
+		head=line.split("\\s");
+		timeIdx=0;
 		mgr=Helper.getMgr();
 		own=owner;
 		return true;
