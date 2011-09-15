@@ -44,7 +44,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>tools</servlet-name>
 		<servlet-class>sanjose.ToolsServlet</servlet-class>
 	</servlet>
-
+    <servlet>
+		<servlet-name>downloads</servlet-name>
+		<servlet-class>sanjose.DownloadsServlet</servlet-class>
+	</servlet>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.css</welcome-file>
@@ -90,6 +93,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet-mapping>
 		<servlet-name>tools</servlet-name>
 		<url-pattern>/tools/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>downloads</servlet-name>
+		<url-pattern>/downloads/*</url-pattern>
 	</servlet-mapping>
 	
 </web-app>
