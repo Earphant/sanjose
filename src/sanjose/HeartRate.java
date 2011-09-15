@@ -10,8 +10,7 @@ public class HeartRate extends DataText{
 		throws IOException{
 		I i=I.timed(req.getParameter("i"));
 		page.title="Heart Rate";
-		page.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";
-		if(i==null){
+		page.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";		if(i==null){
 			page.out("<form method=post action=/post/heart-rate>");
 			page.out("Value<br><input type=text name=v>");
 		}
@@ -47,8 +46,7 @@ public class HeartRate extends DataText{
 		String[]s=plink.split("/");
 		I w=new I(s[1]);
 		page.title="Heart Rate";
-		page.aside="<ul><li><a href=/post/heart-rate>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+w+"/profile>Profile</a><li><a href=/"+w+"/contacts>Contacts</a><li><a href=/"+w+"/tags>Tags</a></ul><ul><li><a href=/"+w+"/dashboard>Dashboard</a><li><a href=/"+w+"/activities>Activities</a><li><a href=/"+w+"/historical>Historical</a></ul><ul><li><a href=/"+w+"/weight>Weight</a><li><a href=/"+w+"/heart-rate>Heart Rate</a><li><a href=/"+w+"/steps>Steps</a><li><a href=/"+w+"/fat>Fat</a></ul>";
-		page.out("<div class=grf2>");
+		page.aside="<ul><li><a href=/post/heart-rate>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+w+"/profile>Profile</a><li><a href=/"+w+"/contacts>Contacts</a><li><a href=/"+w+"/tags>Tags</a></ul><ul><li><a href=/"+w+"/dashboard>Dashboard</a><li><a href=/"+w+"/activities>Activities</a><li><a href=/"+w+"/historical>Historical</a></ul><ul><li><a href=/"+w+"/weight>Weight</a><li><a href=/"+w+"/heart-rate>Heart Rate</a><li><a href=/"+w+"/steps>Steps</a><li><a href=/"+w+"/fat>Fat</a></ul>";		page.out("<div class=grf2>");
 		page.out(getHtml(w,I136.class,"/post/heart-rate?i="+w+".",28,
 			Helper.getMgr()));
 		page.out("</div>");
