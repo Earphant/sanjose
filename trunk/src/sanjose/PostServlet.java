@@ -93,6 +93,10 @@ public class PostServlet extends HttpServlet{
 					new Weight().doGet(req,rsp,p);
 					return;
 				}
+				if(n.equalsIgnoreCase("documents")){
+					new Document().doGet(req,rsp,p);
+					return;
+				}
 			}
 		}
 		getMessage(req,rsp,p,m);
@@ -130,6 +134,10 @@ public class PostServlet extends HttpServlet{
 				}   
 				if(n.equalsIgnoreCase("weight")){
 					new Weight().doPost(req,rsp);
+					return;
+				}
+				if(n.equalsIgnoreCase("documents")){
+					new Document().doPost(req,rsp);
 					return;
 				}
 			}
