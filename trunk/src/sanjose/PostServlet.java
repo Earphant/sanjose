@@ -77,7 +77,7 @@ public class PostServlet extends HttpServlet{
 					new Organization().doGet(req,rsp,p,m);
 					return;
 				}
-				if(n.equalsIgnoreCase("step")){
+				if(n.equalsIgnoreCase("steps")){
 					new Steps().doGet(req,rsp,p);
 					return;
 				}
@@ -120,7 +120,7 @@ public class PostServlet extends HttpServlet{
 					new Organization().doPost(req,rsp);
 					return;
 				}
-				if(n.equalsIgnoreCase("step")){
+				if(n.equalsIgnoreCase("steps")){
 					new Steps().doPost(req,rsp);
 					return;
 				}
