@@ -20,6 +20,7 @@ public class DataText{
 	private String[] head;
 	private int timeIdx;
 	private Date time;
+	private long fat,water;
 
 	private boolean checkType(String line){
 		if(line==null)
@@ -33,8 +34,18 @@ public class DataText{
 	}
 	private void postItem(String type,String val)throws ParseException{
 		log.warning(type);
+		if(type.equalsIgnoreCase("fat")){
+			fat=Long.parseLong(val);
+			if(water!=0x80000000)
+				mgr.makePersistent(new I135(own,time,fat,water));
+		}
 		if(type.equalsIgnoreCase("heart-rate"))
 			mgr.makePersistent(new I136(own,time,Long.parseLong(val)));
+		if(type.equalsIgnoreCase("water")){
+			water=Long.parseLong(val);
+			if(fat!=0x80000000)
+				mgr.makePersistent(new I135(own,time,fat,water));
+		}
 		if(type.equalsIgnoreCase("weight"))
 			mgr.makePersistent(new I138(own,time,Long.parseLong(val)));
 		if(type.equalsIgnoreCase("step"))
@@ -44,21 +55,13 @@ public class DataText{
 		if(line==null)
 			return false;
 		try{
+			fat=water=0x80000000;
 			line=line.trim();
 			time=getDate(line);
 			String[]s=line.split(" ");
 			int i;
-			for(i=s.length;i>0;){
-				i--;
-				postItem(head[i],s[i]);
-			}
-			mgr.makePersistent(new I135(own,time,Long.parseLong(s[3]),
-				Long.parseLong(s[4])));
-			/*
-			mgr.makePersistent(new I136(own,t,Long.parseLong(s[5])));
-			mgr.makePersistent(new I138(own,t,Long.parseLong(s[2])));
-			mgr.makePersistent(new I139(own,t,Long.parseLong(s[6])));
-			*/
+			for(i=s.length;i>0;)
+				postItem(head[--i],s[i]);
 		}
 		catch(ParseException e){
 			e.printStackTrace();
