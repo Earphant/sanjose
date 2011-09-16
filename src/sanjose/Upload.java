@@ -19,14 +19,14 @@ public class Upload{
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp,Page page)
 		throws IOException{
 		page.title="Upload";
-		I i=new I(req.getParameter("i"));
+		I i=new I(req.getParameter("i"),0);
 		page.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/uploads>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";		
 		page.out("<form method=post action=/post/upload?i="+i+" enctype=multipart/form-data> <input type=file name=file>");
 		page.end("<input type=submit name=ok></form>");
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 	    throws IOException{
-		I w=new I(req.getParameter("i"));
+		I w=new I(req.getParameter("i"),0);
 		if(w.getSite()==0){
 			Session s=new Session("/post");
 			w=s.owner;
@@ -45,7 +45,7 @@ public class Upload{
 					byte[] a=IOUtils.toByteArray(s);
 					if(!new DataText().doPost(req,rsp,a,w)){
 						PersistenceManager m=Helper.getMgr();
-						I i=new I(req.getParameter("i"));
+						I i=new I(req.getParameter("i"),0);
 						if(i.getSite()==0){
 							String x=t.getName();
 							x=x.substring(x.lastIndexOf(".")+1,x.length());

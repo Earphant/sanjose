@@ -11,7 +11,7 @@ public class Steps extends DataText{
 
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp,Page page)
 		throws IOException{
-		I i=I.timed(req.getParameter("i"));
+		I i=I.timed(req.getParameter("i"),0);
 		page.title="Steps";
 		page.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";
 		if(i==null){
@@ -31,7 +31,7 @@ public class Steps extends DataText{
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		Session sn=new Session("/post");
-		I i=I.timed(req.getParameter("i"));
+		I i=I.timed(req.getParameter("i"),0);
 		long v=Long.parseLong(req.getParameter("v"));
 		if(i==null){
 			i=new I(sn.owner.getId(),sn.owner.getSite());
@@ -55,7 +55,7 @@ public class Steps extends DataText{
 		page.title="Steps";
 		page.aside="<ul><li><a href=/post/step>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+b+"/profile>Profile</a><li><a href=/"+b+"/contacts>Contacts</a><li><a href=/"+b+"/tags>Tags</a></ul><ul><li><a href=/"+b+"/dashboard>Dashboard</a><li><a href=/"+b+"/activities>Activities</a><li><a href=/"+b+"/historical>Historical</a></ul><ul><li><a href=/"+b+"/weight>Weight</a><li><a href=/"+b+"/heart-rate>Heart Rate</a><li><a href=/"+b+"/steps>Steps</a><li><a href=/"+b+"/fat>Fat</a></ul>";
 		page.out("<div class=grf2>");
-		page.out(getHtml(new I(b),I139.class,"/post/step?i="+b+".",28,
+		page.out(getHtml(new I(b,0),I139.class,"/post/step?i="+b+".",28,
 			Helper.getMgr()));
 		page.out("</div>");
 		page.end(null);

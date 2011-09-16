@@ -191,10 +191,10 @@ public class I{
 			page.out("</table>");
 		}
 	}
-	static public I timed(String val){
+	static public I timed(String val,long type){
 		if(val==null)
 			return null;
-		I i=new I(val);
+		I i=new I(val,type);
 		i.o=i.i;
 		i.w=i.j;
 		i.m=i.e==null?now():new Date(Long.parseLong(i.e)*1000);
@@ -216,7 +216,8 @@ public class I{
 		this.i=id;
 		this.j=site;
 	}
-	public I(String path){
+	public I(String path,long type){
+		this.a=type;
 		if(path==null){
 			this.i=0L;
 			this.j=0L;

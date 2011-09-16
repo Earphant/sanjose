@@ -81,10 +81,10 @@ public class Based{
 				new Fat().out(plink,p);
 				return;
 			}
-			Object(new I(n),s[1],rsp,p);
+			Object(new I(n,0),s[1],rsp,p);
 			return;
 		}
 		log.warning(plink);
-		Index(new I(s[1]),p,ssn);
+		Index(new I(s[1],0),p,ssn);
 	}
 }

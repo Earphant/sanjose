@@ -21,9 +21,9 @@ public class SystemServlet extends HttpServlet{
 	private void follow(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		Session s=new Session("ow");
-		I d=new I(req.getParameter("i"));
-		PersistenceManager m=Helper.getMgr();   
-		I21 i=new I21(d,s.owner,1,new Date());
+		I d=new I(req.getParameter("i"),1);
+		PersistenceManager m=Helper.getMgr();
+		I21 i=new I21(d,s.owner,new Date());
 		try{
 			m.makePersistent(i);
 		}finally {
@@ -155,9 +155,9 @@ public class SystemServlet extends HttpServlet{
 	private void unfollow(HttpServletRequest req,HttpServletResponse rsp)
 	throws IOException{
 	Session s=new Session("ow");
-	I d=new I(req.getParameter("i"));
+	I d=new I(req.getParameter("i"),1);
 	PersistenceManager m=Helper.getMgr();   
-	I21 i=new I21(d,s.owner,1,new Date());
+	I21 i=new I21(d,s.owner,new Date());
 	try{
 		m.makePersistent(i);
 		m.deletePersistent(i);
@@ -169,9 +169,9 @@ public class SystemServlet extends HttpServlet{
 	private void join(HttpServletRequest req,HttpServletResponse rsp)
 	throws IOException{
 		Session s=new Session("ow");
-		I d=new I(req.getParameter("i"));
+		I d=new I(req.getParameter("i"),2);
 		PersistenceManager m=Helper.getMgr();   
-		I21 i=new I21(d,s.owner,2,new Date());
+		I21 i=new I21(d,s.owner,new Date());
 		try{
 			m.makePersistent(i);
 		}finally {
@@ -182,9 +182,9 @@ public class SystemServlet extends HttpServlet{
 	private void quit(HttpServletRequest req,HttpServletResponse rsp)
 	throws IOException{
 	Session s=new Session("ow");
-	I d=new I(req.getParameter("i"));
+	I d=new I(req.getParameter("i"),2);
 	PersistenceManager m=Helper.getMgr();   
-	I21 i=new I21(d,s.owner,2,new Date());
+	I21 i=new I21(d,s.owner,new Date());
 	try{
 		m.makePersistent(i);
 		m.deletePersistent(i);
