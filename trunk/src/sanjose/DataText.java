@@ -18,50 +18,52 @@ public class DataText{
 	private I own;
 	private PersistenceManager mgr;
 	private String[] head;
-	private int timeIdx;
-	private Date time;
-	private long fat,water;
 
 	private boolean checkType(String line){
 		if(line==null)
 			return false;
 		return line.trim().equalsIgnoreCase("<!doctype palo-alto>");
 	}
-	private Date getDate(String line)throws ParseException{
-		if(head[timeIdx].equalsIgnoreCase("DATE"))
-			return fmt.parse(line);
-		return null;
-	}
-	private void postItem(String type,String val)throws ParseException{
-		log.warning(type);
-		if(type.equalsIgnoreCase("fat")){
-			fat=Long.parseLong(val);
-			if(water!=0x80000000)
-				mgr.makePersistent(new I135(own,time,fat,water));
-		}
-		if(type.equalsIgnoreCase("heart-rate"))
-			mgr.makePersistent(new I136(own,time,Long.parseLong(val)));
-		if(type.equalsIgnoreCase("water")){
-			water=Long.parseLong(val);
-			if(fat!=0x80000000)
-				mgr.makePersistent(new I135(own,time,fat,water));
-		}
-		if(type.equalsIgnoreCase("weight"))
-			mgr.makePersistent(new I138(own,time,Long.parseLong(val)));
-		if(type.equalsIgnoreCase("step"))
-			mgr.makePersistent(new I139(own,time,Long.parseLong(val)));
-	}
 	private boolean postLine(String line)throws ParseException{
 		if(line==null)
 			return false;
 		try{
-			fat=water=0x80000000;
+			Date time;
+			long v135=0x80000000;
+			long v145=0x80000000;
+			long v136=0x80000000;
+			long v138=0x80000000;
+			long v139=0x80000000;
 			line=line.trim();
-			time=getDate(line);
+			time=fmt.parse(line);
 			String[]s=line.split(" ");
-			int i;
-			for(i=s.length;i>0;)
-				postItem(head[--i],s[i]);
+			for(int i=s.length;i>0;){
+				String a=head[--i];
+				long v;
+				try{
+					v=Long.parseLong(s[i]);
+					if(a.equalsIgnoreCase("fat"))
+						v135=v;
+					if(a.equalsIgnoreCase("heart-rate"))
+						v136=v;
+					if(a.equalsIgnoreCase("water"))
+						v145=v;
+					if(a.equalsIgnoreCase("weight"))
+						v138=v;
+					if(a.equalsIgnoreCase("step"))
+						v139=v;
+				}
+				catch(NumberFormatException e){
+				}
+			}
+			if(v135!=0x80000000 && v145!=0x80000000)
+				mgr.makePersistent(new I135(own,time,v135,v145));
+			if(v136!=0x80000000)
+				mgr.makePersistent(new I136(own,time,v136));
+			if(v138!=0x80000000)
+				mgr.makePersistent(new I138(own,time,v138));
+			if(v139!=0x80000000)
+				mgr.makePersistent(new I139(own,time,v139));
 		}
 		catch(ParseException e){
 			e.printStackTrace();
@@ -73,7 +75,6 @@ public class DataText{
 		if(line==null)
 			return false;
 		head=line.split("\\s");
-		timeIdx=0;
 		mgr=Helper.getMgr();
 		own=owner;
 		return true;
