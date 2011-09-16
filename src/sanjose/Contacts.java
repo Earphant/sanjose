@@ -72,13 +72,15 @@ public class Contacts {
 						String d=i.getId()+"."+i.getSite();
 						String x=i.getEmail();
 						String base=i.getId()+"."+i.getSite();
-						String owner=s.owner.getId()+"."+s.owner.getSite();
-						int k;
-						for(k=0;k<IJ1.size();k++){
-						   if(d.equals(owner) || (IJ1.get(k)[0]==i.getId() && IJ1.get(k)[1]==i.getSite()))break;
+						String owner=s.owner.getId()+"."+s.owner.getSite();						
+						if(!d.equals(owner)){
+							int k;
+							for(k=0;k<IJ1.size();k++){
+								   if(IJ1.get(k)[0]==i.getId() && IJ1.get(k)[1]==i.getSite())break;
+								}
+							if(k==IJ1.size())
+								   page.out("<div class=real style=left:"+33+"%;background-color:#fff;><a href=/"+base+"/><img src=/icons/"+d+".jpg></a><div><a href=/"+base+"/>"+x+"</a></div><div><a href=/system/follow?i="+d+">Follow</a></div></div>");				                    
 						}
-						if(k==IJ1.size())
-						   page.out("<div class=real style=left:"+33+"%;background-color:#fff;><a href=/"+base+"/><img src=/icons/"+d+".jpg></a><div><a href=/"+base+"/>"+x+"</a></div><div><a href=/system/follow?i="+d+">Follow</a></div></div>");				                    
 					}
 				}				
 			}
