@@ -15,6 +15,8 @@ public class I21{
 	@Persistent
 	private Long j;
 	@Persistent
+	private Long a;
+	@Persistent
 	private Long r;
 	@Persistent
 	private Date t;
@@ -22,38 +24,35 @@ public class I21{
 	private Long o;
 	@Persistent
 	private Long w;
-	@Persistent
-	private Long a;
 
-	public I21(I i,I owner,long A,Date time){
+	public I21(I i,I owner,Date time){
 		this.i=i.getId();
 		this.j=i.getSite();
-		this.a=A;
+		this.a=i.getType();
 		this.o=owner.getId();
 		this.w=owner.getSite();
 		t=time;
 		_key=i+"."+owner;
 	}
-	public Long geti(){
+	public long geti(){
 	    return i;
 	}
-	public Long getj(){
+	public long getj(){
 	    return j;
 	}
-	public Long getr(){
+	public long getr(){
 	    return r;
 	}
 	public Date gett(){
 	    return t;
 	}
-	public Long geta(){
+	public long geta(){
 	    return a;
 	}
-	public Long getw(){
+	public long getw(){
 	    return w;
 	}
-	public Long geto(){
+	public long geto(){
 	    return o;
 	}
-
 }

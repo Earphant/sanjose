@@ -40,7 +40,7 @@ public class I12{
 		if(path!=null){
 			StringTokenizer n=new StringTokenizer(path,"/");
 			if(n.countTokens()>0)
-				return create(new I(n.nextToken()));
+				return create(new I(n.nextToken(),0));
 		}
 		return null;
 	}

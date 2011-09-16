@@ -166,7 +166,7 @@ public class AdminsServlet extends HttpServlet{
         p.nav="<ul><li><a href=/>Home</a><li><a href=/admins?a=2>Groups</a><li><a href=/admins?a=12>Pictures</a><li><a href=/admins?a=>Posts</a><li><a href=/admins?a=1>Users</a></ul>";
         p.aside=null;
 		String a=req.getParameter("a");
-		I i=new I(req.getParameter("i"));
+		I i=new I(req.getParameter("i"),0);
 		if(a==null){
 			if(i.getSite()==0){
 		        p.title="Admins";
@@ -193,7 +193,7 @@ public class AdminsServlet extends HttpServlet{
     @SuppressWarnings("unchecked")
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 	    throws IOException{
-		I i = new I(req.getParameter("i"));
+		I i = new I(req.getParameter("i"),0);
 		if(i.getId()!=0L){
 			PersistenceManager mgr=Helper.getMgr();
 			String pwd1 = req.getParameter("pwd1");

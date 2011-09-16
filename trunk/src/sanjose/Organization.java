@@ -74,7 +74,7 @@ public class Organization{
 
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp,Page page,
 		PersistenceManager mgr)throws IOException{
-		I i=new I(req.getParameter("i"));
+		I i=new I(req.getParameter("i"),0);
 		page.title="Organization";
 		page.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";
 		if(i.getSite()==0)
@@ -93,12 +93,13 @@ public class Organization{
 		throws IOException{
 		Session sn=new Session("/post/organization");
 		String v=req.getParameter("text");
-		I i=new I(req.getParameter("i")),o;
+		I i=new I(req.getParameter("i"),0);
+		I o;
 		PersistenceManager m=Helper.getMgr();
 		try{
 			if(i.getSite()==0){
 				o=I.store(v,null,2,0,sn.owner,m,true);
-				I21 i21=new I21(o,o.getOwner(),2,new Date());
+				I21 i21=new I21(o,o.getOwner(),new Date());
 			    m.makePersistent(i21);
 			}
 			else{

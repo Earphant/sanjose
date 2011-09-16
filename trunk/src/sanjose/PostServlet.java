@@ -9,9 +9,9 @@ public class PostServlet extends HttpServlet{
 	//private static final Logger log=Logger.getLogger(PostServlet.class.getName());
 	private void getMessage(HttpServletRequest req,HttpServletResponse rsp,
 		Page page,PersistenceManager mgr)throws IOException{
-		I i=new I(req.getParameter("i"));
-		I b=new I(req.getParameter("b"));
-		I r=new I(req.getParameter("re"));
+		I i=new I(req.getParameter("i"),0);
+		I b=new I(req.getParameter("b"),0);
+		I r=new I(req.getParameter("re"),0);
 		page.title="Post";
 		page.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/step>Step</a><li><a href=/post/fat>Fat</a></ul>";
 		page.out("<form method=post action=/post?i="+i+"&b="+b+"&re="+r+
@@ -27,9 +27,9 @@ public class PostServlet extends HttpServlet{
 		throws IOException{
 		Session sn=new Session("/post");
 		String v=req.getParameter("text");
-		I b=new I(req.getParameter("b"));
-		I i=new I(req.getParameter("i"));
-		I re=new I(req.getParameter("re"));
+		I b=new I(req.getParameter("b"),0);
+		I i=new I(req.getParameter("i"),0);
+		I re=new I(req.getParameter("re"),0);
 		PersistenceManager m=Helper.getMgr();
 		try{
 			if(i.getSite()==0){
