@@ -91,7 +91,7 @@ public class Contacts {
 			page.out("<br><br><br>The groups that I joined :");	
 			List <Long[]> IJ2=new ArrayList<Long[]>();
 			Query q_21=mgr.newQuery(I21.class);		
-			q_21.setOrdering("i desc");
+			q_21.setOrdering("t desc");
 			q_21.setFilter("o==oParam && w==wParam ");	
 			q_21.declareParameters("Long oParam,Long wParam");     
 			try{
@@ -101,10 +101,11 @@ public class Contacts {
 					for(I21 i21:r){
 						String d=i21.geti()+"."+i21.getj();						
 						Long A=i21.geta();
+				
 						if(A==2){
 						   Long[] ij={i21.geti(),i21.getj()};
-						   IJ2.add(ij);
-	                       page.out("<a href=/"+d+"/><img src=/icons/"+d+".jpg></a>");
+						   IJ2.add(ij);						   						   
+	                           page.out("<a href=/"+d+"/><img src=/icons/"+d+".jpg></a>");						 
 						}
 					}
 				}
@@ -129,7 +130,7 @@ public class Contacts {
 			                 if(IJ2.get(k)[0]==i.getId() && IJ2.get(k)[1]==i.getSite())break;
 			            }	
 					    if(k==IJ2.size())
-						   page.out("<div class=real style=left:"+33+"%;background-color:#fff;><a href=/"+base+"/><img src=/icons/"+d+".jpg></a><div><a href=/"+base+"/>"+x+"</a></div><div><a href=/system/follow?i="+d+">Follow</a></div></div>");
+						   page.out("<div class=real style=left:"+33+"%;background-color:#fff;><a href=/"+base+"/><img src=/icons/"+d+".jpg></a><div><a href=/"+base+"/>"+x+"</a></div><div><a href=/system/join?i="+d+">Join</a></div></div>");
 					}
 			}
 			finally{
