@@ -44,13 +44,13 @@ public class DataText{
 					v=Long.parseLong(s[i]);
 					if(a.equalsIgnoreCase("fat"))
 						v135=v;
-					if(a.equalsIgnoreCase("heart-rate"))
+					else if(a.equalsIgnoreCase("heart-rate"))
 						v136=v;
-					if(a.equalsIgnoreCase("water"))
+					else if(a.equalsIgnoreCase("water"))
 						v145=v;
-					if(a.equalsIgnoreCase("weight"))
+					else if(a.equalsIgnoreCase("weight"))
 						v138=v;
-					if(a.equalsIgnoreCase("step"))
+					else if(a.equalsIgnoreCase("step"))
 						v139=v;
 				}
 				catch(NumberFormatException e){
@@ -81,9 +81,15 @@ public class DataText{
 	}
 	private void unprepare(){
 		log.warning("unprep");
-		updatePost(own,136,getHtml(own,I136.class,null,28,mgr),"Heart Rate","heart-rate",mgr);
-		updatePost(own,138,getHtml(own,I138.class,null,28,mgr),"Weight","weight",mgr);
-		updatePost(own,139,getHtml(own,I139.class,null,28,mgr),"Steps","steps",mgr);
+		for(String i:head){
+			log.warning(i);
+			if(i.equalsIgnoreCase("heart-rate"))
+				updatePost(own,136,getHtml(own,I136.class,null,28,mgr),"Heart Rate","heart-rate",mgr);
+			else if(i.equalsIgnoreCase("weight"))
+				updatePost(own,138,getHtml(own,I138.class,null,28,mgr),"Weight","weight",mgr);
+			else if(i.equalsIgnoreCase("step"))
+				updatePost(own,139,getHtml(own,I139.class,null,28,mgr),"Steps","steps",mgr);
+		}
 		mgr.close();
 	}
 
