@@ -46,12 +46,9 @@ public class HeartRate extends DataText{
 		String[]s=plink.split("/");
 		I w=new I(s[1],0);
 		page.title="Heart Rate";
-		page.aside="<ul><li><a href=/post/heart-rate>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+w+"/profile>Profile</a><li><a href=/"+w+"/contacts>Contacts</a><li><a href=/"+w+"/tags>Tags</a></ul><ul><li><a href=/"+w+"/dashboard>Dashboard</a><li><a href=/"+w+"/activities>Activities</a><li><a href=/"+w+"/historical>Historical</a></ul><ul><li><a href=/"+w+"/weight>Weight</a><li><a href=/"+w+"/heart-rate>Heart Rate</a><li><a href=/"+w+"/steps>Steps</a><li><a href=/"+w+"/fat>Fat</a></ul>";		page.out("<div class=grf2>");
-		page.out(getHtml(w,I136.class,"/post/heart-rate?i="+w+".",28,
-			Helper.getMgr()));
-		page.out("</div>");
+		page.aside="<ul><li><a href=/post/heart-rate>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+w+"/profile>Profile</a><li><a href=/"+w+"/contacts>Contacts</a><li><a href=/"+w+"/tags>Tags</a></ul><ul><li><a href=/"+w+"/dashboard>Dashboard</a><li><a href=/"+w+"/activities>Activities</a><li><a href=/"+w+"/historical>Historical</a></ul><ul><li><a href=/"+w+"/weight>Weight</a><li><a href=/"+w+"/heart-rate>Heart Rate</a><li><a href=/"+w+"/steps>Steps</a><li><a href=/"+w+"/fat>Fat</a></ul>";
 		page.out("<div class=grf2>");
-		page.out(getHtml(w,I136.class,"/post/heart-rate?i="+w+".",88,
+		page.out(getHtml(w,I136.class,"/post/heart-rate?i="+w+".",28,
 			Helper.getMgr()));
 		page.out("</div>");
 		page.end(null);
