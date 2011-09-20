@@ -85,10 +85,12 @@ public class PostServlet extends HttpServlet{
 					new Tags().doGet(req,rsp,p);
 					return;
 				}
+				/*
 				if(n.equalsIgnoreCase("upload")){
 					new Upload().doGet(req,rsp,p);
 					return;
 				}
+				*/
 				if(n.equalsIgnoreCase("weight")){
 					new Weight().doGet(req,rsp,p);
 					return;
@@ -128,10 +130,12 @@ public class PostServlet extends HttpServlet{
 					new Tags().doPost(req,rsp);
 					return;
 				}
+				/*
 				if(n.equalsIgnoreCase("upload")){
 					new Upload().doPost(req,rsp);
 					return;
-				}   
+				}
+				*/
 				if(n.equalsIgnoreCase("weight")){
 					new Weight().doPost(req,rsp);
 					return;
