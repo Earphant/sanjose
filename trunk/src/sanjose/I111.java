@@ -25,6 +25,8 @@ public class I111 extends Single{
 	private Long qty;
 	@Persistent
 	private String val;
+	@Persistent
+	private String ref;
 
 	public I111(I i,long ord,Date time,String val,long qty){
 		this.i=i.getId();
@@ -35,14 +37,17 @@ public class I111 extends Single{
 		this.val=val;
 		this._key=i+"."+ord;
 	}
+	public long getQuantity(){
+	    return qty;
+	}
 	public long getTick(){
 		return t.getTime()/1000;
 	}
 	public Date getTime(){
 		return t;
 	}
-	public long getQuantity(){
-	    return qty;
+	public String getReference(){
+	    return ref;
 	}
 	public String getValue(){
 	    return val;
