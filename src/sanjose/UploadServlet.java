@@ -48,10 +48,12 @@ public class UploadServlet extends HttpServlet{
 					if(t.getFieldName().equalsIgnoreCase("file")){
 						String fn=t.getName();
 						byte[] a=IOUtils.toByteArray(s);
-						if(fn.equalsIgnoreCase("data.txt")){
+						if(fn.equalsIgnoreCase("bom.csv"))
+							if(new BomCsv().doPost(req,rsp,a,w))
+								break;
+						if(fn.equalsIgnoreCase("data.txt"))
 							if(new DataText().doPost(req,rsp,a,w))
 								break;
-						}
 						PersistenceManager m=Helper.getMgr();
 						I i=new I(req.getParameter("i"),0);
 						if(i.getSite()==0){
