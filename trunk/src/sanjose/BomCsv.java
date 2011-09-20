@@ -19,6 +19,20 @@ public class BomCsv{
 	private boolean postLine(String line)throws ParseException{
 		if(line==null)
 			return false;
+		String[]s=line.split(" ");
+		long qty=0;
+		String ref=null;
+		String val=null;
+		for(int i=s.length;i>0;){
+			String a=head[--i];
+			String v=s[i];
+			if(a.equalsIgnoreCase("qty"))
+				qty=Long.parseLong(v);
+			else if(a.equalsIgnoreCase("ref"))
+				ref=v;
+			else if(a.equalsIgnoreCase("val"))
+				val=v;
+		}
 		return true;
 	}
 	private boolean prepare(String line,I owner)throws IOException{
@@ -29,10 +43,14 @@ public class BomCsv{
 		head=line.split(",");
 		for(int i=head.length;i>0;){
 			String a=head[--i];
+			if(a.equalsIgnoreCase("part reference"))
+				head[i]="ref";
 			if(a.equalsIgnoreCase("quantity")){
 				head[i]="qty";
 				qty=true;
 			}
+			if(a.equalsIgnoreCase("reference"))
+				head[i]="ref";
 			if(a.equalsIgnoreCase("value")){
 				head[i]="val";
 				val=true;
