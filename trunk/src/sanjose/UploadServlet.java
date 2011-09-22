@@ -49,7 +49,7 @@ public class UploadServlet extends HttpServlet{
 						String fn=t.getName();
 						byte[] a=IOUtils.toByteArray(s);
 						if(fn.equalsIgnoreCase("bom.csv"))
-							if(new BomCsv().doPost(req,rsp,a,w))
+							if(new Bom().doPost(req,rsp,a,w))
 								break;
 						if(fn.equalsIgnoreCase("data.txt"))
 							if(new DataText().doPost(req,rsp,a,w))

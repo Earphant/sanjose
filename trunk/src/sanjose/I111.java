@@ -18,7 +18,6 @@ public class I111 extends Single{
 	private Long j;
 	@Persistent
 	private Date t;
-	@SuppressWarnings("unused")
 	@Persistent
 	private Long ord;
 	@Persistent
@@ -42,6 +41,9 @@ public class I111 extends Single{
 	}
 	public String getExtra(){
 	    return z;
+	}
+	public long getOrder(){
+	    return ord;
 	}
 	public long getQuantity(){
 	    return qty;
