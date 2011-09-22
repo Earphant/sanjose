@@ -27,15 +27,21 @@ public class I111 extends Single{
 	private String val;
 	@Persistent
 	private String ref;
+	@Persistent
+	private String z;
 
-	public I111(I i,long ord,Date time,String val,long qty){
+	public I111(I i,long ord,Date time,String val,long qty,String xtr){
 		this.i=i.getId();
 		this.j=i.getSite();
 		this.t=time;
 		this.ord=ord;
 		this.qty=qty;
 		this.val=val;
+		this.z=xtr;
 		this._key=i+"."+ord;
+	}
+	public String getExtra(){
+	    return z;
 	}
 	public long getQuantity(){
 	    return qty;
