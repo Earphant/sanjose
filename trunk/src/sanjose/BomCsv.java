@@ -12,30 +12,38 @@ import javax.servlet.http.HttpServletResponse;
 
 public class BomCsv{
 	private static final Logger log=Logger.getLogger(BomCsv.class.getName());
-	private I own;
 	private PersistenceManager mgr;
 	private String[] head;
 
-	private boolean postLine(String line)throws ParseException{
+	private boolean postLine(I id,I own,String line,int ord)throws ParseException{
 		if(line==null)
 			return false;
 		String[]s=line.split(" ");
 		long qty=0;
 		String ref=null;
 		String val=null;
-		for(int i=s.length;i>0;){
-			String a=head[--i];
-			String v=s[i];
-			if(a.equalsIgnoreCase("qty"))
-				qty=Long.parseLong(v);
-			else if(a.equalsIgnoreCase("ref"))
-				ref=v;
-			else if(a.equalsIgnoreCase("val"))
-				val=v;
+		Date time=new Date();
+		try{
+			for(int i=s.length;i>0;){
+				String a=head[--i];
+				String v=s[i];
+				log.warning(a+": "+v);
+				if(a.equalsIgnoreCase("qty"))
+					qty=Long.parseLong(v);
+				else if(a.equalsIgnoreCase("ref"))
+					ref=v;
+				else if(a.equalsIgnoreCase("val"))
+					val=v;
+			}
+			if(qty!=0 && ref!=null && val!=null)
+				mgr.makePersistent(new I111(id,ord,time,val,qty,""));
+		}
+		catch(NumberFormatException e){
+			//e.printStackTrace();
 		}
 		return true;
 	}
-	private boolean prepare(String line,I owner)throws IOException{
+	private boolean prepare(String line)throws IOException{
 		if(line==null)
 			return false;
 		boolean qty=false;
@@ -63,7 +71,6 @@ public class BomCsv{
 		if(qty && val){
 			log.warning("Ok");
 			mgr=Helper.getMgr();
-			own=owner;
 			return true;
 		}
 		return false;
@@ -142,10 +149,11 @@ public class BomCsv{
 		boolean ret=false;
 		String v=new String(bytes);
 		String[]s=v.split("\n");
-		if(s.length>2 && prepare(s[0],owner)){
+		if(s.length>2 && prepare(s[0])){
+			I id=I.store("BOM",null,111,9,owner,mgr,true);
 			try{
-				for(String i:s)
-					postLine(i);
+				for(int i=s.length-1;i>0;i--)
+					postLine(id,owner,s[i],i);
 				rsp.sendRedirect("/"+owner+"/");
 				ret=true;
 			}
@@ -157,5 +165,12 @@ public class BomCsv{
 			}
 		}
 		return ret;
+	}
+	public void out(I id,String base,Page page)throws IOException{
+		page.title="BOM";
+		page.aside="<ul><li><a href=/post/weight>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+base+"/profile>Profile</a><li><a href=/"+base+"/contacts>Contacts</a><li><a href=/"+base+"/tags>Tags</a></ul><ul><li><a href=/"+base+"/dashboard>Dashboard</a><li><a href=/"+base+"/activities>Activities</a><li><a href=/"+base+"/historical>Historical</a></ul><ul><li><a href=/"+base+"/weight>Weight</a><li><a href=/"+base+"/heart-rate>Heart Rate</a><li><a href=/"+base+"/steps>Steps</a><li><a href=/"+base+"/fat>Fat</a></ul>";
+		page.out("<table><tr><td>Item<td>Value<td>Quantity");
+		page.out("</table>");
+		page.end(null);
 	}
 }
