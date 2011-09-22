@@ -12,6 +12,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>community</servlet-name>
 		<servlet-class>sanjose.CommunityServlet</servlet-class>
 	</servlet>
+    <servlet>
+		<servlet-name>downloads</servlet-name>
+		<servlet-class>sanjose.DownloadsServlet</servlet-class>
+	</servlet>
 	<servlet>
 		<servlet-name>home</servlet-name>
 		<servlet-class>sanjose.HomeServlet</servlet-class>
@@ -45,9 +49,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-class>sanjose.ToolsServlet</servlet-class>
 	</servlet>
     <servlet>
-		<servlet-name>downloads</servlet-name>
-		<servlet-class>sanjose.DownloadsServlet</servlet-class>
+		<servlet-name>upload</servlet-name>
+		<servlet-class>sanjose.UploadServlet</servlet-class>
 	</servlet>
+
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.css</welcome-file>
@@ -61,6 +66,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet-mapping>
 		<servlet-name>community</servlet-name>
 		<url-pattern>/community/</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>downloads</servlet-name>
+		<url-pattern>/downloads/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>home</servlet-name>
@@ -83,6 +92,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/post/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
+		<servlet-name>upload</servlet-name>
+		<url-pattern>/post/upload</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>system</servlet-name>
 		<url-pattern>/system/*</url-pattern>
 	</servlet-mapping>
@@ -94,9 +107,4 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>tools</servlet-name>
 		<url-pattern>/tools/*</url-pattern>
 	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>downloads</servlet-name>
-		<url-pattern>/downloads/*</url-pattern>
-	</servlet-mapping>
-	
 </web-app>
