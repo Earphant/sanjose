@@ -10,15 +10,15 @@ import javax.jdo.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class BomCsv{
-	private static final Logger log=Logger.getLogger(BomCsv.class.getName());
+public class Bom{
+	private static final Logger log=Logger.getLogger(Bom.class.getName());
 	private PersistenceManager mgr;
 	private String[] head;
 
 	private boolean postLine(I id,I own,String line,int ord)throws ParseException{
 		if(line==null)
 			return false;
-		String[]s=line.split(" ");
+		String[]s=line.split(",");
 		long qty=0;
 		String ref=null;
 		String val=null;
@@ -27,7 +27,7 @@ public class BomCsv{
 			for(int i=s.length;i>0;){
 				String a=head[--i];
 				String v=s[i];
-				log.warning(a+": "+v);
+				//log.warning(a+": "+v);
 				if(a.equalsIgnoreCase("qty"))
 					qty=Long.parseLong(v);
 				else if(a.equalsIgnoreCase("ref"))
@@ -35,8 +35,10 @@ public class BomCsv{
 				else if(a.equalsIgnoreCase("val"))
 					val=v;
 			}
-			if(qty!=0 && ref!=null && val!=null)
+			if(qty!=0 && ref!=null && val!=null){
+				log.warning(ord+": "+qty+", "+val+", "+ref);
 				mgr.makePersistent(new I111(id,ord,time,val,qty,""));
+			}
 		}
 		catch(NumberFormatException e){
 			//e.printStackTrace();
@@ -166,10 +168,25 @@ public class BomCsv{
 		}
 		return ret;
 	}
-	public void out(I id,String base,Page page)throws IOException{
+	public void out(I id,String base,PersistenceManager mgr,Page page)throws IOException{
 		page.title="BOM";
-		page.aside="<ul><li><a href=/post/weight>Post</a></ul><ul><li><a href=/system/settings>Settings</a><li><a href=/"+base+"/profile>Profile</a><li><a href=/"+base+"/contacts>Contacts</a><li><a href=/"+base+"/tags>Tags</a></ul><ul><li><a href=/"+base+"/dashboard>Dashboard</a><li><a href=/"+base+"/activities>Activities</a><li><a href=/"+base+"/historical>Historical</a></ul><ul><li><a href=/"+base+"/weight>Weight</a><li><a href=/"+base+"/heart-rate>Heart Rate</a><li><a href=/"+base+"/steps>Steps</a><li><a href=/"+base+"/fat>Fat</a></ul>";
-		page.out("<table><tr><td>Item<td>Value<td>Quantity");
+		page.aside="<ul><li><a href=/post/bom>New bom</a></ul><ul><li><a href=/"+base+"/"+id+"?action=merge>Merge</a><li><a href=/"+base+"/profile>Profile</a><li><a href=/"+base+"/contacts>Contacts</a><li><a href=/"+base+"/tags>Tags</a></ul><ul><li><a href=/"+base+"/dashboard>Dashboard</a><li><a href=/"+base+"/activities>Activities</a><li><a href=/"+base+"/historical>Historical</a></ul><ul><li><a href=/"+base+"/weight>Weight</a><li><a href=/"+base+"/heart-rate>Heart Rate</a><li><a href=/"+base+"/steps>Steps</a><li><a href=/"+base+"/fat>Fat</a></ul>";
+		page.out("<table class=list><tr><th>Item<th class=w030>Value<td>Qty<th class=w030>Reference<td>Unit Price");
+		Query q=mgr.newQuery(I111.class);
+		q.setFilter("i==id && j==site");
+		q.declareParameters("Long id,Long site");
+        q.setOrdering("ord");
+		try{
+			@SuppressWarnings("unchecked")
+			List<I111>r=(List<I111>)q.execute(id.getId(),id.getSite());
+			for(I111 o:r){
+				page.out("<tr><th>"+o.getOrder()+"<th>"+o.getValue()+"<td>"+
+					o.getQuantity());
+			}
+		}
+        finally{
+            q.closeAll();
+        }
 		page.out("</table>");
 		page.end(null);
 	}

@@ -27,7 +27,7 @@ public class Based{
 			PersistenceManager m=Helper.getMgr();
 			I d=I.query(i,m);
 			if(d.getType()==111){
-				new BomCsv().out(i,base,page);
+				new Bom().out(i,base,m,page);
 			}
 			else{
 				page.title=d.getTitle(true);
