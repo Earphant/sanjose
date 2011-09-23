@@ -43,7 +43,7 @@ textarea{width:100%}
     
 .icon{width:48px;height:48px;margin-top:1ex;float:left}
 .list{table-layout:fixed;border-collapse:collapse;width:100%}
-.list thead td,.list thead th{font-weight:bold}
+.list thead td,.list thead th,.list tfoot td,.list tfoot th{font-weight:bold}
 .list th,.list td{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .list th{text-align:left;font-weight:normal}
 .list td{text-align:right;padding-right:1em}
