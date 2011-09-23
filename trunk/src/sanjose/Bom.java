@@ -172,7 +172,7 @@ public class Bom{
 		page.title="BOM";
 		page.aside="<ul><li><a href=/post/bom>New bom</a></ul><ul><li><a href=/"+base+"/"+id+"?action=merge>Merge</a><li><a href=/"+base+"/profile>Profile</a><li><a href=/"+base+"/contacts>Contacts</a><li><a href=/"+base+"/tags>Tags</a></ul><ul><li><a href=/"+base+"/dashboard>Dashboard</a><li><a href=/"+base+"/activities>Activities</a><li><a href=/"+base+"/historical>Historical</a></ul><ul><li><a href=/"+base+"/weight>Weight</a><li><a href=/"+base+"/heart-rate>Heart Rate</a><li><a href=/"+base+"/steps>Steps</a><li><a href=/"+base+"/fat>Fat</a></ul>";
 		page.aside=null;
-		page.out("<table class=list><tr><th>Item<th class=w030>Value<td>Qty<th class=w030>Reference<td>Unit Price");
+		page.out("<table class=list><thead><tr><th>Item<th class=w030>Value<td>Qty<th class=w030>Reference<td>Price<tbody>");
 		Query q=mgr.newQuery(I111.class);
 		q.setFilter("i==id && j==site && v==0");
 		q.declareParameters("Long id,Long site");
