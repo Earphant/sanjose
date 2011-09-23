@@ -33,7 +33,7 @@ public class HomeServlet extends HttpServlet{
 		page.out("<form method=post action=/post/><textarea name=text rows=5></textarea><input type=submit name=ok></form>");
 		PersistenceManager m=Helper.getMgr();
 		Query q=m.newQuery(I21.class);
-		q.setFilter("o==oParam && w==wParam ");	
+		q.setFilter("o==oParam && w==wParam");	
 		q.declareParameters("Long oParam,Long wParam");
 		try{
 			List<I21> r=(List<I21>)q.execute(owner.getId(),owner.getSite());
@@ -52,6 +52,7 @@ public class HomeServlet extends HttpServlet{
 		throws IOException{
 		log.warning("unfollowed");
 		Query q=mgr.newQuery(I.class);
+		q.setFilter("r==0");
         q.setOrdering("m desc");
 		q.setRange(0,25);
 		try{

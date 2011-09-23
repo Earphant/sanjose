@@ -170,9 +170,9 @@ public class Bom{
 	}
 	public void out(I id,String base,PersistenceManager mgr,Page page)throws IOException{
 		page.title="BOM";
-		page.aside="<ul><li><a href=/post/bom>New bom</a></ul><ul><li><a href=/"+base+"/"+id+"?action=merge>Merge</a><li><a href=/"+base+"/profile>Profile</a><li><a href=/"+base+"/contacts>Contacts</a><li><a href=/"+base+"/tags>Tags</a></ul><ul><li><a href=/"+base+"/dashboard>Dashboard</a><li><a href=/"+base+"/activities>Activities</a><li><a href=/"+base+"/historical>Historical</a></ul><ul><li><a href=/"+base+"/weight>Weight</a><li><a href=/"+base+"/heart-rate>Heart Rate</a><li><a href=/"+base+"/steps>Steps</a><li><a href=/"+base+"/fat>Fat</a></ul>";
+		//page.aside="<ul><li><a href=/post/bom>New bom</a></ul><ul><li><a href=/"+base+"/"+id+"?action=merge>Merge</a><li><a href=/"+base+"/profile>Profile</a><li><a href=/"+base+"/contacts>Contacts</a><li><a href=/"+base+"/tags>Tags</a></ul><ul><li><a href=/"+base+"/dashboard>Dashboard</a><li><a href=/"+base+"/activities>Activities</a><li><a href=/"+base+"/historical>Historical</a></ul><ul><li><a href=/"+base+"/weight>Weight</a><li><a href=/"+base+"/heart-rate>Heart Rate</a><li><a href=/"+base+"/steps>Steps</a><li><a href=/"+base+"/fat>Fat</a></ul>";
 		page.aside=null;
-		page.out("<table class=list><thead><tr><th>Item<th class=w030>Value<td>Qty<th class=w030>Reference<td>Price<tbody>");
+		page.out("<table class=list><thead><tr><th class=w030>Value<th>Reference<th>Vendor<td>Price<td>Qty<td>Sum<tbody>");
 		Query q=mgr.newQuery(I111.class);
 		q.setFilter("i==id && j==site && v==0");
 		q.declareParameters("Long id,Long site");
@@ -181,14 +181,14 @@ public class Bom{
 			@SuppressWarnings("unchecked")
 			List<I111>r=(List<I111>)q.execute(id.getId(),id.getSite());
 			for(I111 o:r){
-				page.out("<tr><th>"+o.getOrder()+"<th>"+o.getValue()+"<td>"+
-					o.getQuantity()+"<th>"+o.getReference());
+				page.out("<tr><th>"+o.getValue()+"<th>"+o.getReference()+
+					"<td><td><td>"+o.getQuantity());
 			}
 		}
         finally{
             q.closeAll();
         }
-		page.out("</table>");
+		page.out("<tfoot><tr><th><th>Total</table>");
 		page.end(null);
 	}
 }
