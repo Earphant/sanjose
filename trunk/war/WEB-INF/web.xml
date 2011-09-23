@@ -9,6 +9,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-class>sanjose.AdminsServlet</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>backend</servlet-name>
+		<servlet-class>sanjose.BackendServlet</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>community</servlet-name>
 		<servlet-class>sanjose.CommunityServlet</servlet-class>
 	</servlet>
@@ -35,6 +39,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet>
 		<servlet-name>post</servlet-name>
 		<servlet-class>sanjose.PostServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>product</servlet-name>
+		<servlet-class>sanjose.ProductsServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>system</servlet-name>
@@ -64,6 +72,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/admins/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
+		<servlet-name>backend</servlet-name>
+		<url-pattern>/backend/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>community</servlet-name>
 		<url-pattern>/community/</url-pattern>
 	</servlet-mapping>
@@ -90,6 +102,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet-mapping>
 		<servlet-name>post</servlet-name>
 		<url-pattern>/post/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>product</servlet-name>
+		<url-pattern>/post/product</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>upload</servlet-name>

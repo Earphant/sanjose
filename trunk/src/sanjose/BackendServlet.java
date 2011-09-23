@@ -9,7 +9,7 @@ import javax.jdo.Query;
 import javax.servlet.http.*;
 
 @SuppressWarnings("serial")
-public class AdminsServlet extends HttpServlet{
+public class BackendServlet extends HttpServlet{
 	private void form(I id,Page page)throws IOException{
 		PersistenceManager m=Helper.getMgr();
 		I o=I.query(id,m);
@@ -162,46 +162,25 @@ public class AdminsServlet extends HttpServlet{
 	}
     public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
+		Session s=new Session("");
         Page p=new Page(rsp);
         p.nav="<ul><li><a href=/>Home</a><li><a href=/admins?a=2>Groups</a><li><a href=/admins?a=12>Pictures</a><li><a href=/admins?a=>Posts</a><li><a href=/admins?a=1>Users</a></ul>";
         p.aside=null;
-		String a=req.getParameter("a");
-		I i=new I(req.getParameter("i"),0);
-		if(i.getSite()==0){
-			switch(a==null||a.equals("")?0:Integer.parseInt(a)){
-			case 1:
-				list("Users","0",p);
-				break;
-			case 2:
-				list("Groups",a,p);
-				break;
-			case 12:
-	            list("Pictures",a,p);
-				break;
-			default:
-	            list("Posts",null,p);
-			}
-		}
-		else
-			form(i,p);
-		/*
-		if(a==null){
-			if(i.getSite()==0){
-		        p.title="Admins";
-		        p.out("<a href=/admins?a=2>Groups</a><br>");
-		        p.out("<a href=/admins?a=12>Pictures</a><br>");
-		        p.out("<a href=/admins?a=>Posts</a><br>");
-		        p.out("<a href=/admins?a=1>Users</a><br>");
-		        p.end(null);
-			}
+		p.title="Backend";
+		p.aside="<ul><li><a href=/post>Post</a><li><a href=/system/settings>Settings</a><li><a href=/12.3/dashboard>Dashboard</a></ul>";
+		if(s.owner==null){
+			p.out("<a href=/tools/debug>Debug</a><br>");
+			p.out("<a href=/system/signin?jmp=%2Ftools>Sign in</a><br>");
+			p.out("<a href=/system/signup?jmp=%2Ftools>Sign up</a><br>");
 		}
 		else{
-			if(a.equals(""))
-			if(a.equals("12"))
-			if(a.equals("1"))
-			if(a.equals("2"))
+			p.out("<a href=/admins>Admins</a><br>");
+			p.out("<a href=/backend>Backend</a><br>");
+			p.out("<a href=/tools/debug>Debug</a><br>");
+			p.out("<a href=/system/signout?jmp=%2Ftools>Sign out</a><br>");
+			p.out("<a href=/post/upload>Upload</a><br>");
 		}
-		*/
+		p.end(null);
 	}
     @SuppressWarnings("unchecked")
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
