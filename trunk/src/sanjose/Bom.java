@@ -20,7 +20,7 @@ public class Bom{
 			return false;
 		String[]s=line.split(",");
 		long qty=0;
-		String ref=null;
+		String ref="";
 		String val=null;
 		Date time=new Date();
 		try{
@@ -35,9 +35,9 @@ public class Bom{
 				else if(a.equalsIgnoreCase("val"))
 					val=v;
 			}
-			if(qty!=0 && ref!=null && val!=null){
+			if(qty!=0 && val!=null){
 				log.warning(ord+": "+qty+", "+val+", "+ref);
-				mgr.makePersistent(new I111(id,ord,time,val,qty,""));
+				mgr.makePersistent(new I111(id,ord,time,val,qty,ref,""));
 			}
 		}
 		catch(NumberFormatException e){
@@ -181,7 +181,7 @@ public class Bom{
 			List<I111>r=(List<I111>)q.execute(id.getId(),id.getSite());
 			for(I111 o:r){
 				page.out("<tr><th>"+o.getOrder()+"<th>"+o.getValue()+"<td>"+
-					o.getQuantity());
+					o.getQuantity()+"<th>"+o.getReference());
 			}
 		}
         finally{
