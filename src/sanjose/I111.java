@@ -44,9 +44,14 @@ public class I111 extends Single{
 		this.j=i.getSite();
 		this.t=time;
 		this.ord=ord;
+		this.pri=1L;
+		this.prj=1L;
+		this.prs=0L;
 		this.qty=qty;
 		this.ref=ref;
 		this.val=val;
+		this.vdi=1L;
+		this.vdj=1L;
 		this.z=xtr;
 		this._key=i+"."+ord;
 	}
