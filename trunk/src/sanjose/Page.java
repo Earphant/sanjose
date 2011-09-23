@@ -21,7 +21,7 @@ public class Page{
 		writer.print("<body class=c90><nav>"+system+nav+"</nav><header>"+
 			header+"</header>");
 		if(aside==null)
-			writer.print("<article class=wide><h1>"+title+"</h1>");
+			writer.print("<article class=full><h1>"+title+"</h1>");
 		else
 			writer.print("<aside>"+aside+"</aside><article><h1>"+title+"</h1>");
 	}
