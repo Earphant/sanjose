@@ -29,12 +29,13 @@ public class I111 extends Single{
 	@Persistent
 	private String z;
 
-	public I111(I i,long ord,Date time,String val,long qty,String xtr){
+	public I111(I i,long ord,Date time,String val,long qty,String ref,String xtr){
 		this.i=i.getId();
 		this.j=i.getSite();
 		this.t=time;
 		this.ord=ord;
 		this.qty=qty;
+		this.ref=ref;
 		this.val=val;
 		this.z=xtr;
 		this._key=i+"."+ord;
@@ -48,14 +49,14 @@ public class I111 extends Single{
 	public long getQuantity(){
 	    return qty;
 	}
+	public String getReference(){
+	    return ref;
+	}
 	public long getTick(){
 		return t.getTime()/1000;
 	}
 	public Date getTime(){
 		return t;
-	}
-	public String getReference(){
-	    return ref;
 	}
 	public String getValue(){
 	    return val;
