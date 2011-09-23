@@ -21,9 +21,19 @@ public class I111 extends Single{
 	@Persistent
 	private Long ord;
 	@Persistent
+	private Long pri;
+	@Persistent
+	private Long prj;
+	@Persistent
+	private Long prs;
+	@Persistent
 	private Long qty;
 	@Persistent
 	private String val;
+	@Persistent
+	private Long vdi;
+	@Persistent
+	private Long vdj;
 	@Persistent
 	private String ref;
 	@Persistent
