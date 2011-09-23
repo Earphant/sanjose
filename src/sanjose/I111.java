@@ -18,6 +18,9 @@ public class I111 extends Single{
 	private Long j;
 	@Persistent
 	private Date t;
+	@SuppressWarnings("unused")
+	@Persistent
+	private Long v;
 	@Persistent
 	private Long ord;
 	@Persistent
@@ -49,11 +52,12 @@ public class I111 extends Single{
 		this.prs=0L;
 		this.qty=qty;
 		this.ref=ref;
+		this.v=0L;
 		this.val=val;
 		this.vdi=1L;
 		this.vdj=1L;
 		this.z=xtr;
-		this._key=i+"."+ord;
+		this._key=i+"."+v+"."+ord;
 	}
 	public String getExtra(){
 	    return z;
