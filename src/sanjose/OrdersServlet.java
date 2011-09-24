@@ -9,7 +9,7 @@ import javax.jdo.Query;
 import javax.servlet.http.*;
 
 @SuppressWarnings("serial")
-public class BackendServlet extends HttpServlet{
+public class OrdersServlet extends HttpServlet{
 	private void form(I id,Page page)throws IOException{
 		PersistenceManager m=Helper.getMgr();
 		I o=I.query(id,m);
@@ -162,25 +162,11 @@ public class BackendServlet extends HttpServlet{
 	}
     public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
-		Session s=new Session("");
         Page p=new Page(rsp);
-        p.nav="<ul><li><a href=/>Home</a><li><a href=/admins?a=2>Groups</a><li><a href=/admins?a=12>Pictures</a><li><a href=/admins?a=>Posts</a><li><a href=/admins?a=1>Users</a></ul>";
+        p.nav="<ul><li><a href=/>Home</a><li><a href=/backend>Backend</a></ul>";
         p.aside=null;
-		p.title="Backend";
-		p.aside="<ul><li><a href=/orders>Orders</a><li><a href=/inquiries>Inquiries</a><li><a href=/12.3/dashboard>Dashboard</a></ul>";
-		if(s.owner==null){
-			p.out("<a href=/tools/debug>Debug</a><br>");
-			p.out("<a href=/system/signin?jmp=%2Ftools>Sign in</a><br>");
-			p.out("<a href=/system/signup?jmp=%2Ftools>Sign up</a><br>");
-		}
-		else{
-			p.out("<a href=/admins>Admins</a><br>");
-			p.out("<a href=/backend>Backend</a><br>");
-			p.out("<a href=/tools/debug>Debug</a><br>");
-			p.out("<a href=/system/signout?jmp=%2Ftools>Sign out</a><br>");
-			p.out("<a href=/post/upload>Upload</a><br>");
-		}
-		p.end(null);
+        p.title="Orders";
+        p.end(null);
 	}
     @SuppressWarnings("unchecked")
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)

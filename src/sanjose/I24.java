@@ -10,49 +10,85 @@ public class I24{
 	@PrimaryKey
 	@SuppressWarnings("unused")
 	private String _key;
+	@SuppressWarnings("unused")
 	@Persistent
 	private Long i;
+	@SuppressWarnings("unused")
 	@Persistent
 	private Long j;
 	@Persistent
-	private Long a;
-	@Persistent
-	private Long r;
-	@Persistent
 	private Date t;
+	@SuppressWarnings("unused")
 	@Persistent
-	private Long o;
+	private Long v;
 	@Persistent
-	private Long w;
+	private Long ord;
+	@Persistent
+	private Long pri;
+	@Persistent
+	private Long prj;
+	@Persistent
+	private Long prs;
+	@Persistent
+	private Long qty;
+	@Persistent
+	private Long stt;
+	@Persistent
+	private String val;
+	@Persistent
+	private Long vdi;
+	@Persistent
+	private Long vdj;
+	@Persistent
+	private String ref;
+	@Persistent
+	private String z;
 
-	public I24(I i,I owner,Date time){
+	public I24(I i,long ord,Date time,String val,long qty,String ref,String xtr){
 		this.i=i.getId();
 		this.j=i.getSite();
-		this.a=i.getType();
-		this.o=owner.getId();
-		this.w=owner.getSite();
-		t=time;
-		_key=i+"."+owner;
+		this.t=time;
+		this.ord=ord;
+		this.pri=1L;
+		this.prj=1L;
+		this.prs=0L;
+		this.qty=qty;
+		this.ref=ref;
+		this.v=0L;
+		this.val=val;
+		this.vdi=1L;
+		this.vdj=1L;
+		this.z=xtr;
+		this._key=i+"."+v+"."+ord;
 	}
-	public long geti(){
-	    return i;
+	public String getExtra(){
+	    return z;
 	}
-	public long getj(){
-	    return j;
+	public long getOrder(){
+	    return ord;
 	}
-	public long getr(){
-	    return r;
+	public long getQuantity(){
+	    return qty;
 	}
-	public Date gett(){
-	    return t;
+	public String getReference(){
+	    return ref;
 	}
-	public long geta(){
-	    return a;
+	public long getTick(){
+		return t.getTime()/1000;
 	}
-	public long getw(){
-	    return w;
+	public Date getTime(){
+		return t;
 	}
-	public long geto(){
-	    return o;
+	public String getValue(){
+	    return val;
+	}
+	public void setQuantity(long val){
+		this.qty=val;
+	}
+	public void setValue(String val){
+		this.val=val;
+	}
+	public void setTime(Date t){
+		this.t=t;
 	}
 }

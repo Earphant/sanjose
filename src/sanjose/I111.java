@@ -6,7 +6,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 @PersistenceCapable
-public class I111 extends Single{
+public class I111{
 	@PrimaryKey
 	@SuppressWarnings("unused")
 	private String _key;
@@ -31,6 +31,8 @@ public class I111 extends Single{
 	private Long prs;
 	@Persistent
 	private Long qty;
+	@Persistent
+	private Long stt;
 	@Persistent
 	private String val;
 	@Persistent

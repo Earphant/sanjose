@@ -29,8 +29,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-class>sanjose.IconsServlet</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>inquiries</servlet-name>
+		<servlet-class>sanjose.InquiriesServlet</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>mail</servlet-name>
 		<servlet-class>sanjose.MailServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>orders</servlet-name>
+		<servlet-class>sanjose.OrdersServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>originals</servlet-name>
@@ -92,8 +100,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/icons/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
+		<servlet-name>inquiries</servlet-name>
+		<url-pattern>/inquiries/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>mail</servlet-name>
 		<url-pattern>/mail/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>orders</servlet-name>
+		<url-pattern>/orders/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>originals</servlet-name>
