@@ -37,7 +37,7 @@ public class Bom{
 			}
 			if(qty!=0 && val!=null){
 				log.warning(ord+": "+qty+", "+val+", "+ref);
-				mgr.makePersistent(new I111(id,ord,time,val,qty,ref,""));
+				mgr.makePersistent(new I24(id,ord,time,val,qty,ref,""));
 			}
 		}
 		catch(NumberFormatException e){
@@ -152,7 +152,7 @@ public class Bom{
 		String v=new String(bytes);
 		String[]s=v.split("\n");
 		if(s.length>2 && prepare(s[0])){
-			I id=I.store("BOM",null,111,9,owner,mgr,true);
+			I id=I.store("BOM",null,24,9,owner,mgr,true);
 			try{
 				for(int i=s.length-1;i>0;i--)
 					postLine(id,owner,s[i],i);
@@ -174,14 +174,14 @@ public class Bom{
 		//page.aside="<ul><li><a href=/post/bom>New bom</a></ul><ul><li><a href=/"+base+"/"+id+"?action=merge>Merge</a><li><a href=/"+base+"/profile>Profile</a><li><a href=/"+base+"/contacts>Contacts</a><li><a href=/"+base+"/tags>Tags</a></ul><ul><li><a href=/"+base+"/dashboard>Dashboard</a><li><a href=/"+base+"/activities>Activities</a><li><a href=/"+base+"/historical>Historical</a></ul><ul><li><a href=/"+base+"/weight>Weight</a><li><a href=/"+base+"/heart-rate>Heart Rate</a><li><a href=/"+base+"/steps>Steps</a><li><a href=/"+base+"/fat>Fat</a></ul>";
 		page.aside=null;
 		page.out("<table class=list><thead><tr><th class=w030>Value<th>Reference<th>Vendor<td>Price<td>Qty<td>Sum<tbody>");
-		Query q=mgr.newQuery(I111.class);
+		Query q=mgr.newQuery(I24.class);
 		q.setFilter("i==id && j==site && v==0");
 		q.declareParameters("Long id,Long site");
         q.setOrdering("ord");
 		try{
 			@SuppressWarnings("unchecked")
-			List<I111>r=(List<I111>)q.execute(id.getId(),id.getSite());
-			for(I111 o:r){
+			List<I24>r=(List<I24>)q.execute(id.getId(),id.getSite());
+			for(I24 o:r){
 				long c=o.getQuantity();
 				tot+=c;
 				page.out("<tr><th>"+o.getValue()+"<th>"+o.getReference()+

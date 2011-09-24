@@ -26,7 +26,7 @@ public class Based{
 		else{
 			PersistenceManager m=Helper.getMgr();
 			I d=I.query(i,m);
-			if(d.getType()==111){
+			if(d.getType()==24){
 				new Bom().out(i,base,m,page);
 			}
 			else{
