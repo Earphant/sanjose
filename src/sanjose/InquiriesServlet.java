@@ -164,10 +164,9 @@ public class InquiriesServlet extends HttpServlet{
 		throws IOException{
         Page p=new Page(rsp);
         p.nav="<ul><li><a href=/>Home</a><li><a href=/backend>Backend</a></ul>";
-        p.aside=null;
+		p.aside="<ul><li><a href=/post/product>Post</a></ul>";
         p.title="Inquiries";
-		//page.aside="<ul><li><a href=/post/bom>New bom</a></ul><ul><li><a href=/"+base+"/"+id+"?action=merge>Merge</a><li><a href=/"+base+"/profile>Profile</a><li><a href=/"+base+"/contacts>Contacts</a><li><a href=/"+base+"/tags>Tags</a></ul><ul><li><a href=/"+base+"/dashboard>Dashboard</a><li><a href=/"+base+"/activities>Activities</a><li><a href=/"+base+"/historical>Historical</a></ul><ul><li><a href=/"+base+"/weight>Weight</a><li><a href=/"+base+"/heart-rate>Heart Rate</a><li><a href=/"+base+"/steps>Steps</a><li><a href=/"+base+"/fat>Fat</a></ul>";
-		p.out("<table class=list><thead><tr><th class=w030>Value<th>Reference<th>Vendor<td>Price<td>Qty<td>Sum<tbody>");
+		p.out("<table class=list><thead><tr><th>Value<td>Quantity<tbody>");
 		PersistenceManager mgr=Helper.getMgr();
 		Query q=mgr.newQuery(I24.class);
 		q.setFilter("pri==1 && prj==1 && v==0");
@@ -176,9 +175,7 @@ public class InquiriesServlet extends HttpServlet{
 			@SuppressWarnings("unchecked")
 			List<I24>r=(List<I24>)q.execute();
 			for(I24 o:r){
-				long c=o.getQuantity();
-				p.out("<tr><th>"+o.getValue()+"<th>"+o.getReference()+
-					"<td><td><td>"+c);
+				p.out("<tr><th>"+o.getValue()+"<td>"+o.getQuantity());
 			}
 		}
         finally{
