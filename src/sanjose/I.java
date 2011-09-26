@@ -35,7 +35,7 @@ public class I{
 	@Persistent
 	private Long d;
 	@Persistent
-	private String e;
+	private String ext;
 	@Persistent
 	private Long h;
 	@Persistent
@@ -45,7 +45,11 @@ public class I{
 	@Persistent
 	private String p;
 	@Persistent
+	private Long prs;
+	@Persistent
 	private Text q;
+	@Persistent
+	private Long qty;
 	@Persistent
 	private Long r;
 	@Persistent
@@ -61,9 +65,9 @@ public class I{
 	@Persistent
 	private String x;
 	@Persistent
-	private Date y;
+	private String xtr;
 	@Persistent
-	private String z;
+	private Date y;
 
 	private void init(String text,String plink,long type,long rate,
 		long ownerid,long ownersite){
@@ -79,6 +83,8 @@ public class I{
 		this.o=ownerid;
 		this.w=ownersite;
 		this.p=plink;
+		this.prs=0L;
+		this.qty=1L;
 		this.r=rate;
 		this.u=0L;
 		this.v=1L;
@@ -197,7 +203,7 @@ public class I{
 		I i=new I(val,type);
 		i.o=i.i;
 		i.w=i.j;
-		i.m=i.e==null?now():new Date(Long.parseLong(i.e)*1000);
+		i.m=i.ext==null?now():new Date(Long.parseLong(i.ext)*1000);
 		i.t=i.m;
 		return i;
 	}
@@ -238,7 +244,7 @@ public class I{
 		this.i=Long.parseLong(t[0]);
 		this.j=Long.parseLong(t[1]);
 		if(t.length>2)
-			this.e=t[2];
+			this.ext=t[2];
 		this.m=now();
 		this.t=now();
 	}
@@ -255,54 +261,60 @@ public class I{
 	    return t.getTime()/1000;
 	}
 	public Date getCreateTime(){
-	    return t;
+		return t;
 	}
 	public String getExtension(){
-	    return e;
+		return ext;
 	}
 	public String getExtra(){
-	    return z;
+		return xtr;
 	}
 	public long getId(){
-	    return i;
+		return i;
 	}
 	public long getModifyTick(){
-	    return m.getTime()/1000;
+		return m.getTime()/1000;
 	}
 	public Date getModifyTime(){
-	    return m;
+		return m;
 	}
 	public I getOwner(){
-	    return new I(o,w);
+		return new I(o,w);
 	}
 	public String getPath(){
 		if(a==1 || a==2)
 			return i+"."+j;
-	    return b+"."+s+"/"+(p==null?i+"."+j:p);
+		return b+"."+s+"/"+(p==null?i+"."+j:p);
 	}
 	public String getPlink(){
-	    return p;
+		return p;
+	}
+	public long getPrice(){
+		return prs;
+	}
+	public long getQuantity(){
+		return qty;
 	}
 	public String getQuotation(){
-	    return q==null?"":q.getValue();
+		return q==null?"":q.getValue();
 	}
 	public long getRate(){
-	    return r;
+		return r;
 	}
 	public I getRef(){
-	    return new I(d,h);
+		return new I(d,h);
 	}
 	public long getReplyCount(){
-	    return u;
+		return u;
 	}
 	public String getReplyString(){
-	    return u==0?"":u.toString();
+		return u==0?"":u.toString();
 	}
 	public long getReplyTick(){
-	    return y.getTime()/1000;
+		return y.getTime()/1000;
 	}
 	public long getSite(){
-	    return j;
+		return j;
 	}
 	public String getTimed(){
 		return i+"."+j+"."+t.getTime()/1000;
@@ -323,9 +335,9 @@ public class I{
 		return ++u;
 	}
 	public boolean isPicture(){
-		if(e==null)
+		if(ext==null)
 			return false;
-		return e.equalsIgnoreCase("jpg");
+		return ext.equalsIgnoreCase("jpg");
 	}
 	public void setBase(I base,I owner){
 		if(base==null || base.j==0)
@@ -336,13 +348,19 @@ public class I{
 		}
 	}
 	public void setExtra(String val){
-	    this.z=val;
+	    this.xtr=val;
 	}
 	public void setModifyTime(Date val){
 		this.m=val==null?now():val;
 	}
 	public void setPlink(String val){
 	    this.p=val;
+	}
+	public void setPrice(long val){
+		prs=val;
+	}
+	public void setQuantity(long val){
+		qty=val;
 	}
 	public void setQuotation(String val){
 		this.q=new Text(val);
