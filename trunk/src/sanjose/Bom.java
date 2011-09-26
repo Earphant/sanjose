@@ -22,7 +22,6 @@ public class Bom{
 		long qty=0;
 		String ref="";
 		String val=null;
-		Date time=new Date();
 		try{
 			for(int i=s.length;i>0;){
 				String a=head[--i];
@@ -37,7 +36,10 @@ public class Bom{
 			}
 			if(qty!=0 && val!=null){
 				log.warning(ord+": "+qty+", "+val+", "+ref);
-				mgr.makePersistent(new I24(id,ord,time,val,qty,ref,""));
+				I o=I.store(val,null,24,20,own,mgr,false);
+				o.setBase(id,own);
+				o.setQuantity(qty);
+				mgr.makePersistent(o);
 			}
 		}
 		catch(NumberFormatException e){
