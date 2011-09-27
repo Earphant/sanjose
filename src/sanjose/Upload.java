@@ -49,7 +49,7 @@ public class Upload{
 						if(i.getSite()==0){
 							String x=t.getName();
 							x=x.substring(x.lastIndexOf(".")+1,x.length());
-							i=I.store(x,null,12,0,w,m,true);
+							i=I.store(x,null,12,(byte)0,w,m,true);
 						}
 						I12 o=new I12(i,new Blob(a));
 						o.setPicture();

@@ -29,7 +29,7 @@ public class Document extends HttpServlet {
 		// i=new I(sn.owner.getId(),sn.owner.getSite()); n
 		// I i=new I( , ,"",null,8,0,sn.owner.getId(),sn.owner.getSite());
 		// I i=new I(sn.owner.getId()+"."+sn.owner.getSite());
-		I i = I.store(title,null,8,0,sn.owner,mgr,false);
+		I i = I.store(title,null,8,(byte)0,sn.owner,mgr,false);
 		i.setQuotation(abs);
 		mgr.makePersistent(i);
 		I8 i8 = new I8(i,text,1,new Date());

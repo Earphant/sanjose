@@ -98,7 +98,7 @@ public class Organization{
 		PersistenceManager m=Helper.getMgr();
 		try{
 			if(i.getSite()==0){
-				o=I.store(v,null,2,0,sn.owner,m,true);
+				o=I.store(v,null,2,(byte)0,sn.owner,m,true);
 				I21 i21=new I21(o,o.getOwner(),new Date());
 			    m.makePersistent(i21);
 			}

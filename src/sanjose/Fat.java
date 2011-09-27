@@ -88,7 +88,7 @@ public class Fat {
 			try{
 				List<I> r=(List<I>)qi.execute(s.owner.getId(),s.owner.getSite(),135);
 				if(r.isEmpty())
-					I.store(s.name,"",135L,0L,s.owner,mgr,true);
+					I.store(s.name,"",135,(byte)0,s.owner,mgr,true);
 				else{
 					I i=r.get(0);
 					i.setModifyTime(now);

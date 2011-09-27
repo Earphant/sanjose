@@ -51,7 +51,7 @@ public class I{
 	@Persistent
 	private Long qty;
 	@Persistent
-	private Long r;
+	private Byte r;
 	@Persistent
 	private Long s;
 	@Persistent
@@ -69,7 +69,7 @@ public class I{
 	@Persistent
 	private Date y;
 
-	private void init(String text,String plink,long type,long rate,
+	private void init(String text,String plink,long type,byte rate,
 		long ownerid,long ownersite){
 		Date t=now();
 		this.i=0L;
@@ -156,7 +156,7 @@ public class I{
 		}
 		return ret;
 	}
-	static public I store(String text,String plink,long type,long rate,
+	static public I store(String text,String plink,long type,byte rate,
 		I owner,PersistenceManager mgr,boolean end){
 		I ret=new I(text,plink,type,rate,owner);
 		mgr.makePersistent(ret);
@@ -208,14 +208,14 @@ public class I{
 		return i;
 	}
 
-	public I(long id,long site,String text,String plink,long classid,long rate,
+	public I(long id,long site,String text,String plink,long classid,byte rate,
 		long ownerid,long ownersite){
 		init(text,plink,classid,rate,ownerid,ownersite);
 		this.i=id;
 		this.j=site;
 		this._key=KeyFactory.createKey(I.class.getSimpleName(),id+"."+site);
 	}
-	public I(String text,String plink,long classid,long rate,I owner){
+	public I(String text,String plink,long classid,byte rate,I owner){
 		init(text,plink,classid,rate,owner.i,owner.j);
 	}
 	public I(long id,long site){
