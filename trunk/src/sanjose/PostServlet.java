@@ -33,7 +33,7 @@ public class PostServlet extends HttpServlet{
 		PersistenceManager m=Helper.getMgr();
 		try{
 			if(i.getSite()==0){
-				i=I.store(v,null,0,0,sn.owner,m,false);
+				i=I.store(v,null,0,(byte)0,sn.owner,m,false);
 				i.setRef(re);
 				i.setBase(b,re);
 				if(re.getSite()!=0){

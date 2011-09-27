@@ -29,7 +29,7 @@ public class Session{
 			}
 			catch(JDOObjectNotFoundException e) {
 				I i=new I(1,1);
-				i=I.store(name,null,1,0,i,m,true);
+				i=I.store(name,null,1,(byte)0,i,m,true);
 				u=new I11(i,email);
 				m.makePersistent(u);
 				I1 idt=new I1(i);

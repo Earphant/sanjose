@@ -36,9 +36,10 @@ public class Bom{
 			}
 			if(qty!=0 && val!=null){
 				log.warning(ord+": "+qty+", "+val+", "+ref);
-				I o=I.store(val,null,24,20,own,mgr,false);
+				I o=I.store(val,null,24,(byte)20,own,mgr,false);
 				o.setBase(id,own);
 				o.setQuantity(qty);
+				o.setQuotation(ref);
 				mgr.makePersistent(o);
 			}
 		}
@@ -132,7 +133,7 @@ public class Bom{
 			List<I> r=(List<I>)q.execute(owner.getId(),owner.getSite(),type);
 			I i;
 			if(r.isEmpty()){
-				i=I.store(text,plink,type,0,owner,mgr,false);
+				i=I.store(text,plink,type,(byte)0,owner,mgr,false);
 			}
 			else{
 				i=r.get(0);
@@ -154,7 +155,7 @@ public class Bom{
 		String v=new String(bytes);
 		String[]s=v.split("\n");
 		if(s.length>2 && prepare(s[0])){
-			I id=I.store("BOM",null,24,9,owner,mgr,true);
+			I id=I.store("BOM",null,24,(byte)9,owner,mgr,true);
 			try{
 				for(int i=s.length-1;i>0;i--)
 					postLine(id,owner,s[i],i);
@@ -176,18 +177,18 @@ public class Bom{
 		//page.aside="<ul><li><a href=/post/bom>New bom</a></ul><ul><li><a href=/"+base+"/"+id+"?action=merge>Merge</a><li><a href=/"+base+"/profile>Profile</a><li><a href=/"+base+"/contacts>Contacts</a><li><a href=/"+base+"/tags>Tags</a></ul><ul><li><a href=/"+base+"/dashboard>Dashboard</a><li><a href=/"+base+"/activities>Activities</a><li><a href=/"+base+"/historical>Historical</a></ul><ul><li><a href=/"+base+"/weight>Weight</a><li><a href=/"+base+"/heart-rate>Heart Rate</a><li><a href=/"+base+"/steps>Steps</a><li><a href=/"+base+"/fat>Fat</a></ul>";
 		page.aside=null;
 		page.out("<table class=list><thead><tr><th class=w030>Value<th>Reference<th>Vendor<td>Price<td>Qty<td>Sum<tbody>");
-		Query q=mgr.newQuery(I24.class);
-		q.setFilter("i==id && j==site && v==0");
+		Query q=mgr.newQuery(I.class);
+		q.setFilter("b==id && s==site && a==24");
 		q.declareParameters("Long id,Long site");
-        q.setOrdering("ord");
+		//q.setOrdering("ord");
 		try{
 			@SuppressWarnings("unchecked")
-			List<I24>r=(List<I24>)q.execute(id.getId(),id.getSite());
-			for(I24 o:r){
+			List<I>r=(List<I>)q.execute(id.getId(),id.getSite());
+			for(I o:r){
 				long c=o.getQuantity();
 				tot+=c;
-				page.out("<tr><th>"+o.getValue()+"<th>"+o.getReference()+
-					"<td><td><td>"+c);
+				page.out("<tr><th>"+o.getText()+"<th>"+o.getQuotation()+
+					"<td><td>"+o.getPrice()+"<td>"+c);
 			}
 		}
         finally{
