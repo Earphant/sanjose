@@ -36,10 +36,11 @@ public class Bom{
 			}
 			if(qty!=0 && val!=null){
 				log.warning(ord+": "+qty+", "+val+", "+ref);
-				I o=I.store(val,null,24,(byte)20,own,mgr,false);
+				I o=I.store(ref,null,24,(byte)20,own,mgr,false);
+				o.setCreateTick(ord);
 				o.setBase(id,own);
 				o.setQuantity(qty);
-				o.setQuotation(ref);
+				o.setQuotation(val);
 				mgr.makePersistent(o);
 			}
 		}
@@ -187,7 +188,7 @@ public class Bom{
 			for(I o:r){
 				long c=o.getQuantity();
 				tot+=c;
-				page.out("<tr><th>"+o.getText()+"<th>"+o.getQuotation()+
+				page.out("<tr><th>"+o.getQuotation()+"<th>"+o.getText()+
 					"<td><td>"+o.getPrice()+"<td>"+c);
 			}
 		}
