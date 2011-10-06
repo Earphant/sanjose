@@ -18,27 +18,30 @@ public class I24{
 	private Long j;
 	@Persistent
 	private Date t;
-	@SuppressWarnings("unused")
 	@Persistent
 	private Long v;
 	@Persistent
 	private Long ord;
+	@SuppressWarnings("unused")
 	@Persistent
 	private Long pri;
 	@Persistent
+	@SuppressWarnings("unused")
 	private Long prj;
 	@Persistent
+	@SuppressWarnings("unused")
 	private Long prs;
 	@Persistent
 	private Long qty;
 	@Persistent
+	@SuppressWarnings("unused")
 	private Long stt;
 	@Persistent
 	private String val;
 	@Persistent
-	private Long vdi;
+	private Long o;
 	@Persistent
-	private Long vdj;
+	private Long w;
 	@Persistent
 	private String ref;
 	@Persistent
@@ -56,8 +59,8 @@ public class I24{
 		this.ref=ref;
 		this.v=0L;
 		this.val=val;
-		this.vdi=1L;
-		this.vdj=1L;
+		this.o=1L;
+		this.w=1L;
 		this.z=xtr;
 		this._key=i+"."+v+"."+ord;
 	}
@@ -82,13 +85,20 @@ public class I24{
 	public String getValue(){
 	    return val;
 	}
+	public I getVendor(){
+		return new I(o,w);
+	}
 	public void setQuantity(long val){
 		this.qty=val;
+	}
+	public void setTime(Date t){
+		this.t=t;
 	}
 	public void setValue(String val){
 		this.val=val;
 	}
-	public void setTime(Date t){
-		this.t=t;
+	public void setVendor(I val){
+		o=val.getId();
+		w=val.getSite();
 	}
 }
