@@ -347,6 +347,9 @@ public class I{
 		    this.s=base.j;
 		}
 	}
+	public void setCreateTick(long val){
+		this.t=new Date(val*1000);
+	}
 	public void setExtra(String val){
 	    this.xtr=val;
 	}
