@@ -53,6 +53,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-class>sanjose.ProductsServlet</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>settings</servlet-name>
+		<servlet-class>sanjose.SettingsServlet</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>system</servlet-name>
 		<servlet-class>sanjose.SystemServlet</servlet-class>
 	</servlet>
@@ -130,6 +134,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet-mapping>
 		<servlet-name>system</servlet-name>
 		<url-pattern>/system/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>settings</servlet-name>
+		<url-pattern>/system/settings</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>thumbnails</servlet-name>

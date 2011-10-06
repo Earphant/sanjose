@@ -10,6 +10,7 @@ import javax.servlet.http.*;
 
 @SuppressWarnings("serial")
 public class InquiriesServlet extends HttpServlet{
+	@SuppressWarnings("unused")
 	private void form(I id,Page page)throws IOException{
 		PersistenceManager m=Helper.getMgr();
 		I o=I.query(id,m);
@@ -92,6 +93,7 @@ public class InquiriesServlet extends HttpServlet{
 		page.out("<input type=hidden name=i value="+id.getId()+"."+id.getSite()+">");
 		page.out("<input type=submit name=ok value=Ok></form>");
 	}
+	@SuppressWarnings("unused")
 	private void list(String title,String type,Page page)throws IOException{
 		page.title=title;
 		PersistenceManager m=Helper.getMgr();
