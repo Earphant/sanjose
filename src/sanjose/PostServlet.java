@@ -65,6 +65,18 @@ public class PostServlet extends HttpServlet{
 			String[]s=n.split("/");
 			if(s.length>1){
 				n=s[1];
+				if(n.equalsIgnoreCase("adminindividual")){
+					new AdminsServlet().doGet(req,rsp);
+					return;
+				}
+				if(n.equalsIgnoreCase("individual")){
+					new Individual().doGet(req,rsp,p,m);
+					return;
+				}
+				if(n.equalsIgnoreCase("organization")){
+					new Organization().doGet(req,rsp,p,m);
+					return;
+				}
 				if(n.equalsIgnoreCase("fat")){
 					new Fat().doGet(req,rsp);
 					return;
@@ -73,10 +85,7 @@ public class PostServlet extends HttpServlet{
 					new HeartRate().doGet(req,rsp,p);
 					return;
 				}
-				if(n.equalsIgnoreCase("organization")){
-					new Organization().doGet(req,rsp,p,m);
-					return;
-				}
+				
 				if(n.equalsIgnoreCase("steps")){
 					new Steps().doGet(req,rsp,p);
 					return;
@@ -110,16 +119,24 @@ public class PostServlet extends HttpServlet{
 			String[]s=v.split("/");
 			if(s.length>1){
 				String n=s[1];
+				if(n.equalsIgnoreCase("adminindividual")){
+					new AdminsServlet().doPost(req,rsp);
+					return;
+				}
+				if(n.equalsIgnoreCase("individual")){
+					new Individual().doPost(req,rsp);
+					return;
+				}
+				if(n.equalsIgnoreCase("organization")){
+					new Organization().doPost(req,rsp);
+					return;
+				}
 				if(n.equalsIgnoreCase("fat")){
 					new Fat().doPost(req,rsp);
 					return;
 				}
 				if(n.equalsIgnoreCase("heart-rate")){
 					new HeartRate().doPost(req,rsp);
-					return;
-				}
-				if(n.equalsIgnoreCase("organization")){
-					new Organization().doPost(req,rsp);
 					return;
 				}
 				if(n.equalsIgnoreCase("steps")){
