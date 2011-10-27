@@ -1,6 +1,8 @@
 package	sanjose;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -62,36 +64,120 @@ public class Individual{
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp,Page page,
 		PersistenceManager mgr)throws IOException{
 		I i=new I(req.getParameter("i"),0);
-		page.title="Organization";
+		page.title="Individual";
 		page.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";
 		if(i.getSite()==0)
 			page.out("<form method=post action=/post/individual><input type=text name=text>");
 		else{
 			page.out("<form method=post action=/post/individual?i="+i+">");
-			i=I.query(i,mgr);
-			page.out("<input type=text name=text value="+i.getText()+">");
+			individualGet(i,page,mgr);
 		}
-		page.end("<br><input type=submit name=ok></form>");
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
-		Session sn=new Session("/post/organization");
-		String v=req.getParameter("text");
 		I i=new I(req.getParameter("i"),0);
+		PersistenceManager mgr=Helper.getMgr();
+		individualPost(req,i,mgr);
+		rsp.sendRedirect("/"+i);
+	}
+	public static void individualGet(I i,Page page,PersistenceManager mgr)
+	throws IOException{
+		i=I.query(i,mgr);
+		String pwd1="";
+		String pwd2="";
+		I1 i1=I1.query(i,mgr);
+		String fsn=i1.getfsn()==null?"first+name":i1.getfsn();
+		String mdn=i1.getmdn()==""?"middle+name":i1.getmdn();
+		String lsn=i1.getlsn()==""||i1.getlsn()==null?"lastname":i1.getlsn();
+		String gnf=i1.getgnd()=="female"?"checked":"";
+		String gnm=i1.getgnd()=="male"?"checked":"";
+		String yir="";
+		String mth="";
+		String dat="";
+		String ocp=i1.getocp();
+		String zip=i1.getzip()==0L?"":i1.getzip().toString();
+		String tel=i1.gettel()==0L?"":i1.gettel().toString();
+		String add=i1.getadd();
+		if(i1.gett()!=null){
+			Date t=i1.gett();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(t);
+			yir= Integer.toString(cal.get(Calendar.YEAR));
+			mth= Integer.toString(cal.get(Calendar.MONTH));
+			dat= Integer.toString(cal.get(Calendar.DAY_OF_MONTH));
+		}
+		page.out("Password<br><input type=password name=pwd1 value="+pwd1+"><br>Ensure Password<br><input type=password name=pwd2 value="+pwd2+"><br>"
+		        +"Nick Name<br><input type=text name=text value="+i.getText()+"><br>"
+		        +"First Name<br><input type=text name=fsn value="+fsn+"><br>Middle Name<br><input type=text name=mdn value="+mdn+"><br>Last Name<br><input type=text name=lsn value="+lsn+"><br>"
+	            +"Gender<br><input type=radio name=gnd value=female "+gnf+">Female  <input type=radio name=gnd value=male "+gnm+">Male<br>"
+		        +"Birthday<br><input type=text name=yir value="+yir+">-<input type=text name=mth value="+mth+">-<input type=text name=dat value="+dat+"><br>"
+		        +"Occupation<br><input type=text name=ocp value="+ocp+"><br>"
+		        +"Postal Code<br><input type=text name=zip value="+zip+"><br>Telephone Number<br><input type=text name=tel value="+tel+"><br>"
+		        +"Address<br><textarea name=add rows=1>"+add+"</textarea>");
+	page.out("<input type=hidden name=i value="+i+">");
+	page.end("<br><input type=submit name=ok></form>");
+	}
+	@SuppressWarnings("unchecked")
+	public static void individualPost(HttpServletRequest req,I i,PersistenceManager mgr)
+	throws IOException{
 		I o;
-		PersistenceManager m=Helper.getMgr();
+		String v=req.getParameter("text");
+		o=I.query(i,mgr);
+		o.setText(v);
+		o.setModifyTime(null);
+			
+		Query q11=mgr.newQuery(I11.class);
+        q11.setFilter("i==iParam && j==jParam");
+		q11.declareParameters("Long iParam,Long jParam");
+		   try{
+				List<I11> r11=(List<I11>)q11.execute(i.getId(),i.getSite());
+				if(!r11.isEmpty()){
+					I11 i11=r11.get(0);
+					String pwd1 = req.getParameter("pwd1");
+					String pwd2 = req.getParameter("pwd2");
+					if(pwd1==pwd2 && pwd1!=""){
+						i11.setPassword(pwd1);
+						mgr.makePersistent(i11);
+					}
+				}
+			}
+			finally{
+				q11.closeAll();
+			}
+		String yir = req.getParameter("yir");
+        String mth = req.getParameter("mth");
+        String dat = req.getParameter("dat");
+           Calendar calendar = Calendar.getInstance();
+           Date t=null;
+        if(yir!="" && mth!="" && dat!=""){
+        	calendar.set(Integer.parseInt(yir),Integer.parseInt(mth)-1,Integer.parseInt(dat));
+        	t = calendar.getTime();
+        }
+        Long zip=req.getParameter("zip")==""?0L:Long.parseLong(req.getParameter("zip"));
+        Long tel=req.getParameter("tel")==""?0L:Long.parseLong(req.getParameter("tel"));
+        Query q1=mgr.newQuery(I1.class);
+        q1.setFilter("i==iParam && j==jParam");
+		q1.declareParameters("Long iParam,Long jParam");
 		try{
-			if(i.getSite()==0)
-				o=I.store(v,null,2,(byte)0,sn.owner,m,true);
-			else{
-				o=I.query(i,m);
-				o.setText(v);
-				o.setModifyTime(null);
+			List<I1> r1=(List<I1>)q1.execute(i.getId(),i.getSite());
+			if(!r1.isEmpty()){
+				I1 i1=r1.get(0);
+				i1.setfsn(req.getParameter("fsn"));
+				i1.setmdn(req.getParameter("mdn"));
+				i1.setlsn(req.getParameter("lsn"));
+				i1.setgnd(req.getParameter("gnd"));
+				i1.sett(t);
+				i1.setocp(req.getParameter("ocp"));
+				i1.setzip(zip);
+				i1.settel(tel);
+				i1.setadd(req.getParameter("add"));
+				mgr.makePersistent(i1);
 			}
 		}
 		finally{
-			m.close();
+			q1.closeAll();
+			mgr.close();
 		}
-		rsp.sendRedirect("/"+o);
 	}
+	
 }

@@ -1,9 +1,13 @@
 package sanjose;
 
 import java.util.Date;
+import java.util.List;
+
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 
 @PersistenceCapable
 public class I1{
@@ -50,19 +54,22 @@ public class I1{
 		this.tel=0L;
 		this.add="";
 	}
-	public I1(I i,String fsn,String mdn,String lsn,String gnd,Date t,String ocp,Long zip,Long tel,String add){
-		this.i=i.getId();
-		this.j=i.getSite();
-		this.fsn=fsn;
-		this.mdn=mdn;
-		this.lsn=lsn;
-		this.gnd=gnd;
-		this.t=t;
-		this.ocp=ocp;
-		this.zip=zip;
-		this.tel=tel;
-		this.add=add;
-		this._key=this.i+"."+this.j;
+	
+	static public I1 query(I id,PersistenceManager mgr){
+		I1 ret=null;
+		Query q1=mgr.newQuery(I1.class);
+		q1.setFilter("i==iParam && j==jParam");
+		q1.declareParameters("Long iParam,Long jParam");
+		try{
+			@SuppressWarnings("unchecked")
+			List<I1> r1=(List<I1>)q1.execute(id.getId(),id.getSite());
+			if(!r1.isEmpty())
+				ret=r1.get(0);
+		}
+		finally{
+			q1.closeAll();
+		}
+		return ret;
 	}
 	
 	public Long geti(){
