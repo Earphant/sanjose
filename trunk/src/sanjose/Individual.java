@@ -14,7 +14,7 @@ public class Individual{
 	static public String menu(I id,Session ssn,PersistenceManager mgr){
 		String ret=null;
 		if(id.equals(ssn.owner))
-			ret="<ul><li><a href=/post>Post</a><li><a href=/system/settings>Settings</a></ul>";
+			ret="<ul><li><a href=/post>Post</a><li><a href=/system/settings?i="+id+">Settings</a></ul>";
 		else{
 			Query q=mgr.newQuery(I21.class);
 			I o=ssn.owner;
@@ -71,6 +71,8 @@ public class Individual{
 		else{
 			page.out("<form method=post action=/post/individual?i="+i+">");
 			individualGet(i,page,mgr);
+			page.out("<input type=hidden name=i value="+i+">");
+			page.end("<br><input type=submit name=ok></form>");
 		}
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
@@ -82,7 +84,6 @@ public class Individual{
 	}
 	public static void individualGet(I i,Page page,PersistenceManager mgr)
 	throws IOException{
-		i=I.query(i,mgr);
 		String pwd1="";
 		String pwd2="";
 		I1 i1=I1.query(i,mgr);
@@ -110,22 +111,17 @@ public class Individual{
 		        +"Nick Name<br><input type=text name=text value="+i.getText()+"><br>"
 		        +"First Name<br><input type=text name=fsn value="+fsn+"><br>Middle Name<br><input type=text name=mdn value="+mdn+"><br>Last Name<br><input type=text name=lsn value="+lsn+"><br>"
 	            +"Gender<br><input type=radio name=gnd value=female "+gnf+">Female  <input type=radio name=gnd value=male "+gnm+">Male<br>"
-		        +"Birthday<br><input type=text name=yir value="+yir+">-<input type=text name=mth value="+mth+">-<input type=text name=dat value="+dat+"><br>"
+		        +"Birthday<br><input type=text style=width:40px; name=yir value="+yir+">-<input type=text name=mth style=width:20px; value="+mth+">-<input type=text name=dat style=width:20px; value="+dat+"><br>"
 		        +"Occupation<br><input type=text name=ocp value="+ocp+"><br>"
 		        +"Postal Code<br><input type=text name=zip value="+zip+"><br>Telephone Number<br><input type=text name=tel value="+tel+"><br>"
 		        +"Address<br><textarea name=add rows=1>"+add+"</textarea>");
-	page.out("<input type=hidden name=i value="+i+">");
-	page.end("<br><input type=submit name=ok></form>");
 	}
 	@SuppressWarnings("unchecked")
 	public static void individualPost(HttpServletRequest req,I i,PersistenceManager mgr)
 	throws IOException{
-		I o;
 		String v=req.getParameter("text");
-		o=I.query(i,mgr);
-		o.setText(v);
-		o.setModifyTime(null);
-			
+		i.setText(v);
+		i.setModifyTime(null);
 		Query q11=mgr.newQuery(I11.class);
         q11.setFilter("i==iParam && j==jParam");
 		q11.declareParameters("Long iParam,Long jParam");
@@ -158,26 +154,25 @@ public class Individual{
         Query q1=mgr.newQuery(I1.class);
         q1.setFilter("i==iParam && j==jParam");
 		q1.declareParameters("Long iParam,Long jParam");
-		try{
-			List<I1> r1=(List<I1>)q1.execute(i.getId(),i.getSite());
-			if(!r1.isEmpty()){
-				I1 i1=r1.get(0);
-				i1.setfsn(req.getParameter("fsn"));
-				i1.setmdn(req.getParameter("mdn"));
-				i1.setlsn(req.getParameter("lsn"));
-				i1.setgnd(req.getParameter("gnd"));
-				i1.sett(t);
-				i1.setocp(req.getParameter("ocp"));
-				i1.setzip(zip);
-				i1.settel(tel);
-				i1.setadd(req.getParameter("add"));
-				mgr.makePersistent(i1);
+			try{
+				List<I1> r1=(List<I1>)q1.execute(i.getId(),i.getSite());
+				if(!r1.isEmpty()){
+					I1 i1=r1.get(0);
+					i1.setfsn(req.getParameter("fsn"));
+					i1.setmdn(req.getParameter("mdn"));
+					i1.setlsn(req.getParameter("lsn"));
+					i1.setgnd(req.getParameter("gnd"));
+					i1.sett(t);
+					i1.setocp(req.getParameter("ocp"));
+					i1.setzip(zip);
+					i1.settel(tel);
+					i1.setadd(req.getParameter("add"));
+					mgr.makePersistent(i1);
+				}
 			}
-		}
-		finally{
-			q1.closeAll();
-			mgr.close();
-		}
+			finally{
+				q1.closeAll();
+				mgr.close();
+			}
 	}
-	
 }

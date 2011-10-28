@@ -31,11 +31,20 @@ public class SystemServlet extends HttpServlet{
 	private void settings(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{	
 		page.title="Settings";
-		I owner=new Session("/tools/settings").owner;
+		I owner=new I(req.getParameter("i"),0);
 		PersistenceManager mgr=Helper.getMgr();	
-		page.out("<a href=/post/upload?i="+owner+"><img src=/icons/"+owner+" class=icon></a><br>");
-		page.out("<form method=post action=/post/individual?i="+owner+">");
-		Individual.individualGet(owner,page,mgr);
+		I i=I.query(owner, mgr);
+		page.out("<a href=/post/upload?i="+i+"><img src=/icons/"+i+" class=icon></a><br>");
+		if(i.getType()==1){
+			page.out("<form method=post action=/post/individual?i="+i+">");
+			Individual.individualGet(i,page,mgr);
+		}
+		else if(i.getType()==2){
+			page.out("<form method=post action=/post/organization?i="+i+">");
+			Organization.organizationGet(i,page,mgr);
+		}
+		page.out("<input type=hidden name=i value="+i.getId()+"."+i.getSite()+">");
+		page.out("<input type=submit name=ok value=Ok></form>");
 	}
 	private void signin(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
@@ -100,44 +109,43 @@ public class SystemServlet extends HttpServlet{
 	}
 	rsp.sendRedirect("/"+d+"/");
 }
-
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		page=new Page(rsp);
-		String p=req.getPathInfo();
+		String p=req.getPathInfo().split("/")[1];
 		jmp=req.getParameter("jmp");
 
-		if(p.equals("/"))
+		if(p.isEmpty())
 			page.title="System";
-		else if(p.equalsIgnoreCase("/follow")){
+		else if(p.equalsIgnoreCase("follow")){
 			follow(req,rsp);
 			return;
 		}
-		else if(p.equalsIgnoreCase("/settings")){
+		else if(p.equalsIgnoreCase("settings")){
 			settings(req,rsp);
 			return;
 		}
-		else if(p.equalsIgnoreCase("/signin")){
+		else if(p.equalsIgnoreCase("signin")){
 			signin(req,rsp);
 			return;
 		}
-		else if(p.equalsIgnoreCase("/signout")){
+		else if(p.equalsIgnoreCase("signout")){
 			signout(req,rsp);
 			return;
 		}
-		else if(p.equals("/signup")){
+		else if(p.equals("signup")){
 			signup(req,rsp);
 			return;
 		}
-		else if(p.equalsIgnoreCase("/unfollow")){
+		else if(p.equalsIgnoreCase("unfollow")){
 			unfollow(req,rsp);
 			return;
 		}
-		else if(p.equalsIgnoreCase("/join")){
+		else if(p.equalsIgnoreCase("join")){
 			join(req,rsp);
 			return;
 		}
-		else if(p.equalsIgnoreCase("/quit")){
+		else if(p.equalsIgnoreCase("quit")){
 			quit(req,rsp);
 			return;
 		}

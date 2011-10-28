@@ -1,8 +1,6 @@
 package sanjose;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -58,58 +56,18 @@ public class AdminsServlet extends HttpServlet{
 	public void individualForm(I id,Page page,PersistenceManager mgr)
 		throws IOException{
 		page.out("<a href=/post/upload?i="+id+"><img src=/icons/"+id+" class=icon></a><br>");
-		page.out("<form method=post action=/post/adminindividual?i="+id+">");
+		page.title="Individual";
+		page.out("<form method=post action=/post/adindividual?i="+id+">");
 		Individual.individualGet(id,page,mgr);
+		page.out("<input type=hidden name=i value="+id+">");
+		page.end("<br><input type=submit name=ok></form>");
 	}
-	@SuppressWarnings("unchecked")
 	private void organizationForm(I id,Page page,PersistenceManager mgr)
 		throws IOException{
 		page.out("<a href=/post/upload?i="+id.getId()+"."+id.getSite()+"><img src=/icons/"+id.getId()+"."+id.getSite()+" class=icon></a><br>");
-		String nkn=id.getText()==null?"nick+name":id.getText();
-
-		Query q1=mgr.newQuery(I1.class);
-		q1.setFilter("i==iParam && j==jParam");
-		q1.declareParameters("Long iParam,Long jParam");
-		try{
-			List<I1> r1=(List<I1>)q1.execute(id.getId(),id.getSite());
-			I1 i1=r1.get(0);
-			String fsn=i1.getfsn()==""||i1.getfsn()==null?"first+name":i1.getfsn();
-			String mdn=i1.getmdn()==""||i1.getmdn()==null?"middle+name":i1.getmdn();
-			String lsn=i1.getlsn()==""||i1.getlsn()==null?"last+name":i1.getlsn();
-			String gnf=i1.getgnd()=="female"?"checked":"";
-			String gnm=i1.getgnd()=="male"?"checked":"";
-			String yir="";
-			String mth="";
-			String dat="";
-			String ocp=i1.getocp();
-			String zip=i1.getzip()==0L?"":i1.getzip().toString();
-			String tel=i1.gettel()==0L?"":i1.gettel().toString();
-			String add=i1.getadd();
-			if(i1.gett()!=null){
-				Date t=i1.gett();
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(t);
-				yir= Integer.toString(cal.get(Calendar.YEAR));
-				mth= Integer.toString(cal.get(Calendar.MONTH)+1);
-				dat= Integer.toString(cal.get(Calendar.DAY_OF_MONTH));
-			}
-			page.title="Individual";
-			page.out("<form method=post action=/post/individual?i="+id.getId()+"."+id.getSite()+">");
-			page.out("Nick Name<br><input type=text name=text value="+nkn+"><br>");
-			page.out("First Name<br><input type=text name=fsn value="+fsn+"><br>");
-			page.out("Middle Name<br><input type=text name=mdn value="+mdn+"><br>");
-			page.out("Last Name<br><input type=text name=lsn value="+lsn+"><br>");
-			page.out("Gender<br><input type=radio name=gnd value=female "+gnf+">Female<input type=radio name=gnd value=male "+gnm+">Male<br>");
-			page.out("Birthday<br><input type=text name=yir value="+yir+">-<input type=text name=mth value="+mth+">-<input type=text name=dat value="+dat+"><br>");
-			page.out("Occupation<br><input type=text name=ocp value="+ocp+"><br>");
-			page.out("Postal Code<br><input type=text name=zip value="+zip+"><br>");
-			page.out("Telephone Number<br><input type=text name=tel value="+tel+"><br>");
-			page.out("Address<br><textarea name=add rows=1>"+add+"</textarea>");
-		}
-		finally{
-			q1.closeAll();
-			mgr.close();
-		}
+		page.title="Groups";
+		page.out("<form method=post action=/post/adorganization?i="+id+">");
+		Organization.organizationGet(id, page, mgr);
 		page.out("<input type=hidden name=i value="+id.getId()+"."+id.getSite()+">");
 		page.out("<input type=submit name=ok value=Ok></form>");
 	}
@@ -169,9 +127,16 @@ public class AdminsServlet extends HttpServlet{
 	    throws IOException{
 		PersistenceManager mgr=Helper.getMgr();
 		I i = new I(req.getParameter("i"),0);
+		I o = I.query(i, mgr);
 		if(i.getId()!=0L){
-			Individual.individualPost(req,i,mgr);
+			if(o.getType()==1){
+				Individual.individualPost(req, o, mgr);
+				rsp.sendRedirect("/admins?a=1");
+			}
+			if(o.getType()==2){
+				Organization.organizationPost(req, o, mgr);
+				rsp.sendRedirect("/admins?a=2");
+			}
 		}
-		rsp.sendRedirect("/admins?a=1");
 	}
 }
