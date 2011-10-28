@@ -24,6 +24,8 @@ public class I21{
 	private Long o;
 	@Persistent
 	private Long w;
+	@Persistent
+	private Long rak;
 
 	public I21(I i,I owner,Date time){
 		this.i=i.getId();
@@ -54,5 +56,8 @@ public class I21{
 	}
 	public long geto(){
 	    return o;
+	}
+	public long getrak(){
+	    return rak;
 	}
 }
