@@ -65,7 +65,7 @@ public class PostServlet extends HttpServlet{
 			String[]s=n.split("/");
 			if(s.length>1){
 				n=s[1];
-				if(n.equalsIgnoreCase("adminindividual")){
+				if(n.equalsIgnoreCase("adindividual")||n.equalsIgnoreCase("adorganization")){
 					new AdminsServlet().doGet(req,rsp);
 					return;
 				}
@@ -119,7 +119,7 @@ public class PostServlet extends HttpServlet{
 			String[]s=v.split("/");
 			if(s.length>1){
 				String n=s[1];
-				if(n.equalsIgnoreCase("adminindividual")){
+				if(n.equalsIgnoreCase("adindividual")||n.equalsIgnoreCase("adorganization")){
 					new AdminsServlet().doPost(req,rsp);
 					return;
 				}

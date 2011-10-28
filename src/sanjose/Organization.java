@@ -34,7 +34,7 @@ public class Organization{
 			q.closeAll();
 		}
 		if(O==ssn.owner.getId() && W==ssn.owner.getSite())
-			ret="<ul><li><a href=/post>Post</a><li><a href=/system/settings>Settings</a></ul><ul><li><a href=/"+id+"/contacts>members</a></ul>";
+			ret="<ul><li><a href=/post>Post</a><li><a href=/system/settings?i="+id+">Settings</a></ul><ul><li><a href=/"+id+"/contacts>members</a></ul>";
 		else{
 			Query q21=mgr.newQuery(I21.class);
 			I o=ssn.owner;
@@ -70,8 +70,6 @@ public class Organization{
 		}
 		page.end(null);
 	}
-
-
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp,Page page,
 		PersistenceManager mgr)throws IOException{
 		I i=new I(req.getParameter("i"),0);
@@ -83,8 +81,7 @@ public class Organization{
 			i=I.query(i,mgr);
 			page.out("<a href=/post/upload?i="+i.getId()+"."+i.getSite()+"><img src=/icons/"+i.getId()+"."+i.getSite()+" class=icon></a><br>");
 			page.out("<form method=post action=/post/organization?i="+i+">");
-			page.out("Group Name<br><input type=text name=text value="+i.getText()+"><br>");
-			page.out("Quotation<br><textarea name=q rows=10>"+i.getQuotation()+"</textarea><br>");
+			organizationGet(i,page,mgr);
 		}
 		page.out("<input type=hidden name=i value="+i.getId()+"."+i.getSite()+">");
 		page.end("<input type=submit name=ok></form>");
@@ -92,27 +89,38 @@ public class Organization{
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		Session sn=new Session("/post/organization");
-		String v=req.getParameter("text");
 		I i=new I(req.getParameter("i"),0);
 		I o;
 		PersistenceManager m=Helper.getMgr();
 		try{
 			if(i.getSite()==0){
+				String v=req.getParameter("text");
 				o=I.store(v,null,2,(byte)0,sn.owner,m,true);
 				I21 i21=new I21(o,o.getOwner(),new Date());
 			    m.makePersistent(i21);
 			}
 			else{
-				String q=req.getParameter("q");
-				o=I.query(i,m);
-				o.setText(v);
-				o.setQuotation(q);
-				o.setModifyTime(null);
+				o = I.query(i,m);
+				organizationPost(req,o,m);
 			}
 		}
 		finally{
 			m.close();
 		}
 		rsp.sendRedirect("/"+o);
+	}
+	public static void organizationGet(I i,Page page,PersistenceManager mgr)
+	throws IOException{
+		page.out("Group Name<br><input type=text name=text value="+i.getText()+"><br>");
+		page.out("Quotation<br><textarea name=q rows=10>"+i.getQuotation()+"</textarea><br>");
+	}
+	public static void organizationPost(HttpServletRequest req,I i,PersistenceManager mgr)
+	throws IOException{
+		String v=req.getParameter("text");
+		String q=req.getParameter("q");
+		i.setText(v);
+		i.setQuotation(q);
+		i.setModifyTime(null);
+		mgr.close();
 	}
 }
