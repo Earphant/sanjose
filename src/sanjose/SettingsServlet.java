@@ -1,12 +1,7 @@
 package sanjose;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
 import javax.servlet.http.*;
 
 import com.google.appengine.api.users.UserService;
@@ -18,7 +13,6 @@ public class SettingsServlet extends HttpServlet{
 	private Page page;
 	private String jmp;
 
-	@SuppressWarnings("unchecked")
 	public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
 		page=new Page(rsp);
@@ -29,7 +23,11 @@ public class SettingsServlet extends HttpServlet{
 		I owner=new Session("/tools/settings").owner;
 		PersistenceManager mgr=Helper.getMgr();	
 		page.out("<a href=/post/upload?i="+owner+"><img src=/icons/"+owner+" class=icon></a><br>");
-		Query q11=mgr.newQuery(I11.class);
+		I o = I.query(owner, mgr);
+		page.out("<form method=post action=/post/individual?i="+owner+">");
+		Individual.individualGet(o,page,mgr);
+		
+/*		Query q11=mgr.newQuery(I11.class);
 		q11.setFilter("i==iParam && j==jParam");
 		q11.declareParameters("Long iParam,Long jParam");
 		try{
@@ -118,15 +116,18 @@ public class SettingsServlet extends HttpServlet{
 			q1.closeAll();
 			mgr.close();
 		}
+*/
 		page.out("<input type=hidden name=i value="+owner+">");
 		page.end("<input type=submit name=ok></form>");
 	}
-	@SuppressWarnings("unchecked")
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 	throws IOException{
 		PersistenceManager mgr=Helper.getMgr();	
 		Session current = new Session("");
-		String pwd1 = req.getParameter("pwd1");
+		I o = I.query(current.owner, mgr);
+		Individual.individualPost(req, o, mgr);
+		
+/*		String pwd1 = req.getParameter("pwd1");
 		String pwd2 = req.getParameter("pwd2");
 		   String pwd=null;
 		   if(pwd1==pwd2 && pwd1!=null)
@@ -202,6 +203,7 @@ public class SettingsServlet extends HttpServlet{
 				q1.closeAll();
 				mgr.close();
 			}
+*/
 		rsp.sendRedirect("/"+current.owner+"/");
 	}
 }

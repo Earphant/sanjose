@@ -53,14 +53,14 @@ public class AdminsServlet extends HttpServlet{
 		}
 		page.end(null);
 	}
-	public void individualForm(I id,Page page,PersistenceManager mgr)
+	private void individualForm(I id,Page page,PersistenceManager mgr)
 		throws IOException{
 		page.out("<a href=/post/upload?i="+id+"><img src=/icons/"+id+" class=icon></a><br>");
 		page.title="Individual";
 		page.out("<form method=post action=/post/adindividual?i="+id+">");
 		Individual.individualGet(id,page,mgr);
 		page.out("<input type=hidden name=i value="+id+">");
-		page.end("<br><input type=submit name=ok></form>");
+		page.out("<br><input type=submit name=ok></form>");
 	}
 	private void organizationForm(I id,Page page,PersistenceManager mgr)
 		throws IOException{
@@ -89,8 +89,7 @@ public class AdminsServlet extends HttpServlet{
 		finally{
 			q.closeAll();
 			mgr.close();
-		}
-		page.end(null);			
+		}			
 	}
     public void doGet(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
