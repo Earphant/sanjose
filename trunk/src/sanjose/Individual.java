@@ -87,11 +87,11 @@ public class Individual{
 		String pwd1="";
 		String pwd2="";
 		I1 i1=I1.query(i,mgr);
-		String fsn=i1.getfsn()==null?"first+name":i1.getfsn();
-		String mdn=i1.getmdn()==""?"middle+name":i1.getmdn();
-		String lsn=i1.getlsn()==""||i1.getlsn()==null?"lastname":i1.getlsn();
-		String gnf=i1.getgnd()=="female"?"checked":"";
-		String gnm=i1.getgnd()=="male"?"checked":"";
+		String fsn; if(i1.getfsn().equals("")) fsn="first-name"; else fsn="";
+		String mdn; if(i1.getmdn().equals("")) mdn="middle-name";else mdn="";
+		String lsn; if(i1.getfsn().equals("")) lsn="last-name";  else lsn="";
+		String gnf; if(i1.getgnd().equals("female")) gnf="checked";else gnf="";
+		String gnm; if(i1.getgnd().equals("male"))   gnm="checked";else gnm="";
 		String yir="";
 		String mth="";
 		String dat="";
@@ -146,33 +146,24 @@ public class Individual{
            Calendar calendar = Calendar.getInstance();
            Date t=null;
         if(yir!="" && mth!="" && dat!=""){
-        	calendar.set(Integer.parseInt(yir),Integer.parseInt(mth)-1,Integer.parseInt(dat));
+        	calendar.set(Integer.parseInt(yir),Integer.parseInt(mth),Integer.parseInt(dat));
         	t = calendar.getTime();
         }
         Long zip=req.getParameter("zip")==""?0L:Long.parseLong(req.getParameter("zip"));
         Long tel=req.getParameter("tel")==""?0L:Long.parseLong(req.getParameter("tel"));
-        Query q1=mgr.newQuery(I1.class);
-        q1.setFilter("i==iParam && j==jParam");
-		q1.declareParameters("Long iParam,Long jParam");
-			try{
-				List<I1> r1=(List<I1>)q1.execute(i.getId(),i.getSite());
-				if(!r1.isEmpty()){
-					I1 i1=r1.get(0);
-					i1.setfsn(req.getParameter("fsn"));
-					i1.setmdn(req.getParameter("mdn"));
-					i1.setlsn(req.getParameter("lsn"));
-					i1.setgnd(req.getParameter("gnd"));
-					i1.sett(t);
-					i1.setocp(req.getParameter("ocp"));
-					i1.setzip(zip);
-					i1.settel(tel);
-					i1.setadd(req.getParameter("add"));
-					mgr.makePersistent(i1);
-				}
-			}
-			finally{
-				q1.closeAll();
-				mgr.close();
-			}
+        I1 i1 = I1.query(i, mgr);
+		i1.setfsn(req.getParameter("fsn"));
+		i1.setmdn(req.getParameter("mdn"));
+		i1.setlsn(req.getParameter("lsn"));
+		i1.setgnd(req.getParameter("gnd"));
+		i1.sett(t);
+		i1.setocp(req.getParameter("ocp"));
+		i1.setzip(zip);
+		i1.settel(tel);
+		i1.setadd(req.getParameter("add"));
+		mgr.makePersistent(i1);
+		
+		mgr.close();
+			
 	}
 }
