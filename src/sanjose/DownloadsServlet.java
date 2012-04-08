@@ -16,7 +16,7 @@ public class DownloadsServlet extends HttpServlet {
 		
 		Page p=new Page(rsp);
 		p.title="Downloads";
-		p.aside="<ul><li><a href=/post/upload>Upload</a></ul>";
+		p.aside="<div class=column1></div><ul class=column2><ul><li><a href=/post/upload>Upload</a></ul></ul>";
 
 		PersistenceManager mgr=Helper.getMgr();
 		Query q=mgr.newQuery(I12.class);

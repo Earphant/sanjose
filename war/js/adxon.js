@@ -322,7 +322,7 @@ _[2]={
 		}
 	},
 	_C:function(t){
-		return t.getMonth()+1+'月'+t.getDate()+'日';
+		return t.getMonth()+1+'-'+t.getDate();
 	},
 	_E:function(t){
 		return this._m[t.getMonth()]+' '+t.getDate();

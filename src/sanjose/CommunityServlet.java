@@ -11,7 +11,7 @@ public class CommunityServlet extends HttpServlet {
 		throws IOException{
 		Page p=new Page(rsp);
 		p.title="Community";
-		p.aside="<ul><li><a href=/post/organization>Create a group</a></ul>";
+		p.aside="<div class=column1></div><ul class=column2><ul><li><a href=/post/organization>Create a group</a></ul></ul>";
 		PersistenceManager mgr=Helper.getMgr();
 		Query q=mgr.newQuery(I.class);
 		q.setFilter("r==0 && d==1 && h==1");

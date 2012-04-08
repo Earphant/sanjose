@@ -113,28 +113,29 @@ public class I{
 					page.out("<div class=post><a href=/"+i+
 						"><img class=icon src=/icons/"+i+
 						"></a><div class=text><a href=/"+i+
-						">"+x+"</a><div class=c2 t="+
-						o.getModifyTick()+"></div></div></div>");
+						">"+x+"</a><div class=timere><div class=c2 t="+
+						o.getModifyTick()+"></div></div></div></div>");
 					break;
 				case 12:
-					page.out("<div class=post><a href=/"+w+"/"+i+"><img class=thmb src=/thumbnails/"+i+"></a><a href=/"+w+"/><img src=/icons/"+w+" class=icon></a><div class=text><a href=/"+w+"/"+i+">"+x+"</a><div class=c2 t="+o.getModifyTick()+"></div><a href=/post?re="+i+"&jmp=%2F>Re</a></div></div>");
+					page.out("<div class=post><a href=/"+w+"/"+i+"><img class=thmb src=/thumbnails/"+i+"></a><a href=/"+w+"/><img src=/icons/"+w+" class=icon></a><div class=text><a href=/"+w+"/"+i+">"+x+"</a><div class=timere><div class=c2 t="+o.getModifyTick()+"></div>&nbsp;&nbsp;<a href=/post?re="+i+"&jmp=%2F>Reply</a></div></div></div>");
 					break;
 				case 136:
-					page.out("<div class=post><a href=/"+w+"><img src=/icons/"+w+" class=icon></a><div class=text><a href=/"+w+"/heart-rate>"+x+"</a><div class=grf1>"+o.getQuotation()+"</div><div class=c2 t="+o.getModifyTick()+"></div><a href=/post?re="+i+"&jmp=%2F>Re</a></div></div>");
+					page.out("<div class=post><a href=/"+w+"><img src=/icons/"+w+" class=icon></a><div class=text><a href=/"+w+"/heart-rate>"+x+"</a><div class=grf1>"+o.getQuotation()+"</div><div class=timere><div class=c2 t="+o.getModifyTick()+"></div>&nbsp;&nbsp;<a href=/post?re="+i+"&jmp=%2F>Reply</a></div></div></div>");
 					break;
 				case 138:
-					page.out("<div class=post><a href=/"+w+"><img src=/icons/"+w+" class=icon></a><div class=text><a href=/"+w+"/weight>"+x+"</a><div class=grf1>"+o.getQuotation()+"</div><div class=c2 t="+o.getModifyTick()+"></div><a href=/post?re="+i+"&jmp=%2F>Re</a></div></div>");
+					page.out("<div class=post><a href=/"+w+"><img src=/icons/"+w+" class=icon></a><div class=text><a href=/"+w+"/weight>"+x+"</a><div class=grf1>"+o.getQuotation()+"</div><div class=timere><div class=c2 t="+o.getModifyTick()+"></div>&nbsp;&nbsp;<a href=/post?re="+i+"&jmp=%2F>Reply</a></div></div></div>");
 					break;
 				case 139:
-					page.out("<div class=post><a href=/"+w+"><img src=/icons/"+w+" class=icon></a><div class=text><a href=/"+w+"/steps>"+x+"</a><div class=grf1>"+o.getQuotation()+"</div><div class=c2 t="+o.getModifyTick()+"></div><a href=/post?re="+i+"&jmp=%2F>Re</a></div></div>");
+					page.out("<div class=post><a href=/"+w+"><img src=/icons/"+w+" class=icon></a><div class=text><a href=/"+w+"/steps>"+x+"</a><div class=grf1>"+o.getQuotation()+"</div><div class=timere><div class=c2 t="+o.getModifyTick()+"></div>&nbsp;&nbsp;<a href=/post?re="+i+"&jmp=%2F>Reply</a></div></div></div>");
 					break;
 				default:
 					page.out("<div class=post><a href=/"+
 						w+"><img src=/icons/"+
 						w+" class=icon></a><div class=text>"+
-						x+"<br>"+t+"</br><a href=/post?re="+
-						i+"&jmp=%2F>Re</a></div></div>");
+						x+"</div><div class=timere>"+t+"&nbsp;&nbsp;<a href=/post?re="+
+						i+"&jmp=%2F>Reply</a></div></div>");
 				}
+				page.out("<div class=divide></div>");
 				ret++;
 			}
 		}
@@ -317,7 +318,7 @@ public class I{
 		return j;
 	}
 	public String getTimed(){
-		return i+"."+j+"."+t.getTime()/1000;
+		return i+"-"+j+"-"+t.getTime()/1000;
 	}
 	public String getTitle(boolean html){
 		return x.equals("")?(html?"<i>(untitled)</i>":"(untitled)"):x;

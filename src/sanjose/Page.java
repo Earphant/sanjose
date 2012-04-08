@@ -55,7 +55,7 @@ public class Page{
 		response.getWriter().println(cont);
 	}
 	public String articale="";
-	public String aside="<ul><li><a href=/products/>Products</a><li><a href=/downloads/>Downloads</a><li><a href=/support/>Support</a><li><a href=/community/>Community</a></ul>";
+	public String aside="<div class=column1></div><ul class=column2><ul><li><a href=/products/>Products</a><li><a href=/downloads/>Downloads</a><li><a href=/support/>Support</a><li><a href=/community/>Community</a></ul></ul>";
 	public String content_type="text/html;charset=UTF-8";
 	public String footer="<ul><li><a href=/about/>About</a><li><a href=/about/contact.html>Contact</a><li><a href=/about/privacy.html>Privacy</a><li><a href=/about/term.html>Term</a><li><a href=/forum/>Forum</a></ul>";
 	public String header="";

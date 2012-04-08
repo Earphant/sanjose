@@ -30,7 +30,8 @@ public class HomeServlet extends HttpServlet{
 	private void signed(Page page,Session ssn)throws IOException{
 		I owner=ssn.owner;
 		page.title="Home";
-		page.out("<form method=post action=/post/><textarea name=text rows=5></textarea><input type=submit name=ok></form>");
+		page.aside=("<div class=column1><img src=/thumbnails/"+owner+" class=owner></div><ul class=column2><ul><li><a href=/products/>Products</a><li><a href=/downloads/>Downloads</a><li><a href=/support/>Support</a><li><a href=/community/>Community</a></ul></ul>");
+		page.out("<form method=post action=/post/><textarea name=text rows=3></textarea><div class=postsub><input type=submit name=ok></div></form>");
 		PersistenceManager m=Helper.getMgr();
 		Query q=m.newQuery(I21.class);
 		q.setFilter("o==oParam && w==wParam");	

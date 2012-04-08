@@ -169,7 +169,7 @@ public class BackendServlet extends HttpServlet{
         p.nav="<ul><li><a href=/>Home</a><li><a href=/admins?a=2>Groups</a><li><a href=/admins?a=12>Pictures</a><li><a href=/admins?a=>Posts</a><li><a href=/admins?a=1>Users</a></ul>";
         p.aside=null;
 		p.title="Backend";
-		p.aside="<ul><li><a href=/orders>Orders</a><li><a href=/inquiries>Inquiries</a><li><a href=/12.3/dashboard>Dashboard</a></ul>";
+		p.aside="<div class=column1></div><ul class=column2><ul><li><a href=/orders>Orders</a><li><a href=/inquiries>Inquiries</a><li><a href=/12.3/dashboard>Dashboard</a></ul></ul>";
 		if(s.owner==null){
 			p.out("<a href=/tools/debug>Debug</a><br>");
 			p.out("<a href=/system/signin?jmp=%2Ftools>Sign in</a><br>");
