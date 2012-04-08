@@ -22,7 +22,7 @@ public class SettingsServlet extends HttpServlet{
 		page.title="Settings";
 		I owner=new Session("/tools/settings").owner;
 		PersistenceManager mgr=Helper.getMgr();	
-		page.out("<a href=/post/upload?i="+owner+"><img src=/icons/"+owner+" class=icon></a><br>");
+		page.out("<div class=1><a href=/post/upload?i="+owner+"><img src=/thumbnails/"+owner+" class=icon2></a><br>");
 		I o = I.query(owner, mgr);
 		page.out("<form method=post action=/post/individual?i="+owner+">");
 		Individual.individualGet(o,page,mgr);

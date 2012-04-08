@@ -21,7 +21,7 @@ public class ToolsServlet extends HttpServlet {
 		}
 		Page page=new Page(rsp);
 		page.title="Tools";
-		page.aside="<ul><li><a href=/post>Post</a><li><a href=/system/settings>Settings</a><li><a href=/12.3/dashboard>Dashboard</a></ul>";
+		page.aside="<div class=column1></div><ul class=column2><ul><li><a href=/post>Post</a><li><a href=/system/settings>Settings</a><li><a href=/12.3/dashboard>Dashboard</a></ul></ul>";
 		if(ssn.owner==null){
 			page.out("<a href=/tools/debug>Debug</a><br>");
 			page.out("<a href=/system/signin?jmp=%2Ftools>Sign in</a><br>");

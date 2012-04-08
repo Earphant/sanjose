@@ -14,7 +14,7 @@ public class Individual{
 	static public String menu(I id,Session ssn,PersistenceManager mgr){
 		String ret=null;
 		if(id.equals(ssn.owner))
-			ret="<ul><li><a href=/post>Post</a><li><a href=/system/settings?i="+id+">Settings</a></ul>";
+			ret="<div class=column1></div><ul class=column2><ul><li><a href=/post>Post</a><li><a href=/system/settings?i="+id+">Settings</a></ul>";
 		else{
 			Query q=mgr.newQuery(I21.class);
 			I o=ssn.owner;
@@ -23,8 +23,8 @@ public class Individual{
 			try{
 				@SuppressWarnings("unchecked")
 				List<I21> r=(List<I21>)q.execute();
-				ret=r.isEmpty()?"<ul><li><a href=/system/follow?i="+id+">Follow</a></ul>":
-					"<ul><li><a href=/system/unfollow?i="+id+">Unfollow</a></ul>";
+				ret=r.isEmpty()?"<div class=column1></div><ul class=column2><ul><li><a href=/system/follow?i="+id+">Follow</a></ul>":
+					"<div class=column1></div><ul class=column2><ul><li><a href=/system/unfollow?i="+id+">Unfollow</a></ul>";
 			}
 			finally{
 				q.closeAll();
@@ -45,10 +45,10 @@ public class Individual{
 			id+"/historical>Historical</a></ul><ul><li><a href=/"+
 			id+"/weight>Weight</a><li><a href=/"+
 			id+"/heart-rate>Heart Rate</a><li><a href=/"+
-			id+"/steps>Steps</a><li><a href=/"+id+"/fat>Fat</a></ul>";
+			id+"/steps>Steps</a><li><a href=/"+id+"/fat>Fat</a></ul></ul>";
 		page.out("<form method=post action=/post?re="+id+">");
-		page.out("<textarea name=text rows=5></textarea>");
-		page.out("<input type=submit name=ok value=Reply></form>");
+		page.out("<textarea name=text rows=3></textarea>");
+		page.out("<div class=postsub><input type=submit name=ok value=Reply></div></form>");
 		Query q=mgr.newQuery(I.class);
 		q.setFilter("o==oParam && w==wParam ");	
 		q.declareParameters("Long oParam,Long wParam");
@@ -65,7 +65,7 @@ public class Individual{
 		PersistenceManager mgr)throws IOException{
 		I i=new I(req.getParameter("i"),0);
 		page.title="Individual";
-		page.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";
+		page.aside="<div class=column1></div><ul class=column2><ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul></ul>";
 		if(i.getSite()==0)
 			page.out("<form method=post action=/post/individual><input type=text name=text>");
 		else{
@@ -107,14 +107,14 @@ public class Individual{
 			mth= Integer.toString(cal.get(Calendar.MONTH));
 			dat= Integer.toString(cal.get(Calendar.DAY_OF_MONTH));
 		}
-		page.out("Password<br><input type=password name=pwd1 value="+pwd1+"><br>Ensure Password<br><input type=password name=pwd2 value="+pwd2+"><br>"
-		        +"Nick Name<br><input type=text name=text value="+i.getText()+"><br>"
-		        +"First Name<br><input type=text name=fsn value="+fsn+"><br>Middle Name<br><input type=text name=mdn value="+mdn+"><br>Last Name<br><input type=text name=lsn value="+lsn+"><br>"
-	            +"Gender<br><input type=radio name=gnd value=female "+gnf+">Female  <input type=radio name=gnd value=male "+gnm+">Male<br>"
-		        +"Birthday<br><input type=text style=width:40px; name=yir value="+yir+">-<input type=text name=mth style=width:20px; value="+mth+">-<input type=text name=dat style=width:20px; value="+dat+"><br>"
-		        +"Occupation<br><input type=text name=ocp value="+ocp+"><br>"
-		        +"Postal Code<br><input type=text name=zip value="+zip+"><br>Telephone Number<br><input type=text name=tel value="+tel+"><br>"
-		        +"Address<br><textarea name=add rows=1>"+add+"</textarea>");
+		page.out("<div class=sinput>Password<br><input type=password name=pwd1 value="+pwd1+"></div><div class=2>Ensure Password<br><input type=password name=pwd2 value="+pwd2+"></div>"
+		        +"<div class=sinput>Nick Name<br><input type=text name=text value="+i.getText()+"></div>"
+		        +"<div class=sinput>First Name<br><input type=text name=fsn value="+fsn+"></div><div class=2>Middle Name<br><input type=text name=mdn value="+mdn+"></div><div class=2>Last Name<br><input type=text name=lsn value="+lsn+"></div>"
+	            +"<div class=sinput>Gender<br><input type=radio name=gnd value=female "+gnf+">Female  <input type=radio name=gnd value=male "+gnm+">Male</div>"
+		        +"<div class=sinput>Birthday<br><input type=text style=width:40px; name=yir value="+yir+">-<input type=text name=mth style=width:20px; value="+mth+">-<input type=text name=dat style=width:20px; value="+dat+"></div>"
+		        +"<div class=sinput>Occupation<br><input type=text name=ocp value="+ocp+"></div>"
+		        +"<div class=sinput>Postal Code<br><input type=text name=zip value="+zip+"></div><div class=2>Telephone Number<br><input type=text name=tel value="+tel+"></div>"
+		        +"<div class=sinput>Address<br><textarea name=add rows=1>"+add+"</textarea></div></div>");
 	}
 	@SuppressWarnings("unchecked")
 	public static void individualPost(HttpServletRequest req,I i,PersistenceManager mgr)

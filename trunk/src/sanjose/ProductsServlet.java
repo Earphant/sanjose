@@ -23,7 +23,7 @@ public class ProductsServlet extends HttpServlet{
 		I i=new I(req.getParameter("i"),0);
 		Page p=new Page(rsp);
 		p.title="Upload";
-		p.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/uploads>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";		
+		p.aside="<div class=column1></div><ul class=column2><ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/uploads>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul></ul>";		
 		p.out("<form method=post action=/post/upload?i="+i+
 			" enctype=multipart/form-data> <input type=file name=file>");
 		p.end("<br><br><input type=submit name=ok></form>");

@@ -20,9 +20,9 @@ public class Upload{
 		throws IOException{
 		page.title="Upload";
 		I i=new I(req.getParameter("i"),0);
-		page.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/uploads>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";		
-		page.out("<form method=post action=/post/upload?i="+i+" enctype=multipart/form-data> <input type=file name=file>");
-		page.end("<input type=submit name=ok></form>");
+		page.aside="<div class=column1></div><ul class=column2><ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/uploads>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heartrate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul></ul>";		
+		page.out("<form method=post action=/post/upload?i="+i+" enctype=multipart/form-data> <div class=sinput><input type=file name=file>");
+		page.end("<input type=submit name=ok></div></form>");
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse rsp)
 	    throws IOException{

@@ -31,7 +31,7 @@ public class Based{
 			}
 			else{
 				page.title=d.getTitle(true);
-				page.aside="<ul><li><a href=/post?i="+d+">Edit</a><li><a href=/post/mark?re="+d+">Mark</a></ul>";
+				page.aside="<div class=column1></div><ul class=column2><ul><li><a href=/post?i="+d+">Edit</a><li><a href=/post/mark?re="+d+">Mark</a></ul></ul>";
 				if(d.getType()==12)
 					page.out("<a href=/originals/"+d+".jpg title=test><img src=/"+base+"/"+d+".jpg></a>");
 				long r=Replies.list(d,page,m);

@@ -10,11 +10,11 @@ public class Document extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse rsp, Page page)
 			throws IOException {
 		page.title = "Document";
-		page.aside = "<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul>";
+		page.aside = "<div class=column1></div><ul class=column2><ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/steps>Steps</a><li><a href=/post/fat>Fat</a></ul></ul>";
 		page.out("<form method=post action=/post/documents>");
-		page.out("Title:<br><textarea name=text rows=1></textarea>");
-		page.out("Abstract:<br><textarea name=abstract rows=5></textarea>");
-		page.out("Text:<br><textarea name=html rows=20></textarea>");
+		page.out("<div class=sinput>Title:<br><textarea name=text rows=1></textarea></div>");
+		page.out("<div class=sinput>Abstract:<br><textarea name=abstract rows=5></textarea></div>");
+		page.out("<div class=sinput>Text:<br><textarea name=html rows=20></textarea></div>");
 		page.end("<input type=submit name=ok value=publish></form>");
 	}
 

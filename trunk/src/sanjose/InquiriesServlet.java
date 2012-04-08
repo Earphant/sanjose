@@ -166,7 +166,7 @@ public class InquiriesServlet extends HttpServlet{
 		throws IOException{
         Page p=new Page(rsp);
         p.nav="<ul><li><a href=/>Home</a><li><a href=/backend>Backend</a></ul>";
-		p.aside="<ul><li><a href=/post/product>Post</a></ul>";
+		p.aside="<div class=column1></div><ul class=column2><ul><li><a href=/post/product>Post</a></ul></ul>";
         p.title="Inquiries";
 		p.out("<table class=list><thead><tr><th>Value<td>Quantity<tbody>");
 		PersistenceManager mgr=Helper.getMgr();

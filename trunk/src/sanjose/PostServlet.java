@@ -13,15 +13,15 @@ public class PostServlet extends HttpServlet{
 		I b=new I(req.getParameter("b"),0);
 		I r=new I(req.getParameter("re"),0);
 		page.title="Post";
-		page.aside="<ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/step>Step</a><li><a href=/post/fat>Fat</a></ul>";
+		page.aside="<div class=column1></div><ul class=column2><ul><li><a href=/post>Message</a><li><a href=/post/documents>Document</a><li><a href=/post/picture>Picture</a><li><a href=/post/marks>Mark</a><li><a href=/post/events>Event</a><li><a href=/post/upload>Upload</a></ul><ul><li><a href=/post/books>Book</a><li><a href=/post/issues>Issue</a></ul><ul><li><a href=/post/weight>Weight</a><li><a href=/post/heart-rate>Heart Rate</a><li><a href=/post/step>Step</a><li><a href=/post/fat>Fat</a></ul></ul>";
 		page.out("<form method=post action=/post?i="+i+"&b="+b+"&re="+r+
-			"><textarea name=text rows=10>");
+			"><textarea name=text rows=3>");
 		if(i.getSite()!=0){
 			i=I.query(i,mgr);
 			page.out(i.getText());
 		}
 		page.out("</textarea>");
-		page.end("<input type=submit name=ok></form>");
+		page.end("<div class=postsub><input type=submit name=ok></div></form>");
 	}
 	private void postMessage(HttpServletRequest req,HttpServletResponse rsp)
 		throws IOException{
